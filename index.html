@@ -44,43 +44,52 @@
         <div id="list">載入中...</div>
     </div>
     <script>
-        // 請確認這兩行與您的 GitHub 網址路徑完全一致
         const user = 'twjohnsontsai';
         const repo = 'Stock-Report';
-        const apiUrl = `https://api.github.com/repos/${user}/${repo}/contents/`;
+        // 增加時間戳記避免 API 快取舊資料
+        const apiUrl = `https://api.github.com/repos/${user}/${repo}/contents/?t=${new Date().getTime()}`;
 
-        fetch(apiUrl)
-            .then(res => {
-                if (!res.ok) throw new Error('API 請求失敗');
-                return res.json();
-            })
-            .then(data => {
-                const list = document.getElementById('list');
-                list.innerHTML = '';
+        async function loadReports() {
+            const listDiv = document.getElementById('list');
+            try {
+                const res = await fetch(apiUrl);
 
-                // 篩選出所有 html 檔案，但排除掉 index.html 本身
-                const htmlFiles = data.filter(f => f.name.endsWith('.html') && f.name !== 'index.html');
+                if (res.status === 403) {
+                    throw new Error('API 訪問受限（可能是請求太頻繁），請稍後再試。');
+                }
+                if (!res.ok) {
+                    throw new Error(`找不到儲存庫，請檢查帳號 "${user}" 與儲存庫 "${repo}" 是否正確。`);
+                }
 
-                if (htmlFiles.length === 0) {
-                    list.innerHTML = '<p style="color: #888;">目前資料夾內沒有其他分析報告。</p>';
+                const files = await res.json();
+                listDiv.innerHTML = '';
+
+                // 篩選出 HTML 檔案（排除 index.html）
+                const reports = files.filter(f => f.name.endsWith('.html') && f.name.toLowerCase() !== 'index.html');
+
+                if (reports.length === 0) {
+                    listDiv.innerHTML = '<p style="color: #666;">資料夾內目前沒有其他的 HTML 分析報告。</p>';
                     return;
                 }
 
-                // 按檔名排序（讓最新的檔案出現在上面）
-                htmlFiles.sort((a, b) => b.name.localeCompare(a.name));
+                // 按名稱降序排列（讓最新的日期排在上面）
+                reports.sort((a, b) => b.name.localeCompare(a.name));
 
-                htmlFiles.forEach(f => {
+                reports.forEach(file => {
                     const a = document.createElement('a');
-                    a.href = f.name;
-                    // 讓顯示的名稱漂亮一點，去掉 .html
-                    a.textContent = '📊 ' + f.name.replace('.html', '');
-                    list.appendChild(a);
+                    a.href = file.name;
+                    // 顯示檔名並移除 .html 後綴
+                    a.textContent = '📊 ' + file.name.replace('.html', '');
+                    listDiv.appendChild(a);
                 });
-            })
-            .catch(err => {
-                document.getElementById('list').innerHTML = '<p style="color: red;">載入失敗：請確認 GitHub 帳號與儲存庫名稱設定正確。</p>';
+
+            } catch (err) {
+                listDiv.innerHTML = `<p style="color: red;">⚠️ 錯誤：${err.message}</p>`;
                 console.error(err);
-            });
+            }
+        }
+
+        loadReports();
     </script>
 </body>
 
