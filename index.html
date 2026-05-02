@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>每日分析報告</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f9f9f9;
+        }
+
+        .file-list {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            background: #eef2f7;
+            color: #1565c0;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background: #dce6f1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="file-list">
+        <h2>📈 報告清單</h2>
+        <div id="list">載入中...</div>
+    </div>
+    <script>
+        // 設定您的資訊
+        const user = '您的GitHub帳號';
+        const repo = 'stock-analysis';
+        fetch(`https://api.github.com/repos/${user}/${repo}/contents/`)
+            .then(res => res.json())
+            .then(data => {
+                const list = document.getElementById('list');
+                list.innerHTML = '';
+                // 找出所有 html 檔案但排除 index.html
+                data.filter(f => f.name.endsWith('.html') && f.name !== 'index.html')
+                    .sort((a, b) => b.name.localeCompare(a.name)) // 最新的排上面
+                    .forEach(f => {
+                        const a = document.createElement('a');
+                        a.href = f.name;
+                        a.textContent = f.name.replace('.html', '');
+                        list.appendChild(a);
+                    });
+            });
+    </script>
+</body>
+
+</html>
