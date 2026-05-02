@@ -78,8 +78,30 @@
                 reports.forEach(file => {
                     const a = document.createElement('a');
                     a.href = file.name;
-                    // 顯示檔名並移除 .html 後綴
-                    a.textContent = '📊 ' + file.name.replace('.html', '');
+
+                    // --- 自動改名邏輯開始 ---
+                    let name = file.name.replace('.html', ''); // 去掉 .html
+                    let parts = name.split('_'); // 依照底線拆分
+
+                    let stockId = parts[0] || ""; // 第一部分：代號
+                    let type = parts[1] || "";    // 第二部分：類型
+                    let date = parts[2] || "";    // 第三部分：日期
+
+                    // 翻譯分析類型
+                    let typeName = "分析報告";
+                    if (type === "90d") typeName = "借券分析";
+                    if (type === "report") typeName = "分點報告";
+
+                    // 格式化日期：把 20260502 變成 2026-05-02
+                    let formattedDate = date;
+                    if (date.length === 8) {
+                        formattedDate = `${date.substring(0, 4)}-${date.substring(4, 6)}-${date.substring(6, 8)}`;
+                    }
+
+                    // 顯示最終格式，例如：📊 1802 借券分析 (2026-05-02)
+                    a.textContent = `📊 ${stockId} ${typeName} (${formattedDate})`;
+                    // --- 自動改名邏輯結束 ---
+
                     listDiv.appendChild(a);
                 });
 
