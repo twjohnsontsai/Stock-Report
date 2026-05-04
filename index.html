@@ -32,10 +32,6 @@
             letter-spacing: 1px;
         }
 
-        #list {
-            min-height: 120px;
-        }
-
         a {
             display: flex;
             align-items: center;
@@ -67,7 +63,6 @@
             text-align: center;
             color: #94a3b8;
             padding: 30px;
-            font-style: italic;
         }
 
         .error {
@@ -90,30 +85,17 @@
     <script>
         const user = 'twjohnsontsai';
         const repo = 'Stock-Report';
-        // 加入時間戳記確保抓取 GitHub 最新版本
         const apiUrl = `https://api.github.com/repos/${user}/${repo}/contents/?t=${new Date().getTime()}`;
 
         async function loadReports() {
             const listDiv = document.getElementById('list');
             try {
                 const res = await fetch(apiUrl);
-
-                if (!res.ok) {
-                    throw new Error(res.status === 403 ? '存取過於頻繁，請稍候' : '無法讀取儲存庫');
-                }
-
+                if (!res.ok) throw new Error('無法讀取儲存庫');
                 const files = await res.json();
                 listDiv.innerHTML = '';
 
-                // 排除 index.html 本身
                 const reports = files.filter(f => f.name.endsWith('.html') && f.name.toLowerCase() !== 'index.html');
-
-                if (reports.length === 0) {
-                    listDiv.innerHTML = '<p style="text-align: center; color: #64748b;">目前尚無分析報告上傳。</p>';
-                    return;
-                }
-
-                // 降序排列 (最新日期優先)
                 reports.sort((a, b) => b.name.localeCompare(a.name));
 
                 reports.forEach(file => {
@@ -127,32 +109,33 @@
                     let typeCode = parts[1] || "";
                     let dateStr = parts[2] || "";
 
-                    let typeName = "個股分析";
+                    let typeName = "個股分析"; // 預設
                     let cycle = "";
 
-                    // 1. 判斷標準三段格式
-                    if (typeCode === "90d") {
+                    // --- 核心邏輯修正 ---
+                    // 1. 判斷借券分析：支援 90d 或檔名包含 lending
+                    if (typeCode === "90d" || fileName.includes("lending")) {
                         typeName = "借券分析";
-                        cycle = " (90日)";
-                    } else if (typeCode === "report") {
+                        // 如果 typeCode 是 90d 就顯示 90日，否則預設為 60日（或您可以自行調整）
+                        cycle = (typeCode === "90d") ? " (90日)" : " (60日)";
+                    }
+                    // 2. 判斷分點報告
+                    else if (typeCode === "report") {
                         typeName = "分點報告";
                         cycle = " (30日)";
-                    } else if (typeCode === "future") {
+                    }
+                    // 3. 判斷期貨技術分析 (GYF, CAF)
+                    else if (typeCode === "future" || stockId === "GYF" || stockId === "CAF") {
                         typeName = "期貨技術分析";
-                        // 強茂與南亞期貨固定為 60 日
                         cycle = (stockId === "GYF" || stockId === "CAF") ? " (60日)" : " (30日)";
                     }
 
-                    // 2. 判斷兩段格式 (如 GYF_20260504)
+                    // 處理兩段格式 (日期在第二段的情況)
                     if (parts.length === 2 && parts[1].length === 8 && !isNaN(parts[1])) {
                         dateStr = parts[1];
-                        if (stockId === "GYF" || stockId === "CAF") {
-                            typeName = "期貨技術分析";
-                            cycle = " (60日)";
-                        }
                     }
 
-                    // 3. 日期格式化
+                    // 日期格式化
                     let formattedDate = dateStr;
                     if (dateStr && dateStr.length === 8) {
                         formattedDate = `${dateStr.substring(0, 4)}-${dateStr.substring(4, 6)}-${dateStr.substring(6, 8)}`;
@@ -161,12 +144,10 @@
                     a.textContent = `${stockId} ${typeName}${cycle} (${formattedDate})`;
                     listDiv.appendChild(a);
                 });
-
             } catch (err) {
                 listDiv.innerHTML = `<div class="error">⚠️ 載入失敗：${err.message}</div>`;
             }
         }
-
         loadReports();
     </script>
 </body>
