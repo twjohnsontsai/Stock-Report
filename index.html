@@ -43,82 +43,70 @@
         <h2>📈 報告清單</h2>
         <div id="list">載入中...</div>
     </div>
-    <script>
-        const user = 'twjohnsontsai';
-        const repo = 'Stock-Report';
-        // 增加時間戳記避免 API 快取舊資料
-        const apiUrl = `https://api.github.com/repos/${user}/${repo}/contents/?t=${new Date().getTime()}`;
+   ript>
+    const user = 'twjohnsontsai';
+    const repo = 'Stock-Report';
+    const apiUrl = `https://api.github.com/repos/${user}/${repo}/contents/?t=${new Date().getTime()}`;
 
-        async function loadReports() {
-            const listDiv = document.getElementById('list');
-            try {
-                const res = await fetch(apiUrl);
+    async function loadReports() {
+        const listDiv = document.getElementById('list');
+        try {
+            const res = await fetch(apiUrl);
 
-                if (res.status === 403) {
-                    throw new Error('API 訪問受限（可能是請求太頻繁），請稍後再試。');
-                }
-                if (!res.ok) {
-                    throw new Error(`找不到儲存庫，請檢查帳號 "${user}" 與儲存庫 "${repo}" 是否正確。`);
-                }
-
-                const files = await res.json();
-                listDiv.innerHTML = '';
-
-                // 篩選出 HTML 檔案（排除 index.html）
-                const reports = files.filter(f => f.name.endsWith('.html') && f.name.toLowerCase() !== 'index.html');
-
-                if (reports.length === 0) {
-                    listDiv.innerHTML = '<p style="color: #666;">資料夾內目前沒有其他的 HTML 分析報告。</p>';
-                    return;
-                }
-
-                // 按名稱降序排列（讓最新的日期排在上面）
-                reports.sort((a, b) => b.name.localeCompare(a.name));
-
-                reports.forEach(file => {
-                    const a = document.createElement('a');
-                    a.href = file.name;
-
-                    // --- 自動改名邏輯開始 ---
-                    let name = file.name.replace('.html', ''); // 去掉 .html
-                    let parts = name.split('_'); // 依照底線拆分
-
-                    let stockId = parts[0] || ""; // 第一部分：代號
-                    let type = parts[1] || "";    // 第二部分：類型
-                    let date = parts[2] || "";    // 第三部分：日期
-
-                    // 翻譯分析類型
-                    let typeName = "分析報告";
-                    if (type === "90d") typeName = "借券分析";
-                    if (type === "report") typeName = "分點報告";
-                    
-                    // 在 index.html 的邏輯中增加對應的翻譯
-                    let typeName = "分析報告";
-                    if (type === "90d") typeName = "借券分析";
-                    if (type === "report") typeName = "分點報告";
-                    if (type === "future") typeName = "期貨OI分析"; // 新增對應標籤
-
-                    // 格式化日期：把 20260502 變成 2026-05-02
-                    let formattedDate = date;
-                    if (date.length === 8) {
-                        formattedDate = `${date.substring(0, 4)}-${date.substring(4, 6)}-${date.substring(6, 8)}`;
-                    }
-
-                    // 顯示最終格式，例如：📊 1802 借券分析 (2026-05-02)
-                    a.textContent = `📊 ${stockId} ${typeName} (${formattedDate})`;
-                    // --- 自動改名邏輯結束 ---
-
-                    listDiv.appendChild(a);
-                });
-
-            } catch (err) {
-                listDiv.innerHTML = `<p style="color: red;">⚠️ 錯誤：${err.message}</p>`;
-                console.error(err);
+            if (res.status === 403) {
+                throw new Error('API 訪問受限（可能是請求太頻繁），請稍後再試。');
             }
-        }
+            if (!res.ok) {
+                throw new Error(`找不到儲存庫，請檢查帳號 "${user}" 與儲存庫 "${repo}" 是否正確。`);
+            }
 
-        loadReports();
-    </script>
+            const files = await res.json();
+            listDiv.innerHTML = '';
+
+            const reports = files.filter(f => f.name.endsWith('.html') && f.name.toLowerCase() !== 'index.html');
+
+            if (reports.length === 0) {
+                listDiv.innerHTML = '<p style="color: #666;">資料夾內目前沒有其他的 HTML 分析報告。</p>';
+                return;
+            }
+
+            reports.sort((a, b) => b.name.localeCompare(a.name));
+
+            reports.forEach(file => {
+                const a = document.createElement('a');
+                a.href = file.name;
+
+                // --- 自動改名邏輯 ---
+                let name = file.name.replace('.html', '');
+                let parts = name.split('_');
+
+                let stockId = parts[0] || "";
+                let type = parts[1] || "";
+                let date = parts[2] || "";
+
+                // 翻譯分析類型 (修正重複宣告問題)
+                let typeName = "分析報告";
+                if (type === "90d") typeName = "借券分析";
+                else if (type === "report") typeName = "分點報告";
+                else if (type === "future") typeName = "期貨OI分析";
+
+                let formattedDate = date;
+                if (date.length === 8) {
+                    formattedDate = `${date.substring(0, 4)}-${date.substring(4, 6)}-${date.substring(6, 8)}`;
+                }
+
+                a.textContent = `📊 ${stockId} ${typeName} (${formattedDate})`;
+                listDiv.appendChild(a);
+            });
+
+        } catch (err) {
+            listDiv.innerHTML = `<p style="color: red;">⚠️ 錯誤：${err.message}</p>`;
+            console.error(err);
+        }
+    }
+
+    loadReports();
+</script>
 </body>
 
 </html>
