@@ -79,7 +79,7 @@
     <script>
         const user = 'twjohnsontsai';
         const repo = 'Stock-Report';
-        // 增加時間戳記避免 API 快取舊資料[cite: 1]
+        // 增加時間戳記避免 API 快取舊資料
         const apiUrl = `https://api.github.com/repos/${user}/${repo}/contents/?t=${new Date().getTime()}`;
 
         async function loadReports() {
@@ -97,7 +97,7 @@
                 const files = await res.json();
                 listDiv.innerHTML = '';
 
-                // 篩選出 HTML 檔案（排除 index.html 自身）[cite: 1]
+                // 篩選出 HTML 檔案（排除 index.html 自身）
                 const reports = files.filter(f => f.name.endsWith('.html') && f.name.toLowerCase() !== 'index.html');
 
                 if (reports.length === 0) {
@@ -105,14 +105,14 @@
                     return;
                 }
 
-                // 按名稱降序排列（確保最新日期在最前面）[cite: 1]
+                // 按名稱降序排列（確保最新日期在最前面）
                 reports.sort((a, b) => b.name.localeCompare(a.name));
 
                 reports.forEach(file => {
                     const a = document.createElement('a');
                     a.href = file.name;
 
-                    // --- 解析邏輯開始 ---[cite: 1]
+                    // --- 解析邏輯開始 ---
                     let fileName = file.name.replace('.html', '');
                     let parts = fileName.split('_');
 
@@ -123,16 +123,16 @@
                     let typeName = "分析報告";
                     let cycleInfo = "";
 
-                    // 1. 處理標準三段式 (如 1802_90d_20260502)[cite: 1]
+                    // 1. 處理標準三段式 (如 1802_90d_20260502)
                     if (typeCode === "90d") {
                         typeName = "借券分析";
                         cycleInfo = " (90日)";
                     } else if (typeCode === "report") {
                         typeName = "分點報告";
-                        cycleInfo = " (30根)";
+                        cycleInfo = " (30日)";
                     } else if (typeCode === "future") {
                         typeName = "期貨技術分析";
-                        cycleInfo = " (30根)";
+                        cycleInfo = " (30日)";
                     }
 
                     // 2. 處理兩段式 (如 GYF_20260504 或 CAF_20260430)
@@ -140,13 +140,13 @@
                         dateStr = parts[1];
                         if (stockId === "GYF" || stockId === "CAF") {
                             typeName = "期貨技術分析";
-                            cycleInfo = " (30根)";
+                            cycleInfo = " (30日)";
                         } else {
                             typeName = "個股分析";
                         }
                     }
 
-                    // 3. 格式化日期 (20260502 -> 2026-05-02)[cite: 1]
+                    // 3. 格式化日期 (20260502 -> 2026-05-02)
                     let displayDate = dateStr;
                     if (dateStr && dateStr.length === 8) {
                         displayDate = `${dateStr.substring(0, 4)}-${dateStr.substring(4, 6)}-${dateStr.substring(6, 8)}`;
@@ -154,7 +154,7 @@
                         displayDate = "查看詳情";
                     }
 
-                    // 顯示最終格式[cite: 1]
+                    // 顯示最終格式
                     a.textContent = `📊 ${stockId} ${typeName}${cycleInfo} (${displayDate})`;
                     // --- 解析邏輯結束 ---
 
