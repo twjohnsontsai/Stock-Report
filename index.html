@@ -32,6 +32,10 @@
             letter-spacing: 1px;
         }
 
+        #list {
+            min-height: 120px;
+        }
+
         a {
             display: flex;
             align-items: center;
@@ -109,15 +113,15 @@
                     let typeCode = parts[1] || "";
                     let dateStr = parts[2] || "";
 
-                    let typeName = "個股分析"; // 預設
+                    let typeName = "個股分析";
                     let cycle = "";
 
-                    // --- 核心邏輯修正 ---
-                    // 1. 判斷借券分析：支援 90d 或檔名包含 lending
-                    if (typeCode === "90d" || fileName.includes("lending")) {
+                    // --- 修正後的判斷邏輯 ---
+                    // 1. 判斷借券分析 (支援 90d, 60d, 20d 等格式)
+                    if (/^\d+d$/.test(typeCode)) {
                         typeName = "借券分析";
-                        // 如果 typeCode 是 90d 就顯示 90日，否則預設為 60日（或您可以自行調整）
-                        cycle = (typeCode === "90d") ? " (90日)" : " (60日)";
+                        let days = typeCode.replace('d', '');
+                        cycle = ` (${days}日)`;
                     }
                     // 2. 判斷分點報告
                     else if (typeCode === "report") {
