@@ -1,61 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 
 <head>
     <meta charset="UTF-8">
-    <title>每日分析報告</title>
+    <title>每日分析報告清單</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <style>
         body {
-            font-family: sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             padding: 20px;
             line-height: 1.6;
             background: #f9f9f9;
+            color: #333;
         }
 
         .file-list {
-            max-width: 500px;
-            margin: auto;
+            max-width: 550px;
+            margin: 20px auto;
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
             text-align: center;
-            color: #333;
+            color: #1a1a2e;
             border-bottom: 2px solid #eef2f7;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
+            margin-top: 0;
+        }
+
+        #list {
+            min-height: 100px;
         }
 
         a {
             display: block;
-            padding: 12px;
-            margin: 8px 0;
-            background: #eef2f7;
-            color: #1565c0;
+            padding: 14px;
+            margin: 10px 0;
+            background: #f1f5f9;
+            color: #1d4ed8;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-weight: 500;
-            transition: background 0.2s;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
         }
 
         a:hover {
-            background: #dce6f1;
+            background: #dbeafe;
+            border-color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        .loading {
+            text-align: center;
+            color: #64748b;
+            padding: 20px;
+        }
+
+        .error {
+            color: #dc2626;
+            background: #fef2f2;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #fee2e2;
         }
     </style>
 </head>
 
 <body>
     <div class="file-list">
-        <h2>📈 報告清單</h2>
-        <div id="list">載入中...</div>
+        <h2>📈 投資分析報告清單</h2>
+        <div id="list" class="loading">正在獲取最新報告...</div>
     </div>
+
     <script>
         const user = 'twjohnsontsai';
         const repo = 'Stock-Report';
-        // 增加時間戳記避免 API 快取舊資料
+        // 增加時間戳記避免 API 快取舊資料[cite: 1]
         const apiUrl = `https://api.github.com/repos/${user}/${repo}/contents/?t=${new Date().getTime()}`;
 
         async function loadReports() {
@@ -67,69 +91,78 @@
                     throw new Error('API 訪問受限，請稍後再試。');
                 }
                 if (!res.ok) {
-                    throw new Error(`找不到儲存庫，請檢查設定。`);
+                    throw new Error(`找不到儲存庫，請檢查 GitHub 設定。`);
                 }
 
                 const files = await res.json();
                 listDiv.innerHTML = '';
 
-                // 篩選出 HTML 檔案（排除 index.html）
+                // 篩選出 HTML 檔案（排除 index.html 自身）[cite: 1]
                 const reports = files.filter(f => f.name.endsWith('.html') && f.name.toLowerCase() !== 'index.html');
 
                 if (reports.length === 0) {
-                    listDiv.innerHTML = '<p style="color: #666;">目前沒有分析報告。</p>';
+                    listDiv.innerHTML = '<p style="color: #666; text-align: center;">目前資料夾內沒有分析報告。</p>';
                     return;
                 }
 
-                // 按名稱降序排列（最新日期排在上面）[cite: 1]
+                // 按名稱降序排列（確保最新日期在最前面）[cite: 1]
                 reports.sort((a, b) => b.name.localeCompare(a.name));
 
                 reports.forEach(file => {
                     const a = document.createElement('a');
                     a.href = file.name;
 
-                    // --- 自動改名與類型辨識邏輯 ---[cite: 1]
+                    // --- 解析邏輯開始 ---[cite: 1]
                     let fileName = file.name.replace('.html', '');
                     let parts = fileName.split('_');
 
                     let stockId = parts[0] || "";
-                    let type = parts[1] || "";
-                    let date = parts[2] || "";
-                    let typeName = "分析報告";
+                    let typeCode = parts[1] || "";
+                    let dateStr = parts[2] || "";
 
-                    // 1. 標準三段式格式判斷 (如 1802_90d_20260502)[cite: 1]
-                    if (type === "90d") {
+                    let typeName = "分析報告";
+                    let cycleInfo = "";
+
+                    // 1. 處理標準三段式 (如 1802_90d_20260502)[cite: 1]
+                    if (typeCode === "90d") {
                         typeName = "借券分析";
-                    } else if (type === "report") {
+                        cycleInfo = " (90日)";
+                    } else if (typeCode === "report") {
                         typeName = "分點報告";
-                    } else if (type === "future") {
+                        cycleInfo = " (30根)";
+                    } else if (typeCode === "future") {
                         typeName = "期貨技術分析";
+                        cycleInfo = " (30根)";
                     }
 
-                    // 2. 特殊兩段式格式判斷 (如 GYF_20260504 或 CAF_20260430)[cite: 1]
+                    // 2. 處理兩段式 (如 GYF_20260504 或 CAF_20260430)
                     if (parts.length === 2 && parts[1].length === 8 && !isNaN(parts[1])) {
-                        date = parts[1]; // 第二段是日期
+                        dateStr = parts[1];
                         if (stockId === "GYF" || stockId === "CAF") {
                             typeName = "期貨技術分析";
+                            cycleInfo = " (30根)";
                         } else {
                             typeName = "個股分析";
                         }
                     }
 
-                    // 3. 格式化日期顯示 (20260502 -> 2026-05-02)[cite: 1]
-                    let displayDate = date;
-                    if (date && date.length === 8) {
-                        displayDate = `${date.substring(0, 4)}-${date.substring(4, 6)}-${date.substring(6, 8)}`;
-                    } else if (!date || date.length < 8) {
+                    // 3. 格式化日期 (20260502 -> 2026-05-02)[cite: 1]
+                    let displayDate = dateStr;
+                    if (dateStr && dateStr.length === 8) {
+                        displayDate = `${dateStr.substring(0, 4)}-${dateStr.substring(4, 6)}-${dateStr.substring(6, 8)}`;
+                    } else if (!dateStr) {
                         displayDate = "查看詳情";
                     }
 
-                    a.textContent = `📊 ${stockId} ${typeName} (${displayDate})`;
+                    // 顯示最終格式[cite: 1]
+                    a.textContent = `📊 ${stockId} ${typeName}${cycleInfo} (${displayDate})`;
+                    // --- 解析邏輯結束 ---
+
                     listDiv.appendChild(a);
                 });
 
             } catch (err) {
-                listDiv.innerHTML = `<p style="color: red;">⚠️ 錯誤：${err.message}</p>`;
+                listDiv.innerHTML = `<p class="error">⚠️ 錯誤：${err.message}</p>`;
                 console.error(err);
             }
         }
