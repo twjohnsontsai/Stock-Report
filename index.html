@@ -6,36 +6,29 @@
     <title>每日投資分析報告清單</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <style>
-        /* --- CSS 樣式部分 --- */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             padding: 20px;
             line-height: 1.6;
-            background: #f0f2f5;
-            color: #1a202c;
+            background: #f4f7f9;
+            color: #333;
         }
 
         .file-list {
-            max-width: 600px;
-            margin: 30px auto;
-            background: #ffffff;
-            padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            max-width: 550px;
+            margin: 20px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
         }
 
         h2 {
             text-align: center;
-            color: #2d3748;
+            color: #2c3e50;
             border-bottom: 2px solid #edf2f7;
             padding-bottom: 20px;
             margin-top: 0;
-            font-size: 1.5rem;
-            letter-spacing: 1px;
-        }
-
-        #list {
-            min-height: 150px;
         }
 
         a {
@@ -44,20 +37,19 @@
             padding: 16px;
             margin: 12px 0;
             background: #ffffff;
-            color: #2b6cb0;
+            color: #2563eb;
             text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
-            border: 1px solid #e2e8f0;
-            transition: all 0.25s ease-in-out;
-            position: relative;
+            border-radius: 10px;
+            font-weight: 500;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
         }
 
         a:hover {
-            background: #ebf8ff;
-            border-color: #4299e1;
+            background: #f8faff;
+            border-color: #3b82f6;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.15);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
         }
 
         a::before {
@@ -68,17 +60,16 @@
 
         .loading {
             text-align: center;
-            color: #a0aec0;
-            padding: 40px;
-            font-style: italic;
+            color: #94a3b8;
+            padding: 30px;
         }
 
         .error {
-            color: #c53030;
-            background: #fff5f5;
+            color: #e11d48;
+            background: #fff1f2;
             padding: 15px;
             border-radius: 8px;
-            border: 1px solid #feb2b2;
+            border: 1px solid #ffe4e6;
             text-align: center;
         }
     </style>
@@ -87,32 +78,23 @@
 <body>
     <div class="file-list">
         <h2>📊 投資分析報告清單</h2>
-        <div id="list" class="loading">正在同步最新分析數據...</div>
+        <div id="list" class="loading">同步最新報告數據中...</div>
     </div>
 
     <script>
         const user = 'twjohnsontsai';
         const repo = 'Stock-Report';
-        // 增加時間戳記避免 API 快取舊資料
         const apiUrl = `https://api.github.com/repos/${user}/${repo}/contents/?t=${new Date().getTime()}`;
 
         async function loadReports() {
             const listDiv = document.getElementById('list');
             try {
                 const res = await fetch(apiUrl);
-                if (!res.ok) throw new Error('無法讀取 GitHub 儲存庫資料');
+                if (!res.ok) throw new Error('無法讀取儲存庫');
                 const files = await res.json();
                 listDiv.innerHTML = '';
 
-                // 篩選出 HTML 檔案（排除 index.html 自身）
                 const reports = files.filter(f => f.name.endsWith('.html') && f.name.toLowerCase() !== 'index.html');
-
-                if (reports.length === 0) {
-                    listDiv.innerHTML = '<p style="text-align: center; color: #718096;">目前資料夾內尚無報告。</p>';
-                    return;
-                }
-
-                // 按名稱降序排列（確保最新日期在最前面）
                 reports.sort((a, b) => b.name.localeCompare(a.name));
 
                 reports.forEach(file => {
@@ -127,55 +109,52 @@
                     let cycle = "";
                     let dateStr = "";
 
-                    // --- 核心辨識邏輯：對應您的命名規則 ---
+                    // --- 修正後的辨識邏輯 ---
 
-                    // 1. 處理「chip」開頭的新格式 (如 chip_3715_20260506)
-                    if (parts[0] === "chip") {
-                        stockId = parts[1] || "";
+                    // 1. 處理 chip 類型 (籌碼綜合分析)
+                    if (fileName.includes("chip")) {
                         typeName = "籌碼綜合分析";
-                        cycle = " (10日)"; // 您的籌碼圖表通常顯示近10日變動
-                        dateStr = parts[2] || "";
+                        // 嘗試尋找帶有 d 的週期 (如 60d)，若無則預設 (60日)
+                        let cycleMatch = fileName.match(/(\d+)d/);
+                        cycle = cycleMatch ? ` (${cycleMatch[1]}日)` : " (60日)";
+
+                        // 修正 stockId 與日期的抓取位置
+                        stockId = parts.find(p => p !== "chip" && p.length <= 5 && isNaN(p) === false) || parts[1];
+                        dateStr = parts.find(p => p.length >= 8 && !isNaN(p.replace(/-/g, ''))) || "";
                     }
-                    // 2. 處理標準格式 (如 1802_90d_20260502) 或 (GYF_20260504)
+                    // 2. 處理其他標準格式
                     else {
                         stockId = parts[0];
                         let typeCode = parts[1] || "";
+                        dateStr = parts[2] || (typeCode.length >= 8 ? typeCode : "");
 
-                        // 判斷類型與週期
                         if (typeCode === "report") {
                             typeName = "分點報告";
                             cycle = " (30日)";
                         } else if (typeCode === "future" || stockId === "GYF" || stockId === "CAF") {
                             typeName = "期貨技術分析";
                             cycle = (stockId === "GYF" || stockId === "CAF") ? " (60日)" : " (30日)";
-                        } else if (/^\d+d$/.test(typeCode)) {
-                            typeName = "借券分析";
-                            cycle = ` (${typeCode.replace('d', '')}日)`;
                         } else {
-                            // 針對 3715_60d_20260504 這種格式，若 typeCode 為數字+d 已處理，若無則預設借券
+                            // 借券分析或其他數字型週期
+                            let dayMatch = fileName.match(/(\d+)d/);
                             typeName = "借券分析";
-                            cycle = " (60日)";
+                            cycle = dayMatch ? ` (${dayMatch[1]}日)` : " (60日)";
                         }
-
-                        // 抓取日期：若是兩段式 (GYF_20260504) 日期在第二段；三段式則在第三段
-                        dateStr = parts[2] || (parts[1] && parts[1].length >= 8 ? parts[1] : "");
                     }
 
-                    // 格式化日期顯示 (YYYYMMDD -> YYYY-MM-DD)
+                    // 日期格式化
                     let cleanDate = dateStr.replace(/-/g, '');
-                    let displayDate = cleanDate.length === 8
+                    let formattedDate = cleanDate.length === 8
                         ? `${cleanDate.substring(0, 4)}-${cleanDate.substring(4, 6)}-${cleanDate.substring(6, 8)}`
                         : dateStr;
 
-                    a.textContent = `${stockId} ${typeName}${cycle} (${displayDate})`;
+                    a.textContent = `${stockId} ${typeName}${cycle} (${formattedDate})`;
                     listDiv.appendChild(a);
                 });
-
             } catch (err) {
-                listDiv.innerHTML = `<div class="error">⚠️ 載入失敗：${err.message}</div>`;
+                listDiv.innerHTML = `<div class="error">⚠️ 載入失敗</div>`;
             }
         }
-
         loadReports();
     </script>
 </body>
