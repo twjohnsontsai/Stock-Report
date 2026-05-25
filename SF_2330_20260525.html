@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>2330 個股期貨｜2026/05/25｜近 60 個交易日</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#0d0f14;color:#ccc;font-family:"Microsoft JhengHei",sans-serif;
+       display:flex;flex-direction:column;height:100vh;overflow:hidden}
+  #hdr{flex-shrink:0;background:#11151e;border-bottom:1px solid #1e2635;
+        padding:6px 14px;font-size:12px;color:#aaa;line-height:1.9}
+  #main-layout{flex:1;display:flex;min-height:0;overflow:hidden}
+  #chart{flex:1;min-width:0;height:100%}
+  #panel-col{width:220px;flex-shrink:0;overflow-y:auto;
+              background:#0d0f14;border-left:1px solid #1a2030}
+  #hpanel{background:rgba(17,24,32,0.95);padding:10px 12px;font-size:.75rem;
+           border-radius:0;min-height:100%}
+  .hd{font-weight:600;color:#d8e8f0;font-size:.82rem;margin-bottom:.5rem;
+       padding-bottom:.4rem;border-bottom:1px solid #1e2635}
+  .hs{font-size:.65rem;color:#6a8298;text-transform:uppercase;letter-spacing:.06em;
+       margin:7px 0 3px;font-weight:600;border-top:1px solid #182030;padding-top:4px}
+  .hr{display:flex;justify-content:space-between;align-items:center;padding:.15rem 0}
+  .hl{color:#586880;font-size:.68rem}
+  .hv{font-weight:600;font-variant-numeric:tabular-nums;font-size:.75rem}
+  .lgnd{display:flex;align-items:center;gap:5px;padding:.18rem 0;font-size:.72rem;color:#8892a0}
+  .lgnd-clr{width:22px;height:3px;border-radius:2px;flex-shrink:0}
+  #expand{flex:1;overflow-y:auto;background:#0d0f14;padding:0 10px 20px}
+  h2{font-size:13px;color:#aaa;padding:14px 0 4px;margin:0}
+  .legend-row{font-size:11px;padding:2px 0 8px;color:#aaa}
+</style>
+</head>
+<body>
+<div id="hdr">
+  <b style="color:#42a5f5;font-size:14px">2330</b>
+  <span style="color:#888;font-size:11px">&nbsp;(CDF)</span>
+  &nbsp;｜ 2026/05/25
+  &nbsp;收 <b style="color:#ef5350">2275.00</b>
+  &nbsp;現貨 <b>2310.00</b>
+  &nbsp;基差 <b style="color:#66bb6a">+35.00</b>
+  &nbsp;OI <b style="color:#ffb300">2,275</b>
+  &nbsp;OI變化 <b style="color:#66bb6a">-26,349</b><br>
+  外資 <b style="color:#ef5350">-34,403</b>
+  &nbsp;投信 <b>+40,546</b>
+  &nbsp;自營 <b>+9,851</b>
+  &nbsp;&nbsp;OI象限：多頭擴張 <b style='color:#66bb6a'>5</b> 天&nbsp;空頭回補 <b style='color:#a5d6a7'>18</b> 天&nbsp;空頭擴張 <b style='color:#ef5350'>4</b> 天&nbsp;多頭出場 <b style='color:#ef9a9a'>32</b> 天
+</div>
+<div id="main-layout">
+  <div id="chart"></div>
+  <div id="panel-col">
+    <div id="hpanel">
+      <div class="hd">移至圖表查看數值</div>
+      <div class="hs">圖例</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#ef5350;height:8px;border-radius:2px"></div>K線</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#f9a825"></div>MA5</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#42a5f5"></div>MA10</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#ab47bc"></div>MA20</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#ef5350;border:1px dashed #ef5350"></div>MA60</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#888"></div>成交量</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#ef5350;opacity:.65"></div>未平倉OI↑（紅）</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#66bb6a;opacity:.65"></div>未平倉OI↓（綠）</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#ffd54f"></div>OI MA5</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#ff8f00;border:1px dashed #ff8f00"></div>OI MA20</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#ef5350"></div>外資淨OI</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#42a5f5"></div>投信淨OI</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#aaa;border:1px dashed #aaa"></div>自營淨OI</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#80cbc4"></div>基差（現-期）</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#ef6c00"></div>RSI6</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#fdd835"></div>RSI12</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#ffd54f;height:8px"></div>⚠ 先行訊號</div>
+    </div>
+  </div>
+</div>
+<div id="expand">
+<script>
+const D = {"dates": ["20260225", "20260226", "20260302", "20260303", "20260304", "20260305", "20260306", "20260309", "20260310", "20260311", "20260312", "20260313", "20260316", "20260317", "20260318", "20260319", "20260320", "20260323", "20260324", "20260325", "20260326", "20260327", "20260330", "20260331", "20260401", "20260402", "20260407", "20260408", "20260409", "20260410", "20260413", "20260414", "20260415", "20260416", "20260417", "20260420", "20260421", "20260422", "20260423", "20260424", "20260427", "20260428", "20260429", "20260430", "20260504", "20260505", "20260506", "20260507", "20260508", "20260511", "20260512", "20260513", "20260514", "20260515", "20260518", "20260519", "20260520", "20260521", "20260522", "20260525"], "opens": [2010.0, 2020.0, 1945.0, 1975.0, 1895.0, 1940.0, 1890.0, 1785.0, 1885.0, 1880.0, 1915.0, 1845.0, 1870.0, 1870.0, 1905.0, 1880.0, 1865.0, 1795.0, 1855.0, 1880.0, 1875.0, 1810.0, 1770.0, 1760.0, 1850.0, 1875.0, 1835.0, 1930.0, 1965.0, 1975.0, 1985.0, 2015.0, 2085.0, 2105.0, 2060.0, 2060.0, 2055.0, 2065.0, 2100.0, 2115.0, 2325.0, 2290.0, 2225.0, 2210.0, 2215.0, 2270.0, 2285.0, 2335.0, 2315.0, 2285.0, 2255.0, 2190.0, 2250.0, 2310.0, 2215.0, 2240.0, 2210.0, 2255.0, 2280.0, 2275.0], "highs": [2040.0, 2020.0, 2005.0, 1990.0, 1920.0, 1970.0, 1905.0, 1820.0, 1890.0, 1955.0, 1925.0, 1890.0, 1890.0, 1880.0, 1920.0, 1885.0, 1875.0, 1820.0, 1855.0, 1885.0, 1875.0, 1835.0, 1805.0, 1800.0, 1870.0, 1880.0, 1860.0, 1965.0, 1965.0, 2010.0, 2005.0, 2060.0, 2120.0, 2120.0, 2070.0, 2070.0, 2085.0, 2075.0, 2140.0, 2210.0, 2365.0, 2295.0, 2225.0, 2230.0, 2300.0, 2275.0, 2300.0, 2350.0, 2320.0, 2290.0, 2280.0, 2240.0, 2275.0, 2335.0, 2255.0, 2240.0, 2225.0, 2280.0, 2280.0, 2285.0], "lows": [2000.0, 2000.0, 1945.0, 1940.0, 1870.0, 1895.0, 1885.0, 1730.0, 1830.0, 1880.0, 1890.0, 1840.0, 1850.0, 1860.0, 1900.0, 1850.0, 1845.0, 1780.0, 1810.0, 1850.0, 1845.0, 1800.0, 1765.0, 1760.0, 1835.0, 1810.0, 1835.0, 1925.0, 1935.0, 1975.0, 1980.0, 2010.0, 2070.0, 2070.0, 2045.0, 2045.0, 2055.0, 2055.0, 2060.0, 2115.0, 2280.0, 2230.0, 2185.0, 2155.0, 2205.0, 2250.0, 2250.0, 2315.0, 2275.0, 2250.0, 2215.0, 2185.0, 2230.0, 2250.0, 2215.0, 2205.0, 2200.0, 2245.0, 2240.0, 2270.0], "closes": [2020.0, 2010.0, 1985.0, 1940.0, 1885.0, 1910.0, 1900.0, 1805.0, 1845.0, 1945.0, 1895.0, 1870.0, 1855.0, 1875.0, 1920.0, 1850.0, 1850.0, 1810.0, 1825.0, 1860.0, 1845.0, 1830.0, 1790.0, 1775.0, 1870.0, 1810.0, 1860.0, 1960.0, 1960.0, 2010.0, 1990.0, 2055.0, 2095.0, 2115.0, 2045.0, 2045.0, 2070.0, 2060.0, 2085.0, 2205.0, 2290.0, 2235.0, 2195.0, 2155.0, 2300.0, 2270.0, 2265.0, 2335.0, 2300.0, 2250.0, 2250.0, 2230.0, 2260.0, 2255.0, 2240.0, 2215.0, 2210.0, 2245.0, 2275.0, 2275.0], "volumes": [10081.0, 6449.0, 11105.0, 11029.0, 15060.0, 13509.0, 7764.0, 25175.0, 14736.0, 13635.0, 11281.0, 10162.0, 15460.0, 13067.0, 10577.0, 8330.0, 7433.0, 10861.0, 11131.0, 9154.0, 6418.0, 4948.0, 10124.0, 11224.0, 11267.0, 9438.0, 9296.0, 12498.0, 13140.0, 12141.0, 12408.0, 13412.0, 13500.0, 11957.0, 12161.0, 7539.0, 6133.0, 5780.0, 19152.0, 16990.0, 22796.0, 10404.0, 11080.0, 10857.0, 8330.0, 6212.0, 11318.0, 9068.0, 7229.0, 6896.0, 9090.0, 11684.0, 9489.0, 11940.0, 10601.0, 16383.0, 9106.0, 6516.0, 6173.0, null], "oi": [29716.0, 29182.0, 28488.0, 27635.0, 25702.0, 24465.0, 23995.0, 20018.0, 18495.0, 17693.0, 17045.0, 15874.0, 12028.0, 7194.0, 27085.0, 27336.0, 26744.0, 26100.0, 26029.0, 25843.0, 25520.0, 25344.0, 24632.0, 23491.0, 22944.0, 22342.0, 20159.0, 18373.0, 16067.0, 14741.0, 10246.0, 6264.0, 26005.0, 24537.0, 23335.0, 22753.0, 21607.0, 20407.0, 18670.0, 20409.0, 22129.0, 23105.0, 23233.0, 22705.0, 22425.0, 22297.0, 20822.0, 20221.0, 19629.0, 18749.0, 17577.0, 15618.0, 14870.0, 14299.0, 11305.0, 7747.0, 28632.0, 28991.0, 28624.0, 2275.0], "oi_chg": [null, -534.0, -694.0, -853.0, -1933.0, -1237.0, -470.0, -3977.0, -1523.0, -802.0, -648.0, -1171.0, -3846.0, -4834.0, 19891.0, 251.0, -592.0, -644.0, -71.0, -186.0, -323.0, -176.0, -712.0, -1141.0, -547.0, -602.0, -2183.0, -1786.0, -2306.0, -1326.0, -4495.0, -3982.0, 19741.0, -1468.0, -1202.0, -582.0, -1146.0, -1200.0, -1737.0, 1739.0, 1720.0, 976.0, 128.0, -528.0, -280.0, -128.0, -1475.0, -601.0, -592.0, -880.0, -1172.0, -1959.0, -748.0, -571.0, -2994.0, -3558.0, 20885.0, 359.0, -367.0, -26349.0], "fi_net": [-35753, -36168, -41274, -40421, -41633, -41134, -38930, -40462, -36856, -40958, -43064, -40347, -38512, -36158, -34549, -40825, -36366, -37717, -34108, -35947, -37065, -39919, -37282, -37214, -31373, -34855, -31350, -32478, -33399, -34403, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "it_net": [31037, 31248, 31445, 30693, 30549, 32091, 32366, 33407, 35033, 36571, 36356, 36596, 35340, 36290, 37001, 36307, 36660, 37461, 37781, 39029, 38484, 38169, 37470, 37655, 38915, 38013, 38276, 40284, 39954, 40546, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "dt_net": [8095, 8310, 7966, 7374, 6059, 6273, 6425, 5096, 6165, 6488, 5728, 6295, 5704, 6279, 5830, 4525, 4735, 4616, 4626, 5469, 5332, 5207, 4247, 4079, 6865, 5033, 6294, 9432, 8541, 9851, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "basis": [-5.0, -15.0, -10.0, -5.0, -20.0, -10.0, -10.0, 5.0, 5.0, -5.0, -10.0, -5.0, -10.0, -5.0, -15.0, 0.0, -10.0, 0.0, -15.0, -15.0, -5.0, -10.0, -10.0, -15.0, -15.0, 0.0, 0.0, -10.0, -5.0, -10.0, 0.0, 0.0, -15.0, -30.0, -15.0, -20.0, -20.0, -10.0, -5.0, -20.0, -25.0, -20.0, -15.0, -20.0, -25.0, -20.0, -15.0, -25.0, -10.0, -15.0, 5.0, -10.0, 10.0, 10.0, 0.0, -10.0, -25.0, -15.0, -20.0, 35.0], "rsi6": [null, null, null, null, null, null, 14.71, 8.8, 24.18, 49.65, 41.32, 37.54, 35.22, 41.05, 52.57, 38.52, 38.52, 31.58, 36.71, 47.7, 43.79, 39.87, 30.99, 28.16, 57.55, 43.93, 54.66, 68.93, 68.93, 74.67, 68.59, 76.16, 79.76, 81.45, 60.37, 60.37, 65.02, 61.55, 66.86, 81.54, 86.59, 71.42, 61.95, 53.45, 70.85, 64.83, 63.75, 71.69, 63.36, 52.84, 52.84, 48.22, 55.26, 53.79, 49.12, 41.84, 40.41, 53.74, 62.4, 62.4], "rsi12": [null, null, null, null, null, null, null, null, null, null, null, null, 33.33, 36.15, 42.14, 36.35, 36.35, 33.24, 35.5, 40.61, 39.16, 37.69, 33.98, 32.67, 46.87, 40.92, 47.03, 56.78, 56.78, 61.05, 58.52, 63.82, 66.68, 68.05, 58.79, 58.79, 61.04, 59.62, 62.03, 71.09, 75.58, 68.1, 63.15, 58.5, 67.85, 64.57, 64.01, 68.24, 64.13, 58.62, 58.62, 56.32, 58.96, 58.31, 56.31, 53.01, 52.34, 56.54, 59.84, 59.84], "ma5": [null, null, null, null, 1968.0, 1946.0, 1924.0, 1888.0, 1869.0, 1881.0, 1878.0, 1872.0, 1882.0, 1888.0, 1883.0, 1874.0, 1870.0, 1861.0, 1851.0, 1839.0, 1838.0, 1834.0, 1830.0, 1820.0, 1822.0, 1815.0, 1821.0, 1855.0, 1892.0, 1920.0, 1956.0, 1995.0, 2022.0, 2053.0, 2060.0, 2071.0, 2074.0, 2067.0, 2061.0, 2093.0, 2142.0, 2175.0, 2202.0, 2216.0, 2235.0, 2231.0, 2237.0, 2265.0, 2294.0, 2284.0, 2280.0, 2273.0, 2258.0, 2249.0, 2247.0, 2240.0, 2236.0, 2233.0, 2237.0, 2244.0], "ma10": [null, null, null, null, null, null, null, null, null, 1924.5, 1912.0, 1898.0, 1885.0, 1878.5, 1882.0, 1876.0, 1871.0, 1871.5, 1869.5, 1861.0, 1856.0, 1852.0, 1845.5, 1835.5, 1830.5, 1826.5, 1827.5, 1842.5, 1856.0, 1871.0, 1885.5, 1908.0, 1938.5, 1972.5, 1990.0, 2013.5, 2034.5, 2044.5, 2057.0, 2076.5, 2106.5, 2124.5, 2134.5, 2138.5, 2164.0, 2186.5, 2206.0, 2233.5, 2255.0, 2259.5, 2255.5, 2255.0, 2261.5, 2271.5, 2265.5, 2260.0, 2254.5, 2245.5, 2243.0, 2245.5], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1892.75, 1884.0, 1875.0, 1865.25, 1857.0, 1856.25, 1851.25, 1849.25, 1857.0, 1862.75, 1866.0, 1870.75, 1880.0, 1892.0, 1904.0, 1910.25, 1920.0, 1931.0, 1943.5, 1956.5, 1973.75, 1996.0, 2016.25, 2036.5, 2055.5, 2077.0, 2100.0, 2120.25, 2139.0, 2156.0, 2168.0, 2181.0, 2189.75, 2198.0, 2205.0, 2214.75, 2223.25, 2230.25, 2239.5, 2249.0, 2252.5], "ma60": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 2039.67], "oi_ma5": [null, null, null, null, 28144.6, 27094.4, 26057.0, 24363.0, 22535.0, 20933.2, 19449.2, 17825.0, 16227.0, 13966.8, 15845.2, 17903.4, 20077.4, 22891.8, 26658.8, 26410.4, 26047.2, 25767.2, 25473.6, 24966.0, 24386.2, 23750.6, 22713.6, 21461.8, 19977.0, 18336.4, 15917.2, 13138.2, 14664.6, 16358.6, 18077.4, 20578.8, 23647.4, 22527.8, 21354.4, 20769.2, 20644.4, 20944.0, 21509.2, 22316.2, 22719.4, 22753.0, 22296.4, 21694.0, 21078.8, 20343.6, 19399.6, 18358.8, 17288.6, 16222.6, 14733.8, 12767.8, 15370.6, 18194.8, 21059.8, 19253.8], "oi_ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 22833.35, 22623.55, 22431.65, 22238.85, 22031.65, 21893.75, 21787.6, 21595.8, 21513.55, 21392.15, 21244.55, 20904.6, 20424.1, 21122.95, 21990.1, 21802.6, 21573.45, 21316.6, 21031.95, 20664.0, 20392.3, 20222.75, 20110.8, 20040.85, 20001.55, 19975.6, 19973.35, 20006.5, 20098.9, 20277.0, 20477.4, 20843.95, 21311.65, 20754.9, 20243.0, 19641.5, 18891.2, 19242.45, 19671.65, 20169.35, 19262.65], "phases": ["—", "多頭出場", "多頭出場", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "多頭出場", "空頭回補", "空頭回補", "多頭出場", "多頭出場", "多頭出場", "空頭回補", "多頭擴張", "空頭擴張", "多頭出場", "多頭出場", "空頭回補", "空頭回補", "多頭出場", "多頭出場", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "空頭回補", "空頭回補", "多頭出場", "空頭回補", "多頭出場", "空頭回補", "多頭擴張", "空頭回補", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "空頭回補", "多頭擴張", "多頭擴張", "空頭擴張", "空頭擴張", "多頭出場", "空頭回補", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "多頭出場", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "多頭出場", "多頭出場", "空頭擴張", "多頭擴張", "空頭回補", "多頭出場"], "phase_cols": ["rgba(0,0,0,0)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.25)", "rgba(239,83,80,0.25)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.25)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.25)", "rgba(102,187,106,0.25)", "rgba(239,83,80,0.25)", "rgba(239,83,80,0.25)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.25)", "rgba(102,187,106,0.25)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)"], "pre_rally_alert": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]};
+const dates   = D.dates.map(d => d.slice(0,4)+'/'+d.slice(4,6)+'/'+d.slice(6));
+const volClr  = D.closes.map((c,i) => i===0?'#888': c>=D.closes[i-1]?'#ef5350':'#66bb6a');
+const oiChgClr= D.oi_chg.map(v => v===null?'#888': v>=0?'#ef5350':'#66bb6a');
+const alertX  = dates.filter((_,i) => D.pre_rally_alert[i]);
+const alertY  = D.closes.filter((_,i) => D.pre_rally_alert[i]);
+
+const traces = [
+  // ── Panel 1: K線 + MA ──────────────────────────────────────────
+  {type:'candlestick',x:dates,open:D.opens,high:D.highs,low:D.lows,close:D.closes,
+    name:'2330',increasing:{line:{color:'#ef5350'},fillcolor:'#c62828'},
+    decreasing:{line:{color:'#66bb6a'},fillcolor:'#2e7d32'},
+    xaxis:'x',yaxis:'y1',whiskerwidth:0.3},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma5, name:'MA5', line:{color:'#f9a825',width:1.2},xaxis:'x',yaxis:'y1'},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma10,name:'MA10',line:{color:'#42a5f5',width:1.2},xaxis:'x',yaxis:'y1'},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma20,name:'MA20',line:{color:'#ab47bc',width:1.2},xaxis:'x',yaxis:'y1'},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma60,name:'MA60',line:{color:'#ef5350',width:1.5},xaxis:'x',yaxis:'y1'},
+  // ── Panel 2: 成交量 ────────────────────────────────────────────
+  {type:'bar',x:dates,y:D.volumes,name:'成交量',marker:{color:volClr},xaxis:'x',yaxis:'y2'},
+  // ── Panel 3: 未平倉量（柱 + MA5 + MA20）──────────────────────
+  {type:'bar',x:dates,y:D.oi,name:'未平倉OI',marker:{color:oiChgClr,opacity:0.45},xaxis:'x',yaxis:'y3'},
+  {type:'scatter',mode:'lines',x:dates,y:D.oi_ma5, name:'OI MA5', line:{color:'#ffd54f',width:2},xaxis:'x',yaxis:'y3'},
+  {type:'scatter',mode:'lines',x:dates,y:D.oi_ma20,name:'OI MA20',line:{color:'#ff8f00',width:2,dash:'dot'},xaxis:'x',yaxis:'y3'},
+  // ── Panel 4: OI 日變化 ─────────────────────────────────────────
+  {type:'bar',x:dates,y:D.oi_chg,name:'OI日變化',marker:{color:oiChgClr},xaxis:'x',yaxis:'y4'},
+  // ── Panel 5: 三大法人淨OI ──────────────────────────────────────
+  {type:'scatter',mode:'lines',x:dates,y:D.fi_net,name:'外資淨OI',
+    line:{color:'#ef5350',width:2},xaxis:'x',yaxis:'y5'},
+  {type:'scatter',mode:'lines',x:dates,y:D.it_net,name:'投信淨OI',
+    line:{color:'#42a5f5',width:1.5},xaxis:'x',yaxis:'y5'},
+  {type:'scatter',mode:'lines',x:dates,y:D.dt_net,name:'自營商淨OI',
+    line:{color:'#aaa',width:1,dash:'dot'},xaxis:'x',yaxis:'y5'},
+  {type:'scatter',mode:'lines',x:[dates[0],dates[dates.length-1]],y:[0,0],
+    line:{color:'#444',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y5'},
+  // ── Panel 6: 基差 ─────────────────────────────────────────────
+  {type:'scatter',mode:'lines',x:dates,y:D.basis,name:'基差(現-期)',
+    line:{color:'#80cbc4',width:2},fill:'tozeroy',fillcolor:'rgba(128,203,196,0.08)',
+    xaxis:'x',yaxis:'y6'},
+  {type:'scatter',mode:'lines',x:[dates[0],dates[dates.length-1]],y:[0,0],
+    line:{color:'#555',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y6'},
+  // ── Panel 7: RSI ──────────────────────────────────────────────
+  {type:'scatter',mode:'lines',x:dates,y:D.rsi6, name:'RSI6',
+    line:{color:'#ef6c00',width:1.5},xaxis:'x',yaxis:'y7'},
+  {type:'scatter',mode:'lines',x:dates,y:D.rsi12,name:'RSI12',
+    line:{color:'#fdd835',width:1.5},xaxis:'x',yaxis:'y7'},
+  {type:'scatter',mode:'lines',x:[dates[0],dates[dates.length-1]],y:[80,80],
+    line:{color:'#ef5350',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y7'},
+  {type:'scatter',mode:'lines',x:[dates[0],dates[dates.length-1]],y:[20,20],
+    line:{color:'#66bb6a',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y7'},
+  // ── 主升段先行訊號 ▲ ──────────────────────────────────────────
+  {type:'scatter',mode:'markers+text',x:alertX,y:alertY,
+    name:'⚠ 先行訊號',
+    marker:{symbol:'triangle-up',size:16,color:'#ffd54f',line:{color:'#f57f17',width:1.5}},
+    text:alertX.map(()=>'⚠'),textposition:'top center',
+    textfont:{color:'#ffd54f',size:12},
+    xaxis:'x',yaxis:'y1',
+    hovertemplate:'%{x}<br>⚠ 主升段先行訊號<br>收: %{y:.2f}<extra></extra>'},
+];
+
+const layout = {
+  paper_bgcolor:'#0d0f14', plot_bgcolor:'#0d0f14',
+  font:{color:'#ccc',size:11},
+  showlegend: false,
+  margin:{l:58,r:8,t:4,b:48},
+  xaxis:{type:'category',rangeslider:{visible:false},tickangle:-45,
+          gridcolor:'#1a2030',color:'#aaa',nticks:20},
+  grid:{rows:7,columns:1,pattern:'independent',roworder:'top to bottom'},
+  yaxis: {domain:[0.80,1.00],gridcolor:'#1a2030',color:'#aaa',title:'2330 價格'},
+  yaxis2:{domain:[0.69,0.79],gridcolor:'#1a2030',color:'#aaa',title:'成交量'},
+  yaxis3:{domain:[0.58,0.68],gridcolor:'#1a2030',color:'#aaa',title:'OI(口)'},
+  yaxis4:{domain:[0.47,0.57],gridcolor:'#1a2030',color:'#aaa',title:'OI變化'},
+  yaxis5:{domain:[0.33,0.46],gridcolor:'#1a2030',color:'#aaa',title:'法人淨OI',
+           zeroline:true,zerolinecolor:'#444'},
+  yaxis6:{domain:[0.20,0.32],gridcolor:'#1a2030',color:'#aaa',title:'基差(元)',
+           zeroline:true,zerolinecolor:'#444'},
+  yaxis7:{domain:[0.00,0.19],gridcolor:'#1a2030',color:'#aaa',title:'RSI',range:[0,100]},
+  hovermode:'x unified',
+  hoverlabel:{bgcolor:'rgba(13,15,20,0.55)',bordercolor:'#555',font:{color:'#fff',size:11}},
+};
+
+// OI 四象限背景色
+const shapes = D.phases.map((p, i) => ({
+  type:'rect', xref:'x', yref:'paper',
+  x0: i===0 ? dates[0] : dates[i-1], x1: dates[i],
+  y0:0, y1:1, fillcolor: D.phase_cols[i], line:{width:0}, layer:'below',
+}));
+layout.shapes = shapes;
+
+Plotly.newPlot('chart', traces, layout, {responsive:true,scrollZoom:true,
+  modeBarButtonsToRemove:['select2d','lasso2d']});
+
+// ── chip_analyzer 風格懸停面板 ────────────────────────────────────────────────
+function updatePanel(i) {
+  const p = document.getElementById('hpanel');
+  const rv = (arr, d) => { const v = arr[i]; return v == null ? '—' : (d != null ? v.toFixed(d) : Math.round(v).toLocaleString()); };
+  const row = (lbl, val, clr) => `<div class="hr"><span class="hl">${lbl}</span><span class="hv" style="color:${clr||'#c8d8e8'}">${val}</span></div>`;
+  const sec = t => `<div class="hs">${t}</div>`;
+  const rc  = v  => v == null ? '#8892a0' : v > 0 ? '#ef5350' : '#66bb6a';
+  const kc  = D.closes[i] >= D.opens[i] ? '#ef5350' : '#66bb6a';
+  const alertTxt = D.pre_rally_alert[i] ? row('⚠ 先行訊號','觸發','#ffd54f') : '';
+  p.innerHTML =
+    `<div class="hd">${dates[i]}</div>` +
+    sec('K 線') +
+    row('開/收', rv(D.opens,2)+' / '+rv(D.closes,2), kc) +
+    row('高/低', rv(D.highs,2)+' / '+rv(D.lows,2), '#8892a0') +
+    row('MA5/MA20', rv(D.ma5,2)+' / '+rv(D.ma20,2), '#f9a825') +
+    row('MA60', rv(D.ma60,2), '#ef5350') +
+    sec('OI 籌碼') +
+    row('成交量', rv(D.volumes,0), '#42a5f5') +
+    row('未平倉OI', rv(D.oi,0), '#ffb300') +
+    row('OI 變化', (D.oi_chg[i]!=null?(D.oi_chg[i]>0?'+':'')+Math.round(D.oi_chg[i]).toLocaleString():'—'), rc(D.oi_chg[i])) +
+    row('OI 象限', D.phases[i]||'—', '#ccc') +
+    sec('法人') +
+    row('外資淨OI', (D.fi_net[i]!=null?(D.fi_net[i]>0?'+':'')+Math.round(D.fi_net[i]).toLocaleString():'—'), rc(D.fi_net[i])) +
+    row('投信淨OI', (D.it_net[i]!=null?(D.it_net[i]>0?'+':'')+Math.round(D.it_net[i]).toLocaleString():'—'), rc(D.it_net[i])) +
+    row('自營淨OI', (D.dt_net[i]!=null?(D.dt_net[i]>0?'+':'')+Math.round(D.dt_net[i]).toLocaleString():'—'), rc(D.dt_net[i])) +
+    sec('技術') +
+    row('基差(現-期)', rv(D.basis,2), rc(D.basis[i])) +
+    row('RSI6', rv(D.rsi6,1), '#ef6c00') +
+    row('RSI12', rv(D.rsi12,1), '#fdd835') +
+    alertTxt +
+    sec('圖例') +
+    `<div class="lgnd"><div class="lgnd-clr" style="background:#f9a825"></div>MA5</div>` +
+    `<div class="lgnd"><div class="lgnd-clr" style="background:#42a5f5"></div>MA10</div>` +
+    `<div class="lgnd"><div class="lgnd-clr" style="background:#ab47bc"></div>MA20</div>` +
+    `<div class="lgnd"><div class="lgnd-clr" style="background:#ef5350"></div>MA60（虛）</div>` +
+    `<div class="lgnd"><div class="lgnd-clr" style="background:#ffd54f"></div>OI MA5</div>` +
+    `<div class="lgnd"><div class="lgnd-clr" style="background:#ff8f00"></div>OI MA20（虛）</div>`;
+}
+
+window._syncBusy = false;
+document.getElementById('chart').on('plotly_hover', function(data) {
+  const i = data.points[0].pointIndex;
+  updatePanel(i);
+  if (!window._syncBusy) {
+    window._syncBusy = true;
+    ['rally-chart','spot-chart','signal-chart'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el || !el.data) return;
+      try { Plotly.Fx.hover(el, [{curveNumber:0,pointNumber:i}]); } catch(e) {}
+    });
+    window._syncBusy = false;
+  }
+});
+document.getElementById('chart').on('plotly_unhover', function() {
+  ['rally-chart','spot-chart','signal-chart'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.data) try { Plotly.Fx.unhover(el); } catch(e) {}
+  });
+});
+window.addEventListener('load', function() {
+  ['rally-chart','spot-chart','signal-chart'].forEach(function(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.on('plotly_hover', function(data) {
+      if (window._syncBusy) return;
+      window._syncBusy = true;
+      const mainPt = data.points.find(p => p.curveNumber === 0) || data.points[0];
+      const i = mainPt.pointIndex;
+      updatePanel(i);
+      const mc = document.getElementById('chart');
+      if (mc && mc.data) try { Plotly.Fx.hover(mc, [{curveNumber:0,pointNumber:i}]); } catch(e) {}
+      ['rally-chart','spot-chart','signal-chart'].forEach(function(oid) {
+        if (oid === id) return;
+        const oe = document.getElementById(oid);
+        if (!oe || !oe.data) return;
+        try { Plotly.Fx.hover(oe, [{curveNumber:0,pointNumber:i}]); } catch(e) {}
+      });
+      window._syncBusy = false;
+    });
+    el.on('plotly_unhover', function() {
+      ['chart','rally-chart','spot-chart','signal-chart'].forEach(function(oid) {
+        if (oid === id) return;
+        const oe = document.getElementById(oid);
+        if (oe && oe.data) try { Plotly.Fx.unhover(oe); } catch(e) {}
+      });
+    });
+  });
+});
+// 初始顯示最後一天
+updatePanel(dates.length - 1);
+</script>
+<div id="expand">
+<h2>⚡ 主升段先行訊號偵測</h2>
+<div class="legend-row">
+  外資淨OI 連續回補 ≥ 3 天
+  ＋ 基差連續回升 ≥ 2 天（近10日曾深度貼水 &lt; -3 元）
+  → 同時觸發 = 主K線圖出現 ⚠ 黃色三角 ｜ 本期間無先行訊號觸發
+</div>
+<div id="rally-chart" style="width:100%;height:38vh"></div>
+<script>
+(function(){
+  const R = {"fi_streak": [0, 0, 0, 1, 0, 1, 2, 0, 1, 0, 0, 1, 2, 3, 4, 0, 1, 0, 1, 0, 0, 0, 1, 2, 3, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "basis_streak": [0, 0, 1, 2, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1], "alert": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], "spot": [2015.0, 1995.0, 1975.0, 1935.0, 1865.0, 1900.0, 1890.0, 1810.0, 1850.0, 1940.0, 1885.0, 1865.0, 1845.0, 1870.0, 1905.0, 1850.0, 1840.0, 1810.0, 1810.0, 1845.0, 1840.0, 1820.0, 1780.0, 1760.0, 1855.0, 1810.0, 1860.0, 1950.0, 1955.0, 2000.0, 1990.0, 2055.0, 2080.0, 2085.0, 2030.0, 2025.0, 2050.0, 2050.0, 2080.0, 2185.0, 2265.0, 2215.0, 2180.0, 2135.0, 2275.0, 2250.0, 2250.0, 2310.0, 2290.0, 2235.0, 2255.0, 2220.0, 2270.0, 2265.0, 2240.0, 2205.0, 2185.0, 2230.0, 2255.0, 2310.0], "fi_thresh": 3, "basis_thresh": 2};
+  const dr = D.dates.map(d => d.slice(0,4)+'/'+d.slice(4,6)+'/'+d.slice(6));
+  const fiClr = R.fi_streak.map(v =>
+    v >= 5 ? '#ef5350' : v >= R.fi_thresh ? '#ffb300' : v >= 1 ? '#42a5f5' : '#222');
+  const bsClr = R.basis_streak.map(v =>
+    v >= 4 ? '#66bb6a' : v >= R.basis_thresh ? '#a5d6a7' : v >= 1 ? '#26a69a' : '#222');
+  const alertShapes = R.alert.map((v, i) => v ? {
+    type:'rect', xref:'x', yref:'paper',
+    x0: i === 0 ? dr[0] : dr[i - 1], x1: dr[i],
+    y0:0, y1:1, fillcolor:'rgba(255,213,79,0.12)', line:{width:0}
+  } : null).filter(s => s);
+  const alertAnno = R.alert.map((v, i) => v ? {
+    xref:'x', yref:'paper', x:dr[i], y:1.04,
+    text:'⚠', showarrow:false, font:{color:'#ffd54f', size:13}
+  } : null).filter(a => a);
+  Plotly.newPlot('rally-chart', [
+    {type:'bar', x:dr, y:R.fi_streak, name:'外資OI改善連續天',
+      marker:{color:fiClr}, yaxis:'y1'},
+    {type:'scatter', mode:'lines', x:[dr[0],dr[dr.length-1]], y:[R.fi_thresh,R.fi_thresh],
+      name:'FI門檻', line:{color:'#ef5350',width:1.5,dash:'dot'}, yaxis:'y1', showlegend:false},
+    {type:'bar', x:dr, y:R.basis_streak, name:'基差回升連續天',
+      marker:{color:bsClr}, yaxis:'y2'},
+    {type:'scatter', mode:'lines', x:[dr[0],dr[dr.length-1]], y:[R.basis_thresh,R.basis_thresh],
+      name:'基差門檻', line:{color:'#66bb6a',width:1.5,dash:'dot'}, yaxis:'y2', showlegend:false},
+  ], {
+    paper_bgcolor:'#0d0f14', plot_bgcolor:'#0d0f14',
+    font:{color:'#ccc', size:11},
+    grid:{rows:2, columns:1, pattern:'coupled', roworder:'top to bottom'},
+    margin:{l:65, r:15, t:24, b:40},
+    xaxis:{type:'category', tickangle:-45, gridcolor:'#1a2030', color:'#aaa', nticks:20},
+    yaxis: {domain:[0.52,1.00], gridcolor:'#1a2030', color:'#aaa', title:'FI改善天數'},
+    yaxis2:{domain:[0.00,0.48], gridcolor:'#1a2030', color:'#aaa', title:'基差回升天數'},
+    shapes: alertShapes, annotations: alertAnno,
+    hovermode:'x unified',
+    hoverlabel:{bgcolor:'rgba(13,15,20,0.55)', bordercolor:'#555', font:{color:'#fff', size:11}},
+    legend:{bgcolor:'rgba(0,0,0,0.4)', font:{size:11}},
+  }, {responsive:true});
+})();
+</script>
+
+<h2>📊 現貨與期貨同步比較（2330 現貨 vs 2330F 期貨 累積漲跌）</h2>
+<div class="legend-row">
+  以區間首日為基準，2330 現貨 vs 2330F 期貨累積%漲跌幅比較 ｜ ⚠ 標記 = 先行訊號日
+</div>
+<div id="spot-chart" style="width:100%;height:30vh"></div>
+<script>
+(function(){
+  const R2 = {"fi_streak": [0, 0, 0, 1, 0, 1, 2, 0, 1, 0, 0, 1, 2, 3, 4, 0, 1, 0, 1, 0, 0, 0, 1, 2, 3, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "basis_streak": [0, 0, 1, 2, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1], "alert": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false], "spot": [2015.0, 1995.0, 1975.0, 1935.0, 1865.0, 1900.0, 1890.0, 1810.0, 1850.0, 1940.0, 1885.0, 1865.0, 1845.0, 1870.0, 1905.0, 1850.0, 1840.0, 1810.0, 1810.0, 1845.0, 1840.0, 1820.0, 1780.0, 1760.0, 1855.0, 1810.0, 1860.0, 1950.0, 1955.0, 2000.0, 1990.0, 2055.0, 2080.0, 2085.0, 2030.0, 2025.0, 2050.0, 2050.0, 2080.0, 2185.0, 2265.0, 2215.0, 2180.0, 2135.0, 2275.0, 2250.0, 2250.0, 2310.0, 2290.0, 2235.0, 2255.0, 2220.0, 2270.0, 2265.0, 2240.0, 2205.0, 2185.0, 2230.0, 2255.0, 2310.0], "fi_thresh": 3, "basis_thresh": 2};
+  const dr2 = D.dates.map(d => d.slice(0,4)+'/'+d.slice(4,6)+'/'+d.slice(6));
+  const futBase  = D.closes.find(v => v != null);
+  const spotBase = R2.spot.find(v => v != null);
+  const futPct   = D.closes.map(v => v    != null && futBase  ? +((v    / futBase  - 1) * 100).toFixed(2) : null);
+  const spotPct  = R2.spot.map(v  => v    != null && spotBase ? +((v    / spotBase - 1) * 100).toFixed(2) : null);
+  const aX2 = dr2.filter((_,i) => R2.alert[i]);
+  const aY2 = futPct.filter((_,i) => R2.alert[i]);
+  Plotly.newPlot('spot-chart', [
+    {type:'scatter', mode:'lines', x:dr2, y:futPct,
+      name:'2330F 期貨%', line:{color:'#ef5350', width:2}},
+    {type:'scatter', mode:'lines', x:dr2, y:spotPct,
+      name:'2330 現貨%', line:{color:'#42a5f5', width:2, dash:'dot'}},
+    {type:'scatter', mode:'lines', x:[dr2[0],dr2[dr2.length-1]], y:[0,0],
+      showlegend:false, line:{color:'#444', width:1, dash:'dot'}},
+    {type:'scatter', mode:'markers', x:aX2, y:aY2,
+      name:'⚠ 先行訊號', marker:{symbol:'triangle-up',size:14,color:'#ffd54f'}},
+  ], {
+    paper_bgcolor:'#0d0f14', plot_bgcolor:'#0d0f14',
+    font:{color:'#ccc', size:11},
+    margin:{l:55, r:15, t:5, b:40},
+    xaxis:{type:'category', tickangle:-45, gridcolor:'#1a2030', color:'#aaa', nticks:20},
+    yaxis:{gridcolor:'#1a2030', color:'#aaa', title:'累積漲跌%', zeroline:true, zerolinecolor:'#444'},
+    legend:{bgcolor:'rgba(0,0,0,0.4)', font:{size:11}},
+    hovermode:'x unified',
+    hoverlabel:{bgcolor:'rgba(13,15,20,0.55)', bordercolor:'#555', font:{color:'#fff', size:11}},
+  }, {responsive:true});
+})();
+</script>
+
+<h2>🔁 多訊號共振分析（法人OI＋RSI＋OI象限＋基差）</h2>
+<div class="legend-row">
+  訊號：外資OI改善(×2) ＋ RSI超賣(×1) ＋ RSI低位回升(×1) ＋ 空頭回補象限(×1) ＋ 基差正常(×1)　｜　滿分6分，高共振門檻≥4分
+</div>
+<div style="text-align:center;font-size:12px;padding:4px 0 10px;color:#ccc;line-height:2.0">
+  <span>次1日: <b style='color:#66bb6a'>100.0%</b> 勝率（均漲跌 <b style='color:#66bb6a'>+3.78%</b>，4 次）</span> &nbsp;&nbsp;
+  <span>次3日: <b style='color:#66bb6a'>75.0%</b> 勝率（均漲跌 <b style='color:#66bb6a'>+2.09%</b>，4 次）</span> &nbsp;&nbsp;
+  <span>次5日: <b style='color:#ffb300'>50.0%</b> 勝率（均漲跌 <b style='color:#66bb6a'>+1.68%</b>，4 次）</span> &nbsp;&nbsp;
+  <span>次10日: <b style='color:#ffb300'>50.0%</b> 勝率（均漲跌 <b style='color:#66bb6a'>+3.07%</b>，4 次）</span>
+</div>
+<div id="signal-chart" style="width:100%;height:30vh"></div>
+<script>
+(function(){
+  const SIG = {"scores": [0, 0, 0, 2, 0, 3, 3, 2, 6, 2, 0, 2, 2, 4, 2, 1, 2, 1, 4, 2, 0, 0, 2, 3, 3, 1, 4, 1, 0, 1, 1, 2, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 2, 1, 1, 0, 0, 0, 1, 1], "thresh": 4};
+  const d2  = {"dates": ["20260225", "20260226", "20260302", "20260303", "20260304", "20260305", "20260306", "20260309", "20260310", "20260311", "20260312", "20260313", "20260316", "20260317", "20260318", "20260319", "20260320", "20260323", "20260324", "20260325", "20260326", "20260327", "20260330", "20260331", "20260401", "20260402", "20260407", "20260408", "20260409", "20260410", "20260413", "20260414", "20260415", "20260416", "20260417", "20260420", "20260421", "20260422", "20260423", "20260424", "20260427", "20260428", "20260429", "20260430", "20260504", "20260505", "20260506", "20260507", "20260508", "20260511", "20260512", "20260513", "20260514", "20260515", "20260518", "20260519", "20260520", "20260521", "20260522", "20260525"], "opens": [2010.0, 2020.0, 1945.0, 1975.0, 1895.0, 1940.0, 1890.0, 1785.0, 1885.0, 1880.0, 1915.0, 1845.0, 1870.0, 1870.0, 1905.0, 1880.0, 1865.0, 1795.0, 1855.0, 1880.0, 1875.0, 1810.0, 1770.0, 1760.0, 1850.0, 1875.0, 1835.0, 1930.0, 1965.0, 1975.0, 1985.0, 2015.0, 2085.0, 2105.0, 2060.0, 2060.0, 2055.0, 2065.0, 2100.0, 2115.0, 2325.0, 2290.0, 2225.0, 2210.0, 2215.0, 2270.0, 2285.0, 2335.0, 2315.0, 2285.0, 2255.0, 2190.0, 2250.0, 2310.0, 2215.0, 2240.0, 2210.0, 2255.0, 2280.0, 2275.0], "highs": [2040.0, 2020.0, 2005.0, 1990.0, 1920.0, 1970.0, 1905.0, 1820.0, 1890.0, 1955.0, 1925.0, 1890.0, 1890.0, 1880.0, 1920.0, 1885.0, 1875.0, 1820.0, 1855.0, 1885.0, 1875.0, 1835.0, 1805.0, 1800.0, 1870.0, 1880.0, 1860.0, 1965.0, 1965.0, 2010.0, 2005.0, 2060.0, 2120.0, 2120.0, 2070.0, 2070.0, 2085.0, 2075.0, 2140.0, 2210.0, 2365.0, 2295.0, 2225.0, 2230.0, 2300.0, 2275.0, 2300.0, 2350.0, 2320.0, 2290.0, 2280.0, 2240.0, 2275.0, 2335.0, 2255.0, 2240.0, 2225.0, 2280.0, 2280.0, 2285.0], "lows": [2000.0, 2000.0, 1945.0, 1940.0, 1870.0, 1895.0, 1885.0, 1730.0, 1830.0, 1880.0, 1890.0, 1840.0, 1850.0, 1860.0, 1900.0, 1850.0, 1845.0, 1780.0, 1810.0, 1850.0, 1845.0, 1800.0, 1765.0, 1760.0, 1835.0, 1810.0, 1835.0, 1925.0, 1935.0, 1975.0, 1980.0, 2010.0, 2070.0, 2070.0, 2045.0, 2045.0, 2055.0, 2055.0, 2060.0, 2115.0, 2280.0, 2230.0, 2185.0, 2155.0, 2205.0, 2250.0, 2250.0, 2315.0, 2275.0, 2250.0, 2215.0, 2185.0, 2230.0, 2250.0, 2215.0, 2205.0, 2200.0, 2245.0, 2240.0, 2270.0], "closes": [2020.0, 2010.0, 1985.0, 1940.0, 1885.0, 1910.0, 1900.0, 1805.0, 1845.0, 1945.0, 1895.0, 1870.0, 1855.0, 1875.0, 1920.0, 1850.0, 1850.0, 1810.0, 1825.0, 1860.0, 1845.0, 1830.0, 1790.0, 1775.0, 1870.0, 1810.0, 1860.0, 1960.0, 1960.0, 2010.0, 1990.0, 2055.0, 2095.0, 2115.0, 2045.0, 2045.0, 2070.0, 2060.0, 2085.0, 2205.0, 2290.0, 2235.0, 2195.0, 2155.0, 2300.0, 2270.0, 2265.0, 2335.0, 2300.0, 2250.0, 2250.0, 2230.0, 2260.0, 2255.0, 2240.0, 2215.0, 2210.0, 2245.0, 2275.0, 2275.0], "volumes": [10081.0, 6449.0, 11105.0, 11029.0, 15060.0, 13509.0, 7764.0, 25175.0, 14736.0, 13635.0, 11281.0, 10162.0, 15460.0, 13067.0, 10577.0, 8330.0, 7433.0, 10861.0, 11131.0, 9154.0, 6418.0, 4948.0, 10124.0, 11224.0, 11267.0, 9438.0, 9296.0, 12498.0, 13140.0, 12141.0, 12408.0, 13412.0, 13500.0, 11957.0, 12161.0, 7539.0, 6133.0, 5780.0, 19152.0, 16990.0, 22796.0, 10404.0, 11080.0, 10857.0, 8330.0, 6212.0, 11318.0, 9068.0, 7229.0, 6896.0, 9090.0, 11684.0, 9489.0, 11940.0, 10601.0, 16383.0, 9106.0, 6516.0, 6173.0, null], "oi": [29716.0, 29182.0, 28488.0, 27635.0, 25702.0, 24465.0, 23995.0, 20018.0, 18495.0, 17693.0, 17045.0, 15874.0, 12028.0, 7194.0, 27085.0, 27336.0, 26744.0, 26100.0, 26029.0, 25843.0, 25520.0, 25344.0, 24632.0, 23491.0, 22944.0, 22342.0, 20159.0, 18373.0, 16067.0, 14741.0, 10246.0, 6264.0, 26005.0, 24537.0, 23335.0, 22753.0, 21607.0, 20407.0, 18670.0, 20409.0, 22129.0, 23105.0, 23233.0, 22705.0, 22425.0, 22297.0, 20822.0, 20221.0, 19629.0, 18749.0, 17577.0, 15618.0, 14870.0, 14299.0, 11305.0, 7747.0, 28632.0, 28991.0, 28624.0, 2275.0], "oi_chg": [null, -534.0, -694.0, -853.0, -1933.0, -1237.0, -470.0, -3977.0, -1523.0, -802.0, -648.0, -1171.0, -3846.0, -4834.0, 19891.0, 251.0, -592.0, -644.0, -71.0, -186.0, -323.0, -176.0, -712.0, -1141.0, -547.0, -602.0, -2183.0, -1786.0, -2306.0, -1326.0, -4495.0, -3982.0, 19741.0, -1468.0, -1202.0, -582.0, -1146.0, -1200.0, -1737.0, 1739.0, 1720.0, 976.0, 128.0, -528.0, -280.0, -128.0, -1475.0, -601.0, -592.0, -880.0, -1172.0, -1959.0, -748.0, -571.0, -2994.0, -3558.0, 20885.0, 359.0, -367.0, -26349.0], "fi_net": [-35753, -36168, -41274, -40421, -41633, -41134, -38930, -40462, -36856, -40958, -43064, -40347, -38512, -36158, -34549, -40825, -36366, -37717, -34108, -35947, -37065, -39919, -37282, -37214, -31373, -34855, -31350, -32478, -33399, -34403, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "it_net": [31037, 31248, 31445, 30693, 30549, 32091, 32366, 33407, 35033, 36571, 36356, 36596, 35340, 36290, 37001, 36307, 36660, 37461, 37781, 39029, 38484, 38169, 37470, 37655, 38915, 38013, 38276, 40284, 39954, 40546, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "dt_net": [8095, 8310, 7966, 7374, 6059, 6273, 6425, 5096, 6165, 6488, 5728, 6295, 5704, 6279, 5830, 4525, 4735, 4616, 4626, 5469, 5332, 5207, 4247, 4079, 6865, 5033, 6294, 9432, 8541, 9851, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "basis": [-5.0, -15.0, -10.0, -5.0, -20.0, -10.0, -10.0, 5.0, 5.0, -5.0, -10.0, -5.0, -10.0, -5.0, -15.0, 0.0, -10.0, 0.0, -15.0, -15.0, -5.0, -10.0, -10.0, -15.0, -15.0, 0.0, 0.0, -10.0, -5.0, -10.0, 0.0, 0.0, -15.0, -30.0, -15.0, -20.0, -20.0, -10.0, -5.0, -20.0, -25.0, -20.0, -15.0, -20.0, -25.0, -20.0, -15.0, -25.0, -10.0, -15.0, 5.0, -10.0, 10.0, 10.0, 0.0, -10.0, -25.0, -15.0, -20.0, 35.0], "rsi6": [null, null, null, null, null, null, 14.71, 8.8, 24.18, 49.65, 41.32, 37.54, 35.22, 41.05, 52.57, 38.52, 38.52, 31.58, 36.71, 47.7, 43.79, 39.87, 30.99, 28.16, 57.55, 43.93, 54.66, 68.93, 68.93, 74.67, 68.59, 76.16, 79.76, 81.45, 60.37, 60.37, 65.02, 61.55, 66.86, 81.54, 86.59, 71.42, 61.95, 53.45, 70.85, 64.83, 63.75, 71.69, 63.36, 52.84, 52.84, 48.22, 55.26, 53.79, 49.12, 41.84, 40.41, 53.74, 62.4, 62.4], "rsi12": [null, null, null, null, null, null, null, null, null, null, null, null, 33.33, 36.15, 42.14, 36.35, 36.35, 33.24, 35.5, 40.61, 39.16, 37.69, 33.98, 32.67, 46.87, 40.92, 47.03, 56.78, 56.78, 61.05, 58.52, 63.82, 66.68, 68.05, 58.79, 58.79, 61.04, 59.62, 62.03, 71.09, 75.58, 68.1, 63.15, 58.5, 67.85, 64.57, 64.01, 68.24, 64.13, 58.62, 58.62, 56.32, 58.96, 58.31, 56.31, 53.01, 52.34, 56.54, 59.84, 59.84], "ma5": [null, null, null, null, 1968.0, 1946.0, 1924.0, 1888.0, 1869.0, 1881.0, 1878.0, 1872.0, 1882.0, 1888.0, 1883.0, 1874.0, 1870.0, 1861.0, 1851.0, 1839.0, 1838.0, 1834.0, 1830.0, 1820.0, 1822.0, 1815.0, 1821.0, 1855.0, 1892.0, 1920.0, 1956.0, 1995.0, 2022.0, 2053.0, 2060.0, 2071.0, 2074.0, 2067.0, 2061.0, 2093.0, 2142.0, 2175.0, 2202.0, 2216.0, 2235.0, 2231.0, 2237.0, 2265.0, 2294.0, 2284.0, 2280.0, 2273.0, 2258.0, 2249.0, 2247.0, 2240.0, 2236.0, 2233.0, 2237.0, 2244.0], "ma10": [null, null, null, null, null, null, null, null, null, 1924.5, 1912.0, 1898.0, 1885.0, 1878.5, 1882.0, 1876.0, 1871.0, 1871.5, 1869.5, 1861.0, 1856.0, 1852.0, 1845.5, 1835.5, 1830.5, 1826.5, 1827.5, 1842.5, 1856.0, 1871.0, 1885.5, 1908.0, 1938.5, 1972.5, 1990.0, 2013.5, 2034.5, 2044.5, 2057.0, 2076.5, 2106.5, 2124.5, 2134.5, 2138.5, 2164.0, 2186.5, 2206.0, 2233.5, 2255.0, 2259.5, 2255.5, 2255.0, 2261.5, 2271.5, 2265.5, 2260.0, 2254.5, 2245.5, 2243.0, 2245.5], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1892.75, 1884.0, 1875.0, 1865.25, 1857.0, 1856.25, 1851.25, 1849.25, 1857.0, 1862.75, 1866.0, 1870.75, 1880.0, 1892.0, 1904.0, 1910.25, 1920.0, 1931.0, 1943.5, 1956.5, 1973.75, 1996.0, 2016.25, 2036.5, 2055.5, 2077.0, 2100.0, 2120.25, 2139.0, 2156.0, 2168.0, 2181.0, 2189.75, 2198.0, 2205.0, 2214.75, 2223.25, 2230.25, 2239.5, 2249.0, 2252.5], "ma60": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 2039.67], "oi_ma5": [null, null, null, null, 28144.6, 27094.4, 26057.0, 24363.0, 22535.0, 20933.2, 19449.2, 17825.0, 16227.0, 13966.8, 15845.2, 17903.4, 20077.4, 22891.8, 26658.8, 26410.4, 26047.2, 25767.2, 25473.6, 24966.0, 24386.2, 23750.6, 22713.6, 21461.8, 19977.0, 18336.4, 15917.2, 13138.2, 14664.6, 16358.6, 18077.4, 20578.8, 23647.4, 22527.8, 21354.4, 20769.2, 20644.4, 20944.0, 21509.2, 22316.2, 22719.4, 22753.0, 22296.4, 21694.0, 21078.8, 20343.6, 19399.6, 18358.8, 17288.6, 16222.6, 14733.8, 12767.8, 15370.6, 18194.8, 21059.8, 19253.8], "oi_ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 22833.35, 22623.55, 22431.65, 22238.85, 22031.65, 21893.75, 21787.6, 21595.8, 21513.55, 21392.15, 21244.55, 20904.6, 20424.1, 21122.95, 21990.1, 21802.6, 21573.45, 21316.6, 21031.95, 20664.0, 20392.3, 20222.75, 20110.8, 20040.85, 20001.55, 19975.6, 19973.35, 20006.5, 20098.9, 20277.0, 20477.4, 20843.95, 21311.65, 20754.9, 20243.0, 19641.5, 18891.2, 19242.45, 19671.65, 20169.35, 19262.65], "phases": ["—", "多頭出場", "多頭出場", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "多頭出場", "空頭回補", "空頭回補", "多頭出場", "多頭出場", "多頭出場", "空頭回補", "多頭擴張", "空頭擴張", "多頭出場", "多頭出場", "空頭回補", "空頭回補", "多頭出場", "多頭出場", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "空頭回補", "空頭回補", "多頭出場", "空頭回補", "多頭出場", "空頭回補", "多頭擴張", "空頭回補", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "空頭回補", "多頭擴張", "多頭擴張", "空頭擴張", "空頭擴張", "多頭出場", "空頭回補", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "多頭出場", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "多頭出場", "多頭出場", "空頭擴張", "多頭擴張", "空頭回補", "多頭出場"], "phase_cols": ["rgba(0,0,0,0)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.25)", "rgba(239,83,80,0.25)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.25)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.25)", "rgba(102,187,106,0.25)", "rgba(239,83,80,0.25)", "rgba(239,83,80,0.25)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.25)", "rgba(102,187,106,0.25)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)"], "pre_rally_alert": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]};
+  const dates2 = d2.dates.map(d => d.slice(0,4)+'/'+d.slice(4,6)+'/'+d.slice(6));
+  const barClr = SIG.scores.map(s => s >= SIG.thresh ? '#ffd54f' : s >= 3 ? '#ffb300' : s >= 2 ? '#42a5f5' : '#333');
+  Plotly.newPlot('signal-chart', [
+    {type:'bar', x:dates2, y:SIG.scores, name:'共振分數',
+      marker:{color:barClr}, hovertemplate:'%{x}<br>分數: %{y}<extra></extra>'},
+    {type:'scatter', mode:'lines', x:[dates2[0],dates2[dates2.length-1]], y:[SIG.thresh,SIG.thresh],
+      name:'高共振門檻', line:{color:'#ffd54f',width:1.5,dash:'dot'}, showlegend:true},
+  ], {
+    paper_bgcolor:'#0d0f14', plot_bgcolor:'#0d0f14',
+    font:{color:'#ccc',size:11},
+    margin:{l:50,r:15,t:5,b:40},
+    xaxis:{type:'category',tickangle:-45,gridcolor:'#1a2030',color:'#aaa',nticks:20},
+    yaxis:{gridcolor:'#1a2030',color:'#aaa',title:'分數',range:[0,6.5]},
+    legend:{bgcolor:'rgba(0,0,0,0)',font:{size:11}},
+    hovermode:'x unified',
+  }, {responsive:true});
+})();
+</script>
+
+<h2>⚡ 高共振日出場結果（分數≥4）</h2>
+<div style="overflow-x:auto;padding:0 8px 16px">
+<table style="width:100%;border-collapse:collapse;font-size:11px;min-width:700px">
+<thead>
+<tr style="background:#1a2030;color:#aaa">
+  <th style="padding:5px 8px">日期</th>
+  <th style="padding:5px 8px">收盤</th>
+  <th style="padding:5px 8px">得分</th>
+  <th style="padding:5px 8px">OI象限</th>
+  <th style="padding:5px 8px">外資淨OI</th>
+  <th style="padding:5px 8px">RSI6</th>
+  <th style="padding:5px 8px">次1日</th>
+  <th style="padding:5px 8px">次3日</th>
+  <th style="padding:5px 8px">次5日</th>
+  <th style="padding:5px 8px">次10日</th>
+</tr>
+</thead>
+<tbody style="color:#ccc">
+<tr><td>2026/04/07</td><td>1860.00</td><td style='color:#ffb300'>4</td><td>空頭回補</td><td style='color:#ef5350'>-31,350</td><td>54.7</td><td style='color:#66bb6a'>+5.38%</td><td style='color:#66bb6a'>+8.06%</td><td style='color:#66bb6a'>+10.48%</td><td style='color:#66bb6a'>+11.29%</td></tr>
+<tr><td>2026/03/24</td><td>1825.00</td><td style='color:#ffb300'>4</td><td>空頭回補</td><td style='color:#ef5350'>-34,108</td><td>36.7</td><td style='color:#66bb6a'>+1.92%</td><td style='color:#66bb6a'>+0.27%</td><td style='color:#ef5350'>-2.74%</td><td style='color:#66bb6a'>+7.40%</td></tr>
+<tr><td>2026/03/17</td><td>1875.00</td><td style='color:#ffb300'>4</td><td>空頭回補</td><td style='color:#ef5350'>-36,158</td><td>41.0</td><td style='color:#66bb6a'>+2.40%</td><td style='color:#ef5350'>-1.33%</td><td style='color:#ef5350'>-2.67%</td><td style='color:#ef5350'>-5.33%</td></tr>
+<tr><td>2026/03/10</td><td>1845.00</td><td style='color:#ffb300'>6</td><td>空頭回補</td><td style='color:#ef5350'>-36,856</td><td>24.2</td><td style='color:#66bb6a'>+5.42%</td><td style='color:#66bb6a'>+1.36%</td><td style='color:#66bb6a'>+1.63%</td><td style='color:#ef5350'>-1.08%</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>📋 每日指標總表（近期優先）</h2>
+<div style="overflow-x:auto;padding:0 8px 24px">
+<table id="dtbl" style="width:100%;border-collapse:collapse;font-size:11px;min-width:900px">
+<thead>
+<tr style="background:#1a2030;color:#aaa;position:sticky;top:0;z-index:10">
+  <th style="padding:5px 6px;white-space:nowrap">日期</th>
+  <th style="padding:5px 6px">收盤</th>
+  <th style="padding:5px 6px">成交量</th>
+  <th style="padding:5px 6px">未平倉OI</th>
+  <th style="padding:5px 6px">OI變化</th>
+  <th style="padding:5px 6px">基差</th>
+  <th style="padding:5px 6px">外資淨OI</th>
+  <th style="padding:5px 6px">投信</th>
+  <th style="padding:5px 6px">自營</th>
+  <th style="padding:5px 6px;white-space:nowrap">OI象限</th>
+  <th style="padding:5px 6px">共振分</th>
+</tr>
+</thead>
+<tbody id="dtbody"></tbody>
+</table>
+</div>
+<script>
+(function(){
+  const D2 = {"dates": ["20260225", "20260226", "20260302", "20260303", "20260304", "20260305", "20260306", "20260309", "20260310", "20260311", "20260312", "20260313", "20260316", "20260317", "20260318", "20260319", "20260320", "20260323", "20260324", "20260325", "20260326", "20260327", "20260330", "20260331", "20260401", "20260402", "20260407", "20260408", "20260409", "20260410", "20260413", "20260414", "20260415", "20260416", "20260417", "20260420", "20260421", "20260422", "20260423", "20260424", "20260427", "20260428", "20260429", "20260430", "20260504", "20260505", "20260506", "20260507", "20260508", "20260511", "20260512", "20260513", "20260514", "20260515", "20260518", "20260519", "20260520", "20260521", "20260522", "20260525"], "opens": [2010.0, 2020.0, 1945.0, 1975.0, 1895.0, 1940.0, 1890.0, 1785.0, 1885.0, 1880.0, 1915.0, 1845.0, 1870.0, 1870.0, 1905.0, 1880.0, 1865.0, 1795.0, 1855.0, 1880.0, 1875.0, 1810.0, 1770.0, 1760.0, 1850.0, 1875.0, 1835.0, 1930.0, 1965.0, 1975.0, 1985.0, 2015.0, 2085.0, 2105.0, 2060.0, 2060.0, 2055.0, 2065.0, 2100.0, 2115.0, 2325.0, 2290.0, 2225.0, 2210.0, 2215.0, 2270.0, 2285.0, 2335.0, 2315.0, 2285.0, 2255.0, 2190.0, 2250.0, 2310.0, 2215.0, 2240.0, 2210.0, 2255.0, 2280.0, 2275.0], "highs": [2040.0, 2020.0, 2005.0, 1990.0, 1920.0, 1970.0, 1905.0, 1820.0, 1890.0, 1955.0, 1925.0, 1890.0, 1890.0, 1880.0, 1920.0, 1885.0, 1875.0, 1820.0, 1855.0, 1885.0, 1875.0, 1835.0, 1805.0, 1800.0, 1870.0, 1880.0, 1860.0, 1965.0, 1965.0, 2010.0, 2005.0, 2060.0, 2120.0, 2120.0, 2070.0, 2070.0, 2085.0, 2075.0, 2140.0, 2210.0, 2365.0, 2295.0, 2225.0, 2230.0, 2300.0, 2275.0, 2300.0, 2350.0, 2320.0, 2290.0, 2280.0, 2240.0, 2275.0, 2335.0, 2255.0, 2240.0, 2225.0, 2280.0, 2280.0, 2285.0], "lows": [2000.0, 2000.0, 1945.0, 1940.0, 1870.0, 1895.0, 1885.0, 1730.0, 1830.0, 1880.0, 1890.0, 1840.0, 1850.0, 1860.0, 1900.0, 1850.0, 1845.0, 1780.0, 1810.0, 1850.0, 1845.0, 1800.0, 1765.0, 1760.0, 1835.0, 1810.0, 1835.0, 1925.0, 1935.0, 1975.0, 1980.0, 2010.0, 2070.0, 2070.0, 2045.0, 2045.0, 2055.0, 2055.0, 2060.0, 2115.0, 2280.0, 2230.0, 2185.0, 2155.0, 2205.0, 2250.0, 2250.0, 2315.0, 2275.0, 2250.0, 2215.0, 2185.0, 2230.0, 2250.0, 2215.0, 2205.0, 2200.0, 2245.0, 2240.0, 2270.0], "closes": [2020.0, 2010.0, 1985.0, 1940.0, 1885.0, 1910.0, 1900.0, 1805.0, 1845.0, 1945.0, 1895.0, 1870.0, 1855.0, 1875.0, 1920.0, 1850.0, 1850.0, 1810.0, 1825.0, 1860.0, 1845.0, 1830.0, 1790.0, 1775.0, 1870.0, 1810.0, 1860.0, 1960.0, 1960.0, 2010.0, 1990.0, 2055.0, 2095.0, 2115.0, 2045.0, 2045.0, 2070.0, 2060.0, 2085.0, 2205.0, 2290.0, 2235.0, 2195.0, 2155.0, 2300.0, 2270.0, 2265.0, 2335.0, 2300.0, 2250.0, 2250.0, 2230.0, 2260.0, 2255.0, 2240.0, 2215.0, 2210.0, 2245.0, 2275.0, 2275.0], "volumes": [10081.0, 6449.0, 11105.0, 11029.0, 15060.0, 13509.0, 7764.0, 25175.0, 14736.0, 13635.0, 11281.0, 10162.0, 15460.0, 13067.0, 10577.0, 8330.0, 7433.0, 10861.0, 11131.0, 9154.0, 6418.0, 4948.0, 10124.0, 11224.0, 11267.0, 9438.0, 9296.0, 12498.0, 13140.0, 12141.0, 12408.0, 13412.0, 13500.0, 11957.0, 12161.0, 7539.0, 6133.0, 5780.0, 19152.0, 16990.0, 22796.0, 10404.0, 11080.0, 10857.0, 8330.0, 6212.0, 11318.0, 9068.0, 7229.0, 6896.0, 9090.0, 11684.0, 9489.0, 11940.0, 10601.0, 16383.0, 9106.0, 6516.0, 6173.0, null], "oi": [29716.0, 29182.0, 28488.0, 27635.0, 25702.0, 24465.0, 23995.0, 20018.0, 18495.0, 17693.0, 17045.0, 15874.0, 12028.0, 7194.0, 27085.0, 27336.0, 26744.0, 26100.0, 26029.0, 25843.0, 25520.0, 25344.0, 24632.0, 23491.0, 22944.0, 22342.0, 20159.0, 18373.0, 16067.0, 14741.0, 10246.0, 6264.0, 26005.0, 24537.0, 23335.0, 22753.0, 21607.0, 20407.0, 18670.0, 20409.0, 22129.0, 23105.0, 23233.0, 22705.0, 22425.0, 22297.0, 20822.0, 20221.0, 19629.0, 18749.0, 17577.0, 15618.0, 14870.0, 14299.0, 11305.0, 7747.0, 28632.0, 28991.0, 28624.0, 2275.0], "oi_chg": [null, -534.0, -694.0, -853.0, -1933.0, -1237.0, -470.0, -3977.0, -1523.0, -802.0, -648.0, -1171.0, -3846.0, -4834.0, 19891.0, 251.0, -592.0, -644.0, -71.0, -186.0, -323.0, -176.0, -712.0, -1141.0, -547.0, -602.0, -2183.0, -1786.0, -2306.0, -1326.0, -4495.0, -3982.0, 19741.0, -1468.0, -1202.0, -582.0, -1146.0, -1200.0, -1737.0, 1739.0, 1720.0, 976.0, 128.0, -528.0, -280.0, -128.0, -1475.0, -601.0, -592.0, -880.0, -1172.0, -1959.0, -748.0, -571.0, -2994.0, -3558.0, 20885.0, 359.0, -367.0, -26349.0], "fi_net": [-35753, -36168, -41274, -40421, -41633, -41134, -38930, -40462, -36856, -40958, -43064, -40347, -38512, -36158, -34549, -40825, -36366, -37717, -34108, -35947, -37065, -39919, -37282, -37214, -31373, -34855, -31350, -32478, -33399, -34403, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "it_net": [31037, 31248, 31445, 30693, 30549, 32091, 32366, 33407, 35033, 36571, 36356, 36596, 35340, 36290, 37001, 36307, 36660, 37461, 37781, 39029, 38484, 38169, 37470, 37655, 38915, 38013, 38276, 40284, 39954, 40546, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "dt_net": [8095, 8310, 7966, 7374, 6059, 6273, 6425, 5096, 6165, 6488, 5728, 6295, 5704, 6279, 5830, 4525, 4735, 4616, 4626, 5469, 5332, 5207, 4247, 4079, 6865, 5033, 6294, 9432, 8541, 9851, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], "basis": [-5.0, -15.0, -10.0, -5.0, -20.0, -10.0, -10.0, 5.0, 5.0, -5.0, -10.0, -5.0, -10.0, -5.0, -15.0, 0.0, -10.0, 0.0, -15.0, -15.0, -5.0, -10.0, -10.0, -15.0, -15.0, 0.0, 0.0, -10.0, -5.0, -10.0, 0.0, 0.0, -15.0, -30.0, -15.0, -20.0, -20.0, -10.0, -5.0, -20.0, -25.0, -20.0, -15.0, -20.0, -25.0, -20.0, -15.0, -25.0, -10.0, -15.0, 5.0, -10.0, 10.0, 10.0, 0.0, -10.0, -25.0, -15.0, -20.0, 35.0], "rsi6": [null, null, null, null, null, null, 14.71, 8.8, 24.18, 49.65, 41.32, 37.54, 35.22, 41.05, 52.57, 38.52, 38.52, 31.58, 36.71, 47.7, 43.79, 39.87, 30.99, 28.16, 57.55, 43.93, 54.66, 68.93, 68.93, 74.67, 68.59, 76.16, 79.76, 81.45, 60.37, 60.37, 65.02, 61.55, 66.86, 81.54, 86.59, 71.42, 61.95, 53.45, 70.85, 64.83, 63.75, 71.69, 63.36, 52.84, 52.84, 48.22, 55.26, 53.79, 49.12, 41.84, 40.41, 53.74, 62.4, 62.4], "rsi12": [null, null, null, null, null, null, null, null, null, null, null, null, 33.33, 36.15, 42.14, 36.35, 36.35, 33.24, 35.5, 40.61, 39.16, 37.69, 33.98, 32.67, 46.87, 40.92, 47.03, 56.78, 56.78, 61.05, 58.52, 63.82, 66.68, 68.05, 58.79, 58.79, 61.04, 59.62, 62.03, 71.09, 75.58, 68.1, 63.15, 58.5, 67.85, 64.57, 64.01, 68.24, 64.13, 58.62, 58.62, 56.32, 58.96, 58.31, 56.31, 53.01, 52.34, 56.54, 59.84, 59.84], "ma5": [null, null, null, null, 1968.0, 1946.0, 1924.0, 1888.0, 1869.0, 1881.0, 1878.0, 1872.0, 1882.0, 1888.0, 1883.0, 1874.0, 1870.0, 1861.0, 1851.0, 1839.0, 1838.0, 1834.0, 1830.0, 1820.0, 1822.0, 1815.0, 1821.0, 1855.0, 1892.0, 1920.0, 1956.0, 1995.0, 2022.0, 2053.0, 2060.0, 2071.0, 2074.0, 2067.0, 2061.0, 2093.0, 2142.0, 2175.0, 2202.0, 2216.0, 2235.0, 2231.0, 2237.0, 2265.0, 2294.0, 2284.0, 2280.0, 2273.0, 2258.0, 2249.0, 2247.0, 2240.0, 2236.0, 2233.0, 2237.0, 2244.0], "ma10": [null, null, null, null, null, null, null, null, null, 1924.5, 1912.0, 1898.0, 1885.0, 1878.5, 1882.0, 1876.0, 1871.0, 1871.5, 1869.5, 1861.0, 1856.0, 1852.0, 1845.5, 1835.5, 1830.5, 1826.5, 1827.5, 1842.5, 1856.0, 1871.0, 1885.5, 1908.0, 1938.5, 1972.5, 1990.0, 2013.5, 2034.5, 2044.5, 2057.0, 2076.5, 2106.5, 2124.5, 2134.5, 2138.5, 2164.0, 2186.5, 2206.0, 2233.5, 2255.0, 2259.5, 2255.5, 2255.0, 2261.5, 2271.5, 2265.5, 2260.0, 2254.5, 2245.5, 2243.0, 2245.5], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1892.75, 1884.0, 1875.0, 1865.25, 1857.0, 1856.25, 1851.25, 1849.25, 1857.0, 1862.75, 1866.0, 1870.75, 1880.0, 1892.0, 1904.0, 1910.25, 1920.0, 1931.0, 1943.5, 1956.5, 1973.75, 1996.0, 2016.25, 2036.5, 2055.5, 2077.0, 2100.0, 2120.25, 2139.0, 2156.0, 2168.0, 2181.0, 2189.75, 2198.0, 2205.0, 2214.75, 2223.25, 2230.25, 2239.5, 2249.0, 2252.5], "ma60": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 2039.67], "oi_ma5": [null, null, null, null, 28144.6, 27094.4, 26057.0, 24363.0, 22535.0, 20933.2, 19449.2, 17825.0, 16227.0, 13966.8, 15845.2, 17903.4, 20077.4, 22891.8, 26658.8, 26410.4, 26047.2, 25767.2, 25473.6, 24966.0, 24386.2, 23750.6, 22713.6, 21461.8, 19977.0, 18336.4, 15917.2, 13138.2, 14664.6, 16358.6, 18077.4, 20578.8, 23647.4, 22527.8, 21354.4, 20769.2, 20644.4, 20944.0, 21509.2, 22316.2, 22719.4, 22753.0, 22296.4, 21694.0, 21078.8, 20343.6, 19399.6, 18358.8, 17288.6, 16222.6, 14733.8, 12767.8, 15370.6, 18194.8, 21059.8, 19253.8], "oi_ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 22833.35, 22623.55, 22431.65, 22238.85, 22031.65, 21893.75, 21787.6, 21595.8, 21513.55, 21392.15, 21244.55, 20904.6, 20424.1, 21122.95, 21990.1, 21802.6, 21573.45, 21316.6, 21031.95, 20664.0, 20392.3, 20222.75, 20110.8, 20040.85, 20001.55, 19975.6, 19973.35, 20006.5, 20098.9, 20277.0, 20477.4, 20843.95, 21311.65, 20754.9, 20243.0, 19641.5, 18891.2, 19242.45, 19671.65, 20169.35, 19262.65], "phases": ["—", "多頭出場", "多頭出場", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "多頭出場", "空頭回補", "空頭回補", "多頭出場", "多頭出場", "多頭出場", "空頭回補", "多頭擴張", "空頭擴張", "多頭出場", "多頭出場", "空頭回補", "空頭回補", "多頭出場", "多頭出場", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "空頭回補", "空頭回補", "多頭出場", "空頭回補", "多頭出場", "空頭回補", "多頭擴張", "空頭回補", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "空頭回補", "多頭擴張", "多頭擴張", "空頭擴張", "空頭擴張", "多頭出場", "空頭回補", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "多頭出場", "多頭出場", "多頭出場", "空頭回補", "多頭出場", "多頭出場", "多頭出場", "空頭擴張", "多頭擴張", "空頭回補", "多頭出場"], "phase_cols": ["rgba(0,0,0,0)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.25)", "rgba(239,83,80,0.25)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.25)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(102,187,106,0.25)", "rgba(102,187,106,0.25)", "rgba(239,83,80,0.25)", "rgba(239,83,80,0.25)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.10)", "rgba(239,83,80,0.25)", "rgba(102,187,106,0.25)", "rgba(102,187,106,0.10)", "rgba(239,83,80,0.10)"], "pre_rally_alert": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]};
+  const SIG2 = {"scores": [0, 0, 0, 2, 0, 3, 3, 2, 6, 2, 0, 2, 2, 4, 2, 1, 2, 1, 4, 2, 0, 0, 2, 3, 3, 1, 4, 1, 0, 1, 1, 2, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 2, 1, 1, 0, 0, 0, 1, 1], "thresh": 4};
+  const body = document.getElementById('dtbody');
+  const n = D2.dates.length;
+  const phaseClr = {
+    '多頭擴張':'#66bb6a','空頭回補':'#a5d6a7','空頭擴張':'#ef5350','多頭出場':'#ef9a9a','—':'#666'
+  };
+  function clr(v){ return v==null?'#aaa': v>0?'#ef5350': v<0?'#66bb6a':'#aaa'; }
+  function basisClr(v){ return v==null?'#aaa': v>0?'#66bb6a': v<0?'#ef5350':'#aaa'; }
+  const rows = [];
+  for(let i=n-1; i>=0; i--){
+    const d = D2.dates[i];
+    const dstr = d.slice(0,4)+'/'+d.slice(4,6)+'/'+d.slice(6);
+    const fi = D2.fi_net[i], it = D2.it_net[i], dt = D2.dt_net[i];
+    const bas = D2.basis[i], oi = D2.oi[i], oiChg = D2.oi_chg[i];
+    const ph = D2.phases[i];
+    const sc = SIG2.scores[i];
+    const scClr = sc>=SIG2.thresh?'#ffd54f': sc>=3?'#ffb300': sc>=2?'#42a5f5':'#555';
+    rows.push(`<tr style="border-bottom:1px solid #1a2030">
+      <td style="padding:4px 6px;color:#ccc;white-space:nowrap">${dstr}</td>
+      <td style="padding:4px 6px;color:#ef5350;font-weight:bold">${D2.closes[i]??'—'}</td>
+      <td style="padding:4px 6px;color:#aaa">${oi==null?'—':Number(D2.volumes[i]||0).toLocaleString()}</td>
+      <td style="padding:4px 6px;color:#ffb300">${oi==null?'—':Number(oi).toLocaleString()}</td>
+      <td style="padding:4px 6px;color:${clr(oiChg)}">${oiChg==null?'—':(oiChg>0?'+':'')+Number(oiChg).toLocaleString()}</td>
+      <td style="padding:4px 6px;color:${basisClr(bas)}">${bas==null?'—':Number(bas).toFixed(1)}</td>
+      <td style="padding:4px 6px;color:${clr(fi)}">${fi==null?'—':(fi>0?'+':'')+fi.toLocaleString()}</td>
+      <td style="padding:4px 6px;color:${clr(it)}">${it==null?'—':(it>0?'+':'')+it.toLocaleString()}</td>
+      <td style="padding:4px 6px;color:${clr(dt)}">${dt==null?'—':(dt>0?'+':'')+dt.toLocaleString()}</td>
+      <td style="padding:4px 6px;color:${phaseClr[ph]||'#aaa'};white-space:nowrap">${ph}</td>
+      <td style="padding:4px 6px;color:${scClr};font-weight:bold">${sc}</td>
+    </tr>`);
+  }
+  body.innerHTML = rows.join('');
+})();
+</script>
+</div><!-- #expand -->
+</body>
+</html>
