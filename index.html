@@ -9,8 +9,7 @@
 <style>
 :root{--bg:#0d0b07;--bg-card:#17130a;--border:#2a2010;--gold:#c09840;--gold-dim:#604e1a;--gold-hi:#d4aa50;--verd:#3a6b55;--text:#e5d9c0;--text-dim:#9a8870;--text-muted:#453c25;--red:#7a2020}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Serif TC',serif;background-color:var(--bg);color:var(--text);min-height:100vh;padding:48px 20px;background-image:repeating-linear-gradient(45deg,rgba(192,152,64,.03) 0,rgba(192,152,64,.03) 1px,transparent 0,transparent 14px),repeating-linear-gradient(-45deg,rgba(192,152,64,.02) 0,rgba(192,152,64,.02) 1px,transparent 0,transparent 14px)}
-canvas.galaxy{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+body{font-family:'Noto Serif TC',serif;background-color:var(--bg);color:var(--text);min-height:100vh;padding:48px 20px;background-image:repeating-linear-gradient(45deg,rgba(192,152,64,.04) 0,rgba(192,152,64,.04) 1px,transparent 0,transparent 14px),repeating-linear-gradient(-45deg,rgba(192,152,64,.025) 0,rgba(192,152,64,.025) 1px,transparent 0,transparent 14px),radial-gradient(ellipse 80% 55% at 8% 0%,rgba(192,152,64,.1) 0%,transparent 65%),radial-gradient(ellipse 80% 55% at 92% 100%,rgba(120,50,20,.08) 0%,transparent 65%),radial-gradient(ellipse 50% 40% at 50% 50%,rgba(58,107,85,.04) 0%,transparent 70%)}
 .wrap{max-width:680px;margin:0 auto}
 .hd{text-align:center;padding:0 0 40px}
 .hd-rule{display:flex;align-items:center;gap:12px;margin-bottom:22px}
@@ -58,11 +57,10 @@ a{overflow:hidden;position:relative}
 a::after{content:'';position:absolute;top:0;left:-120%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(192,152,64,.08),transparent);transition:left .5s ease;pointer-events:none}
 a:hover::after{left:150%}
 .pk{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
-.pk span{position:absolute;bottom:-4px;border-radius:50%;background:var(--gold);animation:spark var(--dur,9s) var(--delay,0s) linear infinite;opacity:0;z-index:1}
+.pk span{position:absolute;bottom:-4px;border-radius:50%;background:var(--gold);animation:spark var(--dur,9s) var(--delay,0s) linear infinite;opacity:0}
 </style>
 </head>
 <body>
-<canvas class="galaxy" aria-hidden="true"></canvas>
 <div class="pk" aria-hidden="true"></div>
 <div class="wrap">
   <div class="hd">
@@ -85,6 +83,7 @@ a:hover::after{left:150%}
   <div class="sec frame">
     <div class="sec-title">每日籌碼摘要</div>
     <ul>
+    <li><a href="daily_20260528.html">&#128202; 每日籌碼摘要 2026-05-28</a></li>
     <li><a href="daily_20260527.html">&#128202; 每日籌碼摘要 2026-05-27</a></li>
     <li><a href="daily_20260526.html">&#128202; 每日籌碼摘要 2026-05-26</a></li>
     <li><a href="daily_20260525.html">&#128202; 每日籌碼摘要 2026-05-25</a></li>
@@ -105,120 +104,9 @@ a:hover::after{left:150%}
 </div>
 <script>
 (function(){
-  /* ── 上升金粒子 ── */
   var pk=document.querySelector('.pk');
-  if(pk){for(var i=0;i<8;i++){var s=document.createElement('span');var sz=(1+Math.random()*1.5).toFixed(1);s.style.cssText='left:'+Math.floor(Math.random()*100)+'%;width:'+sz+'px;height:'+sz+'px;--dur:'+(10+Math.random()*10).toFixed(1)+'s;--delay:'+(Math.random()*14).toFixed(1)+'s;--dx:'+(Math.random()*24-12).toFixed(1)+'px';pk.appendChild(s);}}
+  if(pk){for(var i=0;i<14;i++){var s=document.createElement('span');var sz=(1+Math.random()*2).toFixed(1);s.style.cssText='left:'+Math.floor(Math.random()*100)+'%;width:'+sz+'px;height:'+sz+'px;--dur:'+(7+Math.random()*8).toFixed(1)+'s;--delay:'+(Math.random()*10).toFixed(1)+'s;--dx:'+(Math.random()*32-16).toFixed(1)+'px';pk.appendChild(s);}}
   document.querySelectorAll('li').forEach(function(el,i){el.style.animationDelay=(0.28+i*0.09).toFixed(2)+'s'});
-
-  /* ── 3D 星系穿越 Canvas ── */
-  var cv=document.querySelector('canvas.galaxy');
-  if(!cv)return;
-  var c=cv.getContext('2d');
-  var W,H,CX,CY;
-  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;CX=W/2;CY=H/2;}
-  resize();
-  window.addEventListener('resize',resize);
-
-  /* 透視參數 */
-  var DEPTH=1400, SPEED=0.85, N=650;
-  var stars=[];
-
-  function mkStar(init){
-    var a=Math.random()*Math.PI*2;
-    /* 銀河盤面分佈：徑向集中 + Y 軸壓縮 = 傾斜銀河盤視角 */
-    var d=Math.pow(Math.random(),.45)*1500;
-    var rnd=Math.random();
-    return{
-      x:Math.cos(a)*d,
-      y:Math.sin(a)*d*0.40,   /* 扁平化 ← 銀河傾斜 */
-      z:init?Math.random()*DEPTH:DEPTH,
-      col:rnd<.12?'gold':(rnd<.28?'blue':'white'),
-      r:.4+Math.random()*2.2
-    };
-  }
-  for(var i=0;i<N;i++)stars.push(mkStar(true));
-
-  /* 星雲光暈（背景固定） */
-  var nbs=[
-    {fx:.12,fy:.10,rx:.52,ry:.38,ag:-.30,rgb:'192,152,64',a:.17},
-    {fx:.88,fy:.88,rx:.58,ry:.44,ag: .38,rgb:'58,107,85', a:.15},
-    {fx:.50,fy:.45,rx:.40,ry:.30,ag:  0, rgb:'75,45,130', a:.12},
-    {fx:.22,fy:.72,rx:.38,ry:.28,ag:-.22,rgb:'35,75,130', a:.09},
-    {fx:.82,fy:.18,rx:.40,ry:.30,ag: .28,rgb:'130,70,35', a:.09}
-  ];
-  function drawNeb(){
-    nbs.forEach(function(nb){
-      c.save();c.translate(nb.fx*W,nb.fy*H);c.rotate(nb.ag);c.scale(1,nb.ry/nb.rx);
-      var g=c.createRadialGradient(0,0,0,0,0,nb.rx*W);
-      g.addColorStop(0,  'rgba('+nb.rgb+','+nb.a+')');
-      g.addColorStop(.40,'rgba('+nb.rgb+','+(nb.a*.42)+')');
-      g.addColorStop(.80,'rgba('+nb.rgb+','+(nb.a*.08)+')');
-      g.addColorStop(1,  'rgba('+nb.rgb+',0)');
-      c.fillStyle=g;c.beginPath();c.arc(0,0,nb.rx*W,0,Math.PI*2);c.fill();c.restore();
-    });
-  }
-
-  /* 銀河核心光暈（中心常亮） */
-  function drawCore(){
-    var g=c.createRadialGradient(CX,CY,0,CX,CY,Math.min(W,H)*.28);
-    g.addColorStop(0,'rgba(192,152,64,.07)');
-    g.addColorStop(.5,'rgba(120,90,30,.03)');
-    g.addColorStop(1,'rgba(0,0,0,0)');
-    c.fillStyle=g;c.fillRect(0,0,W,H);
-  }
-
-  function tick(){
-    c.clearRect(0,0,W,H);
-    drawNeb();
-    drawCore();
-
-    for(var i=0;i<N;i++){
-      var s=stars[i];
-      var pz=s.z;
-      s.z-=SPEED;
-      if(s.z<=0.5){stars[i]=mkStar(false);continue;}
-
-      /* 透視投影 */
-      var sc =DEPTH/s.z,  sc0=DEPTH/pz;
-      var px =CX+s.x*sc,  py =CY+s.y*sc;
-      var px0=CX+s.x*sc0, py0=CY+s.y*sc0;
-
-      if(px<-40||px>W+40||py<-40||py>H+40){stars[i]=mkStar(false);continue;}
-
-      var alpha=Math.min(1,(DEPTH-s.z)/(DEPTH*.62));
-      var r    =Math.max(.3,s.r*sc*.27);
-      var col  =s.col==='gold'?'#d4aa50':(s.col==='blue'?'#b0c8ff':'#e8eaf0');
-      var rgb  =s.col==='gold'?'212,170,70':(s.col==='blue'?'160,190,255':'210,220,255');
-
-      /* 運動拖尾（近距時明顯） */
-      var ddx=px-px0, ddy=py-py0;
-      if(alpha>.15&&(Math.abs(ddx)>.5||Math.abs(ddy)>.5)){
-        c.globalAlpha=alpha*.55;
-        c.strokeStyle=col;
-        c.lineWidth=Math.max(.2,r*.55);
-        c.beginPath();c.moveTo(px0,py0);c.lineTo(px,py);c.stroke();
-      }
-
-      /* 暈光（r 夠大時） */
-      if(r>1.4){
-        var hR=r*5.5;
-        var hg=c.createRadialGradient(px,py,0,px,py,hR);
-        hg.addColorStop(0,'rgba('+rgb+','+Math.min(1,alpha)+')');
-        hg.addColorStop(.28,'rgba('+rgb+','+(alpha*.35)+')');
-        hg.addColorStop(1,'rgba('+rgb+',0)');
-        c.globalAlpha=1;c.fillStyle=hg;
-        c.beginPath();c.arc(px,py,hR,0,Math.PI*2);c.fill();
-      }
-
-      /* 星核 */
-      c.globalAlpha=Math.min(1,alpha*1.4);
-      c.fillStyle=col;
-      c.beginPath();c.arc(px,py,Math.max(.3,r),0,Math.PI*2);c.fill();
-    }
-    c.globalAlpha=1;
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
 })();
 </script>
 </body>
