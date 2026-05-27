@@ -4,40 +4,68 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>投資分析報告</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
 <style>
-body{font-family:system-ui,-apple-system,sans-serif;background:#0d1520;color:#c9d1d9;margin:0;padding:24px}
-h1{color:#58a6ff;font-size:1.3rem;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid #21262d}
-p.sub{color:#8b949e;font-size:.85rem;margin:-12px 0 18px}
-ul{list-style:none;padding:0;margin:0;max-width:640px}
-li{margin:6px 0}
-a{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;
-  background:#161b22;border:1px solid #30363d;border-radius:8px;
-  color:#79c0ff;text-decoration:none;font-size:.95rem;transition:all .15s}
-a:hover{border-color:#58a6ff;background:#1c2230}
-a.na{color:#e3b341;border-color:#3d3200}
-a.na:hover{border-color:#e3b341;background:#1e1b00}
-span{color:#6e7681;font-size:.82rem;white-space:nowrap;margin-left:12px}
-.footer{margin-top:24px;color:#484f58;font-size:.72rem}
+:root{--bg:#100e0b;--bg-card:#18150f;--border:#2e2718;--gold:#c9a050;--gold-dim:#6b5828;--text:#e8dcc8;--text-dim:#9a8e78;--text-muted:#4a4232;--red:#8b2828}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Serif TC',serif;background:var(--bg);color:var(--text);min-height:100vh;padding:48px 20px;background-image:radial-gradient(ellipse 60% 40% at 15% 0%,rgba(201,160,80,.05) 0%,transparent 70%),radial-gradient(ellipse 60% 40% at 85% 100%,rgba(139,40,40,.04) 0%,transparent 70%)}
+.wrap{max-width:680px;margin:0 auto}
+.hd{text-align:center;padding:0 0 40px}
+.hd-rule{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.hd-rule::before,.hd-rule::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim))}
+.hd-rule::after{background:linear-gradient(90deg,var(--gold-dim),transparent)}
+.hd-gem{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);flex-shrink:0}
+.hd h1{font-size:1.45rem;font-weight:300;color:var(--gold);letter-spacing:.5em;text-indent:.5em;margin-bottom:10px}
+.hd p{font-size:.75rem;color:var(--text-dim);letter-spacing:.18em}
+.hd-rule2{display:flex;align-items:center;gap:8px;margin-top:20px}
+.hd-rule2::before,.hd-rule2::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border))}
+.hd-rule2::after{background:linear-gradient(90deg,var(--border),transparent)}
+.sec{margin-bottom:0}
+.sec-title{display:flex;align-items:center;gap:10px;font-size:.75rem;color:var(--gold-dim);letter-spacing:.25em;margin-bottom:14px}
+.sec-title::before{content:'';width:3px;height:3px;background:var(--gold);transform:rotate(45deg);flex-shrink:0}
+.sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gold-dim),transparent)}
+ul{list-style:none}
+li{margin:5px 0}
+a{display:block;padding:12px 16px 12px 20px;background:var(--bg-card);border:1px solid var(--border);border-left:2px solid var(--gold-dim);color:var(--text-dim);text-decoration:none;font-size:.9rem;letter-spacing:.05em;transition:all .2s ease}
+a:hover{border-left-color:var(--gold);border-color:var(--gold-dim);background:#201c13;color:var(--gold);padding-left:24px}
+a.na{border-left-color:var(--red);color:#c8a898}
+a.na:hover{border-left-color:#b84040;color:#e8c0b0;border-color:#5a2828;background:#1c1210}
+.frame{position:relative;padding:20px;border:1px solid var(--border)}
+.frame::before{content:'';position:absolute;top:-1px;left:-1px;width:14px;height:14px;border-top:2px solid var(--gold-dim);border-left:2px solid var(--gold-dim)}
+.frame::after{content:'';position:absolute;bottom:-1px;right:-1px;width:14px;height:14px;border-bottom:2px solid var(--gold-dim);border-right:2px solid var(--gold-dim)}
+.ft{margin-top:40px;text-align:center;font-size:.7rem;color:var(--text-muted);letter-spacing:.12em;padding-top:16px;border-top:1px solid var(--border)}
 </style>
 </head>
 <body>
-<h1>&#128202; 每日籌碼摘要</h1>
-<p class="sub">點入摘要可查看各股籌碼分析、分點進出、期貨分析</p>
-<ul>
+<div class="wrap">
+  <div class="hd">
+    <div class="hd-rule"><div class="hd-gem"></div></div>
+    <h1>投資分析報告</h1>
+    <p>籌碼分析 &middot; 分點進出 &middot; 財經節目</p>
+    <div class="hd-rule2"></div>
+  </div>
+  <div class="sec frame">
+    <div class="sec-title">每日籌碼摘要</div>
+    <ul>
     <li><a href="daily_20260526.html">&#128202; 每日籌碼摘要 2026-05-26</a></li>
     <li><a href="daily_20260525.html">&#128202; 每日籌碼摘要 2026-05-25</a></li>
     <li><a href="daily_20260523.html">&#128202; 每日籌碼摘要 2026-05-23</a></li>
     <li><a href="daily_20260522.html">&#128202; 每日籌碼摘要 2026-05-22</a></li>
-</ul>
-<h2 style="color:#e3b341;font-size:1rem;margin:24px 0 8px;padding-top:16px;border-top:1px solid #21262d">&#127908; 財經節目日報</h2>
-<ul>
+    </ul>
+  </div>
+  <div class="sec frame" style="margin-top:20px">
+    <div class="sec-title">財經節目日報</div>
+    <ul>
     <li><a href="財經日報_2026-05-27_晚間.html" class="na">&#128221; 財經日報 2026-05-27（晚間）（報告）</a></li>
     <li><a href="財經日報_2026-05-27_晚間_簡報.html" class="na">&#127916; 財經日報 2026-05-27（晚間）（簡報）</a></li>
     <li><a href="財經日報_2026-05-26_晚間.html" class="na">&#128221; 財經日報 2026-05-26（晚間）（報告）</a></li>
     <li><a href="財經日報_2026-05-26_晚間_簡報.html" class="na">&#127916; 財經日報 2026-05-26（晚間）（簡報）</a></li>
     <li><a href="財經日報_2026-05-26_上段.html" class="na">&#128221; 財經日報 2026-05-26（日間）（報告）</a></li>
     <li><a href="財經日報_2026-05-26_上段_簡報.html" class="na">&#127916; 財經日報 2026-05-26（日間）（簡報）</a></li>
-</ul>
-<p class="footer">最後更新：2026-05-27</p>
+    </ul>
+  </div>
+  <p class="ft">最後更新 &middot; 2026-05-27</p>
+</div>
 </body>
 </html>
