@@ -40,6 +40,8 @@ a.na:hover{border-left-color:#b04040;color:#e8c0b0;border-color:#5a2818;backgrou
 @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
 @keyframes cPulse{0%,100%{opacity:.4}50%{opacity:1}}
 @keyframes spark{0%{transform:translateY(0) translateX(0);opacity:.75}100%{transform:translateY(-100vh) translateX(var(--dx,12px));opacity:0}}
+@keyframes rotateSlow{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.emblem{color:var(--gold);display:block;margin:0 auto 22px;filter:drop-shadow(0 0 10px rgba(192,152,64,.35));animation:rotateSlow 44s linear infinite,fadeUp .9s ease both}
 .hd{animation:fadeUp .9s ease both}
 .frame{animation:fadeUp .8s ease both}
 .frame+.frame{animation-delay:.18s}
@@ -62,6 +64,17 @@ a:hover::after{left:150%}
 <div class="pk" aria-hidden="true"></div>
 <div class="wrap">
   <div class="hd">
+    <svg class="emblem" width="54" height="54" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+      <circle cx="28" cy="28" r="26.5" stroke="currentColor" stroke-width=".5" opacity=".3"/>
+      <circle cx="28" cy="28" r="20" stroke="currentColor" stroke-width=".5" opacity=".2"/>
+      <polygon points="28,4 41,12 48,24 48,32 41,44 28,52 15,44 8,32 8,24 15,12" stroke="currentColor" stroke-width=".75" opacity=".55"/>
+      <polygon points="28,16 38,28 28,40 18,28" stroke="currentColor" stroke-width="1" opacity=".8"/>
+      <circle cx="28" cy="28" r="2" fill="currentColor"/>
+      <circle cx="28" cy="4" r="1.2" fill="currentColor" opacity=".5"/>
+      <circle cx="28" cy="52" r="1.2" fill="currentColor" opacity=".5"/>
+      <circle cx="8" cy="28" r="1.2" fill="currentColor" opacity=".5"/>
+      <circle cx="48" cy="28" r="1.2" fill="currentColor" opacity=".5"/>
+    </svg>
     <div class="hd-rule"><div class="hd-gem"></div></div>
     <h1>投資分析報告</h1>
     <p>籌碼分析 &middot; 分點進出 &middot; 財經節目</p>
