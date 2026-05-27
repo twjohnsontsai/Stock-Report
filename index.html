@@ -9,7 +9,8 @@
 <style>
 :root{--bg:#0d0b07;--bg-card:#17130a;--border:#2a2010;--gold:#c09840;--gold-dim:#604e1a;--gold-hi:#d4aa50;--verd:#3a6b55;--text:#e5d9c0;--text-dim:#9a8870;--text-muted:#453c25;--red:#7a2020}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Serif TC',serif;background-color:var(--bg);color:var(--text);min-height:100vh;padding:48px 20px;background-image:repeating-linear-gradient(45deg,rgba(192,152,64,.04) 0,rgba(192,152,64,.04) 1px,transparent 0,transparent 14px),repeating-linear-gradient(-45deg,rgba(192,152,64,.025) 0,rgba(192,152,64,.025) 1px,transparent 0,transparent 14px),radial-gradient(ellipse 80% 55% at 8% 0%,rgba(192,152,64,.1) 0%,transparent 65%),radial-gradient(ellipse 80% 55% at 92% 100%,rgba(120,50,20,.08) 0%,transparent 65%),radial-gradient(ellipse 50% 40% at 50% 50%,rgba(58,107,85,.04) 0%,transparent 70%)}
+body{font-family:'Noto Serif TC',serif;background-color:var(--bg);color:var(--text);min-height:100vh;padding:48px 20px;background-image:repeating-linear-gradient(45deg,rgba(192,152,64,.03) 0,rgba(192,152,64,.03) 1px,transparent 0,transparent 14px),repeating-linear-gradient(-45deg,rgba(192,152,64,.02) 0,rgba(192,152,64,.02) 1px,transparent 0,transparent 14px)}
+canvas.galaxy{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
 .wrap{max-width:680px;margin:0 auto}
 .hd{text-align:center;padding:0 0 40px}
 .hd-rule{display:flex;align-items:center;gap:12px;margin-bottom:22px}
@@ -57,10 +58,11 @@ a{overflow:hidden;position:relative}
 a::after{content:'';position:absolute;top:0;left:-120%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(192,152,64,.08),transparent);transition:left .5s ease;pointer-events:none}
 a:hover::after{left:150%}
 .pk{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
-.pk span{position:absolute;bottom:-4px;border-radius:50%;background:var(--gold);animation:spark var(--dur,9s) var(--delay,0s) linear infinite;opacity:0}
+.pk span{position:absolute;bottom:-4px;border-radius:50%;background:var(--gold);animation:spark var(--dur,9s) var(--delay,0s) linear infinite;opacity:0;z-index:1}
 </style>
 </head>
 <body>
+<canvas class="galaxy" aria-hidden="true"></canvas>
 <div class="pk" aria-hidden="true"></div>
 <div class="wrap">
   <div class="hd">
@@ -101,9 +103,117 @@ a:hover::after{left:150%}
 </div>
 <script>
 (function(){
+  /* ── 上升金粒子 ── */
   var pk=document.querySelector('.pk');
-  if(pk){for(var i=0;i<14;i++){var s=document.createElement('span');var sz=(1+Math.random()*2).toFixed(1);s.style.cssText='left:'+Math.floor(Math.random()*100)+'%;width:'+sz+'px;height:'+sz+'px;--dur:'+(7+Math.random()*8).toFixed(1)+'s;--delay:'+(Math.random()*10).toFixed(1)+'s;--dx:'+(Math.random()*32-16).toFixed(1)+'px';pk.appendChild(s);}}
+  if(pk){for(var i=0;i<10;i++){var s=document.createElement('span');var sz=(1+Math.random()*1.8).toFixed(1);s.style.cssText='left:'+Math.floor(Math.random()*100)+'%;width:'+sz+'px;height:'+sz+'px;--dur:'+(8+Math.random()*9).toFixed(1)+'s;--delay:'+(Math.random()*12).toFixed(1)+'s;--dx:'+(Math.random()*28-14).toFixed(1)+'px';pk.appendChild(s);}}
   document.querySelectorAll('li').forEach(function(el,i){el.style.animationDelay=(0.28+i*0.09).toFixed(2)+'s'});
+
+  /* ── Canvas 星系 ── */
+  var cv=document.querySelector('canvas.galaxy');
+  if(!cv)return;
+  var cx=cv.getContext('2d');
+  var W,H;
+  function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+  resize();
+  window.addEventListener('resize',resize);
+
+  /* 生成星星：微星 / 小星 / 中星 / 亮星 */
+  var stars=[];
+  var cfg=[
+    {n:280,rMin:.25,rMax:.75,bMin:.2,bMax:.75,spMin:.15,spMax:.7,goldP:.08,blueP:.15},
+    {n:80, rMin:.8, rMax:1.6,bMin:.4,bMax:.9, spMin:.3, spMax:1.4,goldP:.15,blueP:.2},
+    {n:25, rMin:1.7,rMax:2.8,bMin:.55,bMax:1, spMin:.5, spMax:2, goldP:.3, blueP:.2},
+    {n:8,  rMin:3,  rMax:5,  bMin:.7, bMax:1, spMin:.8, spMax:2.5,goldP:.45,blueP:.2}
+  ];
+  cfg.forEach(function(c){
+    for(var i=0;i<c.n;i++){
+      var rnd=Math.random();
+      var col=rnd<c.goldP?'gold':(rnd<c.goldP+c.blueP?'blue':'white');
+      stars.push({
+        x:Math.random(),y:Math.random(),
+        r:c.rMin+Math.random()*(c.rMax-c.rMin),
+        base:c.bMin+Math.random()*(c.bMax-c.bMin),
+        sp:c.spMin+Math.random()*(c.spMax-c.spMin),
+        ph:Math.random()*Math.PI*2,
+        col:col,tier:cfg.indexOf(c)
+      });
+    }
+  });
+
+  /* 星雲斑塊定義（固定，不動） */
+  var nebulae=[
+    {cx:.12,cy:.08,rx:.55,ry:.4,  angle:-.35,r:'192,152,64', a:.18},
+    {cx:.88,cy:.9, rx:.6, ry:.45, angle:.4,  r:'58,107,85',  a:.16},
+    {cx:.5, cy:.45,rx:.4, ry:.3,  angle:0,   r:'80,50,140',  a:.10},
+    {cx:.25,cy:.7, rx:.35,ry:.28, angle:-.2, r:'40,80,120',  a:.09},
+    {cx:.8, cy:.15,rx:.38,ry:.28, angle:.3,  r:'140,80,40',  a:.08}
+  ];
+
+  function drawNebula(){
+    nebulae.forEach(function(nb){
+      cx.save();
+      cx.translate(nb.cx*W,nb.cy*H);
+      cx.rotate(nb.angle);
+      cx.scale(1,nb.ry/nb.rx);
+      var g=cx.createRadialGradient(0,0,0,0,0,nb.rx*W);
+      g.addColorStop(0,  'rgba('+nb.r+','+nb.a+')');
+      g.addColorStop(.4, 'rgba('+nb.r+','+(nb.a*.45)+')');
+      g.addColorStop(.75,'rgba('+nb.r+','+(nb.a*.12)+')');
+      g.addColorStop(1,  'rgba('+nb.r+',0)');
+      cx.fillStyle=g;
+      cx.beginPath();cx.arc(0,0,nb.rx*W,0,Math.PI*2);cx.fill();
+      cx.restore();
+    });
+  }
+
+  /* 銀河臂（長橢圓弧帶） */
+  function drawArm(){
+    cx.save();
+    cx.translate(W*.5,H*.48);
+    cx.rotate(.32);
+    cx.scale(1,.38);
+    var g=cx.createRadialGradient(0,0,0,0,0,W*.72);
+    g.addColorStop(0,  'rgba(192,152,64,.10)');
+    g.addColorStop(.2, 'rgba(160,120,60,.07)');
+    g.addColorStop(.55,'rgba(58,107,85,.04)');
+    g.addColorStop(1,  'rgba(0,0,0,0)');
+    cx.fillStyle=g;
+    cx.beginPath();cx.arc(0,0,W*.72,0,Math.PI*2);cx.fill();
+    cx.restore();
+  }
+
+  function drawStars(t){
+    stars.forEach(function(s){
+      var tw=s.base+(1-s.base)*.5*(1+Math.sin(t*s.sp+s.ph));
+      cx.globalAlpha=tw;
+      var sx=s.x*W, sy=s.y*H;
+      /* 暈光（中星以上） */
+      if(s.tier>=2){
+        var haloR=s.r*(s.tier===3?6:4);
+        var hcol=s.col==='gold'?'192,152,64':(s.col==='blue'?'160,190,255':'220,225,255');
+        var hg=cx.createRadialGradient(sx,sy,0,sx,sy,haloR);
+        hg.addColorStop(0,'rgba('+hcol+','+(tw*.9)+')');
+        hg.addColorStop(.35,'rgba('+hcol+','+(tw*.3)+')');
+        hg.addColorStop(1,'rgba('+hcol+',0)');
+        cx.fillStyle=hg;
+        cx.beginPath();cx.arc(sx,sy,haloR,0,Math.PI*2);cx.fill();
+      }
+      /* 星核 */
+      cx.fillStyle=s.col==='gold'?'#d4aa50':(s.col==='blue'?'#aac8ff':'#e8eaf8');
+      cx.beginPath();cx.arc(sx,sy,s.r,0,Math.PI*2);cx.fill();
+    });
+    cx.globalAlpha=1;
+  }
+
+  function tick(ts){
+    var t=ts*.001;
+    cx.clearRect(0,0,W,H);
+    drawNebula();
+    drawArm();
+    drawStars(t);
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 })();
 </script>
 </body>
