@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天然有机食品原料 — 产品目录</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;color:#333;background:#f7f8f5}
+
+/* ── Header ── */
+header{background:linear-gradient(135deg,#1b4332 0%,#40916c 100%);color:#fff;padding:50px 20px 36px;text-align:center}
+header h1{font-size:2.2rem;letter-spacing:2px;margin-bottom:8px}
+header .sub{font-size:.95rem;opacity:.85;letter-spacing:1px}
+
+/* ── Cert badges ── */
+.certs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:18px 16px;background:#fff;border-bottom:1px solid #eee}
+.cert{background:#e8f5e9;color:#1b4332;border:1px solid #c8e6c9;border-radius:20px;padding:4px 14px;font-size:.78rem;font-weight:600}
+
+/* ── Category nav ── */
+.cat-nav{background:#fff;padding:12px 16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.09);display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+.cat-nav a{display:inline-block;padding:5px 14px;background:#f0f0f0;border-radius:16px;text-decoration:none;color:#444;font-size:.82rem;transition:all .2s;white-space:nowrap}
+.cat-nav a:hover{background:#2d6a4f;color:#fff}
+
+/* ── Section ── */
+.section{max-width:1200px;margin:32px auto 0;padding:0 16px}
+.sec-title{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid #2d6a4f}
+.sec-title h2{font-size:1.35rem;color:#1b4332}
+.sec-title .en{font-size:.85rem;color:#888}
+.sec-note{font-size:.82rem;color:#999;margin-bottom:14px;line-height:1.6}
+
+/* ── Product grid ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-bottom:16px}
+.card{background:#fff;border-radius:10px;padding:13px 12px;box-shadow:0 1px 4px rgba(0,0,0,.07);transition:box-shadow .2s}
+.card:hover{box-shadow:0 4px 14px rgba(0,0,0,.13)}
+.card .zh{font-size:.92rem;font-weight:600;color:#1b4332;margin-bottom:3px}
+.card .en{font-size:.72rem;color:#999}
+.card .spec{font-size:.7rem;color:#bbb;margin-top:5px}
+
+/* ── Star products ── */
+#featured .star-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+.star{background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.08);border-top:3px solid #2d6a4f;position:relative;overflow:hidden}
+.star .idx{position:absolute;top:12px;right:16px;font-size:2.4rem;font-weight:900;color:#f0f7f4;line-height:1}
+.star h3{font-size:1.1rem;color:#1b4332;margin-bottom:2px}
+.star .en{font-size:.8rem;color:#aaa;margin-bottom:10px}
+.star p{font-size:.83rem;color:#555;line-height:1.75}
+.star .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px}
+.tag{padding:2px 10px;border-radius:10px;font-size:.72rem}
+.tag.g{background:#e8f5e9;color:#2d6a4f}
+.tag.y{background:#fff8e1;color:#b07800}
+.tag.r{background:#fce4ec;color:#b71c1c}
+
+/* ── Why us ── */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:12px}
+.why-card{background:#fff;border-radius:10px;padding:16px 16px 14px;box-shadow:0 1px 4px rgba(0,0,0,.07);display:flex;gap:12px;align-items:flex-start}
+.why-card .ico{font-size:1.5rem;line-height:1;flex-shrink:0;margin-top:2px}
+.why-card h4{font-size:.9rem;color:#1b4332;margin-bottom:4px}
+.why-card p{font-size:.8rem;color:#666;line-height:1.6}
+
+/* ── Platform copy ── */
+.platform-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.platform-card{background:#fff;border-radius:12px;padding:22px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.platform-card .plat-name{display:inline-block;background:#1b4332;color:#fff;padding:3px 12px;border-radius:6px;font-size:.78rem;margin-bottom:12px}
+.platform-card h3{font-size:1rem;color:#1b4332;margin-bottom:6px}
+.platform-card .headline{font-size:.82rem;color:#888;font-style:italic;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #eee}
+.platform-card p{font-size:.83rem;color:#555;line-height:1.8}
+.platform-card .hashtags{margin-top:10px;font-size:.75rem;color:#2d6a4f}
+
+/* ── OEM box ── */
+.oem{background:linear-gradient(135deg,#1b4332,#52b788);color:#fff;border-radius:14px;padding:32px 24px;text-align:center;margin:32px 16px}
+.oem h2{font-size:1.4rem;margin-bottom:10px}
+.oem p{opacity:.9;line-height:1.8;font-size:.9rem}
+.oem-items{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:18px}
+.oem-item{background:rgba(255,255,255,.18);border-radius:10px;padding:10px 20px;font-size:.85rem}
+
+/* ── Contact ── */
+.contact{background:#fff;border-radius:14px;padding:36px 24px;text-align:center;margin:20px 16px 48px;box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.contact h2{color:#1b4332;margin-bottom:10px;font-size:1.3rem}
+.contact p{color:#999;font-size:.88rem;line-height:1.8}
+.contact .info{margin-top:18px;font-size:.95rem;color:#333;line-height:2}
+
+footer{text-align:center;padding:20px;color:#bbb;font-size:.78rem;border-top:1px solid #eee}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>天然有机食品原料</h1>
+  <p class="sub">Natural &amp; Organic Food Ingredients &nbsp;|&nbsp; 产地直采 · 品质认证 · 全球供应</p>
+</header>
+
+<div class="certs">
+  <span class="cert">✓ USDA NOP 有机认证</span>
+  <span class="cert">✓ GMP 生产标准</span>
+  <span class="cert">✓ 556项农残检测</span>
+  <span class="cert">✓ 重金属检测</span>
+  <span class="cert">✓ 非转基因 Non-GMO</span>
+  <span class="cert">✓ 无任何添加剂</span>
+  <span class="cert">✓ 素食认证 Vegan</span>
+  <span class="cert">✓ 无麸质 Gluten-Free</span>
+  <span class="cert">✓ 出口 80+ 国家</span>
+</div>
+
+<nav class="cat-nav">
+  <a href="#featured">⭐ 明星产品</a>
+  <a href="#veg">脱水蔬菜粉</a>
+  <a href="#spice">天然香辛料</a>
+  <a href="#grain">五谷杂粮</a>
+  <a href="#fungi">食用菌</a>
+  <a href="#flower">花粉</a>
+  <a href="#fruit">水果干</a>
+  <a href="#solid">固体饮料</a>
+  <a href="#aqua">水产品</a>
+  <a href="#seasoning">调味品</a>
+  <a href="#why">核心优势</a>
+  <a href="#marketing">推广文案</a>
+  <a href="#contact">联系我们</a>
+</nav>
+
+
+<!-- ════════════════════════════════════════
+     核心优势
+════════════════════════════════════════ -->
+<div class="section" id="why">
+  <div class="sec-title"><h2>为什么选择我们</h2><span class="en">Why Choose Us</span></div>
+  <div class="why-grid">
+    <div class="why-card"><div class="ico">🏅</div><div><h4>权威有机认证</h4><p>全线产品通过 USDA NOP 有机认证、非转基因（Non-GMO）及素食认证，助力您的品牌轻松进入高端市场。</p></div></div>
+    <div class="why-card"><div class="ico">🔬</div><div><h4>556项严苛检测</h4><p>每批次均经 556 项农残检测及重金属检测，符合全球最严苛食品安全标准，可随时提供检测报告。</p></div></div>
+    <div class="why-card"><div class="ico">🌍</div><div><h4>产地直采</h4><p>从巴西的巴西莓到云南的有机咖啡，供应链透明可追溯，原料价格具备充分竞争力。</p></div></div>
+    <div class="why-card"><div class="ico">❄️</div><div><h4>先进低温工艺</h4><p>低温冷冻干燥或低温研磨技术，完美锁住天然色彩、风味及营养活性成分，最大程度减少流失。</p></div></div>
+    <div class="why-card"><div class="ico">🏭</div><div><h4>一站式 OEM/ODM</h4><p>配方研发 → 包装设计 → 品牌贴标，全程定制服务，为您打造专属爆款产品线。</p></div></div>
+    <div class="why-card"><div class="ico">🌏</div><div><h4>出口 80+ 国家</h4><p>GMP 生产标准，成熟国际物流对接经验，已稳定服务全球 80 多个国家和地区买家。</p></div></div>
+    <div class="why-card"><div class="ico">📊</div><div><h4>数据支撑的高活性</h4><p>抹茶粉茶氨酸 12.6 g/kg，巴西莓粉花青素 6000 mg/kg，以量化指标证明产品价值。</p></div></div>
+    <div class="why-card"><div class="ico">✅</div><div><h4>100% 清洁标签</h4><p>无色素、无香精、无防腐剂，契合现代消费者清洁饮食趋势，适配高端健康品牌定位。</p></div></div>
+    <div class="why-card"><div class="ico">⚙️</div><div><h4>灵活规格定制</h4><p>粉末细度 20–325 目可选，无论烘焙、饮品还是护肤品原料，精准匹配下游产品需求。</p></div></div>
+    <div class="why-card"><div class="ico">⚡</div><div><h4>48 小时极速周转</h4><p>巴西莓粉等明星产品实现 48 小时内从采摘到加工，最大保留营养，保障产品鲜度与品质。</p></div></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     明星产品
+════════════════════════════════════════ -->
+<div class="section" id="featured">
+  <div class="sec-title"><h2>明星产品</h2><span class="en">Featured Products</span></div>
+  <div class="star-grid">
+
+    <div class="star">
+      <span class="idx">01</span>
+      <h3>巴西莓粉</h3>
+      <div class="en">Acai Fruit Powder</div>
+      <p>采用低温冷冻干燥技术，锁住巴西莓天然的口感和颜色。48小时内从采摘到工厂加工，每公斤花青素含量达6000毫克，远优于普通速溶巴西莓粉。<br>产地：南美洲，原料可追溯。</p>
+      <div class="tags">
+        <span class="tag y">USDA NOP 有机</span>
+        <span class="tag g">冷冻干燥</span>
+        <span class="tag g">AP279P 花青素标准</span>
+        <span class="tag g">高花青素含量</span>
+      </div>
+    </div>
+
+    <div class="star">
+      <span class="idx">02</span>
+      <h3>有机甜菜粉</h3>
+      <div class="en">Organic Beet Powder</div>
+      <p>100%纯植物，无任何添加。通过国内外有机认证，检测500+次残留。粉末均匀，色泽鲜亮，口感极佳。天然着色剂替代品，广泛用于食品着色、饮品调色。</p>
+      <div class="tags">
+        <span class="tag y">USDA 有机</span>
+        <span class="tag g">无添加</span>
+        <span class="tag g">天然着色</span>
+        <span class="tag g">Dairy-Free / Vegan</span>
+        <span class="tag g">Non-GMO</span>
+      </div>
+    </div>
+
+    <div class="star">
+      <span class="idx">03</span>
+      <h3>羽衣甘蓝粉</h3>
+      <div class="en">Kale Powder</div>
+      <p>全国最前沿羽衣甘蓝研磨加工技术，从种植到千克产品可追溯。加工方式从袋装、封箱到盒子全程可配置，过556项农残和重金属检测，ODM/OEM全程代工服务。</p>
+      <div class="tags">
+        <span class="tag y">有机可选</span>
+        <span class="tag g">556项检测</span>
+        <span class="tag g">ODM/OEM</span>
+        <span class="tag g">高营养密度</span>
+      </div>
+    </div>
+
+    <div class="star">
+      <span class="idx">04</span>
+      <h3>可可粉</h3>
+      <div class="en">Cocoa Powder</div>
+      <p>世界三大茶饮之一，世界多地备受欢迎。除了多种抗氧化功效外，对血管、肠胃、心脑血管均有益处。可可粉是可可巧克力的代表，有着超级食品的美誉。<br>产地可选：马来西亚 / 厄瓜多尔 / 加纳。</p>
+      <div class="tags">
+        <span class="tag g">多来源可选</span>
+        <span class="tag g">天然可可</span>
+        <span class="tag y">可定制规格</span>
+      </div>
+    </div>
+
+    <div class="star">
+      <span class="idx">05</span>
+      <h3>有机咖啡粉</h3>
+      <div class="en">Organic Coffee Powder</div>
+      <p>中国有机咖啡产地云南，咖啡豆以阿拉比卡等级分类卡帝姆咖啡。咖啡作为世界三大饮品之一有着多种有益功效。有机咖啡更让人喝的健康与安心。</p>
+      <div class="tags">
+        <span class="tag y">USDA 有机</span>
+        <span class="tag g">云南产</span>
+        <span class="tag g">阿拉比卡等级</span>
+      </div>
+    </div>
+
+    <div class="star">
+      <span class="idx">06</span>
+      <h3>抹茶粉</h3>
+      <div class="en">Matcha Powder</div>
+      <p>国家一级抹茶粉，茶氨酸达12.6g/kg。利用20多天的覆盖遮阳，又经过蒸汽杀青、超低温烘干。碾茶率高达98%以上，生产的抹茶粉叶绿素和茶氨酸含量更高。2024年通过有机抹茶粉认证，产量21.74kg/亩，超国际标准。</p>
+      <div class="tags">
+        <span class="tag y">有机认证</span>
+        <span class="tag g">高碾茶率98%</span>
+        <span class="tag g">超低温加工</span>
+        <span class="tag g">高茶氨酸</span>
+      </div>
+    </div>
+
+    <div class="star">
+      <span class="idx">07</span>
+      <h3>蓝莓粉</h3>
+      <div class="en">Blueberry Powder</div>
+      <p>主打花青素含量，保留蓝莓果实的营养价值，无色素添加，保留花青素及对视力、抗氧化的功效，比和蓝莓汁口感更好，性价比更高，高还原性。原料来源于美国。</p>
+      <div class="tags">
+        <span class="tag g">高花青素</span>
+        <span class="tag g">无色素添加</span>
+        <span class="tag g">美国原料</span>
+        <span class="tag y">高还原性</span>
+      </div>
+    </div>
+
+    <div class="star">
+      <span class="idx">08</span>
+      <h3>姜黄粉 &amp; 肉桂粉</h3>
+      <div class="en">Turmeric &amp; Cinnamon Powder</div>
+      <p><strong>姜黄粉：</strong>进口/国产两类，进口以马来西亚、印度为主，以四川四化方法为主。印度姜黄以色泽好、口感好而优于进口产品。<br><strong>肉桂粉：</strong>由肉桂特去皮制成的粉末，广西产桂皮，色泽光滑，含旦率高度较高。多用于咖啡/面包及其他烘焙原料，帮助管理身体中存在的葡萄糖浓度。</p>
+      <div class="tags">
+        <span class="tag g">进口/国产可选</span>
+        <span class="tag g">广西肉桂</span>
+        <span class="tag y">烘焙专用</span>
+      </div>
+    </div>
+
+    <div class="star">
+      <span class="idx">09</span>
+      <h3>有机草莓粉</h3>
+      <div class="en">Organic Strawberry Powder</div>
+      <p>适用低温草莓原料，通过低温干燥技术有效保留草莓的新鲜香气和丰富的口感。采用有机红草莓原料，安全性高，草莓经过500+次检测。不添加香素、色素、防腐剂等任何添加。</p>
+      <div class="tags">
+        <span class="tag y">有机认证</span>
+        <span class="tag g">低温干燥</span>
+        <span class="tag g">500+次检测</span>
+        <span class="tag g">无任何添加</span>
+      </div>
+    </div>
+
+    <div class="star">
+      <span class="idx">10</span>
+      <h3>有机香蕉粉</h3>
+      <div class="en">Organic Banana Powder</div>
+      <p>原料选用厄瓜多尔香蕉（三大香蕉出口国之一），采用低温干燥技术保留香蕉特有的浓郁风味。采用有机香蕉原料，通过中国、欧洲、美国三国有机认证。不添加香素、防腐剂等任何添加，溶解性好，适用不受限，口感佳，食用方便。</p>
+      <div class="tags">
+        <span class="tag y">三国有机认证</span>
+        <span class="tag g">厄瓜多尔原料</span>
+        <span class="tag g">低温干燥</span>
+        <span class="tag g">速溶性好</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     脱水蔬菜粉
+════════════════════════════════════════ -->
+<div class="section" id="veg">
+  <div class="sec-title"><h2>脱水蔬菜粉（热风干燥）</h2><span class="en">Dehydrated Vegetables Powder (AD)</span></div>
+  <p class="sec-note">规格：20–325目（mesh）可选 · 等级：一级 · 包装：20–25 kg/箱 · 产品均经金属探测器及X-RAY检测</p>
+  <div class="grid">
+    <div class="card"><div class="zh">胡萝卜粉（无糖）</div><div class="en">Carrot Powder Without Sugar</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">花椰菜粉</div><div class="en">Cauliflower Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">红甜椒粉</div><div class="en">Red Bell Pepper Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">青甜椒粉</div><div class="en">Green Bell Pepper Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">西兰花粉</div><div class="en">Broccoli Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">菠菜粉</div><div class="en">Green Spinach Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">芦笋粉</div><div class="en">Asparagus Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">番茄粉</div><div class="en">Tomato Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">卷心菜粉/颗粒</div><div class="en">Cabbage Powder / Granules</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">土豆粉</div><div class="en">Potato Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">甘薯粉</div><div class="en">Sweet Potato Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">紫薯粉</div><div class="en">Purple Sweet Potato Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">豆粉</div><div class="en">Bean Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">南瓜粉</div><div class="en">Pumpkin Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">芹菜粉</div><div class="en">Celery Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">黄瓜粉</div><div class="en">Cucumber Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">香菜粉</div><div class="en">Coriander Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">甘蓝粉/颗粒</div><div class="en">Kale Powder / Granules</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">洋葱粉</div><div class="en">Onion Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">大葱粉</div><div class="en">Spring Onion Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">韭菜粉</div><div class="en">Chinese Chive Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">欧芹粉</div><div class="en">Parsley Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">甜玉米粉</div><div class="en">Sweet Corn Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">小麦草粉</div><div class="en">Wheat Grass Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">辣椒粉</div><div class="en">Chili Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">大蒜粉</div><div class="en">Garlic Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">大蒜片</div><div class="en">Garlic Flakes</div><div class="spec">颗粒状</div></div>
+    <div class="card"><div class="zh">西葫芦粉</div><div class="en">Zucchini Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">甜菜根粉</div><div class="en">Beet Root Powder</div><div class="spec">20–325 mesh</div></div>
+    <div class="card"><div class="zh">长豆角粉</div><div class="en">Long Bean Powder</div><div class="spec">20–325 mesh</div></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     天然香辛料
+════════════════════════════════════════ -->
+<div class="section" id="spice">
+  <div class="sec-title"><h2>天然香辛料</h2><span class="en">Natural Spice</span></div>
+  <p class="sec-note">规格：20–325目（mesh）可选 · 提供整粒 / 切段 / 研磨粉 多种形态 · 产地直采，可提供学名及产地证明</p>
+  <div class="grid">
+    <div class="card"><div class="zh">茴香（孜然）</div><div class="en">Cumin</div></div>
+    <div class="card"><div class="zh">洋葱粉</div><div class="en">Onion Powder</div></div>
+    <div class="card"><div class="zh">大蒜粉</div><div class="en">Garlic Powder</div></div>
+    <div class="card"><div class="zh">小茴香</div><div class="en">Fennel</div></div>
+    <div class="card"><div class="zh">姜黄粉</div><div class="en">Turmeric Powder</div></div>
+    <div class="card"><div class="zh">辣椒粉</div><div class="en">Chili Pepper Powder</div></div>
+    <div class="card"><div class="zh">花椒（四川椒）</div><div class="en">Sichuan Pepper</div></div>
+    <div class="card"><div class="zh">藏红花</div><div class="en">Saffron</div></div>
+    <div class="card"><div class="zh">芫荽（香菜）</div><div class="en">Coriander</div></div>
+    <div class="card"><div class="zh">莳萝</div><div class="en">Dill</div></div>
+    <div class="card"><div class="zh">白芷</div><div class="en">Angelica Root</div></div>
+    <div class="card"><div class="zh">山奈</div><div class="en">Sand Ginger (Kaempferia)</div></div>
+    <div class="card"><div class="zh">肉桂粉</div><div class="en">Cinnamon Powder</div></div>
+    <div class="card"><div class="zh">丁香</div><div class="en">Clove</div></div>
+    <div class="card"><div class="zh">葫芦巴</div><div class="en">Fenugreek</div></div>
+    <div class="card"><div class="zh">卡宴辣椒</div><div class="en">Cayenne Pepper</div></div>
+    <div class="card"><div class="zh">黑胡椒粉</div><div class="en">Black Pepper Powder</div></div>
+    <div class="card"><div class="zh">白胡椒粉</div><div class="en">White Pepper Powder</div></div>
+    <div class="card"><div class="zh">肉豆蔻</div><div class="en">Nutmeg</div></div>
+    <div class="card"><div class="zh">南姜（高良姜）</div><div class="en">Galangal</div></div>
+    <div class="card"><div class="zh">生姜粉</div><div class="en">Ginger Powder</div></div>
+    <div class="card"><div class="zh">欧芹</div><div class="en">Parsley</div></div>
+    <div class="card"><div class="zh">迷迭香</div><div class="en">Rosemary</div></div>
+    <div class="card"><div class="zh">百里香</div><div class="en">Thyme</div></div>
+    <div class="card"><div class="zh">香茅</div><div class="en">Lemongrass</div></div>
+    <div class="card"><div class="zh">薄荷粉</div><div class="en">Mint / Peppermint Powder</div></div>
+    <div class="card"><div class="zh">芥末粉</div><div class="en">Mustard Powder</div></div>
+    <div class="card"><div class="zh">芝麻</div><div class="en">Sesame</div></div>
+    <div class="card"><div class="zh">草果</div><div class="en">Tsao-ko (Black Cardamom)</div></div>
+    <div class="card"><div class="zh">甘草粉</div><div class="en">Licorice Powder</div></div>
+    <div class="card"><div class="zh">陈皮粉</div><div class="en">Dried Tangerine Peel Powder</div></div>
+    <div class="card"><div class="zh">八角粉</div><div class="en">Star Anise Powder</div></div>
+    <div class="card"><div class="zh">藏茴香（葛缕子）</div><div class="en">Caraway</div></div>
+    <div class="card"><div class="zh">葱粉</div><div class="en">Green Onion Powder</div></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     五谷杂粮
+════════════════════════════════════════ -->
+<div class="section" id="grain">
+  <div class="sec-title"><h2>五谷杂粮</h2><span class="en">Grains &amp; Legumes</span></div>
+  <p class="sec-note">规格：20–125目可选 · 一级 · 天然无添加 · 支持定制包装</p>
+  <div class="grid">
+    <div class="card"><div class="zh">核桃粉</div><div class="en">Walnut Powder</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">红豆粉</div><div class="en">Red Azuki Bean Powder</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">荞麦粉</div><div class="en">Buckwheat Flour</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">小米粉</div><div class="en">Millet Flour</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">枸杞粉</div><div class="en">Wolfberry (Goji) Powder</div><div class="spec">10–125 mesh</div></div>
+    <div class="card"><div class="zh">绿豆粉</div><div class="en">Mung Bean Powder</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">小麦粉</div><div class="en">Wheat Flour</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">大米粉</div><div class="en">Rice Powder</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">杏仁粉</div><div class="en">Almond Powder</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">莲子粉</div><div class="en">Lotus Seed Powder</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">燕麦粉</div><div class="en">Oat Powder</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">鹰嘴豆粉</div><div class="en">Chickpea Flour</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">藜麦粉</div><div class="en">Quinoa Powder</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">黑米粉</div><div class="en">Black Rice Powder</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">白芝麻粉</div><div class="en">White Sesame Powder</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">山药粉</div><div class="en">Chinese Yam Powder</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">紫薯粉</div><div class="en">Purple Sweet Potato Powder</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">蚕豆粉</div><div class="en">Broad Bean Flour</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">藕粉</div><div class="en">Lotus Root Starch</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">牡丹粉</div><div class="en">Peony Powder</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">黑米面条</div><div class="en">Black Rice Noodles</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">红米面条</div><div class="en">Red Rice Noodles</div><div class="spec">20–125 mesh</div></div>
+    <div class="card"><div class="zh">甜玉米粉</div><div class="en">Sweet Corn Flour</div><div class="spec">20–125 mesh</div></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     食用菌
+════════════════════════════════════════ -->
+<div class="section" id="fungi">
+  <div class="sec-title"><h2>食用菌粉</h2><span class="en">Edible Fungi Powder</span></div>
+  <p class="sec-note">规格：20–125目 · 天然烘干研磨 · 无添加</p>
+  <div class="grid">
+    <div class="card"><div class="zh">松茸粉</div><div class="en">Matsutake Powder</div></div>
+    <div class="card"><div class="zh">蘑菇粉</div><div class="en">Mushroom Powder</div></div>
+    <div class="card"><div class="zh">白木耳粉（银耳）</div><div class="en">White Fungus (Snow Ear) Powder</div></div>
+    <div class="card"><div class="zh">黑木耳粉</div><div class="en">Black Fungus Powder</div></div>
+    <div class="card"><div class="zh">茶树菇粉</div><div class="en">Tea Tree Mushroom Powder</div></div>
+    <div class="card"><div class="zh">黑灵芝粉</div><div class="en">Black Ganoderma Powder</div></div>
+    <div class="card"><div class="zh">牛肝菌粉（大粒）</div><div class="en">Porcini (Boletus) Powder</div></div>
+    <div class="card"><div class="zh">双孢蘑菇粉</div><div class="en">Button Mushroom Powder</div></div>
+    <div class="card"><div class="zh">白灵菇粉</div><div class="en">King Oyster Mushroom Powder</div></div>
+    <div class="card"><div class="zh">猫眼菇粉</div><div class="en">Oyster Mushroom Powder</div></div>
+    <div class="card"><div class="zh">鸡油菌粉</div><div class="en">Chanterelle Powder</div></div>
+    <div class="card"><div class="zh">灰树花粉</div><div class="en">Maitake Powder</div></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     花粉
+════════════════════════════════════════ -->
+<div class="section" id="flower">
+  <div class="sec-title"><h2>花粉 / 花卉粉</h2><span class="en">Flower Powders</span></div>
+  <p class="sec-note">规格：20–325目 · 天然低温研磨 · 适用于花草茶、固体饮料、护肤品原料</p>
+  <div class="grid">
+    <div class="card"><div class="zh">莲花粉</div><div class="en">Lotus Pollen</div></div>
+    <div class="card"><div class="zh">菊花粉</div><div class="en">Chrysanthemum Powder</div></div>
+    <div class="card"><div class="zh">金银花粉</div><div class="en">Honeysuckle Powder</div></div>
+    <div class="card"><div class="zh">玫瑰花粉</div><div class="en">Rose Powder</div></div>
+    <div class="card"><div class="zh">牡丹花粉</div><div class="en">Peony Flower Powder</div></div>
+    <div class="card"><div class="zh">洋甘菊粉</div><div class="en">Chamomile Powder</div></div>
+    <div class="card"><div class="zh">薰衣草粉</div><div class="en">Lavender Powder</div></div>
+    <div class="card"><div class="zh">百合花粉</div><div class="en">Lily Flower Powder</div></div>
+    <div class="card"><div class="zh">茉莉花粉</div><div class="en">Jasmine Powder</div></div>
+    <div class="card"><div class="zh">山楂花粉</div><div class="en">Hawthorn Flower Powder</div></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     水果干
+════════════════════════════════════════ -->
+<div class="section" id="fruit">
+  <div class="sec-title"><h2>水果干</h2><span class="en">Dried Fruit</span></div>
+  <p class="sec-note">低温干燥工艺，最大程度保留天然色泽与营养</p>
+  <div class="grid">
+    <div class="card"><div class="zh">草莓干</div><div class="en">Dried Strawberry</div></div>
+    <div class="card"><div class="zh">蓝莓干</div><div class="en">Dried Blueberry</div></div>
+    <div class="card"><div class="zh">芒果干</div><div class="en">Dried Mango</div></div>
+    <div class="card"><div class="zh">香蕉干</div><div class="en">Dried Banana / Banana Flakes</div></div>
+    <div class="card"><div class="zh">菠萝干</div><div class="en">Dried Pineapple</div></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     固体饮料
+════════════════════════════════════════ -->
+<div class="section" id="solid">
+  <div class="sec-title"><h2>固体饮料</h2><span class="en">Solid Drinks &amp; Functional Powders</span></div>
+  <p class="sec-note">涵盖代餐粉、蛋白粉、功能性饮料粉等多品类。支持OEM/ODM定制配方，提供贴牌生产服务，适合健康食品品牌。</p>
+  <div class="grid">
+    <div class="card"><div class="zh">代餐粉</div><div class="en">Meal Replacement Powder</div></div>
+    <div class="card"><div class="zh">蛋白粉</div><div class="en">Protein Powder</div></div>
+    <div class="card"><div class="zh">固体饮料（定制配方）</div><div class="en">Customized Solid Drink</div></div>
+    <div class="card"><div class="zh">功能性营养粉</div><div class="en">Functional Nutrition Powder</div></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     水产品
+════════════════════════════════════════ -->
+<div class="section" id="aqua">
+  <div class="sec-title"><h2>水产品</h2><span class="en">Aquatic Products</span></div>
+  <p class="sec-note">规格：40–325目 · 海产品天然低温烘干研磨 · 高蛋白、天然鲜味</p>
+  <div class="grid">
+    <div class="card"><div class="zh">虾粉</div><div class="en">Shrimp Powder</div></div>
+    <div class="card"><div class="zh">螃蟹粉</div><div class="en">Crab Powder</div></div>
+    <div class="card"><div class="zh">鱼粉</div><div class="en">Fish Powder</div></div>
+    <div class="card"><div class="zh">海带粉</div><div class="en">Kelp Powder</div></div>
+    <div class="card"><div class="zh">螺旋藻粉</div><div class="en">Spirulina Powder</div></div>
+    <div class="card"><div class="zh">海藻粉（褐藻）</div><div class="en">Brown Algae Powder</div></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     调味品
+════════════════════════════════════════ -->
+<div class="section" id="seasoning">
+  <div class="sec-title"><h2>调味品</h2><span class="en">Seasoning</span></div>
+  <p class="sec-note">涵盖固态复合调味品与腌料两大品类，支持定制配方</p>
+  <div class="grid">
+    <div class="card"><div class="zh">固态复合调味品</div><div class="en">Solid Compound Seasoning</div></div>
+    <div class="card"><div class="zh">腌料（定制）</div><div class="en">Pickled Seasoning (Custom)</div></div>
+    <div class="card"><div class="zh">蛋黄酱粉</div><div class="en">Egg Yolk Powder</div></div>
+    <div class="card"><div class="zh">鸡汁调味粉</div><div class="en">Chicken Flavor Powder</div></div>
+    <div class="card"><div class="zh">烧烤调料</div><div class="en">BBQ Seasoning</div></div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     OEM / ODM
+════════════════════════════════════════ -->
+<div class="oem">
+  <h2>OEM / ODM 定制服务</h2>
+  <p>支持贴牌代工服务，从配方研发到包装设计一站式完成<br>产品通过 GMP 生产标准，出口 80+ 国家</p>
+  <div class="oem-items">
+    <div class="oem-item">📦 产品袋装 / 盒装 / 罐装</div>
+    <div class="oem-item">🔬 配方定制研发</div>
+    <div class="oem-item">🏷️ 品牌贴标服务</div>
+    <div class="oem-item">📋 提供全套检测报告</div>
+    <div class="oem-item">🌏 全球物流对接</div>
+    <div class="oem-item">✅ 有机 / 无添加认证支持</div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     平台推广文案
+════════════════════════════════════════ -->
+<div class="section" id="marketing">
+  <div class="sec-title"><h2>平台推广文案参考</h2><span class="en">Marketing Copy Templates</span></div>
+  <div class="platform-grid">
+
+    <div class="platform-card">
+      <span class="plat-name">微信公众号</span>
+      <h3>【2024产品目录】556项农残检测，助力品牌打造"清洁标签"</h3>
+      <div class="headline">侧重：专业深度与信任背书</div>
+      <p>深耕天然原料领域，2024版产品目录正式发布。涵盖脱水蔬菜粉、超级食物、天然香辛料等八大品类，全线通过 <strong>USDA NOP 有机认证</strong>，历经 556 项农残及重金属检测，确保非转基因、无添加。凭借 GMP 标准生产线，支持灵活 <strong>ODM/OEM 定制服务</strong>，一站式对接配方研发与贴标服务。无论寻求高活性抹茶粉还是速溶巴西莓粉，出口 80 多国的全球供应实力，助您快速拓展市场。</p>
+    </div>
+
+    <div class="platform-card">
+      <span class="plat-name">小红书</span>
+      <h3>起底爆款配方！有机超级粉末让你的产品"自带流量"</h3>
+      <div class="headline">侧重：视觉美感与使用场景</div>
+      <p>正在寻找让品牌破圈的"超级成分"？<br>
+      💜 <strong>巴西莓粉</strong>：低温冻干锁住 6000 mg/kg 花青素，超级碗必备<br>
+      💚 <strong>羽衣甘蓝粉</strong>：556 项检测保障，清洁代餐首选<br>
+      💖 <strong>甜菜根粉</strong>：天然调色，定义高颜值烘焙<br><br>
+      坚持 100% 纯植物、无添加、无麸质，满足 Vegan 认证。20–325 目定制粉末，适配果昔、烘焙、护肤等多场景应用。联系获取免费样品，开启自然健康配方之旅！</p>
+      <div class="hashtags">#有机原料 #代餐研发 #清洁标签 #B2B供应商 #超级食物</div>
+    </div>
+
+    <div class="platform-card">
+      <span class="plat-name">LinkedIn</span>
+      <h3>Elevate Your Product Line with Certified Organic Ingredients</h3>
+      <div class="headline">侧重：商业价值与全球供应链</div>
+      <p>Seeking a reliable partner for your healthy food brand? Our 2024 Product Catalog features <strong>USDA Organic, Non-GMO, and Vegan certified</strong> ingredients with exports to <strong>80+ countries</strong>. We specialize in premium powders — from high-theanine Matcha to freeze-dried Acai.<br><br>
+      ✅ <strong>Rigorous Testing</strong>: 556 pesticide residue tests & GMP standards<br>
+      ✅ <strong>Advanced Tech</strong>: Low-temperature processing ensures nutritional integrity<br>
+      ✅ <strong>One-Stop Solution</strong>: OEM/ODM from sourcing to custom packaging & global logistics<br><br>
+      Let's discuss how we can support your global scaling.</p>
+      <div class="hashtags">#FoodIngredients #OrganicFood #SupplyChain #GlobalTrade #OEMManufacturing</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     联系我们
+════════════════════════════════════════ -->
+<div class="contact" id="contact">
+  <h2>联系我们</h2>
+  <p>如需报价、样品或定制服务，欢迎随时联系</p>
+  <div class="info">
+    <!-- 请在此填入您的联系方式 -->
+    <p style="color:#ccc">（此处填入您的联系方式）</p>
+  </div>
+</div>
+
+<footer>© 2024 天然有机食品原料 · 保留所有权利</footer>
+
+</body>
+</html>
