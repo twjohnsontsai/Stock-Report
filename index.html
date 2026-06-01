@@ -57,6 +57,10 @@ a{overflow:hidden;position:relative}
 a::after{content:'';position:absolute;top:0;left:-120%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(192,152,64,.08),transparent);transition:left .5s ease;pointer-events:none}
 a:hover::after{left:150%}
 .pk{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.ticker-wrap{display:block;overflow:hidden;white-space:nowrap;color:var(--text-dim);font-size:.9rem;margin-bottom:8px}
+.ticker{display:inline-block;animation:ticker 22s linear infinite}
+.ticker:hover{animation-play-state:paused}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .pk span{position:absolute;bottom:-4px;border-radius:50%;background:var(--gold);animation:spark var(--dur,9s) var(--delay,0s) linear infinite;opacity:0}
 </style>
 </head>
@@ -109,10 +113,12 @@ a:hover::after{left:150%}
     </ul>
   </div>
   <p class="ft">最後更新 &middot; 2026-06-02</p>
-  <p class="ft" style="margin-top:10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;color:var(--text-dim)">
-    <span>&#9888; 数据来源TWSE，相关分析仅供投资参考，下单前请自行斟酌</span>
-    <span>設計：蔡炯辉 &nbsp;｜&nbsp; Powered by Claude Code</span>
-  </p>
+  <div class="ft" style="margin-top:10px">
+    <div class="ticker-wrap">
+      <span class="ticker">&#9888; 数据来源TWSE，相关分析仅供投资参考，下单前请自行斟酌 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &#9888; 数据来源TWSE，相关分析仅供投资参考，下单前请自行斟酌 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    </div>
+    <span style="color:var(--text-dim);font-size:.85rem">設計：蔡炯辉 &nbsp;｜&nbsp; Powered by Claude Code</span>
+  </div>
 </div>
 <script>
 (function(){
