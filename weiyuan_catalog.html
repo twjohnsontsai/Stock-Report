@@ -1330,21 +1330,26 @@ footer.dark{padding:40px;text-align:center;border-top:1px solid rgba(192,152,64,
     <p>如需报价、样品申请或 OEM/ODM 定制服务<br>扫码添加微信，工作日 24 小时内回复</p>
     <div style="display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin:24px 0">
       <div style="text-align:center">
-        <div class="qr-wrap" style="margin-bottom:10px">
+        <div class="qr-wrap" style="margin-bottom:10px;cursor:zoom-in" onclick="document.getElementById('qr-modal').style.display='flex';document.getElementById('qr-modal-img').src='wechat_qr_tsai.jpg'">
           <img src="wechat_qr_tsai.jpg" width="160" height="160" alt="Johnson微信" style="border-radius:8px;object-fit:cover">
         </div>
         <div style="color:var(--gold);font-size:.8rem;font-weight:600;letter-spacing:.1em">Johnson Tsai</div>
         <div style="color:var(--dim);font-size:.72rem;margin-top:4px">台湾业务 · 出口贸易</div>
       </div>
       <div style="text-align:center">
-        <div class="qr-wrap" style="margin-bottom:10px">
+        <div class="qr-wrap" style="margin-bottom:10px;cursor:zoom-in" onclick="document.getElementById('qr-modal').style.display='flex';document.getElementById('qr-modal-img').src='wechat_qr_mary.jpg'">
           <img src="wechat_qr_mary.jpg" width="160" height="160" alt="Mary微信" style="border-radius:8px;object-fit:cover">
         </div>
         <div style="color:var(--gold);font-size:.8rem;font-weight:600;letter-spacing:.1em">Mary</div>
         <div style="color:var(--dim);font-size:.72rem;margin-top:4px">大陆业务 · 客户服务</div>
       </div>
     </div>
-    <p class="contact-note">或发送邮件至：<span style="color:var(--gold)">johnson@twweiyuan.com</span></p>
+    <p class="contact-note">或发送邮件至：<a href="mailto:johnson@twweiyuan.com" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(192,152,64,.4)">johnson@twweiyuan.com</a></p>
+
+<!-- QR 放大 Modal -->
+<div id="qr-modal" onclick="this.style.display='none'" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out">
+  <img id="qr-modal-img" src="" alt="微信二维码" style="width:min(80vw,400px);height:min(80vw,400px);border-radius:16px;object-fit:contain;box-shadow:0 0 60px rgba(0,0,0,.8)">
+</div>
   </div>
 </div>
 </section>
