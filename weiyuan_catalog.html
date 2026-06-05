@@ -622,7 +622,7 @@ footer.dark{padding:40px;text-align:center;border-top:1px solid rgba(192,152,64,
         <div class="card rv"><div class="zh">茴香（孜然）</div><div class="en">Cumin</div></div>
         <div class="card rv has-detail" onclick="document.getElementById('spotlight').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('sp-garlic').scrollIntoView({behavior:'smooth'}),400)" style="cursor:pointer"><div class="zh">大蒜粉</div><div class="en">Garlic Powder</div><div class="detail-btn-3d">▶ 查看详情</div></div>
         <div class="card rv"><div class="zh">小茴香</div><div class="en">Fennel</div></div>
-        <div class="card rv"><div class="zh">姜黄粉</div><div class="en">Turmeric Powder</div></div>
+        <div class="card rv has-detail" onclick="document.getElementById('spotlight').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('sp-turmeric').scrollIntoView({behavior:'smooth'}),400)" style="cursor:pointer"><div class="zh">姜黄粉</div><div class="en">Turmeric Powder</div><div class="detail-btn-3d">▶ 查看详情</div></div>
         <div class="card rv"><div class="zh">辣椒粉</div><div class="en">Chili Pepper Powder</div></div>
         <div class="card rv has-detail" onclick="document.getElementById('spotlight').scrollIntoView({behavior:'smooth'});setTimeout(()=>document.getElementById('sp-sichuan').scrollIntoView({behavior:'smooth'}),400)" style="cursor:pointer"><div class="zh">花椒（四川椒）</div><div class="en">Sichuan Pepper</div><div class="detail-btn-3d">▶ 查看详情</div></div>
         <div class="card rv"><div class="zh">藏红花</div><div class="en">Saffron</div></div>
@@ -981,8 +981,7 @@ footer.dark{padding:40px;text-align:center;border-top:1px solid rgba(192,152,64,
         </div>
       </div>
     </div>
-  <div class="spotlight-grid">
-    <div class="spotlight-card rv">
+    <div class="spotlight-card rv" id="sp-turmeric">
       <div class="sp-header">
         <h3>姜黄粉</h3>
         <div class="en">Turmeric Powder</div>
@@ -1000,7 +999,11 @@ footer.dark{padding:40px;text-align:center;border-top:1px solid rgba(192,152,64,
           </div>
         </div>
         <div class="sp-specs">规格：80–200目 · 姜黄素含量 ≥3% · 进口/国产可选</div>
-        <div class="video-wrap" style="border-radius:8px;overflow:hidden;margin-top:12px">
+        <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+          <a href="turmeric_slides.pdf" download style="display:inline-flex;align-items:center;gap:6px;padding:9px 20px;background:var(--green);color:#fff;text-decoration:none;border-radius:8px;font-size:.8rem">📊 下载完整简报 PDF</a>
+          <a href="turmeric_infographic.png" download style="display:inline-flex;align-items:center;gap:6px;padding:9px 20px;background:var(--green2);color:#fff;text-decoration:none;border-radius:8px;font-size:.8rem">🖼 下载资讯图表</a>
+        </div>
+        <div class="video-wrap" style="border-radius:8px;overflow:hidden">
           <iframe src="//player.bilibili.com/player.html?bvid=BV1Gr766EEbc&page=1&autoplay=0&danmaku=0&high_quality=1&as_wide=1"
             scrolling="no" frameborder="0" framespacing="0" allowfullscreen="true"
             style="width:100%;display:block;border:0;aspect-ratio:16/9;height:auto">
@@ -1008,7 +1011,6 @@ footer.dark{padding:40px;text-align:center;border-top:1px solid rgba(192,152,64,
         </div>
       </div>
     </div>
-  </div>
     <div class="spotlight-card rv" id="sp-licorice">
       <div class="sp-header">
         <h3>甘草粉</h3>
