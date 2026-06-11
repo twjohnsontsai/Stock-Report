@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title id="pageTitle">Loading...</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box}
+body{font-family:'Noto Sans TC','Microsoft JhengHei',system-ui,sans-serif;
+  margin:0 auto;padding:24px;max-width:1200px;background:#f4f5f7;color:#1a1a2e}
+h1{font-size:20px;font-weight:500;margin:0 0 4px}
+.sub{color:#888;font-size:13px;margin-bottom:20px}
+.card{background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;border:1px solid #e8e8e8}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.st{font-size:13px;font-weight:500;margin-bottom:12px;color:#333}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;color:#999;padding:5px 8px;border-bottom:1px solid #f0f0f0;font-weight:400}
+td{padding:5px 8px;border-bottom:1px solid #f8f8f8}
+tr:hover td{background:#fafafa}
+.note{font-size:11px;color:#bbb;margin-top:10px;line-height:1.6}
+.badge{border-radius:4px;padding:2px 8px;font-size:11px}
+.leg-item{display:inline-flex;align-items:center;gap:5px;font-size:12px;margin:2px 6px 2px 0}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<h1 id="h1"></h1>
+<div class="sub" id="sub"></div>
+
+<div class="card">
+  <div class="st" id="chartTitle"></div>
+  <div style="font-size:11px;color:#aaa;margin-bottom:6px" id="legendHint"></div>
+  <div id="leg" style="margin-bottom:12px"></div>
+  <div style="position:relative;height:500px">
+    <canvas id="mainChart"></canvas>
+  </div>
+  <div class="note" id="chartNote"></div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="st" id="buyTitle" style="color:#1565c0"></div>
+    <table><thead><tr>
+      <th id="th_rank">#</th>
+      <th id="th_broker"></th>
+      <th id="th_total" style="text-align:right"></th>
+    </tr></thead>
+    <tbody id="buyRows"></tbody></table>
+  </div>
+  <div class="card">
+    <div class="st" id="sellTitle" style="color:#e63946"></div>
+    <table><thead><tr>
+      <th>#</th><th></th>
+      <th style="text-align:right"></th>
+    </tr></thead>
+    <tbody id="sellRows"></tbody></table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="st" id="corrTitle"></div>
+  <table>
+    <thead><tr>
+      <th id="thA"></th><th id="thB"></th>
+      <th id="thR" style="text-align:right"></th>
+      <th id="thLabel"></th>
+    </tr></thead>
+    <tbody id="corrRows"></tbody>
+  </table>
+  <div class="note" id="corrNote"></div>
+</div>
+
+<script>
+// ── 所有資料（中文以 \uXXXX 存儲）────────────────────────────
+const META    = {"stockName": "2481", "stockId": "2481", "days": 20, "topN": 10, "dateFrom": "2026-04-07", "dateTo": "2026-05-04"};
+const DS      = [{"label": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "isBuy": true, "rank": 1, "total": 2129.0, "data": [2698.0, 1325.0, 237.0, -686.0, 196.0, -460.0, -377.0, 1263.0, -560.0, 771.0, -954.0, -1737.0, -273.0, -701.0, 104.0, -440.0, 842.0, 1079.0, -198.0], "borderColor": "#1565c0", "bgColor": "#1565c028", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "isBuy": true, "rank": 2, "total": 1892.0, "data": [0, 0, 0, 0, 0, 0, 0, 1891.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "borderColor": "#1b5e20", "bgColor": "#1b5e2028", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u82b1\u65d7\u74b0\u7403", "isBuy": true, "rank": 3, "total": 1785.0, "data": [0, 0, 0, 205.0, 0, 0, 574.0, 547.0, 0, 509.0, 0, 0, -702.0, 0, 0, 0, 551.0, 72.0, -116.0], "borderColor": "#b71c1c", "bgColor": "#b71c1c28", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u5f70\u9280", "isBuy": true, "rank": 4, "total": 1036.1, "data": [0, 0, 0, 0, 0, 0, 0, 1011.4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "borderColor": "#6a1b9a", "bgColor": "#6a1b9a28", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u570b\u6cf0-\u6566\u5357", "isBuy": true, "rank": 5, "total": 792.5, "data": [-476.3, 578.5, 0, 0, 0, 69.1, -66.2, -662.1, 0, 628.6, 85.3, 379.8, 0, 93.1, 0, 254.1, -69.0, -93.2, 44.6], "borderColor": "#e65100", "bgColor": "#e6510028", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u7f8e\u6797", "isBuy": true, "rank": 6, "total": 699.0, "data": [155.0, 0, 0, -165.0, -208.0, -224.0, -323.0, 0, 0, 214.0, 355.0, -322.0, 0, -360.0, 788.0, 0, 145.0, 547.0, 0], "borderColor": "#006064", "bgColor": "#00606428", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u4e2d\u570b\u4fe1\u8a17", "isBuy": true, "rank": 7, "total": 541.6, "data": [0, 0, 0, 497.6, 0, 0, 0, 0, 375.8, 0, -500.2, 0, 0, 0, 0, 0, 0, 0, 0], "borderColor": "#880e4f", "bgColor": "#880e4f28", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u51f1\u57fa", "isBuy": true, "rank": 8, "total": 416.0, "data": [0, 0, 0, 0, 0, 0, 0, 0, 440.0, 0, 0, 0, 0, 149.0, 0, -79.0, 0, 0, 0], "borderColor": "#1a237e", "bgColor": "#1a237e28", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u7b2c\u4e00\u91d1", "isBuy": true, "rank": 9, "total": 410.3, "data": [242.9, 0, 0, 72.0, 101.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "borderColor": "#33691e", "bgColor": "#33691e28", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u7389\u5c71-\u5609\u7fa9", "isBuy": true, "rank": 10, "total": 379.2, "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 73.7, 142.1, 84.1, 0, 0, 0, 0, 0, 0], "borderColor": "#004d40", "bgColor": "#004d4028", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u51f1\u57fa-\u53f0\u5317", "isBuy": false, "rank": 11, "total": -5039.7, "data": [0, 0, -5532.2, -802.0, 197.0, 234.2, 640.0, 717.0, 929.0, -992.8, 728.3, -1081.0, 530.7, 286.2, -635.7, -896.0, 683.0, 492.5, -364.1], "borderColor": "#90caf9", "bgColor": "#90caf928", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u7f8e\u5546\u9ad8\u76db", "isBuy": false, "rank": 12, "total": -3361.9, "data": [982.0, -1763.0, 572.0, 143.0, 987.1, 0, 722.0, 2373.0, -138.0, -1705.0, -786.0, -1009.0, -969.0, -710.0, -303.0, -794.0, -425.0, 177.0, -679.0], "borderColor": "#a5d6a7", "bgColor": "#a5d6a728", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u6469\u6839\u5927\u901a", "isBuy": false, "rank": 13, "total": -3228.2, "data": [1205.0, -1018.0, -213.0, -674.0, 171.0, -569.0, 861.0, 276.0, -879.0, -616.8, -111.0, -250.0, 247.0, -160.0, -443.0, -505.0, -282.4, -149.0, -118.0], "borderColor": "#ef9a9a", "bgColor": "#ef9a9a28", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u570b\u6cf0\u8b49\u5238", "isBuy": false, "rank": 14, "total": -2315.1, "data": [0, 0, -99.6, -223.5, 0, -1201.9, 0, 0, 826.0, 0, 0, -937.6, 0, 0, 0, -96.8, -570.0, 0, 0], "borderColor": "#ce93d8", "bgColor": "#ce93d828", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "isBuy": false, "rank": 15, "total": -2048.1, "data": [2488.0, 161.0, 1331.0, 388.0, 1665.9, -268.0, -1598.0, 2659.0, 0, -1915.0, -632.0, -2707.0, -796.0, -1392.9, -1121.0, -909.0, 258.0, 415.0, -109.0], "borderColor": "#ffcc80", "bgColor": "#ffcc8028", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u5bcc\u90a6\u8b49\u5238", "isBuy": false, "rank": 16, "total": -1845.4, "data": [2090.5, -2133.2, 120.4, 346.0, -157.0, -362.1, 286.8, 316.5, 2565.1, -3661.0, 0, -1124.0, -165.0, 0, 0, 114.2, 0, 0, 0], "borderColor": "#80deea", "bgColor": "#80deea28", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u7d71\u4e00", "isBuy": false, "rank": 17, "total": -1352.5, "data": [703.5, -346.6, -71.6, 91.6, -518.4, -429.6, 62.6, 530.8, 256.2, -710.4, 0, -251.0, 795.3, -110.6, 0, -1379.0, 114.6, -53.5, 0], "borderColor": "#f48fb1", "bgColor": "#f48fb128", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u7fa4\u76ca\u91d1\u9f0e", "isBuy": false, "rank": 18, "total": -1203.6, "data": [0, 141.2, -56.0, 0, -195.7, -105.9, 218.7, 0, 0, 825.9, 0, 0, 0, -40.9, 0, 0, -2025.0, -103.0, 0], "borderColor": "#9fa8da", "bgColor": "#9fa8da28", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u6e2f\u5546\u9ea5\u683c\u7406", "isBuy": false, "rank": 19, "total": -1101.0, "data": [0, -1487.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 336.0, 0], "borderColor": "#c5e1a5", "bgColor": "#c5e1a528", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u53f0\u65b0", "isBuy": false, "rank": 20, "total": -917.3, "data": [-1066.4, 0, 112.3, 0, 0, 66.3, -84.8, 1003.0, -1218.3, 207.0, 0, 0, 63.0, 0, 0, 0, 0, -87.5, 0], "borderColor": "#80cbc4", "bgColor": "#80cbc428", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}];
+const DATES   = ["2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-04"];
+const BUY_R   = [{"name": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "val": 2129.0}, {"name": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "val": 1892.0}, {"name": "\u82b1\u65d7\u74b0\u7403", "val": 1785.0}, {"name": "\u5f70\u9280", "val": 1036.1}, {"name": "\u570b\u6cf0-\u6566\u5357", "val": 792.5}, {"name": "\u7f8e\u6797", "val": 699.0}, {"name": "\u4e2d\u570b\u4fe1\u8a17", "val": 541.6}, {"name": "\u51f1\u57fa", "val": 416.0}, {"name": "\u7b2c\u4e00\u91d1", "val": 410.3}, {"name": "\u7389\u5c71-\u5609\u7fa9", "val": 379.2}];
+const SELL_R  = [{"name": "\u51f1\u57fa-\u53f0\u5317", "val": -5039.7}, {"name": "\u7f8e\u5546\u9ad8\u76db", "val": -3361.9}, {"name": "\u6469\u6839\u5927\u901a", "val": -3228.2}, {"name": "\u570b\u6cf0\u8b49\u5238", "val": -2315.1}, {"name": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "val": -2048.1}, {"name": "\u5bcc\u90a6\u8b49\u5238", "val": -1845.4}, {"name": "\u7d71\u4e00", "val": -1352.5}, {"name": "\u7fa4\u76ca\u91d1\u9f0e", "val": -1203.6}, {"name": "\u6e2f\u5546\u9ea5\u683c\u7406", "val": -1101.0}, {"name": "\u53f0\u65b0", "val": -917.3}];
+const CORR    = [{"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "r": 0.27, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u82b1\u65d7\u74b0\u7403", "r": 0.24, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u5f70\u9280", "r": 0.27, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.37, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u7f8e\u6797", "r": 0.38, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u4e2d\u570b\u4fe1\u8a17", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u51f1\u57fa", "r": -0.19, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u7b2c\u4e00\u91d1", "r": 0.52, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u7389\u5c71-\u5609\u7fa9", "r": -0.52, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u51f1\u57fa-\u53f0\u5317", "r": 0.05, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u7f8e\u5546\u9ad8\u76db", "r": 0.32, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u6469\u6839\u5927\u901a", "r": 0.33, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.22, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": 0.67, "label": "\u9ad8\u5ea6\u540c\u5411", "color": "#2d6a4f"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u5bcc\u90a6\u8b49\u5238", "r": 0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u7d71\u4e00", "r": 0.27, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": -0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": -0.23, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u53f0\u65b0", "r": -0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u82b1\u65d7\u74b0\u7403", "r": 0.37, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u5f70\u9280", "r": 1.0, "label": "\u9ad8\u5ea6\u540c\u5411", "color": "#2d6a4f"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.57, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u7f8e\u6797", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u4e2d\u570b\u4fe1\u8a17", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u51f1\u57fa", "r": -0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u7b2c\u4e00\u91d1", "r": -0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u7389\u5c71-\u5609\u7fa9", "r": -0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u51f1\u57fa-\u53f0\u5317", "r": 0.16, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u7f8e\u5546\u9ad8\u76db", "r": 0.61, "label": "\u9ad8\u5ea6\u540c\u5411", "color": "#2d6a4f"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u6469\u6839\u5927\u901a", "r": 0.2, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": 0.47, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u5bcc\u90a6\u8b49\u5238", "r": 0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u7d71\u4e00", "r": 0.29, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": 0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": 0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "(\u725b\u725b\u725b)\u4e9e\u8b49\u5238", "b": "\u53f0\u65b0", "r": 0.57, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u5f70\u9280", "r": 0.37, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u7f8e\u6797", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u4e2d\u570b\u4fe1\u8a17", "r": 0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u51f1\u57fa", "r": -0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u7b2c\u4e00\u91d1", "r": -0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u7389\u5c71-\u5609\u7fa9", "r": -0.4, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u51f1\u57fa-\u53f0\u5317", "r": 0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u7f8e\u5546\u9ad8\u76db", "r": 0.31, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u6469\u6839\u5927\u901a", "r": 0.05, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u570b\u6cf0\u8b49\u5238", "r": -0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": 0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u5bcc\u90a6\u8b49\u5238", "r": -0.17, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u7d71\u4e00", "r": -0.15, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": -0.17, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": 0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u82b1\u65d7\u74b0\u7403", "b": "\u53f0\u65b0", "r": 0.27, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5f70\u9280", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.57, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u5f70\u9280", "b": "\u7f8e\u6797", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5f70\u9280", "b": "\u4e2d\u570b\u4fe1\u8a17", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5f70\u9280", "b": "\u51f1\u57fa", "r": -0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5f70\u9280", "b": "\u7b2c\u4e00\u91d1", "r": -0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5f70\u9280", "b": "\u7389\u5c71-\u5609\u7fa9", "r": -0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5f70\u9280", "b": "\u51f1\u57fa-\u53f0\u5317", "r": 0.16, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5f70\u9280", "b": "\u7f8e\u5546\u9ad8\u76db", "r": 0.61, "label": "\u9ad8\u5ea6\u540c\u5411", "color": "#2d6a4f"}, {"a": "\u5f70\u9280", "b": "\u6469\u6839\u5927\u901a", "r": 0.2, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5f70\u9280", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5f70\u9280", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": 0.47, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u5f70\u9280", "b": "\u5bcc\u90a6\u8b49\u5238", "r": 0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5f70\u9280", "b": "\u7d71\u4e00", "r": 0.29, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5f70\u9280", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": 0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5f70\u9280", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": 0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5f70\u9280", "b": "\u53f0\u65b0", "r": 0.57, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u7f8e\u6797", "r": -0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u4e2d\u570b\u4fe1\u8a17", "r": -0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u51f1\u57fa", "r": -0.05, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u7b2c\u4e00\u91d1", "r": -0.41, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u7389\u5c71-\u5609\u7fa9", "r": 0.23, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u51f1\u57fa-\u53f0\u5317", "r": -0.21, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u7f8e\u5546\u9ad8\u76db", "r": -0.88, "label": "\u9ad8\u5ea6\u5c0d\u5012", "color": "#e63946"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u6469\u6839\u5927\u901a", "r": -0.64, "label": "\u9ad8\u5ea6\u5c0d\u5012", "color": "#e63946"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u570b\u6cf0\u8b49\u5238", "r": -0.15, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": -0.7, "label": "\u9ad8\u5ea6\u5c0d\u5012", "color": "#e63946"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u5bcc\u90a6\u8b49\u5238", "r": -0.73, "label": "\u9ad8\u5ea6\u5c0d\u5012", "color": "#e63946"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u7d71\u4e00", "r": -0.66, "label": "\u9ad8\u5ea6\u5c0d\u5012", "color": "#e63946"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": 0.28, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": -0.44, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u53f0\u65b0", "r": 0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u4e2d\u570b\u4fe1\u8a17", "r": -0.27, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u51f1\u57fa", "r": -0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u7b2c\u4e00\u91d1", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u7389\u5c71-\u5609\u7fa9", "r": -0.14, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u51f1\u57fa-\u53f0\u5317", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u7f8e\u5546\u9ad8\u76db", "r": -0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u6469\u6839\u5927\u901a", "r": -0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.27, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": 0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u5bcc\u90a6\u8b49\u5238", "r": -0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u7d71\u4e00", "r": 0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": -0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": 0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u6797", "b": "\u53f0\u65b0", "r": -0.05, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u51f1\u57fa", "r": 0.43, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u7b2c\u4e00\u91d1", "r": 0.14, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u7389\u5c71-\u5609\u7fa9", "r": -0.32, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u51f1\u57fa-\u53f0\u5317", "r": -0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u7f8e\u5546\u9ad8\u76db", "r": 0.14, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u6469\u6839\u5927\u901a", "r": -0.29, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.17, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": 0.11, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u5bcc\u90a6\u8b49\u5238", "r": 0.27, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u7d71\u4e00", "r": 0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u53f0\u65b0", "r": -0.29, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u7b2c\u4e00\u91d1", "r": -0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u7389\u5c71-\u5609\u7fa9", "r": -0.11, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u51f1\u57fa-\u53f0\u5317", "r": 0.24, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u7f8e\u5546\u9ad8\u76db", "r": -0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u6469\u6839\u5927\u901a", "r": -0.27, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.54, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u51f1\u57fa", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u5bcc\u90a6\u8b49\u5238", "r": 0.46, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u51f1\u57fa", "b": "\u7d71\u4e00", "r": 0.25, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": 0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": 0.05, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u53f0\u65b0", "r": -0.58, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u7b2c\u4e00\u91d1", "b": "\u7389\u5c71-\u5609\u7fa9", "r": -0.15, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7b2c\u4e00\u91d1", "b": "\u51f1\u57fa-\u53f0\u5317", "r": 0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7b2c\u4e00\u91d1", "b": "\u7f8e\u5546\u9ad8\u76db", "r": 0.38, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u7b2c\u4e00\u91d1", "b": "\u6469\u6839\u5927\u901a", "r": 0.55, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u7b2c\u4e00\u91d1", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7b2c\u4e00\u91d1", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": 0.55, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u7b2c\u4e00\u91d1", "b": "\u5bcc\u90a6\u8b49\u5238", "r": 0.39, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u7b2c\u4e00\u91d1", "b": "\u7d71\u4e00", "r": 0.28, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7b2c\u4e00\u91d1", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7b2c\u4e00\u91d1", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": 0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7b2c\u4e00\u91d1", "b": "\u53f0\u65b0", "r": -0.49, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u7389\u5c71-\u5609\u7fa9", "b": "\u51f1\u57fa-\u53f0\u5317", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7389\u5c71-\u5609\u7fa9", "b": "\u7f8e\u5546\u9ad8\u76db", "r": -0.32, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u7389\u5c71-\u5609\u7fa9", "b": "\u6469\u6839\u5927\u901a", "r": 0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7389\u5c71-\u5609\u7fa9", "b": "\u570b\u6cf0\u8b49\u5238", "r": -0.33, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u7389\u5c71-\u5609\u7fa9", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": -0.46, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u7389\u5c71-\u5609\u7fa9", "b": "\u5bcc\u90a6\u8b49\u5238", "r": -0.16, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7389\u5c71-\u5609\u7fa9", "b": "\u7d71\u4e00", "r": 0.15, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7389\u5c71-\u5609\u7fa9", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": 0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7389\u5c71-\u5609\u7fa9", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": 0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7389\u5c71-\u5609\u7fa9", "b": "\u53f0\u65b0", "r": 0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u7f8e\u5546\u9ad8\u76db", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u6469\u6839\u5927\u901a", "r": 0.15, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": -0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u5bcc\u90a6\u8b49\u5238", "r": 0.18, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u7d71\u4e00", "r": 0.24, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": -0.17, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": -0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u53f0\u65b0", "r": -0.13, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u5546\u9ad8\u76db", "b": "\u6469\u6839\u5927\u901a", "r": 0.57, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u7f8e\u5546\u9ad8\u76db", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u5546\u9ad8\u76db", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": 0.72, "label": "\u9ad8\u5ea6\u540c\u5411", "color": "#2d6a4f"}, {"a": "\u7f8e\u5546\u9ad8\u76db", "b": "\u5bcc\u90a6\u8b49\u5238", "r": 0.57, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u7f8e\u5546\u9ad8\u76db", "b": "\u7d71\u4e00", "r": 0.4, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u7f8e\u5546\u9ad8\u76db", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": -0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7f8e\u5546\u9ad8\u76db", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": 0.39, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u7f8e\u5546\u9ad8\u76db", "b": "\u53f0\u65b0", "r": 0.11, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6469\u6839\u5927\u901a", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6469\u6839\u5927\u901a", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": 0.32, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u6469\u6839\u5927\u901a", "b": "\u5bcc\u90a6\u8b49\u5238", "r": 0.37, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u6469\u6839\u5927\u901a", "b": "\u7d71\u4e00", "r": 0.49, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u6469\u6839\u5927\u901a", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": -0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6469\u6839\u5927\u901a", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": 0.36, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u6469\u6839\u5927\u901a", "b": "\u53f0\u65b0", "r": -0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0\u8b49\u5238", "b": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "r": 0.22, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0\u8b49\u5238", "b": "\u5bcc\u90a6\u8b49\u5238", "r": 0.34, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u570b\u6cf0\u8b49\u5238", "b": "\u7d71\u4e00", "r": 0.23, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0\u8b49\u5238", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": 0.29, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0\u8b49\u5238", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": -0.05, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0\u8b49\u5238", "b": "\u53f0\u65b0", "r": -0.36, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u5bcc\u90a6\u8b49\u5238", "r": 0.46, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u7d71\u4e00", "r": 0.38, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": -0.22, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": -0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u53f0\u65b0", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5bcc\u90a6\u8b49\u5238", "b": "\u7d71\u4e00", "r": 0.5, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u5bcc\u90a6\u8b49\u5238", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": -0.27, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5bcc\u90a6\u8b49\u5238", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": 0.37, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u5bcc\u90a6\u8b49\u5238", "b": "\u53f0\u65b0", "r": -0.56, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u7d71\u4e00", "b": "\u7fa4\u76ca\u91d1\u9f0e", "r": -0.17, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7d71\u4e00", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": 0.13, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7d71\u4e00", "b": "\u53f0\u65b0", "r": -0.18, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7fa4\u76ca\u91d1\u9f0e", "b": "\u6e2f\u5546\u9ea5\u683c\u7406", "r": -0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7fa4\u76ca\u91d1\u9f0e", "b": "\u53f0\u65b0", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6e2f\u5546\u9ea5\u683c\u7406", "b": "\u53f0\u65b0", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}];
+
+// ── 設定中文文字 ────────────────────────────────────────────
+document.getElementById("pageTitle").textContent =
+  META.stockName + "（" + META.stockId + "）分點報告";
+document.getElementById("h1").textContent =
+  META.stockName + "（" + META.stockId + "）分點進出分析報告";
+document.getElementById("sub").textContent =
+  "近" + META.days + "日每日曲線｜" + META.dateFrom + "～" + META.dateTo +
+  "｜資料：pscnet（統一證券）MoneyDJ";
+document.getElementById("chartTitle").textContent = "各分點每日淨買賣超曲線（張）";
+document.getElementById("legendHint").textContent =
+  "━ 實線粗＝買超前" + META.topN + "名　╌ 虛線細＝賣超前" + META.topN + "名";
+document.getElementById("chartNote").textContent =
+  "★ 每條線代表一個券商分點的每日淨買賣超（買進－賣出），正值為買超，負值為賣超。曲線持續向上＝主力持續加碼，由正轉負＝主力出場。";
+document.getElementById("buyTitle").textContent =
+  "買超前" + META.topN + "名（近" + META.days + "日累計）";
+document.getElementById("sellTitle").textContent =
+  "賣超前" + META.topN + "名（近" + META.days + "日累計）";
+document.getElementById("corrTitle").textContent = "分點互動關係分析（皮爾森相關係數）";
+document.getElementById("th_broker").textContent = "分點";
+document.getElementById("th_total").textContent  = "累計（張）";
+document.getElementById("thA").textContent       = "券商 A";
+document.getElementById("thB").textContent       = "券商 B";
+document.getElementById("thR").textContent       = "係數";
+document.getElementById("thLabel").textContent   = "關係判斷";
+document.getElementById("corrNote").innerHTML =
+  "係數 &gt;0.6 → 高度同向（疑似同一主力）｜&lt;−0.6 → 高度對倒（疑似對敲）｜接近 0 → 各自獨立";
+
+// ── Legend：買超大→小，賣超大→小（張數絕對值）────────────
+const leg = document.getElementById("leg");
+const buyDs  = DS.filter(d => d.isBuy);   // 已按買超大→小
+const sellDs = DS.filter(d => !d.isBuy);  // 已按賣超大→小（最負在前）
+
+function makeLegItem(d, rank, container) {
+  const wrap = document.createElement("span");
+  wrap.className = "leg-item";
+  const line = document.createElement("span");
+  line.style.cssText = d.borderDash.length
+    ? "display:inline-block;width:18px;height:0;border-top:2px dashed "+d.borderColor+";vertical-align:middle;flex-shrink:0"
+    : "display:inline-block;width:18px;height:3px;background:"+d.borderColor+";border-radius:2px;vertical-align:middle;flex-shrink:0";
+  const txt = document.createElement("span");
+  txt.textContent = rank + ". " + d.label;
+  wrap.appendChild(line);
+  wrap.appendChild(txt);
+  container.appendChild(wrap);
+}
+
+// 買超區
+const buyHdr = document.createElement("div");
+buyHdr.style.cssText = "width:100%;font-size:11px;color:#1565c0;font-weight:500;margin:4px 0 4px;border-bottom:1px solid #e0e8ff;padding-bottom:2px";
+buyHdr.textContent = "▲ 買超前" + META.topN + "名（每日曲線）";
+leg.appendChild(buyHdr);
+buyDs.forEach((d, i) => makeLegItem(d, i+1, leg));
+
+// 賣超區
+const sellHdr = document.createElement("div");
+sellHdr.style.cssText = "width:100%;font-size:11px;color:#e63946;font-weight:500;margin:8px 0 4px;border-bottom:1px solid #ffe0e0;padding-bottom:2px";
+sellHdr.textContent = "▼ 賣超前" + META.topN + "名（每日曲線）";
+leg.appendChild(sellHdr);
+sellDs.forEach((d, i) => makeLegItem(d, i+1, leg));
+
+// ── 排行榜 ─────────────────────────────────────────────────
+function renderRank(data, tbodyId, color) {
+  const tbody = document.getElementById(tbodyId);
+  data.forEach((row, i) => {
+    const tr = document.createElement("tr");
+    const sign = row.val >= 0 ? "+" : "";
+    tr.innerHTML =
+      "<td style='color:#999'>"+(i+1)+"</td>" +
+      "<td>"+row.name+"</td>" +
+      "<td style='text-align:right;color:"+color+";font-variant-numeric:tabular-nums'>"+
+        sign+row.val.toLocaleString()+"</td>";
+    tbody.appendChild(tr);
+  });
+}
+renderRank(BUY_R,  "buyRows",  "#1565c0");
+renderRank(SELL_R, "sellRows", "#e63946");
+
+// ── 相關係數表 ──────────────────────────────────────────────
+const corrTbody = document.getElementById("corrRows");
+CORR.forEach(row => {
+  const tr = document.createElement("tr");
+  const sign = row.r >= 0 ? "+" : "";
+  tr.innerHTML =
+    "<td>"+row.a+"</td><td>"+row.b+"</td>" +
+    "<td style='text-align:right'>"+sign+row.r.toFixed(2)+"</td>" +
+    "<td><span class='badge' style='background:"+row.color+"22;color:"+row.color+"'>"+row.label+"</span></td>";
+  corrTbody.appendChild(tr);
+});
+
+// ── Chart.js ────────────────────────────────────────────────
+const chartDs = DS.map(d => ({
+  label:           d.label,
+  data:            d.data,
+  borderColor:     d.borderColor,
+  backgroundColor: d.bgColor,
+  pointRadius:     d.pointRadius,
+  pointHoverRadius:7,
+  borderWidth:     d.borderWidth,
+  borderDash:      d.borderDash,
+  tension:         0.3,
+  spanGaps:        false,
+}));
+
+const zeroLine = {
+  id: "zeroLine",
+  afterDraw(chart) {
+    const {ctx, scales:{y}} = chart;
+    const y0 = y.getPixelForValue(0);
+    ctx.save();
+    ctx.strokeStyle = "rgba(0,0,0,0.15)";
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4,4]);
+    ctx.beginPath();
+    ctx.moveTo(chart.chartArea.left, y0);
+    ctx.lineTo(chart.chartArea.right, y0);
+    ctx.stroke();
+    ctx.restore();
+  }
+};
+
+new Chart(document.getElementById("mainChart"), {
+  type: "line",
+  data: { labels: DATES, datasets: chartDs },
+  plugins: [zeroLine],
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode:"index", intersect:false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: ctx => ctx[0].label,
+          label: ctx => {
+            if (ctx.raw === null || ctx.raw === 0) return null;
+            const sign = ctx.raw > 0 ? "+" : "";
+            return ctx.dataset.label + "：" + sign + ctx.raw.toLocaleString() + " 張";
+          },
+          // 排序：買超（正值大→小）先，賣超（負值小→大）後
+          afterBody: () => [],
+        },
+        itemSort: (a, b) => b.raw - a.raw,
+        filter: item => item.raw !== null && item.raw !== 0,
+      }
+    },
+    scales: {
+      x: { ticks:{ font:{size:11}, maxRotation:45 }, grid:{ color:"#f0f0f0" } },
+      y: {
+        ticks:{ font:{size:11}, callback: v=>(v>0?"+":"")+v.toLocaleString() },
+        grid:{ color:"#f0f0f0" },
+        title:{ display:true, text:"淨買賣超（張）", font:{size:12} }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

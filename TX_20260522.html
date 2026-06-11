@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>台指期 TX｜2026/05/22｜近 30 個交易日</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+  body {margin:0;background:#0d0f14;color:#ccc;font-family:"Microsoft JhengHei",sans-serif;}
+  h1   {text-align:center;color:#fff;padding:10px 0 0;font-size:17px;margin:0;}
+  .info{text-align:center;color:#aaa;font-size:12px;padding:4px 0 8px;line-height:2.0;}
+</style>
+</head>
+<body>
+<h1>台指期 TX｜2026/05/22｜近 30 個交易日</h1>
+<div class="info">
+  收 <b style="color:#ef5350">42442</b>
+  &nbsp;現貨 <b>42267.97</b>
+  &nbsp;基差 <b style="color:#ef5350">-174.03</b>
+  &nbsp;OI <b style="color:#ffb300">82,109</b>
+  &nbsp;OI變化 <b style="color:#ef5350">+483</b>
+  &nbsp;｜ 前5大淨 <b style='color:#66bb6a'>+6,508</b>&nbsp;前10大淨 <b style='color:#66bb6a'>+2,087</b>
+  
+  <br>
+  外資淨OI <b style="color:#ef5350">-46,483</b>
+  &nbsp;投信 <b>+42,047</b>
+  &nbsp;自營商 <b>+4,680</b>
+  &nbsp;&nbsp;
+  MA5 <b style="color:#f9a825">41020.8</b>
+  &nbsp;MA10 <b style="color:#42a5f5">41282.7</b>
+  &nbsp;MA20 <b style="color:#ab47bc">40919.2</b>
+  &nbsp;MA60 <b style="color:#ef5350">-</b>
+</div>
+<div id="chart" style="width:100%;height:95vh"></div>
+<script>
+const D = {"dates": ["20260410", "20260413", "20260414", "20260415", "20260416", "20260417", "20260420", "20260421", "20260422", "20260423", "20260424", "20260427", "20260428", "20260429", "20260430", "20260504", "20260505", "20260506", "20260507", "20260508", "20260511", "20260512", "20260513", "20260514", "20260515", "20260518", "20260519", "20260520", "20260521", "20260522"], "opens": [35249.0, 35280.0, 36060.0, 36997.0, 37321.0, 37145.0, 37324.0, 37707.0, 38150.0, 38686.0, 38299.0, 39999.0, 39820.0, 39698.0, 39698.0, 40440.0, 40936.0, 41650.0, 42329.0, 42120.0, 42230.0, 42200.0, 41238.0, 41948.0, 42282.0, 40200.0, 40890.0, 40282.0, 40967.0, 42196.0], "highs": [35580.0, 35652.0, 36430.0, 37359.0, 37666.0, 37388.0, 37704.0, 38159.0, 38369.0, 39087.0, 39244.0, 40458.0, 40347.0, 39790.0, 39937.0, 41074.0, 41097.0, 42005.0, 42468.0, 42343.0, 42258.0, 42363.0, 41604.0, 42238.0, 42454.0, 40990.0, 40931.0, 40544.0, 41666.0, 42502.0], "lows": [35215.0, 35225.0, 35990.0, 36909.0, 37086.0, 37033.0, 37209.0, 37647.0, 37925.0, 37408.0, 38268.0, 39837.0, 39661.0, 39123.0, 39265.0, 40167.0, 40798.0, 41038.0, 42005.0, 41539.0, 41802.0, 41607.0, 40984.0, 41497.0, 40976.0, 40169.0, 40188.0, 40005.0, 40957.0, 41790.0], "closes": [35567.0, 35457.0, 36381.0, 36977.0, 37645.0, 37083.0, 37254.0, 38048.0, 38206.0, 37875.0, 39224.0, 39888.0, 39749.0, 39490.0, 39360.0, 41031.0, 41035.0, 41503.0, 42340.0, 41937.0, 41945.0, 41695.0, 41469.0, 41602.0, 41012.0, 40807.0, 40248.0, 40134.0, 41473.0, 42442.0], "volumes": [55415.0, 83511.0, 71746.0, 42753.0, 56683.0, 51355.0, 52704.0, 63284.0, 54740.0, 111647.0, 87114.0, 80194.0, 63337.0, 59705.0, 70719.0, 63214.0, 41739.0, 83758.0, 59558.0, 66370.0, 46800.0, 72568.0, 73412.0, 73073.0, 100977.0, 99781.0, 86112.0, 46223.0, 54092.0, 57547.0], "oi": [71146.0, 38421.0, 16844.0, 73200.0, 77142.0, 78627.0, 79491.0, 82127.0, 81421.0, 78250.0, 79817.0, 79918.0, 79804.0, 79818.0, 79725.0, 82619.0, 83828.0, 84612.0, 86565.0, 89587.0, 89581.0, 87671.0, 86783.0, 83666.0, 75507.0, 42895.0, 17052.0, 80211.0, 81626.0, 82109.0], "oi_chg": [null, -32725.0, -21577.0, 56356.0, 3942.0, 1485.0, 864.0, 2636.0, -706.0, -3171.0, 1567.0, 101.0, -114.0, 14.0, -93.0, 2894.0, 1209.0, 784.0, 1953.0, 3022.0, -6.0, -1910.0, -888.0, -3117.0, -8159.0, -32612.0, -25843.0, 63159.0, 1415.0, 483.0], "fi_net": [-34403, -35996, -36664, -36783, -39683, -41151, -42618, -41295, -42555, -44027, -40633, -44223, -45869, -47074, -44044, -43504, -48687, -50967, -51132, -54530, -54225, -53072, -52760, -51068, -50963, -44996, -45376, -42744, -44454, -46483], "it_net": [40546, 39733, 41195, 42245, 42625, 42292, 42102, 42905, 41752, 41309, 41727, 42645, 42573, 42195, 42317, 44106, 44209, 45098, 46177, 46307, 46609, 44865, 44587, 43116, 41738, 39723, 38642, 38983, 40713, 42047], "dt_net": [9851, 11166, 12548, 10378, 10277, 9356, 8284, 8514, 7804, 6661, 7885, 6960, 7002, 6049, 6247, 6363, 5660, 5761, 5679, 5877, 5600, 5332, 5746, 5797, 5914, 5540, 5212, 4324, 4606, 4680], "basis": [-149.17, 0.29, -84.88, -254.86, -512.98, -278.66, -295.2, -442.89, -327.53, -160.85, -291.6, -271.37, -227.27, -186.5, -433.37, -325.86, -265.71, -364.15, -406.22, -333.06, -154.94, 203.32, -94.5, 149.75, 160.36, 84.82, -72.44, -113.18, -104.79, -174.03], "rsi6": [null, null, null, null, null, null, 77.83, 83.13, 84.04, 73.99, 83.59, 86.53, 82.8, 75.54, 71.75, 84.08, 84.1, 86.47, 89.76, 78.71, 78.77, 70.99, 64.12, 66.42, 49.54, 44.8, 34.11, 32.22, 61.87, 72.37], "rsi12": [null, null, null, null, null, null, null, null, null, null, null, null, 82.34, 78.89, 77.12, 82.59, 82.6, 83.89, 85.91, 80.59, 80.61, 77.09, 73.91, 74.58, 66.29, 63.61, 56.78, 55.46, 65.71, 70.98], "ma5": [null, null, null, null, 36405.4, 36708.6, 37068.0, 37401.4, 37647.2, 37693.2, 38121.4, 38648.2, 38988.4, 39245.2, 39542.2, 39903.6, 40133.0, 40483.8, 41053.8, 41569.2, 41752.0, 41884.0, 41877.2, 41729.6, 41544.6, 41317.0, 41027.6, 40760.6, 40734.8, 41020.8], "ma10": [null, null, null, null, null, null, null, null, null, 37049.3, 37415.0, 37858.1, 38194.9, 38446.2, 38617.7, 39012.5, 39390.6, 39736.1, 40149.5, 40555.7, 40827.8, 41008.5, 41180.5, 41391.7, 41556.9, 41534.5, 41455.8, 41318.9, 41232.2, 41282.7], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 38802.5, 39121.4, 39433.3, 39687.7, 39918.95, 40087.3, 40273.5, 40423.2, 40527.5, 40690.85, 40919.2], "ma60": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]};
+const dates   = D.dates.map(d => d.slice(0,4)+'/'+d.slice(4,6)+'/'+d.slice(6));
+const volClr  = D.closes.map((c,i) => i===0?'#888': c>=D.closes[i-1]?'#ef5350':'#66bb6a');
+const oiChgClr= D.oi_chg.map(v => v===null?'#888': v>=0?'#ef5350':'#66bb6a');
+const zero    = x => [x[0],x[x.length-1]].map((_,i)=>0);
+
+const traces = [
+  // ── Panel 1: K線 + MA ──────────────────────────────────────────
+  {type:'candlestick',x:dates,open:D.opens,high:D.highs,low:D.lows,close:D.closes,
+    name:'TX',increasing:{line:{color:'#ef5350'},fillcolor:'#c62828'},
+    decreasing:{line:{color:'#66bb6a'},fillcolor:'#2e7d32'},
+    xaxis:'x',yaxis:'y1',whiskerwidth:0.3},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma5, name:'MA5', line:{color:'#f9a825',width:1.2},xaxis:'x',yaxis:'y1'},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma10,name:'MA10',line:{color:'#42a5f5',width:1.2},xaxis:'x',yaxis:'y1'},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma20,name:'MA20',line:{color:'#ab47bc',width:1.2},xaxis:'x',yaxis:'y1'},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma60,name:'MA60',line:{color:'#ef5350',width:1.5},xaxis:'x',yaxis:'y1'},
+  // ── Panel 2: 成交量 ────────────────────────────────────────────
+  {type:'bar',x:dates,y:D.volumes,name:'成交量',marker:{color:volClr},xaxis:'x',yaxis:'y2'},
+  // ── Panel 3: 未平倉量 ──────────────────────────────────────────
+  {type:'scatter',mode:'lines',x:dates,y:D.oi,name:'未平倉OI',
+    line:{color:'#ffb300',width:2},xaxis:'x',yaxis:'y3'},
+  // ── Panel 4: OI 日變化 ─────────────────────────────────────────
+  {type:'bar',x:dates,y:D.oi_chg,name:'OI日變化',marker:{color:oiChgClr},xaxis:'x',yaxis:'y4'},
+  // ── Panel 5: 三大法人淨OI ──────────────────────────────────────
+  {type:'scatter',mode:'lines',x:dates,y:D.fi_net,name:'外資淨OI',
+    line:{color:'#ef5350',width:2},xaxis:'x',yaxis:'y5'},
+  {type:'scatter',mode:'lines',x:dates,y:D.it_net,name:'投信淨OI',
+    line:{color:'#42a5f5',width:1.5},xaxis:'x',yaxis:'y5'},
+  {type:'scatter',mode:'lines',x:dates,y:D.dt_net,name:'自營商淨OI',
+    line:{color:'#aaa',width:1,dash:'dot'},xaxis:'x',yaxis:'y5'},
+  {type:'scatter',mode:'lines',x:[dates[0],dates[dates.length-1]],y:[0,0],
+    line:{color:'#444',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y5'},
+  // ── Panel 6: 基差 ─────────────────────────────────────────────
+  {type:'scatter',mode:'lines',x:dates,y:D.basis,name:'基差(現-期)',
+    line:{color:'#80cbc4',width:2},fill:'tozeroy',fillcolor:'rgba(128,203,196,0.08)',
+    xaxis:'x',yaxis:'y6'},
+  {type:'scatter',mode:'lines',x:[dates[0],dates[dates.length-1]],y:[0,0],
+    line:{color:'#555',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y6'},
+  // ── Panel 7: RSI ──────────────────────────────────────────────
+  {type:'scatter',mode:'lines',x:dates,y:D.rsi6, name:'RSI6',
+    line:{color:'#ef6c00',width:1.5},xaxis:'x',yaxis:'y7'},
+  {type:'scatter',mode:'lines',x:dates,y:D.rsi12,name:'RSI12',
+    line:{color:'#fdd835',width:1.5},xaxis:'x',yaxis:'y7'},
+  {type:'scatter',mode:'lines',x:[dates[0],dates[dates.length-1]],y:[80,80],
+    line:{color:'#ef5350',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y7'},
+  {type:'scatter',mode:'lines',x:[dates[0],dates[dates.length-1]],y:[20,20],
+    line:{color:'#66bb6a',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y7'},
+];
+
+const layout = {
+  paper_bgcolor:'#0d0f14', plot_bgcolor:'#0d0f14',
+  font:{color:'#ccc',size:11},
+  legend:{bgcolor:'rgba(0,0,0,0.4)',bordercolor:'#444',borderwidth:1,
+           orientation:'h',x:0,y:1.01,xanchor:'left',font:{size:11}},
+  margin:{l:65,r:15,t:5,b:50},
+  xaxis:{type:'category',rangeslider:{visible:false},tickangle:-45,
+          gridcolor:'#1a2030',color:'#aaa',nticks:20},
+  grid:{rows:7,columns:1,pattern:'independent',roworder:'top to bottom'},
+  yaxis: {domain:[0.80,1.00],gridcolor:'#1a2030',color:'#aaa',title:'TX 價格'},
+  yaxis2:{domain:[0.69,0.79],gridcolor:'#1a2030',color:'#aaa',title:'成交量'},
+  yaxis3:{domain:[0.58,0.68],gridcolor:'#1a2030',color:'#aaa',title:'OI(口)'},
+  yaxis4:{domain:[0.47,0.57],gridcolor:'#1a2030',color:'#aaa',title:'OI變化'},
+  yaxis5:{domain:[0.33,0.46],gridcolor:'#1a2030',color:'#aaa',title:'法人淨OI',
+           zeroline:true,zerolinecolor:'#444'},
+  yaxis6:{domain:[0.20,0.32],gridcolor:'#1a2030',color:'#aaa',title:'基差(點)',
+           zeroline:true,zerolinecolor:'#444'},
+  yaxis7:{domain:[0.00,0.19],gridcolor:'#1a2030',color:'#aaa',title:'RSI',range:[0,100]},
+  hovermode:'x unified',
+  hoverlabel:{bgcolor:'#1a2030',bordercolor:'#555',font:{color:'#fff',size:11}},
+};
+
+Plotly.newPlot('chart', traces, layout, {responsive:true,scrollZoom:true});
+</script>
+</body>
+</html>

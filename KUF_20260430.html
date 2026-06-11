@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>KUF（台玻）日線  30 根</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+  body { margin:0; background:#0d0f14; color:#ccc; font-family:"Microsoft JhengHei",sans-serif; }
+  h1   { text-align:center; color:#fff; padding:10px 0 0; font-size:17px; margin:0; }
+  .info{ text-align:center; color:#aaa; font-size:12px; padding:3px 0 6px; line-height:1.9; }
+</style>
+</head>
+<body>
+<h1>KUF（台玻）日線  30 根</h1>
+<div class="info">
+  最新：2026/04/30
+  &nbsp;收 <b style="color:#f66">67.0</b>
+  &nbsp;現股 <b>67.0</b>
+  &nbsp;基差 <b style="color:#6f6">0.0</b>
+  &nbsp;OI <b style="color:#ffb300">13,793</b>
+  &nbsp;|&nbsp; 前5大 多4,079/空15,155/<b style='color:#f66'>淨-11,076</b>&nbsp; 前10大 多5,632/空15,744/<b style='color:#f66'>淨-10,112</b>
+  <br>MA5 <b style='color:#f9a825'>66.72</b>  MA10 <b style='color:#42a5f5'>69.04</b>  MA20 <b style='color:#ab47bc'>64.97</b>  MA60 <b style='color:#ef5350'>-</b>
+  &nbsp;&nbsp;
+  外資OI淨 <b style="color:#f66">-327,069</b>
+  &nbsp;投信 <b>+14,499</b>
+  &nbsp;自營商 <b>-307,941</b>
+</div>
+<div id="chart" style="width:100%;height:95vh"></div>
+<script>
+const D = {"dates": ["20260318", "20260319", "20260320", "20260323", "20260324", "20260325", "20260326", "20260327", "20260330", "20260331", "20260401", "20260402", "20260407", "20260408", "20260409", "20260410", "20260413", "20260414", "20260415", "20260416", "20260417", "20260420", "20260421", "20260422", "20260423", "20260424", "20260427", "20260428", "20260429", "20260430"], "opens": [62.7, 62.4, 61.6, 53.5, 53.4, 53.4, 55.6, 51.9, 51.1, 52.3, 53.9, 54.2, 52.8, 57.7, 62.9, 62.1, 58.3, 65.9, 68.7, 70.6, 69.7, 75.3, 71.7, 75.8, 71.7, 67.2, 64.8, 64.2, 70.3, 66.5], "highs": [65.2, 62.9, 62.4, 54.0, 54.2, 56.0, 57.5, 54.9, 54.3, 56.3, 55.1, 55.4, 55.1, 58.9, 64.7, 62.5, 63.9, 70.1, 71.0, 73.0, 76.8, 76.8, 76.1, 77.7, 72.5, 68.2, 65.3, 70.7, 70.6, 69.3], "lows": [60.0, 60.3, 55.9, 51.3, 48.6, 52.7, 52.2, 49.85, 51.1, 50.7, 53.1, 51.5, 52.8, 55.9, 59.4, 57.5, 57.6, 64.6, 65.4, 65.9, 68.6, 70.1, 70.9, 70.6, 64.0, 62.5, 61.2, 63.5, 65.9, 65.0], "closes": [63.9, 60.3, 56.9, 51.6, 51.2, 54.0, 52.2, 54.5, 54.1, 51.0, 54.2, 51.9, 53.6, 58.9, 60.5, 57.9, 63.9, 68.7, 69.4, 70.0, 74.7, 70.7, 75.2, 70.9, 65.3, 65.1, 64.3, 70.7, 66.5, 67.0], "volumes": [6900.0, 6856.0, 7337.0, 4878.0, 10713.0, 8935.0, 7211.0, 8068.0, 3501.0, 8849.0, 4417.0, 4183.0, 4492.0, 6570.0, 24224.0, 7942.0, 8413.0, 19135.0, 5585.0, 16145.0, 35521.0, 19618.0, 18365.0, 15924.0, 18766.0, 9949.0, 7466.0, 7537.0, 7705.0, 8697.0], "oi": [4241.0, 12793.0, 12369.0, 11924.0, 12273.0, 12744.0, 12840.0, 12890.0, 12935.0, 13132.0, 12513.0, 11850.0, 11214.0, 9900.0, 8697.0, 7282.0, 5836.0, 4533.0, 3012.0, 15163.0, 16910.0, 17063.0, 17316.0, 16551.0, 14511.0, 14732.0, 13759.0, 13683.0, 14208.0, 13793.0], "oi_chg": [null, 8552.0, -424.0, -445.0, 349.0, 471.0, 96.0, 50.0, 45.0, 197.0, -619.0, -663.0, -636.0, -1314.0, -1203.0, -1415.0, -1446.0, -1303.0, -1521.0, 12151.0, 1747.0, 153.0, 253.0, -765.0, -2040.0, 221.0, -973.0, -76.0, 525.0, -415.0], "oi_colors": ["#888", "#e53935", "#43a047", "#43a047", "#e53935", "#e53935", "#e53935", "#e53935", "#e53935", "#e53935", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#e53935", "#e53935", "#e53935", "#e53935", "#43a047", "#43a047", "#e53935", "#43a047", "#43a047", "#e53935", "#43a047"], "fi_net": [-234514, -259121, -266535, -259150, -251456, -261995, -261889, -257321, -256339, -245796, -245446, -234621, -239662, -242185, -253473, -255632, -249743, -241037, -214698, -232842, -262057, -284197, -293353, -304111, -288531, -281693, -296174, -308600, -321719, -327069], "it_net": [6843, 6832, 4703, 3607, 3598, 3585, 4623, 4668, 7285, 8218, 8151, 8151, 8151, 8151, 8773, 9437, 10952, 10972, 3987, 4207, 4297, 12835, 17130, 19812, 20494, 21004, 12086, 13962, 14529, 14499], "dt_net": [-264981, -283303, -266802, -251441, -228588, -237155, -252054, -262962, -263263, -241325, -238249, -243403, -246587, -258006, -273174, -281265, -305201, -309946, -284847, -299359, -304189, -310903, -311554, -319237, -295417, -296534, -301560, -309524, -311048, -307941], "basis": [0.2, 0.8, 0.7, 0.3, 0.7, 0.2, 1.1, 0.4, 0.3, 0.9, -0.3, 0.3, 0.1, 0.1, -1.0, -0.2, -0.5, -0.5, -0.2, -0.1, -0.5, 0.2, -1.0, 0.0, 0.9, -0.1, -0.1, -0.1, -0.3, 0.0], "rsi6": [null, null, null, null, null, null, 16.18, 27.72, 26.94, 21.39, 37.38, 31.8, 39.77, 58.1, 62.26, 52.16, 66.99, 74.56, 75.54, 76.47, 82.68, 65.12, 72.89, 58.06, 44.05, 43.6, 41.56, 59.68, 47.97, 49.39], "rsi12": [null, null, null, null, null, null, null, null, null, null, null, null, 33.0, 43.74, 46.56, 42.76, 52.52, 58.66, 59.5, 60.25, 65.68, 58.29, 63.35, 56.23, 48.49, 48.23, 47.14, 55.89, 49.97, 50.65], "ma5": [null, null, null, null, 56.78, 54.8, 53.18, 52.7, 53.2, 53.16, 53.2, 53.14, 52.96, 53.92, 55.82, 56.56, 58.96, 61.98, 64.08, 65.98, 69.34, 70.7, 72.0, 72.3, 71.36, 69.44, 68.16, 67.26, 66.38, 66.72], "ma10": [null, null, null, null, null, null, null, null, null, 54.97, 54.0, 53.16, 52.83, 53.56, 54.49, 54.88, 56.05, 57.47, 59.0, 60.9, 62.95, 64.83, 66.99, 68.19, 68.67, 69.39, 69.43, 69.63, 69.34, 69.04], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 57.94, 58.48, 59.0, 59.91, 60.88, 61.58, 62.14, 62.74, 63.55, 64.17, 64.97], "ma60": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]};
+const dates = D.dates.map(d => d.slice(0,4)+'/'+d.slice(4,6)+'/'+d.slice(6));
+const volClr = D.closes.map((c,i) => i===0?'#888': c>=D.closes[i-1]?'#e53935':'#43a047');
+
+const traces = [
+  {type:'candlestick', x:dates, open:D.opens, high:D.highs, low:D.lows, close:D.closes,
+    name:'K線', increasing:{line:{color:'#e53935'},fillcolor:'#c62828'},
+    decreasing:{line:{color:'#43a047'},fillcolor:'#2e7d32'},
+    xaxis:'x', yaxis:'y1', whiskerwidth:0.3},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma5,  name:'MA5',  line:{color:'#f9a825',width:1.2},xaxis:'x',yaxis:'y1'},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma10, name:'MA10', line:{color:'#42a5f5',width:1.2},xaxis:'x',yaxis:'y1'},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma20, name:'MA20', line:{color:'#ab47bc',width:1.2},xaxis:'x',yaxis:'y1'},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma60, name:'MA60', line:{color:'#ef5350',width:1.5},xaxis:'x',yaxis:'y1'},
+  {type:'bar',x:dates,y:D.volumes,name:'成交量',marker:{color:volClr},xaxis:'x',yaxis:'y2'},
+  {type:'scatter',mode:'lines',x:dates,y:D.oi,name:'未平倉口數',line:{color:'#ffb300',width:2},xaxis:'x',yaxis:'y3'},
+  {type:'bar',x:dates,y:D.oi_chg,name:'OI變化',marker:{color:D.oi_colors},xaxis:'x',yaxis:'y4'},
+  {type:'scatter',mode:'lines',x:dates,y:D.fi_net,name:'外資淨OI',line:{color:'#ef5350',width:1.5},xaxis:'x',yaxis:'y5'},
+  {type:'scatter',mode:'lines',x:dates,y:D.it_net,name:'投信淨OI',line:{color:'#42a5f5',width:1.2},xaxis:'x',yaxis:'y5'},
+  {type:'scatter',mode:'lines',x:dates,y:D.dt_net,name:'自營商淨OI',line:{color:'#aaa',width:1.0,dash:'dot'},xaxis:'x',yaxis:'y5'},
+  {type:'scatter',mode:'lines',x:dates,y:D.basis,name:'基差(現-期)',line:{color:'#80cbc4',width:1.5},xaxis:'x',yaxis:'y6'},
+  {type:'scatter',mode:'lines',x:[dates[0],dates[dates.length-1]],y:[0,0],
+    line:{color:'#555',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y6'},
+  {type:'scatter',mode:'lines',x:dates,y:D.rsi6, name:'RSI 6', line:{color:'#ef6c00',width:1.5},xaxis:'x',yaxis:'y7'},
+  {type:'scatter',mode:'lines',x:dates,y:D.rsi12,name:'RSI 12',line:{color:'#fdd835',width:1.5},xaxis:'x',yaxis:'y7'},
+  {type:'scatter',mode:'lines',x:[dates[0],dates[dates.length-1]],y:[80,80],
+    line:{color:'#e53935',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y7'},
+  {type:'scatter',mode:'lines',x:[dates[0],dates[dates.length-1]],y:[20,20],
+    line:{color:'#43a047',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y7'},
+];
+
+const layout = {
+  paper_bgcolor:'#0d0f14', plot_bgcolor:'#0d0f14',
+  font:{color:'#ccc',size:11},
+  legend:{bgcolor:'rgba(0,0,0,0.4)',bordercolor:'#444',borderwidth:1,
+           orientation:'h',x:0,y:1.01,xanchor:'left',font:{size:11}},
+  margin:{l:65,r:15,t:5,b:50},
+  xaxis:{type:'category',rangeslider:{visible:false},tickangle:-45,
+          gridcolor:'#1a2030',color:'#aaa',nticks:20},
+  grid:{rows:7,columns:1,pattern:'independent',roworder:'top to bottom'},
+  yaxis: {domain:[0.79,1.00],gridcolor:'#1a2030',color:'#aaa',title:'價格'},
+  yaxis2:{domain:[0.68,0.78],gridcolor:'#1a2030',color:'#aaa',title:'成交量'},
+  yaxis3:{domain:[0.57,0.67],gridcolor:'#1a2030',color:'#aaa',title:'未平倉'},
+  yaxis4:{domain:[0.46,0.56],gridcolor:'#1a2030',color:'#aaa',title:'OI變化'},
+  yaxis5:{domain:[0.33,0.45],gridcolor:'#1a2030',color:'#aaa',title:'法人淨OI',
+           zeroline:true,zerolinecolor:'#444'},
+  yaxis6:{domain:[0.20,0.32],gridcolor:'#1a2030',color:'#aaa',title:'基差',
+           zeroline:true,zerolinecolor:'#444'},
+  yaxis7:{domain:[0.00,0.19],gridcolor:'#1a2030',color:'#aaa',title:'RSI',range:[0,100]},
+  hovermode:'x unified',
+  hoverlabel:{bgcolor:'#1a2030',bordercolor:'#555',font:{color:'#fff',size:11}},
+};
+
+Plotly.newPlot('chart', traces, layout, {responsive:true,scrollZoom:true});
+</script>
+</body>
+</html>

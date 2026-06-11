@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title id="pageTitle">Loading...</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box}
+body{font-family:'Noto Sans TC','Microsoft JhengHei',system-ui,sans-serif;
+  margin:0 auto;padding:24px;max-width:1200px;background:#f4f5f7;color:#1a1a2e}
+h1{font-size:20px;font-weight:500;margin:0 0 4px}
+.sub{color:#888;font-size:13px;margin-bottom:20px}
+.card{background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;border:1px solid #e8e8e8}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.st{font-size:13px;font-weight:500;margin-bottom:12px;color:#333}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;color:#999;padding:5px 8px;border-bottom:1px solid #f0f0f0;font-weight:400}
+td{padding:5px 8px;border-bottom:1px solid #f8f8f8}
+tr:hover td{background:#fafafa}
+.note{font-size:11px;color:#bbb;margin-top:10px;line-height:1.6}
+.badge{border-radius:4px;padding:2px 8px;font-size:11px}
+.leg-item{display:inline-flex;align-items:center;gap:5px;font-size:12px;margin:2px 6px 2px 0}
+.csec{border-left:3px solid #ddd;padding:10px 14px;margin-bottom:10px;background:#f9f9f9;border-radius:0 8px 8px 0}
+.ckv{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;padding:3px 0;border-bottom:1px solid #efefef}
+.ckv:last-child{border-bottom:none}
+.cpbox{background:#f5f7ff;border-radius:8px;padding:8px 14px;text-align:center;flex:1;min-width:90px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<h1 id="h1"></h1>
+<div class="sub" id="sub"></div>
+
+<div class="card" id="scoreCard">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px">
+    <div>
+      <div class="st" id="scoreTitle" style="margin-bottom:6px"></div>
+      <div id="scoreGrade" style="font-size:24px;font-weight:500;line-height:1.2"></div>
+      <div id="scoreSubNote" style="font-size:11px;color:#bbb;margin-top:6px;max-width:320px;line-height:1.5"></div>
+    </div>
+    <div style="text-align:center;min-width:80px">
+      <div id="scoreNum" style="font-size:56px;font-weight:300;line-height:1"></div>
+      <div style="font-size:11px;color:#bbb">/ 100</div>
+    </div>
+  </div>
+  <div id="scoreBars" style="margin-top:16px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px"></div>
+</div>
+
+<div class="card" id="conclusionCard">
+  <div class="st" id="conclusionTitle"></div>
+  <div id="conclusionBody"></div>
+</div>
+
+<div class="card" id="lastDayCard">
+  <div class="st" id="lastDayTitle"></div>
+  <div id="reversalAlert" style="display:none;margin-bottom:14px"></div>
+  <div id="lastDaySummary" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div>
+      <div style="font-size:11px;font-weight:500;color:#e63946;margin-bottom:6px;padding-bottom:4px;border-bottom:2px solid #e63946" id="ldBuyHeader"></div>
+      <table id="ldBuyTable"><thead><tr>
+        <th style="color:#555"></th>
+        <th style="text-align:right;color:#e63946" id="th_ld_buy"></th>
+        <th style="text-align:right;color:#1565c0" id="th_ld_sell"></th>
+        <th style="text-align:right;color:#333" id="th_ld_net"></th>
+      </tr></thead><tbody id="ldBuyRows"></tbody></table>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:500;color:#1565c0;margin-bottom:6px;padding-bottom:4px;border-bottom:2px solid #1565c0" id="ldSellHeader"></div>
+      <table id="ldSellTable"><thead><tr>
+        <th style="color:#555"></th>
+        <th style="text-align:right;color:#e63946"></th>
+        <th style="text-align:right;color:#1565c0"></th>
+        <th style="text-align:right;color:#333"></th>
+      </tr></thead><tbody id="ldSellRows"></tbody></table>
+    </div>
+  </div>
+  <div class="note" id="lastDayNote"></div>
+</div>
+
+<div class="card">
+  <div class="st" id="chartTitle"></div>
+  <div style="font-size:11px;color:#aaa;margin-bottom:6px" id="legendHint"></div>
+  <div id="leg" style="margin-bottom:12px"></div>
+  <div style="position:relative;height:500px">
+    <canvas id="mainChart"></canvas>
+  </div>
+  <div class="note" id="chartNote"></div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="st" id="buyTitle" style="color:#1565c0"></div>
+    <table><thead><tr>
+      <th id="th_rank">#</th>
+      <th id="th_broker"></th>
+      <th id="th_total" style="text-align:right"></th>
+    </tr></thead>
+    <tbody id="buyRows"></tbody></table>
+  </div>
+  <div class="card">
+    <div class="st" id="sellTitle" style="color:#e63946"></div>
+    <table><thead><tr>
+      <th>#</th><th></th>
+      <th style="text-align:right"></th>
+    </tr></thead>
+    <tbody id="sellRows"></tbody></table>
+  </div>
+</div>
+
+<div class="card" id="overlayCard">
+  <div class="st" id="overlayTitle"></div>
+  <div style="position:relative;height:300px">
+    <canvas id="overlayChart"></canvas>
+  </div>
+  <div class="note" id="overlayNote"></div>
+</div>
+
+<div class="card" id="chainCard" style="display:none">
+  <div class="st" id="chainTitle"></div>
+  <div id="chainCorrWrap" style="margin-bottom:16px;overflow-x:auto"></div>
+  <div id="chainFlowWrap" style="overflow-x:auto"></div>
+  <div class="note" id="chainNote"></div>
+</div>
+
+<div class="card" id="phaseCard" style="display:none">
+  <div class="st" id="phaseTitle"></div>
+  <div id="phaseWrap" style="overflow-x:auto"></div>
+  <div class="note" id="phaseNote"></div>
+</div>
+
+<div class="card" id="watchCard" style="display:none">
+  <div class="st" id="watchTitle"></div>
+  <div style="position:relative;height:320px;margin-bottom:16px">
+    <canvas id="watchChart"></canvas>
+  </div>
+  <div style="overflow-x:auto">
+    <table id="watchTable">
+      <thead><tr id="watchHead"></tr></thead>
+      <tbody id="watchBody"></tbody>
+    </table>
+  </div>
+  <div class="note" id="watchNote"></div>
+</div>
+
+<div class="card" id="streakCard">
+  <div class="st" id="streakTitle"></div>
+  <table id="streakTable" style="margin-bottom:20px">
+    <thead><tr>
+      <th id="thSkBroker"></th>
+      <th id="thSkCur"></th>
+      <th id="thSkMaxBuy"></th>
+      <th id="thSkMaxSell"></th>
+      <th id="thSkStatus"></th>
+    </tr></thead>
+    <tbody id="streakRows"></tbody>
+  </table>
+  <div class="st" id="heatTitle" style="margin-bottom:8px"></div>
+  <div style="overflow-x:auto">
+    <table id="heatTable" style="border-spacing:3px;border-collapse:separate;white-space:nowrap"></table>
+  </div>
+  <div class="note" id="streakNote"></div>
+</div>
+
+<div class="card" id="predCard">
+  <div class="st" id="predTitle"></div>
+  <div class="grid">
+    <div>
+      <div style="font-size:12px;font-weight:500;color:#555;margin-bottom:8px" id="llTitle"></div>
+      <table id="llTable">
+        <thead><tr>
+          <th id="thLlBroker"></th>
+          <th style="text-align:center" id="thLl1"></th>
+          <th style="text-align:center" id="thLl2"></th>
+          <th style="text-align:center" id="thLl3"></th>
+          <th id="thLlBest"></th>
+        </tr></thead>
+        <tbody id="llRows"></tbody>
+      </table>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:500;color:#555;margin-bottom:8px" id="smTitle"></div>
+      <table id="smTable">
+        <thead><tr>
+          <th id="thSmBroker"></th>
+          <th style="text-align:right" id="thSmSmart"></th>
+          <th style="text-align:right" id="thSmDumb"></th>
+          <th id="thSmScore"></th>
+        </tr></thead>
+        <tbody id="smRows"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="note" id="predNote"></div>
+</div>
+
+<div class="card" id="costCard">
+  <div class="st" id="costTitle"></div>
+  <table>
+    <thead><tr>
+      <th id="thCostBroker"></th>
+      <th style="text-align:right" id="thCostAvg"></th>
+      <th style="text-align:right" id="thCostCur"></th>
+      <th style="text-align:right" id="thCostPnl"></th>
+      <th id="thCostStatus"></th>
+    </tr></thead>
+    <tbody id="costRows"></tbody>
+  </table>
+  <div class="note" id="costNote"></div>
+</div>
+
+<div class="card" id="intensityCard">
+  <div class="st" id="intensityTitle"></div>
+  <div style="position:relative;height:220px">
+    <canvas id="intensityChart"></canvas>
+  </div>
+  <div class="note" id="intensityNote"></div>
+</div>
+
+<div class="card" id="govCard" style="display:none">
+  <div class="st" id="govTitle" style="color:#37474f"></div>
+  <div id="govStats" style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:14px;font-size:12px"></div>
+  <div style="position:relative;height:200px">
+    <canvas id="govChart"></canvas>
+  </div>
+  <table style="margin-top:14px">
+    <thead><tr>
+      <th id="thGovBroker"></th>
+      <th id="thGovTotal" style="text-align:right"></th>
+      <th id="thGovDays"></th>
+      <th id="thGovDir"></th>
+    </tr></thead>
+    <tbody id="govRows"></tbody>
+  </table>
+  <div class="note" id="govNote"></div>
+</div>
+
+<div class="card" id="instCard">
+  <div class="st" id="instTitle"></div>
+  <div style="font-size:12px;font-weight:500;color:#555;margin-bottom:8px" id="instChartTitle"></div>
+  <div style="position:relative;height:220px">
+    <canvas id="instChart"></canvas>
+  </div>
+  <div style="font-size:12px;font-weight:500;color:#555;margin:20px 0 8px" id="marginChartTitle"></div>
+  <div style="position:relative;height:220px">
+    <canvas id="marginChart"></canvas>
+  </div>
+  <div class="note" id="instNote"></div>
+</div>
+
+<div class="card">
+  <div class="st" id="corrTitle"></div>
+  <table>
+    <thead><tr>
+      <th id="thA"></th><th id="thB"></th>
+      <th id="thR" style="text-align:right"></th>
+      <th id="thLabel"></th>
+    </tr></thead>
+    <tbody id="corrRows"></tbody>
+  </table>
+  <div class="note" id="corrNote"></div>
+</div>
+
+<script>
+// ── 所有資料（中文以 \uXXXX 存儲）────────────────────────────
+const META     = {"stockName": "2344", "stockId": "2344", "days": 60, "rankDays": 20, "topN": 10, "dateFrom": "2026-03-04", "dateTo": "2026-05-26"};
+const DS       = [{"label": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "isBuy": true, "rank": 1, "total": 58796.8, "data": [7328.0, 975.0, -5478.2, 10347.2, -15101.0, -1062.0, 8451.0, -8071.2, 15860.0, 10778.0, 1307.0, -10885.7, -47704.0, 4114.8, -14342.4, -14761.0, 1776.0, 5812.6, -3640.0, -5570.0, -11657.4, 3086.0, -1658.0, 3386.0, -1670.4, 10936.3, 4877.0, -4879.0, -14342.1, 8418.0, -1484.8, 19366.0, 9902.1, 880.6, 2956.0, 3055.0, 2215.0, 4984.0, 2233.0, 7301.6, 843.0, 3285.4, 8523.0, 11438.9, 6004.8, 4609.0, 5296.0, 3706.8, 2447.0, 5233.0, -5666.3, -27175.0, 5402.3, -23569.0, 21422.0, 32360.0, 16597.0], "borderColor": "#1565c0", "bgColor": "#1565c028", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u51f1\u57fa-\u53f0\u5317", "isBuy": true, "rank": 2, "total": 48699.9, "data": [6218.0, -2601.9, 628.1, 902.1, 0, 1469.3, -2878.0, -2095.5, 2206.0, 0, 4320.9, 2406.4, 0, -3030.7, -4290.4, 0, 1266.5, 3994.8, 1001.5, 1686.7, -1416.5, -963.4, 327.1, 9708.3, -3384.6, 3066.2, 1419.9, 1509.4, -2625.1, -188.0, 350.3, 5090.7, 3623.2, 464.6, -1566.1, 0, 1229.5, 1071.9, -2798.2, -2270.8, 7402.6, 2110.7, 9335.2, 0, -5124.4, -2687.2, 788.8, -1203.5, 5521.4, -4065.8, -3417.8, -3890.2, 283.5, -3056.9, 8139.7, 1880.7, 14154.0], "borderColor": "#1b5e20", "bgColor": "#1b5e2028", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "isBuy": true, "rank": 3, "total": 48263.7, "data": [0, 0, 0, -870.0, 0, 0, 0, 0, 0, 617.5, 0, 0, 57478.0, 0, 0, -602.0, 0, 0, 0, 0, 0, -1104.0, -199.0, -604.2, -2932.0, -1088.0, -1649.0, 0, -473.0, 0, 0, 0, 0, 0, 0, 0, -1125.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 498.3, 0, 0, 0, 0, 0, 0], "borderColor": "#b71c1c", "bgColor": "#b71c1c28", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u5143\u5927\u8b49\u5238", "isBuy": true, "rank": 4, "total": 26800.7, "data": [1120.8, -336.7, -2989.9, -1591.3, -463.5, 1105.8, -2674.2, -1644.7, 2660.0, 4333.0, 1578.5, 0, -9958.7, -1559.9, 0, -8307.6, 0, 723.4, -3368.0, -843.3, 785.8, 2823.6, 361.3, -1271.2, -566.1, 2961.6, 969.7, 0, -2035.8, 0, -7956.8, -1900.5, 8106.0, -2940.8, 639.8, -240.7, 4022.0, 2588.5, -2751.8, -3129.5, 4768.7, 2374.1, 3900.4, 21714.7, -1095.4, 4465.2, 2524.9, 2652.9, 2527.1, 3118.8, 1581.4, -4120.0, -3875.2, -4243.2, 4360.0, 3795.5, 5163.4], "borderColor": "#6a1b9a", "bgColor": "#6a1b9a28", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u51f1\u57fa", "isBuy": true, "rank": 5, "total": 22939.9, "data": [710.4, -1650.9, 0, 1030.2, -556.8, -356.9, 0, -814.8, -940.9, 0, 0, 0, -2575.5, 0, 0, 605.2, 342.4, 1948.1, 0, 2764.5, 1210.2, 421.6, -1721.2, 0, -352.4, 0, 0, 0, 0, 0, 0, -1770.5, -5245.8, 143.1, 0, -356.8, 773.3, 1457.3, -370.0, -1026.6, 0, 681.1, 0, 726.0, 392.6, 30518.1, -15538.9, -11366.9, 0, -1010.5, 0, 4656.1, 591.2, -3101.2, 0, 1695.1, 20732.2], "borderColor": "#e65100", "bgColor": "#e6510028", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u6c38\u8c50\u91d1-\u532f\u7acb", "isBuy": true, "rank": 6, "total": 20849.7, "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -404.0, 0, 0, 0, -567.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1447.0, 0, 0, 0, -2321.0, 0, 299.0, 0, 934.4, 1574.8, 0, 316.8, 265.0, 2224.3, 1613.5, 0, 4046.2, 656.4, 0, 3746.9, 2684.8, 0, 924.8, 0, 0, 0, 656.3, 0, 0, 0], "borderColor": "#006064", "bgColor": "#00606428", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u6e2f\u5546\u91ce\u6751", "isBuy": true, "rank": 7, "total": 18833.2, "data": [1034.0, 0, 979.0, 0, 1124.0, 0, 1950.0, -1698.0, 1291.0, 1012.0, 719.0, -1845.0, -2341.0, 0, 0, -1936.0, 919.4, 1607.0, -1739.0, -768.7, 0, 1252.0, -1466.0, 0, 2598.0, 836.0, 291.0, -1363.5, 0, 212.0, 522.0, 732.0, -328.0, 0, 1169.0, -656.0, -881.0, 0, -2614.0, -2237.0, 801.3, 451.0, 0, 0, 431.0, 2492.0, -571.4, 532.0, 0, 1164.0, -356.0, -850.0, 815.1, -604.0, 7447.0, 1383.0, 8376.0], "borderColor": "#880e4f", "bgColor": "#880e4f28", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u4e2d\u570b\u4fe1\u8a17", "isBuy": true, "rank": 8, "total": 17252.6, "data": [3349.9, 0, 744.3, 0, 596.5, -744.0, 0, 0, 1053.9, 0, -355.2, 0, -1596.8, 0, -1798.9, 0, 0, -3353.2, 286.7, -801.1, 0, 0, 0, -1068.9, 0, -269.8, -435.6, 0, 0, 0, 0, 0, 0, 0, 0, 7840.3, 4042.1, 0, 329.9, 0, 0, 533.0, 0, 0, 0, 0, 0, 0, 4944.4, 0, 0, 0, 0, 524.3, 0, 0, 3002.1], "borderColor": "#1a237e", "bgColor": "#1a237e28", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "isBuy": true, "rank": 9, "total": 14745.2, "data": [1435.5, -574.0, 2909.0, 7098.2, -6079.2, 0, 0, -903.0, 5106.2, 2390.0, -1745.0, -6004.0, -24454.8, 701.4, 0, -10027.0, -703.9, 4801.7, -691.0, 4790.0, -5484.0, 0, -7266.0, 0, 284.7, 8521.0, 0, 1855.6, -3498.7, 277.5, 863.5, 6257.0, 0, -482.2, -901.5, 567.7, 7412.2, 2555.0, -3684.0, -3932.4, 7439.0, 656.0, 0, 3975.2, -3129.5, 5636.8, 3179.9, -2715.5, 4881.0, 0, -6394.0, -5939.0, 4678.0, -2449.0, 10159.0, 4531.0, 7013.0], "borderColor": "#33691e", "bgColor": "#33691e28", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u7d71\u4e00", "isBuy": true, "rank": 10, "total": 14025.7, "data": [-634.7, 2723.0, -1817.7, -2940.4, 0, 0, -621.1, 235.0, 2303.7, 519.3, -1615.3, -870.7, -1530.9, -1049.2, -3024.1, -543.5, 1634.9, -1179.6, 0, 6881.3, 0, 0, -890.9, 0, 0, -400.7, 809.2, 0, -652.6, -557.8, 0, -9923.3, 0, -251.8, 0, -435.8, 4455.9, -506.9, 0, 0, 0, 0, 5120.2, -4614.2, 0, 2713.3, 4060.5, 0, 13730.7, -647.0, 543.4, -1079.4, -1160.2, 1146.6, 2328.5, -3485.5, 4442.1], "borderColor": "#004d40", "bgColor": "#004d4028", "pointRadius": 4, "borderWidth": 2.5, "borderDash": []}, {"label": "\u5143\u5927-\u9928\u524d", "isBuy": false, "rank": 11, "total": -21287.2, "data": [0, -2114.0, 0, 0, 0, -1994.2, -1251.5, -788.7, -1264.1, -2120.1, 0, -3005.4, -1836.9, -4461.5, -4621.5, 0, 0, 0, 0, 0, 0, 0, 0, 958.0, -483.7, 2994.4, -1264.5, 0, 0, 0, 0, 0, 1017.8, 277.7, -1229.8, 0, 0, 0, 0, 0, 2028.7, 0, -939.0, 0, 1183.4, -1127.3, 0, 0, -1310.3, 0, -2599.6, 1036.1, -1505.2, 3994.3, -544.6, 0, -872.6], "borderColor": "#90caf9", "bgColor": "#90caf928", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u570b\u6cf0-\u6566\u5357", "isBuy": false, "rank": 12, "total": -10589.7, "data": [-1244.8, 0, 547.6, 648.6, 675.1, -434.3, 427.3, 813.5, -2208.7, -1216.5, -1496.0, 1801.5, 4420.4, 534.6, 2432.1, 2229.4, 1545.6, 0, 325.3, -440.8, 1251.5, -291.4, 1128.3, -1415.8, 1308.9, -1215.0, -144.9, 247.7, 2015.5, 494.4, 0, -1090.6, -846.8, 0, 0, 0, -1631.2, -733.5, 902.0, 613.4, -2335.5, -481.9, -3556.6, 0, 679.0, -3684.1, -837.9, -835.1, -4383.7, 670.9, 0, 2705.3, 0, 1954.5, -4484.7, -773.5, -4720.0], "borderColor": "#a5d6a7", "bgColor": "#a5d6a728", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u51f1\u57fa-\u677e\u5c71", "isBuy": false, "rank": 13, "total": -10183.6, "data": [0, 0, 0, 0, 0, 0, 0, 0, -1599.2, -4834.8, -1611.5, 0, 0, 0, -1542.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "borderColor": "#ef9a9a", "bgColor": "#ef9a9a28", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u5143\u5927-\u4fe1\u7fa9", "isBuy": false, "rank": 14, "total": -9761.4, "data": [5026.6, -1551.1, 0, -8094.6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -752.8, -1531.2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "borderColor": "#ce93d8", "bgColor": "#ce93d828", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u570b\u6cf0\u8b49\u5238", "isBuy": false, "rank": 15, "total": -8590.7, "data": [-3948.1, 0, 0, -1258.9, 0, 492.8, 0, 0, 1431.8, 4495.1, 1674.0, 0, -1177.8, -2689.2, -3212.4, 685.5, 0, 1150.7, -596.4, -2729.6, -503.9, 660.5, 0, 1366.5, 0, 0, 207.9, 0, -1192.6, -3393.7, 0, 0, 0, 0, 0, 0, 0, 424.0, -4734.7, 0, 0, 841.5, 0, 0, -674.6, 0, 771.6, 0, 4555.4, 0, -225.3, 0, -3998.3, 0, 0, 1753.0, 0], "borderColor": "#ffcc80", "bgColor": "#ffcc8028", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u53f0\u65b0", "isBuy": false, "rank": 16, "total": -8100.7, "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 400.9, 0, 0, -291.9, -6035.1, 0, 0, 0, -239.1, 0, 0, 0, 0, 0, 0, 0, -1000.5, 0, 0, 0, -927.5, 1683.3, 0, -915.4, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1041.8, -1020.8], "borderColor": "#80deea", "bgColor": "#80deea28", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u6c38\u8c50\u91d1\u8b49\u5238", "isBuy": false, "rank": 17, "total": -7410.4, "data": [-1152.4, -543.0, 0, -1591.2, -459.2, 0, 455.9, 0, 0, 1032.5, -351.7, 2524.9, -2164.0, -1513.5, -2966.6, 0, 606.6, -658.9, -3068.4, 7283.7, -4158.4, 458.5, 0, 0, -554.1, 0, 0, 0, -1854.9, -8739.6, -8289.2, -4051.1, -5034.2, -736.4, 0, 190.6, 3371.9, 1280.1, 0, -385.9, 0, 517.6, 0, 0, -1098.8, 0, 0, 5682.0, 1890.4, 1924.5, 3887.6, 0, -821.3, 1211.9, 0, 8480.8, 0], "borderColor": "#f48fb1", "bgColor": "#f48fb128", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u5146\u8c50-\u4e2d\u58e2", "isBuy": false, "rank": 18, "total": -5044.7, "data": [0, 0, -360.7, 0, 0, 0, -1475.0, -2129.1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 470.2, 0, 0, 0, 0, 0, 0, 0, 0, -443.5, 538.1, 303.5, 0, 156.3, 0, 0, 0, 299.1, 397.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -994.5, 0, 0, 0, 0], "borderColor": "#9fa8da", "bgColor": "#9fa8da28", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u51f1\u57fa-\u9577\u5e9a", "isBuy": false, "rank": 19, "total": -4924.2, "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3698.7, 0, 0, 0, -816.2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -328.9, 0, 0, 0, 0, 0, 0], "borderColor": "#c5e1a5", "bgColor": "#c5e1a528", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}, {"label": "\u5927\u548c\u570b\u6cf0", "isBuy": false, "rank": 20, "total": -4598.5, "data": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 434.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3156.0, -1740.0, -1502.0, 0, -150.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -229.0, 0, 0, 0, 0, 0, 0], "borderColor": "#80cbc4", "bgColor": "#80cbc428", "pointRadius": 2, "borderWidth": 1.5, "borderDash": [6, 3]}];
+const DATES    = ["2026-03-04", "2026-03-05", "2026-03-06", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-23", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-27", "2026-03-30", "2026-03-31", "2026-04-01", "2026-04-02", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-04", "2026-05-05", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-11", "2026-05-12", "2026-05-13", "2026-05-14", "2026-05-15", "2026-05-18", "2026-05-19", "2026-05-20", "2026-05-21", "2026-05-22", "2026-05-25", "2026-05-26"];
+const BUY_R    = [{"name": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "val": 85276.5}, {"name": "\u5143\u5927\u8b49\u5238", "val": 46320.4}, {"name": "\u51f1\u57fa", "val": 29698.5}, {"name": "\u82b1\u65d7\u74b0\u7403", "val": 29130.8}, {"name": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "val": 28138.5}, {"name": "\u6c38\u8c50\u91d1\u8b49\u5238", "val": 24757.6}, {"name": "\u7d71\u4e00", "val": 23226.3}, {"name": "\u51f1\u57fa-\u53f0\u5317", "val": 22112.4}, {"name": "\u570b\u7968-\u6566\u5317\u6cd5\u4eba", "val": 21168.9}, {"name": "\u6c38\u8c50\u91d1-\u532f\u7acb", "val": 19131.3}];
+const SELL_R   = [{"name": "\u570b\u6cf0-\u6566\u5357", "val": -19635.6}, {"name": "\u65b0\u5149", "val": -5437.8}, {"name": "\u570b\u6cf0-\u53f0\u4e2d", "val": -4480.6}, {"name": "\u570b\u6cf0-\u677f\u6a4b", "val": -4098.0}, {"name": "\u5143\u5927-\u5317\u5c6f", "val": -3159.5}, {"name": "\u5bcc\u90a6-\u65b0\u7af9", "val": -3139.7}, {"name": "\u5bcc\u90a6-\u4ec1\u611b", "val": -3091.9}, {"name": "\u5143\u5927-\u4e2d\u58e2", "val": -2907.7}, {"name": "\u5bcc\u90a6-\u5efa\u570b", "val": -2826.9}, {"name": "\u570b\u6cf0-\u6843\u5712", "val": -2746.7}];
+const CORR     = [{"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u51f1\u57fa-\u53f0\u5317", "r": 0.38, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "r": -0.53, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u5143\u5927\u8b49\u5238", "r": 0.53, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u51f1\u57fa", "r": 0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u6c38\u8c50\u91d1-\u532f\u7acb", "r": 0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u6e2f\u5546\u91ce\u6751", "r": 0.49, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u4e2d\u570b\u4fe1\u8a17", "r": 0.16, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "r": 0.75, "label": "\u9ad8\u5ea6\u540c\u5411", "color": "#2d6a4f"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u7d71\u4e00", "r": -0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u5143\u5927-\u9928\u524d", "r": 0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.68, "label": "\u9ad8\u5ea6\u5c0d\u5012", "color": "#e63946"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u51f1\u57fa-\u677e\u5c71", "r": -0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u5143\u5927-\u4fe1\u7fa9", "r": -0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.17, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u53f0\u65b0", "r": -0.11, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": 0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": 0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": -0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u5927\u548c\u570b\u6cf0", "r": -0.13, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u5143\u5927\u8b49\u5238", "r": 0.27, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u51f1\u57fa", "r": 0.15, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u6c38\u8c50\u91d1-\u532f\u7acb", "r": -0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u6e2f\u5546\u91ce\u6751", "r": 0.44, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u4e2d\u570b\u4fe1\u8a17", "r": 0.18, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "r": 0.4, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u7d71\u4e00", "r": 0.23, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u5143\u5927-\u9928\u524d", "r": 0.15, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.68, "label": "\u9ad8\u5ea6\u5c0d\u5012", "color": "#e63946"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u51f1\u57fa-\u677e\u5c71", "r": 0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u5143\u5927-\u4fe1\u7fa9", "r": 0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.23, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u53f0\u65b0", "r": -0.11, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": 0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": 0.14, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": 0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u5927\u548c\u570b\u6cf0", "r": -0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u5143\u5927\u8b49\u5238", "r": -0.31, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u51f1\u57fa", "r": -0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u6c38\u8c50\u91d1-\u532f\u7acb", "r": -0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u6e2f\u5546\u91ce\u6751", "r": -0.2, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u4e2d\u570b\u4fe1\u8a17", "r": -0.16, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "r": -0.62, "label": "\u9ad8\u5ea6\u5c0d\u5012", "color": "#e63946"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u7d71\u4e00", "r": -0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u5143\u5927-\u9928\u524d", "r": -0.15, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u570b\u6cf0-\u6566\u5357", "r": 0.34, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u51f1\u57fa-\u677e\u5c71", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u5143\u5927-\u4fe1\u7fa9", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u570b\u6cf0\u8b49\u5238", "r": -0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u53f0\u65b0", "r": 0.05, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": -0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u5927\u548c\u570b\u6cf0", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u51f1\u57fa", "r": 0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u6c38\u8c50\u91d1-\u532f\u7acb", "r": 0.51, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u6e2f\u5546\u91ce\u6751", "r": 0.33, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u4e2d\u570b\u4fe1\u8a17", "r": 0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "r": 0.49, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u7d71\u4e00", "r": 0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u5143\u5927-\u9928\u524d", "r": 0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.52, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u51f1\u57fa-\u677e\u5c71", "r": -0.13, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u5143\u5927-\u4fe1\u7fa9", "r": 0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.24, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u53f0\u65b0", "r": 0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": 0.22, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": 0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": 0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u5927\u548c\u570b\u6cf0", "r": 0.16, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u6c38\u8c50\u91d1-\u532f\u7acb", "r": -0.29, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u6e2f\u5546\u91ce\u6751", "r": 0.43, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u51f1\u57fa", "b": "\u4e2d\u570b\u4fe1\u8a17", "r": 0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "r": 0.22, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u7d71\u4e00", "r": 0.13, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u5143\u5927-\u9928\u524d", "r": -0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.33, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u51f1\u57fa", "b": "\u51f1\u57fa-\u677e\u5c71", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u5143\u5927-\u4fe1\u7fa9", "r": -0.0, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u570b\u6cf0\u8b49\u5238", "r": -0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u53f0\u65b0", "r": -0.17, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": 0.0, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": 0.0, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa", "b": "\u5927\u548c\u570b\u6cf0", "r": 0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u6e2f\u5546\u91ce\u6751", "r": -0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u4e2d\u570b\u4fe1\u8a17", "r": 0.11, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "r": 0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u7d71\u4e00", "r": 0.14, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u5143\u5927-\u9928\u524d", "r": 0.21, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u51f1\u57fa-\u677e\u5c71", "r": 0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u5143\u5927-\u4fe1\u7fa9", "r": 0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u53f0\u65b0", "r": 0.2, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": 0.23, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": 0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1-\u532f\u7acb", "b": "\u5927\u548c\u570b\u6cf0", "r": 0.2, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u4e2d\u570b\u4fe1\u8a17", "r": 0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "r": 0.52, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u7d71\u4e00", "r": 0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u5143\u5927-\u9928\u524d", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.6, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u51f1\u57fa-\u677e\u5c71", "r": -0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u5143\u5927-\u4fe1\u7fa9", "r": 0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.15, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u53f0\u65b0", "r": -0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": 0.0, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": 0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u5927\u548c\u570b\u6cf0", "r": 0.0, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "r": 0.21, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u7d71\u4e00", "r": 0.37, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u5143\u5927-\u9928\u524d", "r": 0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.34, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u51f1\u57fa-\u677e\u5c71", "r": 0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u5143\u5927-\u4fe1\u7fa9", "r": 0.16, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.11, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u53f0\u65b0", "r": 0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": 0.11, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": 0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": 0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u4e2d\u570b\u4fe1\u8a17", "b": "\u5927\u548c\u570b\u6cf0", "r": 0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u7d71\u4e00", "r": 0.16, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u5143\u5927-\u9928\u524d", "r": 0.14, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.71, "label": "\u9ad8\u5ea6\u5c0d\u5012", "color": "#e63946"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u51f1\u57fa-\u677e\u5c71", "r": -0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u5143\u5927-\u4fe1\u7fa9", "r": -0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u53f0\u65b0", "r": -0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": 0.11, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": -0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u5927\u548c\u570b\u6cf0", "r": -0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7d71\u4e00", "b": "\u5143\u5927-\u9928\u524d", "r": -0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7d71\u4e00", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.47, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u7d71\u4e00", "b": "\u51f1\u57fa-\u677e\u5c71", "r": 0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7d71\u4e00", "b": "\u5143\u5927-\u4fe1\u7fa9", "r": 0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7d71\u4e00", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.26, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7d71\u4e00", "b": "\u53f0\u65b0", "r": -0.13, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7d71\u4e00", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": 0.27, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7d71\u4e00", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": 0.0, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7d71\u4e00", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": 0.07, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u7d71\u4e00", "b": "\u5927\u548c\u570b\u6cf0", "r": 0.22, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u9928\u524d", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u9928\u524d", "b": "\u51f1\u57fa-\u677e\u5c71", "r": 0.27, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u9928\u524d", "b": "\u5143\u5927-\u4fe1\u7fa9", "r": 0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u9928\u524d", "b": "\u570b\u6cf0\u8b49\u5238", "r": 0.11, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u9928\u524d", "b": "\u53f0\u65b0", "r": 0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u9928\u524d", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": -0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u9928\u524d", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": 0.12, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u9928\u524d", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": 0.39, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u5143\u5927-\u9928\u524d", "b": "\u5927\u548c\u570b\u6cf0", "r": -0.05, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u51f1\u57fa-\u677e\u5c71", "r": 0.09, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u5143\u5927-\u4fe1\u7fa9", "r": -0.13, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u570b\u6cf0\u8b49\u5238", "r": -0.34, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u53f0\u65b0", "r": 0.13, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": -0.17, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": -0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": -0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0-\u6566\u5357", "b": "\u5927\u548c\u570b\u6cf0", "r": -0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u677e\u5c71", "b": "\u5143\u5927-\u4fe1\u7fa9", "r": -0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u677e\u5c71", "b": "\u570b\u6cf0\u8b49\u5238", "r": -0.35, "label": "\u5f31\u5c0d\u5012", "color": "#e07b00"}, {"a": "\u51f1\u57fa-\u677e\u5c71", "b": "\u53f0\u65b0", "r": -0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u677e\u5c71", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": -0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u677e\u5c71", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u677e\u5c71", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": -0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u677e\u5c71", "b": "\u5927\u548c\u570b\u6cf0", "r": -0.05, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u4fe1\u7fa9", "b": "\u570b\u6cf0\u8b49\u5238", "r": -0.1, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u4fe1\u7fa9", "b": "\u53f0\u65b0", "r": -0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u4fe1\u7fa9", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": 0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u4fe1\u7fa9", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": -0.01, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u4fe1\u7fa9", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": -0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5143\u5927-\u4fe1\u7fa9", "b": "\u5927\u548c\u570b\u6cf0", "r": -0.04, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0\u8b49\u5238", "b": "\u53f0\u65b0", "r": 0.0, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0\u8b49\u5238", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": 0.27, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0\u8b49\u5238", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": 0.08, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0\u8b49\u5238", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": 0.18, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u570b\u6cf0\u8b49\u5238", "b": "\u5927\u548c\u570b\u6cf0", "r": 0.21, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u65b0", "b": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": -0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u65b0", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": -0.05, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u65b0", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u53f0\u65b0", "b": "\u5927\u548c\u570b\u6cf0", "r": -0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1\u8b49\u5238", "b": "\u5146\u8c50-\u4e2d\u58e2", "r": -0.06, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1\u8b49\u5238", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": 0.05, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u6c38\u8c50\u91d1\u8b49\u5238", "b": "\u5927\u548c\u570b\u6cf0", "r": 0.58, "label": "\u5f31\u540c\u5411", "color": "#588157"}, {"a": "\u5146\u8c50-\u4e2d\u58e2", "b": "\u51f1\u57fa-\u9577\u5e9a", "r": -0.02, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u5146\u8c50-\u4e2d\u58e2", "b": "\u5927\u548c\u570b\u6cf0", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}, {"a": "\u51f1\u57fa-\u9577\u5e9a", "b": "\u5927\u548c\u570b\u6cf0", "r": -0.03, "label": "\u5404\u81ea\u7368\u7acb", "color": "#888780"}];
+const GOV      = {"series": [{"name": "\u5146\u8c50-\u4e2d\u58e2", "color": "#e53935", "total": -5044.7, "data": [0, 0, -360.7, 0, 0, 0, -1475.0, -2129.1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 470.2, 0, 0, 0, 0, 0, 0, 0, 0, -443.5, 538.1, 303.5, 0, 156.3, 0, 0, 0, 299.1, 397.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -994.5, 0, 0, 0, 0]}], "combined": [0, 0, -360.7, 0, 0, 0, -1475.0, -2129.1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 470.2, 0, 0, 0, 0, 0, 0, 0, 0, -443.5, 538.1, 303.5, 0, 156.3, 0, 0, 0, 299.1, 397.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -994.5, 0, 0, 0, 0], "total": -5044.7, "buyDays": 6, "sellDays": 5};
+const LAST_DAY = {"date": "2026-05-26", "net": 100116.5, "totalBuy": 117504.9, "totalSell": 17388.4, "pctVol": 29.8, "buyers": [{"name": "\u51f1\u57fa", "buy": 21188.4, "sell": 456.2, "net": 20732.2}, {"name": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "buy": 17718.0, "sell": 1121.0, "net": 16597.0}, {"name": "\u51f1\u57fa-\u53f0\u5317", "buy": 33313.4, "sell": 19159.3, "net": 14154.1}, {"name": "\u51f1\u57fa-\u4fe1\u7fa9", "buy": 14093.0, "sell": 4997.4, "net": 9095.6}, {"name": "\u6e2f\u5546\u91ce\u6751", "buy": 9291.0, "sell": 915.0, "net": 8376.0}, {"name": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "buy": 11465.0, "sell": 4452.0, "net": 7013.0}, {"name": "\u7f8e\u6797", "buy": 8438.0, "sell": 1787.0, "net": 6651.0}, {"name": "\u5bcc\u90a6-\u65b0\u5e97", "buy": 6774.1, "sell": 510.8, "net": 6263.3}, {"name": "\u5143\u5927\u8b49\u5238", "buy": 26973.2, "sell": 21809.8, "net": 5163.4}, {"name": "\u570b\u7968-\u6566\u5317\u6cd5\u4eba", "buy": 7597.2, "sell": 2919.7, "net": 4677.5}, {"name": "\u51f1\u57fa-\u7ad9\u524d", "buy": 8204.4, "sell": 3614.3, "net": 4590.1}, {"name": "\u7d71\u4e00", "buy": 7073.1, "sell": 2631.1, "net": 4442.0}, {"name": "\u5bcc\u90a6\u8b49\u5238", "buy": 26813.7, "sell": 22411.2, "net": 4402.5}, {"name": "\u4e2d\u570b\u4fe1\u8a17", "buy": 4435.2, "sell": 1433.0, "net": 3002.2}, {"name": "\u6469\u6839\u5927\u901a", "buy": 11725.0, "sell": 9380.0, "net": 2345.0}], "sellers": [{"name": "\u570b\u6cf0-\u6566\u5357", "buy": 3627.2, "sell": 8347.2, "net": -4720.0}, {"name": "\u570b\u6cf0-\u677f\u6a4b", "buy": 434.7, "sell": 1891.6, "net": -1456.9}, {"name": "\u570b\u6cf0-\u53f0\u4e2d", "buy": 806.3, "sell": 2133.2, "net": -1326.9}, {"name": "\u53f0\u65b0", "buy": 1958.1, "sell": 2978.9, "net": -1020.8}, {"name": "\u5bcc\u90a6-\u65b0\u7af9", "buy": 95.4, "sell": 996.1, "net": -900.7}, {"name": "\u7d71\u4e00-\u57fa\u9686", "buy": 32.7, "sell": 923.4, "net": -890.7}, {"name": "\u5143\u5927-\u6210\u529f", "buy": 140.1, "sell": 1022.3, "net": -882.2}, {"name": "\u5143\u5927-\u9928\u524d", "buy": 1040.8, "sell": 1913.4, "net": -872.6}, {"name": "\u7389\u5c71\u8b49\u5238", "buy": 191.1, "sell": 1038.6, "net": -847.5}, {"name": "\u7fa4\u76ca\u91d1\u9f0e-\u58eb\u6797", "buy": 24.1, "sell": 862.5, "net": -838.4}, {"name": "\u5143\u5927-\u5927\u96c5", "buy": 86.8, "sell": 899.5, "net": -812.7}, {"name": "\u5bcc\u90a6-\u967d\u660e", "buy": 242.9, "sell": 990.8, "net": -747.9}, {"name": "\u570b\u6cf0-\u9928\u524d", "buy": 870.3, "sell": 1613.3, "net": -743.0}, {"name": "\u5143\u5927-\u4e2d\u58e2", "buy": 266.1, "sell": 950.0, "net": -683.9}, {"name": "\u53f0\u65b0-\u5efa\u5317", "buy": 328.9, "sell": 973.1, "net": -644.2}]};
+const DUALDAO  = [{"a": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.706, "aTotal": 14745.2, "bTotal": -10589.7, "aIsBuy": true, "bIsBuy": false}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.681, "aTotal": 58796.8, "bTotal": -10589.7, "aIsBuy": true, "bIsBuy": false}, {"a": "\u51f1\u57fa-\u53f0\u5317", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.678, "aTotal": 48699.9, "bTotal": -10589.7, "aIsBuy": true, "bIsBuy": false}, {"a": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "b": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "r": -0.617, "aTotal": 48263.7, "bTotal": 14745.2, "aIsBuy": true, "bIsBuy": true}, {"a": "\u6e2f\u5546\u91ce\u6751", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.597, "aTotal": 18833.2, "bTotal": -10589.7, "aIsBuy": true, "bIsBuy": false}, {"a": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "b": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "r": -0.532, "aTotal": 58796.8, "bTotal": 48263.7, "aIsBuy": true, "bIsBuy": true}, {"a": "\u5143\u5927\u8b49\u5238", "b": "\u570b\u6cf0-\u6566\u5357", "r": -0.517, "aTotal": 26800.7, "bTotal": -10589.7, "aIsBuy": true, "bIsBuy": false}];
+const WATCH    = [];
+const CHAIN    = {"brokers": [], "pairs": [], "flow": [{"date": "2026-05-26"}, {"date": "2026-05-25"}, {"date": "2026-05-22"}, {"date": "2026-05-21"}, {"date": "2026-05-20"}, {"date": "2026-05-19"}, {"date": "2026-05-18"}, {"date": "2026-05-15"}, {"date": "2026-05-14"}, {"date": "2026-05-13"}], "chainDays": ["2026-05-13", "2026-05-14", "2026-05-15", "2026-05-18", "2026-05-19", "2026-05-20", "2026-05-21", "2026-05-22", "2026-05-25", "2026-05-26"], "mainBuyer": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "chainFull": [{"name": "\u570b\u6cf0-\u6566\u5357", "r": -0.681, "cum120": -10130.9, "recent20": -19301.4, "isWatch": false}, {"name": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "r": -0.532, "cum120": 47947.6, "recent20": 498.3, "isWatch": false}, {"name": "\u5927\u548c\u570b\u6cf0", "r": -0.126, "cum120": -6343.0, "recent20": -229.0, "isWatch": false}, {"name": "\u53f0\u65b0", "r": -0.115, "cum120": -9387.9, "recent20": -3222.7, "isWatch": false}, {"name": "\u51f1\u57fa-\u677e\u5c71", "r": -0.096, "cum120": -9588.0, "recent20": 0, "isWatch": false}, {"name": "\u51f1\u57fa-\u9577\u5e9a", "r": -0.038, "cum120": -4843.8, "recent20": -328.9, "isWatch": false}, {"name": "\u5143\u5927-\u4fe1\u7fa9", "r": -0.037, "cum120": -6903.1, "recent20": 0, "isWatch": false}, {"name": "\u7d71\u4e00", "r": -0.018, "cum120": 13214.3, "recent20": 22592.1, "isWatch": false}, {"name": "\u5146\u8c50-\u4e2d\u58e2", "r": 0.011, "cum120": -3238.6, "recent20": -298.4, "isWatch": false}, {"name": "\u5143\u5927-\u9928\u524d", "r": 0.032, "cum120": -21844.1, "recent20": -656.1, "isWatch": false}, {"name": "\u6c38\u8c50\u91d1-\u532f\u7acb", "r": 0.042, "cum120": 18098.2, "recent20": 17135.0, "isWatch": false}, {"name": "\u51f1\u57fa", "r": 0.096, "cum120": 22642.1, "recent20": 29035.6, "isWatch": false}, {"name": "\u6c38\u8c50\u91d1\u8b49\u5238", "r": 0.121, "cum120": -9393.3, "recent20": 22568.9, "isWatch": false}, {"name": "\u4e2d\u570b\u4fe1\u8a17", "r": 0.159, "cum120": 16823.9, "recent20": 9333.7, "isWatch": false}, {"name": "\u570b\u6cf0\u8b49\u5238", "r": 0.169, "cum120": -9825.2, "recent20": -1287.4, "isWatch": false}, {"name": "\u51f1\u57fa-\u53f0\u5317", "r": 0.384, "cum120": 50023.0, "recent20": 22173.7, "isWatch": false}, {"name": "\u6e2f\u5546\u91ce\u6751", "r": 0.49, "cum120": 19885.2, "recent20": 16660.0, "isWatch": false}, {"name": "\u5143\u5927\u8b49\u5238", "r": 0.531, "cum120": 27862.1, "recent20": 46320.5, "isWatch": false}, {"name": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "r": 0.752, "cum120": 12917.4, "recent20": 26460.5, "isWatch": false}], "lendBal": 172.0, "lendSell": 3107.0, "lendRet": 1896.0};
+const PHASE    = [{"name": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "up": -3350.4, "dn": 51298.0, "cum": 47947.6, "q": 4, "isWatch": false, "lend_r": 0.162}, {"name": "\u570b\u6cf0-\u6566\u5357", "up": -35183.8, "dn": 25484.2, "cum": -9699.6, "q": 4, "isWatch": false, "lend_r": -0.151}, {"name": "\u5143\u5927-\u9928\u524d", "up": -9151.4, "dn": -11904.0, "cum": -21055.4, "q": 3, "isWatch": false, "lend_r": 0.082}, {"name": "\u5143\u5927-\u4fe1\u7fa9", "up": -1551.1, "dn": -10378.6, "cum": -11929.7, "q": 3, "isWatch": false, "lend_r": 0.035}, {"name": "\u51f1\u57fa-\u677e\u5c71", "up": -8045.5, "dn": -1542.5, "cum": -9588.0, "q": 3, "isWatch": false, "lend_r": -0.019}, {"name": "\u53f0\u65b0", "up": -8549.2, "dn": -838.7, "cum": -9387.9, "q": 3, "isWatch": false, "lend_r": -0.11}, {"name": "\u5927\u548c\u570b\u6cf0", "up": -229.0, "dn": -6114.0, "cum": -6343.0, "q": 3, "isWatch": false, "lend_r": -0.092}, {"name": "\u51f1\u57fa-\u9577\u5e9a", "up": -328.9, "dn": -4514.9, "cum": -4843.8, "q": 3, "isWatch": false, "lend_r": -0.093}, {"name": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "up": 141676.8, "dn": -82136.7, "cum": 59540.1, "q": 2, "isWatch": false, "lend_r": 0.579}, {"name": "\u51f1\u57fa-\u53f0\u5317", "up": 67122.9, "dn": -21222.4, "cum": 45900.5, "q": 2, "isWatch": false, "lend_r": 0.098}, {"name": "\u5143\u5927\u8b49\u5238", "up": 83259.1, "dn": -54873.1, "cum": 28386.0, "q": 2, "isWatch": false, "lend_r": 0.513}, {"name": "\u6e2f\u5546\u91ce\u6751", "up": 22223.9, "dn": -1674.7, "cum": 20549.2, "q": 2, "isWatch": false, "lend_r": 0.438}, {"name": "\u7d71\u4e00", "up": 32691.4, "dn": -19077.4, "cum": 13614.0, "q": 2, "isWatch": false, "lend_r": 0.134}, {"name": "\u4e2d\u570b\u4fe1\u8a17", "up": 19425.5, "dn": -5951.5, "cum": 13474.0, "q": 2, "isWatch": false, "lend_r": 0.204}, {"name": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "up": 50340.3, "dn": -37955.4, "cum": 12384.9, "q": 2, "isWatch": false, "lend_r": 0.671}, {"name": "\u6c38\u8c50\u91d1\u8b49\u5238", "up": 12718.6, "dn": -20959.5, "cum": -8240.9, "q": 2, "isWatch": false, "lend_r": -0.004}, {"name": "\u570b\u6cf0\u8b49\u5238", "up": 16688.0, "dn": -22565.1, "cum": -5877.1, "q": 2, "isWatch": false, "lend_r": -0.037}, {"name": "\u5146\u8c50-\u4e2d\u58e2", "up": 769.3, "dn": -1878.8, "cum": -1109.5, "q": 2, "isWatch": false, "lend_r": -0.108}, {"name": "\u51f1\u57fa", "up": 21779.4, "dn": 967.1, "cum": 22746.5, "q": 1, "isWatch": false, "lend_r": 0.054}, {"name": "\u6c38\u8c50\u91d1-\u532f\u7acb", "up": 16824.9, "dn": 1273.3, "cum": 18098.2, "q": 1, "isWatch": false, "lend_r": 0.173}];
+const STREAK  = [{"name": "\u53f0\u7063\u6469\u6839\u58eb\u4e39\u5229", "isBuy": true, "total": 58796.8, "curBuy": 3, "curSell": 0, "maxBuy": 19, "maxSell": 3, "cells": [7328.0, 975.0, -5478.2, 10347.2, -15101.0, -1062.0, 8451.0, -8071.2, 15860.0, 10778.0, 1307.0, -10885.7, -47704.0, 4114.8, -14342.4, -14761.0, 1776.0, 5812.6, -3640.0, -5570.0, -11657.4, 3086.0, -1658.0, 3386.0, -1670.4, 10936.3, 4877.0, -4879.0, -14342.1, 8418.0, -1484.8, 19366.0, 9902.1, 880.6, 2956.0, 3055.0, 2215.0, 4984.0, 2233.0, 7301.6, 843.0, 3285.4, 8523.0, 11438.9, 6004.8, 4609.0, 5296.0, 3706.8, 2447.0, 5233.0, -5666.3, -27175.0, 5402.3, -23569.0, 21422.0, 32360.0, 16597.0], "leadLag": {"1": 0.228, "2": 0.301, "3": 0.119}, "bestLag": 2, "bestR": 0.301, "smartBuy": 91382.9, "dumbBuy": 178803.5, "smartScore": 33.8, "smartDays": 15, "dumbDays": 22, "costBand": {"avgCost": 110.34, "minPrice": 85.7, "maxPrice": 141.0, "totalBuy": 277514.4, "curPrice": 141.0, "pnlPct": 27.79, "inProfit": true}}, {"name": "\u51f1\u57fa-\u53f0\u5317", "isBuy": true, "total": 48699.9, "curBuy": 3, "curSell": 0, "maxBuy": 4, "maxSell": 3, "cells": [6218.0, -2601.9, 628.1, 902.1, 0, 1469.3, -2878.0, -2095.5, 2206.0, 0, 4320.9, 2406.4, 0, -3030.7, -4290.4, 0, 1266.5, 3994.8, 1001.5, 1686.7, -1416.5, -963.4, 327.1, 9708.3, -3384.6, 3066.2, 1419.9, 1509.4, -2625.1, -188.0, 350.3, 5090.7, 3623.2, 464.6, -1566.1, 0, 1229.5, 1071.9, -2798.2, -2270.8, 7402.6, 2110.7, 9335.2, 0, -5124.4, -2687.2, 788.8, -1203.5, 5521.4, -4065.8, -3417.8, -3890.2, 283.5, -3056.9, 8139.7, 1880.7, 14154.0], "leadLag": {"1": 0.037, "2": 0.026, "3": -0.133}, "bestLag": 3, "bestR": -0.133, "smartBuy": 18910.2, "dumbBuy": 78449.8, "smartScore": 19.4, "smartDays": 12, "dumbDays": 18, "costBand": {"avgCost": 110.45, "minPrice": 85.7, "maxPrice": 141.0, "totalBuy": 103578.0, "curPrice": 141.0, "pnlPct": 27.66, "inProfit": true}}, {"name": "\u5143\u5927\u8b49\u5238", "isBuy": true, "total": 26800.7, "curBuy": 3, "curSell": 0, "maxBuy": 6, "maxSell": 4, "cells": [1120.8, -336.7, -2989.9, -1591.3, -463.5, 1105.8, -2674.2, -1644.7, 2660.0, 4333.0, 1578.5, 0, -9958.7, -1559.9, 0, -8307.6, 0, 723.4, -3368.0, -843.3, 785.8, 2823.6, 361.3, -1271.2, -566.1, 2961.6, 969.7, 0, -2035.8, 0, -7956.8, -1900.5, 8106.0, -2940.8, 639.8, -240.7, 4022.0, 2588.5, -2751.8, -3129.5, 4768.7, 2374.1, 3900.4, 21714.7, -1095.4, 4465.2, 2524.9, 2652.9, 2527.1, 3118.8, 1581.4, -4120.0, -3875.2, -4243.2, 4360.0, 3795.5, 5163.4], "leadLag": {"1": 0.019, "2": 0.055, "3": -0.027}, "bestLag": 2, "bestR": 0.055, "smartBuy": 7666.9, "dumbBuy": 88939.2, "smartScore": 7.9, "smartDays": 5, "dumbDays": 22, "costBand": {"avgCost": 112.18, "minPrice": 87.8, "maxPrice": 141.0, "totalBuy": 97726.9, "curPrice": 141.0, "pnlPct": 25.69, "inProfit": true}}, {"name": "\u6e2f\u5546\u91ce\u6751", "isBuy": true, "total": 18833.2, "curBuy": 3, "curSell": 0, "maxBuy": 3, "maxSell": 2, "cells": [1034.0, 0, 979.0, 0, 1124.0, 0, 1950.0, -1698.0, 1291.0, 1012.0, 719.0, -1845.0, -2341.0, 0, 0, -1936.0, 919.4, 1607.0, -1739.0, -768.7, 0, 1252.0, -1466.0, 0, 2598.0, 836.0, 291.0, -1363.5, 0, 212.0, 522.0, 732.0, -328.0, 0, 1169.0, -656.0, -881.0, 0, -2614.0, -2237.0, 801.3, 451.0, 0, 0, 431.0, 2492.0, -571.4, 532.0, 0, 1164.0, -356.0, -850.0, 815.1, -604.0, 7447.0, 1383.0, 8376.0], "leadLag": {"1": 0.178, "2": 0.248, "3": 0.082}, "bestLag": 2, "bestR": 0.248, "smartBuy": 14350.5, "dumbBuy": 26755.3, "smartScore": 34.9, "smartDays": 13, "dumbDays": 13, "costBand": {"avgCost": 116.14, "minPrice": 85.7, "maxPrice": 141.0, "totalBuy": 42139.8, "curPrice": 141.0, "pnlPct": 21.41, "inProfit": true}}, {"name": "\u65b0\u52a0\u5761\u5546\u745e\u9280", "isBuy": true, "total": 14745.2, "curBuy": 3, "curSell": 0, "maxBuy": 3, "maxSell": 3, "cells": [1435.5, -574.0, 2909.0, 7098.2, -6079.2, 0, 0, -903.0, 5106.2, 2390.0, -1745.0, -6004.0, -24454.8, 701.4, 0, -10027.0, -703.9, 4801.7, -691.0, 4790.0, -5484.0, 0, -7266.0, 0, 284.7, 8521.0, 0, 1855.6, -3498.7, 277.5, 863.5, 6257.0, 0, -482.2, -901.5, 567.7, 7412.2, 2555.0, -3684.0, -3932.4, 7439.0, 656.0, 0, 3975.2, -3129.5, 5636.8, 3179.9, -2715.5, 4881.0, 0, -6394.0, -5939.0, 4678.0, -2449.0, 10159.0, 4531.0, 7013.0], "leadLag": {"1": 0.156, "2": 0.369, "3": 0.19}, "bestLag": 2, "bestR": 0.369, "smartBuy": 34516.6, "dumbBuy": 74023.0, "smartScore": 31.8, "smartDays": 11, "dumbDays": 15, "costBand": {"avgCost": 108.7, "minPrice": 85.7, "maxPrice": 141.0, "totalBuy": 109975.1, "curPrice": 141.0, "pnlPct": 29.71, "inProfit": true}}, {"name": "\u51f1\u57fa", "isBuy": true, "total": 22939.9, "curBuy": 2, "curSell": 0, "maxBuy": 3, "maxSell": 2, "cells": [710.4, -1650.9, 0, 1030.2, -556.8, -356.9, 0, -814.8, -940.9, 0, 0, 0, -2575.5, 0, 0, 605.2, 342.4, 1948.1, 0, 2764.5, 1210.2, 421.6, -1721.2, 0, -352.4, 0, 0, 0, 0, 0, 0, -1770.5, -5245.8, 143.1, 0, -356.8, 773.3, 1457.3, -370.0, -1026.6, 0, 681.1, 0, 726.0, 392.6, 30518.1, -15538.9, -11366.9, 0, -1010.5, 0, 4656.1, 591.2, -3101.2, 0, 1695.1, 20732.2], "leadLag": {"1": -0.035, "2": -0.062, "3": 0.091}, "bestLag": 3, "bestR": 0.091, "smartBuy": 12895.0, "dumbBuy": 57793.3, "smartScore": 18.2, "smartDays": 10, "dumbDays": 8, "costBand": {"avgCost": 120.59, "minPrice": 90.2, "maxPrice": 141.0, "totalBuy": 71398.7, "curPrice": 141.0, "pnlPct": 16.93, "inProfit": true}}, {"name": "\u4e2d\u570b\u4fe1\u8a17", "isBuy": true, "total": 17252.6, "curBuy": 1, "curSell": 0, "maxBuy": 2, "maxSell": 2, "cells": [3349.9, 0, 744.3, 0, 596.5, -744.0, 0, 0, 1053.9, 0, -355.2, 0, -1596.8, 0, -1798.9, 0, 0, -3353.2, 286.7, -801.1, 0, 0, 0, -1068.9, 0, -269.8, -435.6, 0, 0, 0, 0, 0, 0, 0, 0, 7840.3, 4042.1, 0, 329.9, 0, 0, 533.0, 0, 0, 0, 0, 0, 0, 4944.4, 0, 0, 0, 0, 524.3, 0, 0, 3002.1], "leadLag": {"1": 0.191, "2": 0.171, "3": -0.004}, "bestLag": 1, "bestR": 0.191, "smartBuy": 1598.5, "dumbBuy": 22299.0, "smartScore": 6.7, "smartDays": 3, "dumbDays": 8, "costBand": {"avgCost": 107.92, "minPrice": 88.2, "maxPrice": 141.0, "totalBuy": 27247.4, "curPrice": 141.0, "pnlPct": 30.65, "inProfit": true}}, {"name": "\u7d71\u4e00", "isBuy": true, "total": 14025.7, "curBuy": 1, "curSell": 0, "maxBuy": 3, "maxSell": 6, "cells": [-634.7, 2723.0, -1817.7, -2940.4, 0, 0, -621.1, 235.0, 2303.7, 519.3, -1615.3, -870.7, -1530.9, -1049.2, -3024.1, -543.5, 1634.9, -1179.6, 0, 6881.3, 0, 0, -890.9, 0, 0, -400.7, 809.2, 0, -652.6, -557.8, 0, -9923.3, 0, -251.8, 0, -435.8, 4455.9, -506.9, 0, 0, 0, 0, 5120.2, -4614.2, 0, 2713.3, 4060.5, 0, 13730.7, -647.0, 543.4, -1079.4, -1160.2, 1146.6, 2328.5, -3485.5, 4442.1], "leadLag": {"1": -0.029, "2": -0.007, "3": -0.084}, "bestLag": 3, "bestR": -0.084, "smartBuy": 9662.8, "dumbBuy": 43749.8, "smartScore": 18.1, "smartDays": 3, "dumbDays": 12, "costBand": {"avgCost": 116.75, "minPrice": 90.2, "maxPrice": 141.0, "totalBuy": 53647.6, "curPrice": 141.0, "pnlPct": 20.77, "inProfit": true}}, {"name": "\u570b\u6cf0-\u6566\u5357", "isBuy": false, "total": -10589.7, "curBuy": 0, "curSell": 3, "maxBuy": 6, "maxSell": 4, "cells": [-1244.8, 0, 547.6, 648.6, 675.1, -434.3, 427.3, 813.5, -2208.7, -1216.5, -1496.0, 1801.5, 4420.4, 534.6, 2432.1, 2229.4, 1545.6, 0, 325.3, -440.8, 1251.5, -291.4, 1128.3, -1415.8, 1308.9, -1215.0, -144.9, 247.7, 2015.5, 494.4, 0, -1090.6, -846.8, 0, 0, 0, -1631.2, -733.5, 902.0, 613.4, -2335.5, -481.9, -3556.6, 0, 679.0, -3684.1, -837.9, -835.1, -4383.7, 670.9, 0, 2705.3, 0, 1954.5, -4484.7, -773.5, -4720.0], "leadLag": {"1": -0.168, "2": -0.218, "3": -0.066}, "bestLag": 2, "bestR": -0.218, "smartBuy": 27307.0, "dumbBuy": 2251.9, "smartScore": 92.4, "smartDays": 20, "dumbDays": 3, "costBand": {"avgCost": 103.98, "minPrice": 89.4, "maxPrice": 129.5, "totalBuy": 30372.4, "curPrice": 141.0, "pnlPct": 35.6, "inProfit": true}}, {"name": "\u53f0\u65b0", "isBuy": false, "total": -8100.7, "curBuy": 0, "curSell": 2, "maxBuy": 1, "maxSell": 2, "cells": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 400.9, 0, 0, -291.9, -6035.1, 0, 0, 0, -239.1, 0, 0, 0, 0, 0, 0, 0, -1000.5, 0, 0, 0, -927.5, 1683.3, 0, -915.4, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1041.8, -1020.8], "leadLag": {"1": -0.043, "2": 0.099, "3": 0.064}, "bestLag": 2, "bestR": 0.099, "smartBuy": 400.9, "dumbBuy": 1683.3, "smartScore": 19.2, "smartDays": 1, "dumbDays": 1, "costBand": {"avgCost": 109.27, "minPrice": 89.4, "maxPrice": 114.0, "totalBuy": 2084.2, "curPrice": 141.0, "pnlPct": 29.04, "inProfit": true}}, {"name": "\u5143\u5927-\u9928\u524d", "isBuy": false, "total": -21287.2, "curBuy": 0, "curSell": 1, "maxBuy": 2, "maxSell": 5, "cells": [0, -2114.0, 0, 0, 0, -1994.2, -1251.5, -788.7, -1264.1, -2120.1, 0, -3005.4, -1836.9, -4461.5, -4621.5, 0, 0, 0, 0, 0, 0, 0, 0, 958.0, -483.7, 2994.4, -1264.5, 0, 0, 0, 0, 0, 1017.8, 277.7, -1229.8, 0, 0, 0, 0, 0, 2028.7, 0, -939.0, 0, 1183.4, -1127.3, 0, 0, -1310.3, 0, -2599.6, 1036.1, -1505.2, 3994.3, -544.6, 0, -872.6], "leadLag": {"1": 0.394, "2": 0.384, "3": 0.456}, "bestLag": 3, "bestR": 0.456, "smartBuy": 6491.5, "dumbBuy": 6998.9, "smartScore": 48.1, "smartDays": 4, "dumbDays": 4, "costBand": {"avgCost": 102.79, "minPrice": 90.6, "maxPrice": 117.5, "totalBuy": 13490.4, "curPrice": 141.0, "pnlPct": 37.17, "inProfit": true}}, {"name": "\u9999\u6e2f\u4e0a\u6d77\u532f\u8c50", "isBuy": true, "total": 48263.7, "curBuy": 0, "curSell": 0, "maxBuy": 1, "maxSell": 6, "cells": [0, 0, 0, -870.0, 0, 0, 0, 0, 0, 617.5, 0, 0, 57478.0, 0, 0, -602.0, 0, 0, 0, 0, 0, -1104.0, -199.0, -604.2, -2932.0, -1088.0, -1649.0, 0, -473.0, 0, 0, 0, 0, 0, 0, 0, -1125.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 498.3, 0, 0, 0, 0, 0, 0], "leadLag": {"1": -0.079, "2": -0.198, "3": -0.179}, "bestLag": 2, "bestR": -0.198, "smartBuy": 57478.0, "dumbBuy": 1115.8, "smartScore": 98.1, "smartDays": 1, "dumbDays": 2, "costBand": {"avgCost": 110.32, "minPrice": 110.0, "maxPrice": 130.5, "totalBuy": 58593.8, "curPrice": 141.0, "pnlPct": 27.81, "inProfit": true}}, {"name": "\u6c38\u8c50\u91d1-\u532f\u7acb", "isBuy": true, "total": 20849.7, "curBuy": 0, "curSell": 0, "maxBuy": 4, "maxSell": 1, "cells": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -404.0, 0, 0, 0, -567.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1447.0, 0, 0, 0, -2321.0, 0, 299.0, 0, 934.4, 1574.8, 0, 316.8, 265.0, 2224.3, 1613.5, 0, 4046.2, 656.4, 0, 3746.9, 2684.8, 0, 924.8, 0, 0, 0, 656.3, 0, 0, 0], "leadLag": {"1": 0.08, "2": 0.277, "3": 0.237}, "bestLag": 2, "bestR": 0.277, "smartBuy": 4565.3, "dumbBuy": 16824.9, "smartScore": 21.3, "smartDays": 7, "dumbDays": 7, "costBand": {"avgCost": 108.76, "minPrice": 88.2, "maxPrice": 129.5, "totalBuy": 21390.2, "curPrice": 141.0, "pnlPct": 29.64, "inProfit": true}}, {"name": "\u51f1\u57fa-\u677e\u5c71", "isBuy": false, "total": -10183.6, "curBuy": 0, "curSell": 0, "maxBuy": 0, "maxSell": 3, "cells": [0, 0, 0, 0, 0, 0, 0, 0, -1599.2, -4834.8, -1611.5, 0, 0, 0, -1542.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leadLag": {"1": -0.051, "2": 0.099, "3": 0.267}, "bestLag": 3, "bestR": 0.267, "smartBuy": 0.0, "dumbBuy": 0.0, "smartScore": 0, "smartDays": 0, "dumbDays": 0, "costBand": null}, {"name": "\u5143\u5927-\u4fe1\u7fa9", "isBuy": false, "total": -9761.4, "curBuy": 0, "curSell": 0, "maxBuy": 1, "maxSell": 2, "cells": [5026.6, -1551.1, 0, -8094.6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -752.8, -1531.2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "leadLag": {"1": 0.06, "2": -0.113, "3": -0.069}, "bestLag": 2, "bestR": -0.113, "smartBuy": 0.0, "dumbBuy": 0.0, "smartScore": 0, "smartDays": 0, "dumbDays": 0, "costBand": {"avgCost": 104.0, "minPrice": 104.0, "maxPrice": 104.0, "totalBuy": 5026.6, "curPrice": 141.0, "pnlPct": 35.58, "inProfit": true}}, {"name": "\u570b\u6cf0\u8b49\u5238", "isBuy": false, "total": -8590.7, "curBuy": 0, "curSell": 0, "maxBuy": 3, "maxSell": 3, "cells": [-3948.1, 0, 0, -1258.9, 0, 492.8, 0, 0, 1431.8, 4495.1, 1674.0, 0, -1177.8, -2689.2, -3212.4, 685.5, 0, 1150.7, -596.4, -2729.6, -503.9, 660.5, 0, 1366.5, 0, 0, 207.9, 0, -1192.6, -3393.7, 0, 0, 0, 0, 0, 0, 0, 424.0, -4734.7, 0, 0, 841.5, 0, 0, -674.6, 0, 771.6, 0, 4555.4, 0, -225.3, 0, -3998.3, 0, 0, 1753.0, 0], "leadLag": {"1": 0.061, "2": -0.038, "3": -0.142}, "bestLag": 3, "bestR": -0.142, "smartBuy": 2496.7, "dumbBuy": 18013.6, "smartScore": 12.2, "smartDays": 3, "dumbDays": 11, "costBand": {"avgCost": 118.51, "minPrice": 91.8, "maxPrice": 134.0, "totalBuy": 20510.3, "curPrice": 141.0, "pnlPct": 18.98, "inProfit": true}}, {"name": "\u6c38\u8c50\u91d1\u8b49\u5238", "isBuy": false, "total": -7410.4, "curBuy": 0, "curSell": 0, "maxBuy": 4, "maxSell": 6, "cells": [-1152.4, -543.0, 0, -1591.2, -459.2, 0, 455.9, 0, 0, 1032.5, -351.7, 2524.9, -2164.0, -1513.5, -2966.6, 0, 606.6, -658.9, -3068.4, 7283.7, -4158.4, 458.5, 0, 0, -554.1, 0, 0, 0, -1854.9, -8739.6, -8289.2, -4051.1, -5034.2, -736.4, 0, 190.6, 3371.9, 1280.1, 0, -385.9, 0, 517.6, 0, 0, -1098.8, 0, 0, 5682.0, 1890.4, 1924.5, 3887.6, 0, -821.3, 1211.9, 0, 8480.8, 0], "leadLag": {"1": 0.179, "2": 0.013, "3": -0.063}, "bestLag": 1, "bestR": 0.179, "smartBuy": 14466.0, "dumbBuy": 26333.5, "smartScore": 35.5, "smartDays": 7, "dumbDays": 9, "costBand": {"avgCost": 114.72, "minPrice": 88.2, "maxPrice": 134.0, "totalBuy": 40799.5, "curPrice": 141.0, "pnlPct": 22.91, "inProfit": true}}, {"name": "\u5146\u8c50-\u4e2d\u58e2", "isBuy": false, "total": -5044.7, "curBuy": 0, "curSell": 0, "maxBuy": 2, "maxSell": 2, "cells": [0, 0, -360.7, 0, 0, 0, -1475.0, -2129.1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 470.2, 0, 0, 0, 0, 0, 0, 0, 0, -443.5, 538.1, 303.5, 0, 156.3, 0, 0, 0, 299.1, 397.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -994.5, 0, 0, 0, 0], "leadLag": {"1": -0.107, "2": -0.253, "3": -0.297}, "bestLag": 3, "bestR": -0.297, "smartBuy": 1394.9, "dumbBuy": 769.3, "smartScore": 64.5, "smartDays": 4, "dumbDays": 2, "costBand": {"avgCost": 90.82, "minPrice": 85.7, "maxPrice": 95.5, "totalBuy": 2164.2, "curPrice": 141.0, "pnlPct": 55.25, "inProfit": true}}, {"name": "\u51f1\u57fa-\u9577\u5e9a", "isBuy": false, "total": -4924.2, "curBuy": 0, "curSell": 0, "maxBuy": 0, "maxSell": 1, "cells": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3698.7, 0, 0, 0, -816.2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -328.9, 0, 0, 0, 0, 0, 0], "leadLag": {"1": 0.234, "2": 0.21, "3": 0.199}, "bestLag": 1, "bestR": 0.234, "smartBuy": 0.0, "dumbBuy": 0.0, "smartScore": 0, "smartDays": 0, "dumbDays": 0, "costBand": null}, {"name": "\u5927\u548c\u570b\u6cf0", "isBuy": false, "total": -4598.5, "curBuy": 0, "curSell": 0, "maxBuy": 1, "maxSell": 3, "cells": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 434.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -3156.0, -1740.0, -1502.0, 0, -150.0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -229.0, 0, 0, 0, 0, 0, 0], "leadLag": {"1": 0.044, "2": 0.034, "3": -0.019}, "bestLag": 1, "bestR": 0.044, "smartBuy": 434.0, "dumbBuy": 0.0, "smartScore": 100.0, "smartDays": 1, "dumbDays": 0, "costBand": {"avgCost": 96.0, "minPrice": 96.0, "maxPrice": 96.0, "totalBuy": 434.0, "curPrice": 141.0, "pnlPct": 46.88, "inProfit": true}}];
+const INTENSITY={"buy": [66950.2, 42618.5, 34690.0, 61155.4, 34020.0, 38374.5, 40606.5, 37919.3, 65276.0, 65237.3, 90355.7, 31929.6, 96647.3, 39311.6, 24810.2, 29212.2, 39404.8, 53209.3, 34789.1, 94011.6, 51477.5, 53593.8, 42773.9, 48151.2, 34349.9, 61121.3, 29788.1, 30645.4, 26839.2, 25865.4, 26660.1, 57511.5, 59508.8, 23483.2, 48661.7, 34373.8, 92656.6, 63799.4, 36973.1, 32964.1, 63036.0, 58538.5, 62054.3, 105579.3, 50073.5, 73954.3, 104834.7, 48242.7, 126638.6, 96053.9, 52275.2, 37796.8, 47518.0, 57098.6, 80749.0, 144312.0, 138083.4], "sell": [47706.8, 48292.2, 39528.6, 57475.4, 54284.1, 39898.0, 38222.0, 55015.7, 39376.3, 48231.3, 87931.1, 48211.7, 130089.2, 51963.3, 58176.9, 63189.0, 33114.6, 39178.8, 46278.3, 81759.0, 70980.0, 47250.4, 53757.4, 37092.6, 40101.8, 35071.1, 30742.7, 31828.3, 51498.6, 32942.1, 44096.1, 48321.4, 48314.5, 25823.2, 47594.2, 23475.3, 67197.1, 50379.8, 50747.6, 37766.4, 39863.8, 45956.7, 40598.5, 66609.2, 51848.9, 31933.8, 101414.2, 49105.2, 91835.3, 88741.3, 64981.6, 72452.7, 48102.5, 84634.2, 31922.2, 93733.7, 65216.9], "ratio": [58.4, 46.9, 46.7, 51.6, 38.5, 49.0, 51.5, 40.8, 62.4, 57.5, 50.7, 39.8, 42.6, 43.1, 29.9, 31.6, 54.3, 57.6, 42.9, 53.5, 42.0, 53.1, 44.3, 56.5, 46.1, 63.5, 49.2, 49.1, 34.3, 44.0, 37.7, 54.3, 55.2, 47.6, 50.6, 59.4, 58.0, 55.9, 42.1, 46.6, 61.3, 56.0, 60.5, 61.3, 49.1, 69.8, 50.8, 49.6, 58.0, 52.0, 44.6, 34.3, 49.7, 40.3, 71.7, 60.6, 67.9], "broker_pct": [62.9, 54.8, 60.4, 70.6, 53.7, 43.0, 47.0, 53.8, 52.0, 48.0, 60.2, 40.5, 67.1, 61.4, 36.6, 45.3, 38.1, 57.8, 53.2, 70.9, 59.6, 55.0, 56.8, 49.7, 55.0, 57.8, 63.2, 37.2, 61.0, 52.4, 58.5, 64.3, 58.0, 52.1, 56.2, 47.2, 59.1, 52.0, 67.5, 60.9, 51.8, 53.1, 42.5, 50.8, 58.5, 65.1, 64.9, 73.1, 52.1, 53.1, 60.8, 59.6, 63.4, 67.6, 58.3, 66.6, 60.5], "total_vol": [182140.0, 165823.0, 122902.0, 168057.0, 164291.0, 182017.0, 167668.0, 172609.0, 201277.0, 236549.0, 296360.0, 198122.0, 338025.0, 148726.0, 226815.0, 204011.0, 190169.0, 159719.0, 152254.0, 248003.0, 205568.0, 183486.0, 169816.0, 171450.0, 135312.0, 166460.0, 95826.0, 167859.0, 128417.0, 112136.0, 121007.0, 164661.0, 185989.0, 94692.0, 171220.0, 122540.0, 270350.0, 219581.0, 129993.0, 116065.0, 198798.0, 196656.0, 241792.0, 338650.0, 174129.0, 162760.0, 317629.0, 133243.0, 419382.0, 348302.0, 192809.0, 184931.0, 150894.0, 209614.0, 193147.0, 357613.0, 336105.0]};
+const COMPOSITE={"total": 48, "grade": "\u504f\u5f31\u6e1b\u78bc \u2606", "color": "#c62828", "scoreItems": [{"label": "\u8cb7\u8d85\u52d5\u80fd", "sub": "\u8fd15\u65e5\u5f37\u5ea6\u6bd4\u5747\u503c", "unit": "%", "score": 16, "max": 20, "value": 58.0}, {"label": "\u4e3b\u529b\u5e03\u5c40", "sub": "\u6700\u9ad8\u9023\u8cb7\u5929\u6578", "unit": "\u65e5", "score": 14, "max": 20, "value": 3}, {"label": "\u8070\u660e\u9322", "sub": "\u52a0\u6b0a\u8070\u660e\u9322\u5206\u6578", "unit": "%", "score": 8, "max": 20, "value": 30.0}, {"label": "\u6210\u672c\u5b89\u5168", "sub": "\u4e3b\u529b\u5e73\u5747\u6d6e\u76c8", "unit": "%", "score": 10, "max": 20, "value": 26.27}, {"label": "\u5b98\u80a1\u652f\u6490", "sub": "\u5b98\u80a1\u7d2f\u8a08\u6de8\u8cb7\u8d85", "unit": "\u5f35", "score": 0, "max": 20, "value": -5044.7}]};
+const OHLCV   = {"open": [106.0, 113.5, 110.0, 95.9, 108.0, 109.0, 114.5, 109.0, 113.5, 121.5, 129.0, 123.5, 124.0, 103.5, 109.5, 99.0, 100.0, 90.2, 91.2, 88.0, 97.1, 96.0, 95.0, 93.1, 96.0, 93.0, 93.8, 96.8, 95.6, 90.6, 90.0, 87.5, 88.1, 91.5, 93.0, 88.6, 89.8, 95.3, 94.5, 94.2, 91.9, 96.8, 108.5, 113.0, 111.0, 115.0, 118.5, 117.0, 127.0, 132.5, 126.0, 125.0, 117.5, 120.0, 116.5, 120.5, 133.5], "high": [109.5, 114.0, 113.0, 101.0, 109.0, 115.0, 117.5, 114.5, 118.0, 126.0, 129.5, 125.5, 124.5, 109.5, 109.5, 103.0, 104.5, 92.4, 96.8, 95.5, 97.2, 97.6, 95.8, 95.8, 96.2, 97.5, 95.2, 98.0, 96.6, 90.9, 90.7, 88.4, 92.8, 91.5, 93.4, 88.9, 95.6, 96.9, 96.0, 94.6, 98.4, 100.5, 108.5, 117.0, 115.0, 117.5, 123.5, 122.0, 134.0, 136.5, 134.0, 127.0, 119.0, 122.5, 125.0, 133.0, 141.0], "low": [102.0, 109.0, 105.5, 95.9, 101.5, 107.5, 109.0, 108.0, 113.0, 119.5, 120.5, 120.0, 110.0, 103.5, 97.0, 98.1, 96.0, 87.2, 90.6, 85.2, 91.3, 91.8, 89.1, 92.2, 90.3, 92.3, 91.5, 93.5, 90.1, 88.3, 86.8, 83.8, 88.0, 88.9, 84.3, 84.0, 89.1, 93.5, 92.1, 88.8, 91.1, 96.6, 104.0, 106.5, 103.5, 113.0, 116.0, 115.0, 124.5, 127.5, 119.0, 117.5, 112.0, 113.5, 115.5, 119.0, 133.0], "close": [104.0, 112.0, 106.5, 101.0, 105.5, 114.0, 109.0, 109.0, 117.0, 123.5, 128.0, 122.0, 110.0, 107.5, 99.5, 98.2, 96.0, 92.4, 93.0, 90.2, 93.1, 91.8, 89.4, 95.6, 91.0, 93.5, 94.4, 93.5, 90.2, 89.6, 87.8, 85.7, 91.1, 90.6, 87.8, 88.2, 93.9, 95.5, 92.7, 89.8, 95.4, 98.8, 108.5, 114.0, 107.0, 117.5, 121.5, 122.0, 134.0, 129.5, 130.5, 117.5, 115.5, 114.0, 125.0, 128.5, 141.0], "vol": [182140.0, 165823.0, 122902.0, 168057.0, 164291.0, 182017.0, 167668.0, 172609.0, 201277.0, 236549.0, 296360.0, 198122.0, 338025.0, 148726.0, 226815.0, 204011.0, 190169.0, 159719.0, 152254.0, 248003.0, 205568.0, 183486.0, 169816.0, 171450.0, 135312.0, 166460.0, 95826.0, 167859.0, 128417.0, 112136.0, 121007.0, 164661.0, 185989.0, 94692.0, 171220.0, 122540.0, 270350.0, 219581.0, 129993.0, 116065.0, 198798.0, 196656.0, 241792.0, 338650.0, 174129.0, 162760.0, 317629.0, 133243.0, 419382.0, 348302.0, 192809.0, 184931.0, 150894.0, 209614.0, 193147.0, 357613.0, 336105.0]};
+const INST    = {"foreign": [38693.1, 16744.3, 5513.2, 22001.4, -27349.9, -9071.8, 12767.6, -17436.2, 43234.4, 18464.4, 16744.3, -36072.5, -132952.1, 13048.5, -14643.0, -56510.2, -4837.7, 24119.1, -5150.7, 5077.9, -30628.9, 8415.7, -19174.5, 21232.2, -22044.4, 18831.0, 6074.1, -4310.6, -25402.0, 13304.7, 9192.6, 49497.5, 14347.8, -3312.3, 3812.7, -704.1, 11770.5, 15807.1, -6648.1, -5741.2, 38896.5, 622.0, 32736.7, 34578.5, -15612.8, 17494.2, 27422.0, 4228.5, 24008.9, 16049.7, -19138.4, -48978.1, 12724.8, -31196.4, 51442.0, 72092.0, 46872.7], "trust": [-5297.0, -739.0, -1859.0, 50.0, -146.0, -3.0, -1137.0, -105.0, -1390.0, 1425.0, 604.0, -585.0, 67025.8, -5945.7, -17506.0, -2754.5, -6044.5, -6084.1, -129.3, 29414.2, -6638.2, 2257.6, -2617.1, -1631.9, 185.3, -1920.5, -6439.3, -2642.0, -2115.4, -15689.7, -18967.1, -7986.5, -5127.6, 0, -376.9, 2663.9, 17767.2, -1037.8, -8646.5, -2297.0, 354.1, 1990.8, 2786.0, 13287.0, 1781.0, 1524.3, 7659.4, 8723.0, 16323.0, 25824.1, 7462.0, 6220.8, 1746.0, -3076.0, -1191.0, 5251.0, 4364.5], "dealer": [-551.9, -1334.6, -150.9, -5476.3, -2280.2, -35.4, -3338.0, -1456.5, 2019.3, 1807.4, -2888.2, 14.2, -6569.5, -1387.3, -4564.1, 1449.0, 1818.4, 2545.2, -3467.6, -1920.8, -3720.5, 383.1, 315.3, 2313.2, -2689.3, 1415.7, 756.5, -35.2, -5023.8, -1185.7, 289.5, 1331.7, 5.0, -356.5, 133.5, 148.0, 1170.2, 778.0, 0, -1325.1, 1285.4, 1319.2, 1631.8, 2292.3, -623.1, 1460.6, -219.2, -220.6, 2043.9, 510.4, -286.2, -2600.2, -4071.6, 1178.1, 1878.8, 308.9, 2637.1]};
+const MARGIN  = {"fin_diff": [-6825, 7839, -3253, -10499, 4165, 14139, -7115, -562, 4697, -6429, 9880, -76, -1930, 0, -1930, 8490, -5825, -9394, -55, -6552, 9724, -3531, 4883, 5144, 656, -1254, 2004, -1935, 1111, -167, 748, 141, 776, -6, -1299, 2, 4647, -1702, 2152, -2647, 6785, 421, 11243, -8333, -6676, 5347, 4893, 2577, 6851, -12470, 6157, -5537, -5738, -4085, 8414, -25622, 16130], "fin_bal": [122794, 130633, 127380, 116881, 121046, 135185, 128070, 127508, 132205, 125776, 135656, 135580, 133650, 128498, 126568, 135058, 129233, 119839, 119784, 113232, 122956, 119425, 124308, 129452, 130108, 128854, 130858, 128923, 130034, 129867, 130615, 130756, 131532, 131526, 130227, 130229, 134876, 133174, 135326, 132679, 139464, 139885, 151128, 142795, 136119, 141466, 146359, 148936, 155787, 143317, 149474, 143937, 138199, 134114, 142528, 116906, 133036], "short_diff": [-3188, 1522, -921, -476, -80, 38, -525, -342, -78, -445, -774, -1617, -1638, 0, -255, 0, 0, 800, 1364, 647, -331, 173, -187, -208, -232, 92, -11, -92, -1, -226, 215, -554, 222, 46, -240, 66, 645, 275, -33, -325, 151, 174, 660, 297, -996, 814, 304, -47, 858, -897, -229, 136, -1290, 18, 1154, -105, 1723], "short_bal": [10845, 12367, 11446, 10970, 10890, 10928, 10403, 10061, 9983, 9538, 8764, 7147, 5509, 255, 0, 0, 0, 800, 2164, 2811, 2480, 2653, 2466, 2258, 2026, 2118, 2107, 2015, 2014, 1788, 2003, 1449, 1671, 1717, 1477, 1543, 2188, 2463, 2430, 2105, 2256, 2430, 3090, 3387, 2391, 3205, 3509, 3462, 4320, 3423, 3194, 3330, 2040, 2058, 3212, 3107, 4830]};
+const REVERSAL= [];
+
+// ── 綜合評分 ─────────────────────────────────────────────
+(function() {
+  document.getElementById("scoreTitle").textContent  = "籌碼面綜合評分";
+  const numEl   = document.getElementById("scoreNum");
+  const gradeEl = document.getElementById("scoreGrade");
+  numEl.textContent   = COMPOSITE.total;
+  numEl.style.color   = COMPOSITE.color;
+  gradeEl.textContent = COMPOSITE.grade;
+  gradeEl.style.color = COMPOSITE.color;
+  document.getElementById("scoreSubNote").textContent =
+    "綜合 5 大面向：買超動能 ＋ 主力布局 ＋ 聰明錢質量 ＋ 成本安全 ＋ 官股支撐";
+
+  const barsEl = document.getElementById("scoreBars");
+  COMPOSITE.scoreItems.forEach(item => {
+    const pct = Math.round(item.score / item.max * 100);
+    const c   = item.score >= item.max * 0.8 ? "#1b5e20" :
+                item.score >= item.max * 0.6 ? "#2e7d32" :
+                item.score >= item.max * 0.4 ? "#f57c00" : "#c62828";
+    const valStr = (item.unit === "%" && item.value !== 0 ? (item.value > 0 ? "+" : "") : "") + item.value + item.unit;
+    const div = document.createElement("div");
+    div.style.cssText = "background:#f9f9f9;border-radius:8px;padding:10px 12px";
+    div.innerHTML =
+      "<div style='font-size:11px;color:#666;margin-bottom:4px'>" + item.label + "</div>" +
+      "<div style='font-size:20px;font-weight:500;color:" + c + ";line-height:1'>" + item.score +
+        "<span style='font-size:11px;color:#bbb;font-weight:400'>/" + item.max + "</span></div>" +
+      "<div style='background:#e8e8e8;border-radius:3px;height:4px;margin:7px 0 5px'>" +
+        "<div style='background:" + c + ";width:" + pct + "%;height:4px;border-radius:3px'></div></div>" +
+      "<div style='font-size:10px;color:#aaa'>" + item.sub + "：" + valStr + "</div>";
+    barsEl.appendChild(div);
+  });
+})();
+
+// ── 當日分點進出明細 ─────────────────────────────────────────
+(function() {
+  document.getElementById("lastDayTitle").textContent =
+    "當日分點進出明細（" + LAST_DAY.date + "）";
+
+  const nc = LAST_DAY.net >= 0 ? "#e63946" : "#1565c0";
+  const summaryEl = document.getElementById("lastDaySummary");
+  [
+    { label: "主力買賣超（張）", val: (LAST_DAY.net >= 0 ? "+" : "") + LAST_DAY.net, color: nc },
+    { label: "主力買超（張）",   val: "+" + LAST_DAY.totalBuy,  color: "#e63946" },
+    { label: "主力賣超（張）",   val: "-" + LAST_DAY.totalSell, color: "#1565c0" },
+    { label: "佔成交量",         val: LAST_DAY.pctVol + "%",    color: "#555" },
+  ].forEach(item => {
+    const d = document.createElement("div");
+    d.style.cssText = "background:#f9f9f9;border-radius:8px;padding:12px 14px;text-align:center";
+    d.innerHTML = "<div style='font-size:11px;color:#888;margin-bottom:6px'>" + item.label + "</div>" +
+      "<div style='font-size:22px;font-weight:500;color:" + item.color + "'>" + item.val + "</div>";
+    summaryEl.appendChild(d);
+  });
+
+  document.getElementById("ldBuyHeader").textContent  = "買超券商";
+  document.getElementById("ldSellHeader").textContent = "賣超券商";
+  document.getElementById("th_ld_buy").textContent  = "買進";
+  document.getElementById("th_ld_sell").textContent = "賣出";
+  document.getElementById("th_ld_net").textContent  = "淨超";
+
+  function makeRow(r, isBuy) {
+    const tr = document.createElement("tr");
+    const netStr = isBuy ? ("+" + r.net) : r.net.toString();
+    const netC   = isBuy ? "#e63946" : "#1565c0";
+    tr.innerHTML =
+      "<td style='font-size:12px'>" + r.name + "</td>" +
+      "<td style='text-align:right;color:#e63946'>" + r.buy  + "</td>" +
+      "<td style='text-align:right;color:#888'>"    + r.sell + "</td>" +
+      "<td style='text-align:right;font-weight:500;color:" + netC + "'>" + netStr + "</td>";
+    return tr;
+  }
+
+  const buyBody  = document.getElementById("ldBuyRows");
+  const sellBody = document.getElementById("ldSellRows");
+  LAST_DAY.buyers.forEach(r  => buyBody.appendChild(makeRow(r, true)));
+  LAST_DAY.sellers.forEach(r => sellBody.appendChild(makeRow(r, false)));
+
+  // ── 當日說明 ──
+  const watchNames = (WATCH || []).map(w => w.name);
+  const ldWatchBuy  = LAST_DAY.buyers.filter(r => watchNames.includes(r.name));
+  const ldWatchSell = LAST_DAY.sellers.filter(r => watchNames.includes(r.name));
+  let noteHTML =
+    "<div style='background:#f9f9f9;border-radius:8px;padding:10px 14px;margin-top:10px'>" +
+    "<div style='font-size:11px;font-weight:600;color:#333;margin-bottom:6px'>▌ 這個分析在看什麼</div>" +
+    "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:8px'>" +
+    "顯示<b>最後一個交易日</b>所有分點的實際買進張數 / 賣出張數 / 淨超。" +
+    "淨超正值（紅）= 當日買超；負值（藍）= 當日賣超。" +
+    "佔成交量% 越高，代表主力當日越主導市場方向。" +
+    "</div>";
+
+  if (ldWatchBuy.length > 0 || ldWatchSell.length > 0) {
+    noteHTML += "<div style='font-size:11px;border-left:3px solid #e65100;padding:6px 10px;background:#fff8f4;border-radius:0 4px 4px 0;margin-bottom:6px'>" +
+      "<b>重點追蹤分點今日動向</b>：";
+    if (ldWatchBuy.length > 0)  noteHTML += ldWatchBuy.map(r => r.name + " <span style='color:#b71c1c'>+" + r.net + "</span>").join("　") + "　";
+    if (ldWatchSell.length > 0) noteHTML += ldWatchSell.map(r => r.name + " <span style='color:#1565c0'>" + r.net + "</span>").join("　");
+    noteHTML += "</div>";
+  }
+
+  if (DUALDAO.length > 0) {
+    const top = DUALDAO[0];
+    noteHTML += "<div style='font-size:11px;border-left:3px solid #888;padding:6px 10px;background:#fff;border-radius:0 4px 4px 0'>" +
+      "🔄 <b>對倒對（負相關最強）</b>：" + top.a + " vs " + top.b + "（r=" + top.r + "）　" +
+      "<span style='color:#888'>兩者呈高度反向，可能是借券換手鏈的主要執行帳戶對</span>" +
+      "</div>";
+  }
+
+  noteHTML += "</div>";
+  document.getElementById("lastDayNote").innerHTML = noteHTML;
+
+  // ── 方向翻轉警示 ──────────────────────────────────────────────
+  if (REVERSAL && REVERSAL.length > 0) {
+    const alertEl = document.getElementById("reversalAlert");
+    alertEl.style.display = "";
+    const strongCount = REVERSAL.filter(x => x.strength === "strong").length;
+    const borderC = strongCount >= 2 ? "#b71c1c" : strongCount === 1 ? "#e65100" : "#f57c00";
+    const bgC     = strongCount >= 2 ? "#fff5f5" : strongCount === 1 ? "#fff8f4" : "#fffdf0";
+    const titleTx = strongCount >= 2 ? "⚡ 主力集體翻多訊號 — 多個借券帳戶同步轉買" :
+                    strongCount === 1 ? "⚠ 方向翻轉偵測 — 借券帳戶轉買中" :
+                                       "〓 方向翻轉偵測 — 近5日出現轉買跡象";
+    let html = "<div style='border-left:4px solid " + borderC + ";background:" + bgC + ";border-radius:0 8px 8px 0;padding:12px 16px'>" +
+               "<div style='font-size:12px;font-weight:600;color:" + borderC + ";margin-bottom:10px'>" + titleTx + "</div>" +
+               "<table style='width:100%;border-collapse:collapse;font-size:11px'>" +
+               "<tr style='background:rgba(0,0,0,0.03)'>" +
+               "<th style='text-align:left;padding:3px 8px;color:#888;font-weight:400'>分點</th>" +
+               "<th style='text-align:right;padding:3px 8px;color:#888;font-weight:400'>120日累計</th>" +
+               "<th style='text-align:right;padding:3px 8px;color:#888;font-weight:400'>近10日</th>" +
+               "<th style='text-align:right;padding:3px 8px;color:#888;font-weight:400'>近5日</th>" +
+               "<th style='text-align:right;padding:3px 8px;color:#888;font-weight:400'>今日</th>" +
+               "<th style='text-align:center;padding:3px 8px;color:#888;font-weight:400'>強度</th>" +
+               "</tr>";
+    REVERSAL.forEach(r => {
+      const sIcon  = r.strength === "strong" ? "🔴 強" : r.strength === "moderate" ? "🟠 中" : "🟡 弱";
+      const todayC = r.today > 0 ? "#b71c1c" : r.today < 0 ? "#1565c0" : "#999";
+      const r5C    = r.r5d > 0 ? "#b71c1c" : "#1565c0";
+      html += "<tr style='border-top:1px solid #eee'>" +
+              "<td style='padding:4px 8px;font-weight:500'>" + r.name + "</td>" +
+              "<td style='text-align:right;padding:4px 8px;color:#1565c0'>" + r.cum + "</td>" +
+              "<td style='text-align:right;padding:4px 8px;color:" + (r.r10d > 0 ? "#b71c1c" : "#1565c0") + "'>" + (r.r10d > 0 ? "+" : "") + r.r10d + "</td>" +
+              "<td style='text-align:right;padding:4px 8px;color:" + r5C + ";font-weight:600'>" + (r.r5d > 0 ? "+" : "") + r.r5d + "</td>" +
+              "<td style='text-align:right;padding:4px 8px;color:" + todayC + ";font-weight:600'>" + (r.today > 0 ? "+" : "") + r.today + "</td>" +
+              "<td style='text-align:center;padding:4px 8px'>" + sIcon + "</td>" +
+              "</tr>";
+    });
+    html += "</table>" +
+            "<div style='font-size:10px;color:#999;margin-top:8px'>" +
+            "偵測邏輯：整段累計賣超≥200張 且 近5日淨轉買超。強＝今日+近3日均正；中＝近3日正；弱＝近5日剛轉正" +
+            "</div></div>";
+    alertEl.innerHTML = html;
+  }
+})();
+
+// ── 借券資金鏈分析 ───────────────────────────────────────────
+(function() {
+  if (!CHAIN || !CHAIN.mainBuyer) return;
+  const card = document.getElementById("chainCard");
+  card.style.display = "";
+  document.getElementById("chainTitle").textContent = "借券資金鏈分析";
+
+  const full = CHAIN.chainFull || [];
+  const mb   = CHAIN.mainBuyer;
+
+  // ── 全券商分類 ──
+  // 主力賣方：r <= -0.35
+  const sellers   = full.filter(x => x.r <= -0.35).slice(0, 15);
+  // 潛在接棒：r <= -0.25 且 cum120 > 0（曾大量累積）
+  const relays    = full.filter(x => x.r <= -0.25 && x.cum120 > 0 && x.r > -0.35);
+  // 協同買方：r >= 0.30 且 cum120 > 0
+  const cobuyers  = full.filter(x => x.r >= 0.30 && x.cum120 > 0);
+
+  // ── 主力買方資訊 ──
+  const mbFull = (WATCH || []).find(w => w.name === mb);
+  const mbCum  = mbFull ? mbFull.cum[mbFull.cum.length - 1] : "?";
+
+  // ── 表格產生 ──
+  function sign(v) { return v > 0 ? "+" + v : String(v); }
+
+  function makeTable(items, title, rColor, showPotential) {
+    if (!items.length) return "";
+    let h = "<div style='margin-bottom:14px'>" +
+            "<div style='font-size:11px;font-weight:600;color:" + rColor + ";margin-bottom:6px'>" + title + "</div>" +
+            "<table style='width:100%;border-collapse:collapse;font-size:11px'>" +
+            "<tr style='background:#f5f5f5'>" +
+            "<th style='text-align:left;padding:3px 6px'>券商</th>" +
+            "<th style='text-align:right;padding:3px 6px'>r（與" + mb + "）</th>" +
+            "<th style='text-align:right;padding:3px 6px'>120日累計</th>" +
+            "<th style='text-align:right;padding:3px 6px'>近20日</th>" +
+            (showPotential ? "<th style='text-align:center;padding:3px 6px'>方向</th>" : "") +
+            "</tr>";
+    items.forEach(x => {
+      const rC  = x.r <= -0.40 ? "#b71c1c" : (x.r <= -0.25 ? "#e65100" : "#1565c0");
+      const dir = x.recent20 > 0 ? "<span style='color:#b71c1c'>▲買</span>" : "<span style='color:#1565c0'>▼賣</span>";
+      const watch = x.isWatch ? " ★" : "";
+      h += "<tr style='border-bottom:1px solid #eee'>" +
+           "<td style='padding:3px 6px'>" + x.name + watch + "</td>" +
+           "<td style='text-align:right;padding:3px 6px;color:" + rC + ";font-weight:600'>" + x.r.toFixed(3) + "</td>" +
+           "<td style='text-align:right;padding:3px 6px;color:" + (x.cum120>=0?"#b71c1c":"#1565c0") + "'>" + sign(x.cum120) + "</td>" +
+           "<td style='text-align:right;padding:3px 6px;color:" + (x.recent20>=0?"#b71c1c":"#1565c0") + "'>" + sign(x.recent20) + "</td>" +
+           (showPotential ? "<td style='text-align:center;padding:3px 6px'>" + dir + "</td>" : "") +
+           "</tr>";
+    });
+    h += "</table></div>";
+    return h;
+  }
+
+  let html = "";
+
+  // 主力買方橫幅
+  html += "<div style='background:#e3f2fd;border-left:4px solid #1565c0;padding:8px 14px;margin-bottom:14px;border-radius:4px'>" +
+          "<span style='font-size:11px;color:#1565c0;font-weight:600'>主力承接方：</span>" +
+          "<span style='font-size:13px;font-weight:700;color:#0d47a1'>" + mb + "</span>" +
+          "<span style='font-size:11px;color:#888;margin-left:10px'>120日累計 " + sign(mbCum) + " 張</span>" +
+          "</div>";
+
+  html += makeTable(sellers,  "▼ 反向賣超方（r ≤ -0.35，疑似借券打壓）", "#b71c1c", true);
+  if (relays.length)   html += makeTable(relays,   "⇄ 潛在接棒（r ≤ -0.25，曾累積籌碼）",      "#e65100", true);
+  if (cobuyers.length) html += makeTable(cobuyers, "▲ 協同買超方（r ≥ 0.30，同向積累）",        "#2e7d32", false);
+
+  document.getElementById("chainCorrWrap").innerHTML = html;
+  document.getElementById("chainFlowWrap").innerHTML = "";
+
+  // ── 籌碼結構總覽：買方陣營 vs 賣方陣營 ──
+  const buyCoal  = (WATCH || []).filter(w => w.total > 0);
+  const sellCoal = (WATCH || []).filter(w => w.total < 0);
+  const buySum   = Math.round(buyCoal.reduce((a, w) => a + w.total, 0));
+  const sellSum  = Math.round(Math.abs(sellCoal.reduce((a, w) => a + w.total, 0)));
+
+  // 借券餘額：優先使用 TWSE TWT93U 實際餘額；否則 fallback 到 watchlist 流量估算
+  const lendBal  = (CHAIN && CHAIN.lendBal != null) ? CHAIN.lendBal : null;
+  const lendSell = (CHAIN && CHAIN.lendSell != null) ? CHAIN.lendSell : null;
+  const lendRet  = (CHAIN && CHAIN.lendRet  != null) ? CHAIN.lendRet  : null;
+  const balDisplay = lendBal != null
+    ? Math.round(lendBal) + " 張"
+    : (sellSum - buySum) + " 張（估）";
+  const balSource  = lendBal != null
+    ? "<span style='color:#2e7d32'>TWSE TWT93U 實際餘額</span>"
+    : "<span style='color:#888'>watchlist 流量估算，誤差大</span>";
+  const lendDetail = (lendSell != null)
+    ? "今日借出 " + lendSell + " 張 / 還券 " + (lendRet || 0) + " 張"
+    : "";
+
+  const structHTML =
+    "<div style='background:#f9f9f9;border-radius:8px;padding:12px 16px;margin-top:14px'>" +
+    "<div style='font-size:11px;font-weight:600;color:#333;margin-bottom:10px'>▌ 這個分析在看什麼</div>" +
+    "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:10px'>" +
+    "把 watchlist 指定分點依照「和主力承接方的相關性（r 值）」分類：" +
+    "r 越負代表行為越相反（主力買的時候它賣）→ 這類帳戶是籌碼的<b>打壓方</b>；" +
+    "r 越正代表方向一致 → 可能是<b>同一主力的協同帳戶</b>。" +
+    "<br><b>⚠️ 限制</b>：pscnet 只顯示前20大分點；主力帳戶遠不止於此，以下數字僅代表可追蹤部分，不能作全市場推論。" +
+    "</div>" +
+    "<div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px'>" +
+    "<div style='background:#e3f2fd;border-radius:6px;padding:8px 12px;text-align:center'>" +
+    "<div style='font-size:10px;color:#1565c0;margin-bottom:4px'>主力右手承接（watchlist）</div>" +
+    "<div style='font-size:18px;font-weight:600;color:#0d47a1'>+" + buySum + " 張</div>" +
+    "<div style='font-size:10px;color:#888'>" + buyCoal.map(w => w.name).join("、") + "</div>" +
+    "</div>" +
+    "<div style='background:#fce4ec;border-radius:6px;padding:8px 12px;text-align:center'>" +
+    "<div style='font-size:10px;color:#b71c1c;margin-bottom:4px'>借券左手賣出（watchlist）</div>" +
+    "<div style='font-size:18px;font-weight:600;color:#b71c1c'>-" + sellSum + " 張</div>" +
+    "<div style='font-size:10px;color:#888'>" + sellCoal.map(w => w.name).join("、") + "</div>" +
+    "</div>" +
+    "<div style='background:#fff8e1;border-radius:6px;padding:8px 12px;text-align:center'>" +
+    "<div style='font-size:10px;color:#e65100;margin-bottom:4px'>借券餘額（強制回補部位）</div>" +
+    "<div style='font-size:18px;font-weight:600;color:#e65100'>" + balDisplay + "</div>" +
+    "<div style='font-size:10px;margin-top:2px'>" + balSource + "</div>" +
+    (lendDetail ? "<div style='font-size:10px;color:#888;margin-top:2px'>" + lendDetail + "</div>" : "") +
+    "</div>" +
+    "</div>" +
+    "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:6px'>" +
+    "借券賣出的股票流向：一部分由主力右手帳戶承接，一部分流入散戶或追蹤不到的帳戶。" +
+    "但無論籌碼去哪，<b>只要借券尚未歸還，餘額就是主力的淨空頭部位</b>，主力在未來某時點<b>必須買回</b>這批股票還券。" +
+    "<br>餘額越大 → 強制回補買盤越重；餘額縮小（回補出現）→ 換手進入尾聲。" +
+    "</div>" +
+    "<div style='font-size:11px;color:#444;background:#fff;border-left:3px solid #1565c0;padding:6px 10px;border-radius:0 4px 4px 0'>" +
+    "📌 <b>啟動信號</b>：賣超方近20日方向由賣轉買（▲買）= 借券壓力收縮，換手進入尾聲。" +
+    "</div></div>";
+
+  document.getElementById("chainCorrWrap").innerHTML += structHTML;
+
+  document.getElementById("chainNote").innerHTML =
+    "<div style='font-size:11px;color:#555;margin-top:8px;line-height:1.8'>" +
+    "這裡的 <b>r 值</b>：以<b>主力買方分點</b>（累計最多買超的分點）為基準，計算其他每個分點 vs 主力買方的逐日淨超相關係數（同日 lag=0）。" +
+    "資料來源：pscnet 分點每日淨買賣超（買進－賣出張數）。" +
+    "<br>r 越負（紅色）= 主力買的時候這分點在賣，反向程度越強，越可能是借券換手的對手方；" +
+    "r 越正（藍色）= 兩者協同操作，可能是同主力的多帳號。★ = watchlist 重點分點。" +
+    "</div>";
+})();
+
+// ── 漲跌段四象限分析 ─────────────────────────────────────────
+(function() {
+  if (!PHASE || PHASE.length === 0) return;
+  const card = document.getElementById("phaseCard");
+  card.style.display = "";
+  document.getElementById("phaseTitle").textContent = "漲跌段分點行為四象限分析";
+
+  const qLabel = {1:"Q1 協同多頭", 2:"Q2 借券/換手帳戶", 3:"Q3 持續賣出", 4:"Q4 底倉承接"};
+  const qColor = {1:"#2e7d32", 2:"#e65100", 3:"#6a1b9a", 4:"#1565c0"};
+  const qDesc  = {
+    1:"漲段買超 + 跌段買超（持續吸籌，靜默建倉）",
+    2:"漲段買超 + 跌段賣超（借券執行或換手中繼；lend_r 高者為借券帳戶）",
+    3:"漲段賣超 + 跌段賣超（持續賣壓，可能為散戶斷頭或強制出場）",
+    4:"漲段賣超 + 跌段買超（逢漲出貨、逢跌低吸，底倉承接）"
+  };
+
+  function sign(v) { return v > 0 ? "+" + v : String(v); }
+  function lendTag(r) {
+    if (r === null || r === undefined) return "";
+    const rStr = (r >= 0 ? "+" : "") + r.toFixed(3);
+    if (r >= 0.30) return " <span style='background:#b71c1c;color:#fff;border-radius:2px;padding:0 3px;font-size:9px'>借券執行 r=" + rStr + "</span>";
+    if (r >= 0.18) return " <span style='background:#e65100;color:#fff;border-radius:2px;padding:0 3px;font-size:9px'>借券中度 r=" + rStr + "</span>";
+    if (r <= -0.28) return " <span style='background:#1565c0;color:#fff;border-radius:2px;padding:0 3px;font-size:9px'>借券承接 r=" + rStr + "</span>";
+    return " <span style='color:#999;font-size:9px'>r=" + rStr + "</span>";
+  }
+
+  let html = "";
+  [2, 4, 3, 1].forEach(q => {
+    const items = PHASE.filter(x => x.q === q).sort((a, b) => Math.abs(b.cum) - Math.abs(a.cum));
+    if (!items.length) return;
+    html += "<div style='margin-bottom:16px'>" +
+      "<div style='font-size:11px;font-weight:600;color:" + qColor[q] + ";margin-bottom:4px'>" +
+      qLabel[q] + "　<span style='font-weight:400;color:#888'>" + qDesc[q] + "</span></div>" +
+      "<table style='width:100%;border-collapse:collapse;font-size:11px'>" +
+      "<tr style='background:#f5f5f5'><th style='text-align:left;padding:3px 6px'>券商</th>" +
+      "<th style='text-align:right;padding:3px 6px;white-space:nowrap'>漲日淨張<br><span style='font-weight:400;color:#888;font-size:10px'>紅=買 藍=賣</span></th>" +
+      "<th style='text-align:right;padding:3px 6px;white-space:nowrap'>跌日淨張<br><span style='font-weight:400;color:#888;font-size:10px'>紅=買 藍=賣</span></th>" +
+      "<th style='text-align:right;padding:3px 6px'>合計（張）</th></tr>";
+    items.slice(0, 10).forEach(x => {
+      const watch = x.isWatch ? " ★" : "";
+      const upC  = x.up  >= 0 ? "#b71c1c" : "#1565c0";
+      const dnC  = x.dn  >= 0 ? "#b71c1c" : "#1565c0";
+      const cumC = x.cum >= 0 ? "#b71c1c" : "#1565c0";
+      html += "<tr style='border-bottom:1px solid #eee'>" +
+        "<td style='padding:3px 6px'>" + x.name + watch + lendTag(x.lend_r) + "</td>" +
+        "<td style='text-align:right;padding:3px 6px;color:" + upC  + "'>" + sign(x.up)  + "</td>" +
+        "<td style='text-align:right;padding:3px 6px;color:" + dnC  + "'>" + sign(x.dn)  + "</td>" +
+        "<td style='text-align:right;padding:3px 6px;color:" + cumC + ";font-weight:600'>" + sign(x.cum) + "</td>" +
+        "</tr>";
+    });
+    html += "</table></div>";
+  });
+
+  document.getElementById("phaseWrap").innerHTML = html;
+
+  // ── 四象限說明 + 資料驅動結論 ──
+  const borrowExec  = PHASE.filter(x => x.lend_r !== null && x.lend_r !== undefined && x.lend_r >= 0.30);
+  const bottomAccum = PHASE.filter(x => x.q === 4 || (x.q === 1 && x.lend_r !== null && x.lend_r <= -0.28));
+  const purePress   = PHASE.filter(x => x.q === 3);
+  const silentAccum = PHASE.filter(x => x.q === 1);
+  const q2List      = PHASE.filter(x => x.q === 2);
+  const q4List      = PHASE.filter(x => x.q === 4);
+
+  // 換手結構：Q2 賣超總量 vs Q4 買超總量
+  const q2TotalSell = q2List.reduce((s, x) => s + Math.abs(x.dn), 0).toFixed(0);
+  const q4TotalBuy  = q4List.reduce((s, x) => s + Math.abs(x.dn), 0).toFixed(0);
+  // Q3 浮籌洗出量
+  const q3Total = Math.abs(purePress.reduce((s, x) => s + x.cum, 0)).toFixed(0);
+  // Q1 靜默建倉量
+  const q1Total = silentAccum.reduce((s, x) => s + x.cum, 0).toFixed(0);
+
+  let phaseExpl =
+    "<div style='background:#f9f9f9;border-radius:8px;padding:12px 16px;margin-top:14px;font-size:11px'>" +
+    "<div style='font-weight:600;color:#333;margin-bottom:8px;font-size:12px'>▌ 四象限能告訴你什麼</div>" +
+
+    // ── 基本原理 ──
+    "<div style='color:#555;line-height:1.9;margin-bottom:12px'>" +
+    "計算方式：把每個交易日按股價漲跌分成兩組，分別統計每個分點在「漲天」和「跌天」的淨買超量，" +
+    "得到兩個數字（漲日淨張、跌日淨張），根據正負落入 4 個象限。<br>" +
+    "這個分法的核心邏輯：<b>有計劃的帳戶，買賣方向會跟股價漲跌有規律的關聯；隨機散單則不會</b>。" +
+    "</div>" +
+
+    // ── 四象限定義（詳細版）──
+    "<div style='font-weight:600;color:#333;margin-bottom:6px'>① 四個象限各代表什麼</div>" +
+    "<div style='display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px'>" +
+
+    "<div style='background:#e8f5e9;border-radius:6px;padding:8px 10px'>" +
+    "<b style='color:#2e7d32'>Q1 漲天買 ＋ 跌天買（靜默建倉）</b>" +
+    "<div style='color:#444;line-height:1.8;margin-top:4px'>" +
+    "不管股價漲跌，每天都在淨買進。這是<b>最堅定的主力多方帳戶</b>。<br>" +
+    "特點：不怕在漲天追價，跌天也不減碼反而加碼。這種帳戶通常對後市有把握，" +
+    "代表主力仍處於<b>建倉階段</b>，尚未啟動拉升。<br>" +
+    "Q1 累計量越大 = 主力倉位越重、意圖越強烈。" +
+    "</div></div>" +
+
+    "<div style='background:#fff3e0;border-radius:6px;padding:8px 10px'>" +
+    "<b style='color:#e65100'>Q2 漲天買 ＋ 跌天賣（借券 / 換手中繼）</b>" +
+    "<div style='color:#444;line-height:1.8;margin-top:4px'>" +
+    "漲天買進、跌天賣出，配合股價節奏精準操作。有兩種可能：<br>" +
+    "① <b>借券帳戶</b>：跌天賣的是借來的券（配合打壓節奏），lend_r 高（≥0.30）可確認<br>" +
+    "② <b>換手中繼帳戶</b>：漲天從其他人手上接籌、跌天再把籌碼轉給 Q4 帳戶<br>" +
+    "這兩種操作都需要精確掌握股價節奏，是<b>有計劃的機構帳戶</b>特徵。" +
+    "</div></div>" +
+
+    "<div style='background:#f3e5f5;border-radius:6px;padding:8px 10px'>" +
+    "<b style='color:#6a1b9a'>Q3 漲天賣 ＋ 跌天賣（浮籌持續流出）</b>" +
+    "<div style='color:#444;line-height:1.8;margin-top:4px'>" +
+    "不管漲跌都在賣，有幾種可能：<br>" +
+    "① <b>散戶斷頭 / 融資斷頭</b>：跌天被迫斷頭，漲天也急忙出逃，賣壓持續<br>" +
+    "② <b>法人減碼</b>：有系統地分批出場，不分漲跌持續縮減部位<br>" +
+    "③ <b>強制平倉</b>：被動賣出，不考慮時機<br>" +
+    "Q3 總量越大 = 被洗出的浮動籌碼越多 = 未來反彈潛力越大（籌碼越乾淨）。" +
+    "</div></div>" +
+
+    "<div style='background:#e3f2fd;border-radius:6px;padding:8px 10px'>" +
+    "<b style='color:#1565c0'>Q4 漲天賣 ＋ 跌天買（底倉逢低吸籌）</b>" +
+    "<div style='color:#444;line-height:1.8;margin-top:4px'>" +
+    "漲天賣出（獲利了結 / 讓散戶追進）、跌天買回（趁回調補充底倉）。<br>" +
+    "這是<b>最典型的主力控盤行為</b>：高賣低買，在震盪中壓縮成本、累積底部倉位。<br>" +
+    "跌日買超量越大 = 主力對低位越有興趣 = 底部支撐越強。" +
+    "</div></div></div>" +
+
+    // ── 換手結構解讀 ──
+    "<div style='font-weight:600;color:#333;margin-bottom:6px'>② 換手結構：Q2 ＋ Q4 同時出現代表什麼</div>" +
+    "<div style='background:#fff8f0;border-radius:6px;padding:8px 10px;margin-bottom:12px;color:#444;line-height:1.9'>" +
+    "當 Q2（借券打壓）和 Q4（逢低承接）同時存在，代表主力在執行<b>換手操作</b>：<br>" +
+    "　→ Q2 帳戶用借券打壓股價，製造恐慌讓散戶賣出<br>" +
+    "　→ Q4 帳戶趁低價大量承接，把籌碼從散戶手中轉移到主力手中<br>" +
+    "　→ 這個過程中股價看起來在「跌」，但主力倉位實際上在「增加」<br>" +
+    "本期 Q2 跌日賣超合計：<b>" + q2TotalSell + " 張</b>，Q4 跌日買超合計：<b>" + q4TotalBuy + " 張</b>。" +
+    (parseFloat(q4TotalBuy) > parseFloat(q2TotalSell) * 0.7
+      ? "　<span style='color:#1565c0'>Q4 承接量接近 Q2 打壓量，換手力道積極。</span>"
+      : parseFloat(q4TotalBuy) > 0
+        ? "　<span style='color:#888'>Q4 承接量低於 Q2 打壓量，部分打壓目的為洗盤而非轉倉。</span>"
+        : "") +
+    "</div>" +
+
+    // ── 籌碼清洗進度 ──
+    "<div style='font-weight:600;color:#333;margin-bottom:6px'>③ 籌碼清洗進度：Q3 告訴你洗了多少</div>" +
+    "<div style='background:#f9f4ff;border-radius:6px;padding:8px 10px;margin-bottom:12px;color:#444;line-height:1.9'>" +
+    "Q3 的累計賣超量代表本期被洗出的浮動籌碼，本期 Q3 合計：<b>" + q3Total + " 張</b>。<br>" +
+    "判斷邏輯：<br>" +
+    "　→ Q3 量持續增加 = 洗盤仍在進行，浮籌尚未清乾淨，不適合進場<br>" +
+    "　→ Q3 量開始縮小（近期 Q3 分點減少或賣超量降低）= 洗盤接近尾聲<br>" +
+    "　→ Q3 分點轉向 Q1（之前賣的人開始買）= 洗盤完成，是重要的多頭確認訊號<br>" +
+    "配合融資餘額：融資持續減少 + Q3 量縮 = 雙重確認籌碼乾淨。" +
+    "</div>" +
+
+    // ── lend_r 進階 ──
+    "<div style='font-weight:600;color:#333;margin-bottom:6px'>④ lend_r 的三種解讀（不只是識別借券帳戶）</div>" +
+    "<div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px'>" +
+    "<div style='background:#fff5f5;border-radius:6px;padding:7px 10px'>" +
+    "<b style='color:#b71c1c'>lend_r ≥ +0.30（借券執行）</b><br>" +
+    "<div style='color:#444;line-height:1.8;margin-top:3px'>這個分點的每日賣出量與借券增加量高度同步。代表它「借到券就賣」，是打壓行動的主要執行者。這種帳戶一旦停止借券，賣壓就會消失。</div>" +
+    "</div>" +
+    "<div style='background:#f5f5f5;border-radius:6px;padding:7px 10px'>" +
+    "<b style='color:#555'>lend_r 接近 0（無關聯）</b><br>" +
+    "<div style='color:#444;line-height:1.8;margin-top:3px'>這個分點的賣出與借券無關。可能是正常的獲利出場、散戶賣出，或法人再平衡，不是借券打壓的執行者。</div>" +
+    "</div>" +
+    "<div style='background:#f0f7ff;border-radius:6px;padding:7px 10px'>" +
+    "<b style='color:#1565c0'>lend_r ≤ −0.28（借券反向承接）</b><br>" +
+    "<div style='color:#444;line-height:1.8;margin-top:3px'>借券賣出最多的時候，這個分點反而在買進。代表它是最頑強的底部吸籌帳戶 — 明知有借券打壓仍持續買，對底部有極強信心。</div>" +
+    "</div></div>" +
+
+    // ── 反轉訊號 ──
+    "<div style='font-weight:600;color:#333;margin-bottom:6px'>⑤ 用四象限判斷反轉訊號</div>" +
+    "<div style='background:#fffde7;border-radius:6px;padding:8px 10px;margin-bottom:12px;color:#444;line-height:1.9'>" +
+    "四象限最有價值的用途是<b>跨期比較</b>（對比上一份報告的象限分布）：<br>" +
+    "　🔴 <b>最強反轉訊號</b>：Q2 帳戶轉進 Q1（跌天從賣轉買）→ 借券打壓停止，主力開始正式做多<br>" +
+    "　🟠 <b>次強訊號</b>：Q4 帳戶買超量持續增加 → 底部吸籌加速，即將啟動<br>" +
+    "　🟡 <b>輔助訊號</b>：Q3 分點數量減少、Q3 總賣超量縮小 → 浮籌已大量清除<br>" +
+    "　⚫ <b>反轉失敗警示</b>：Q2 帳戶賣超量再度擴大，或新的分點進入 Q2 → 打壓延長，底部未到<br>" +
+    "三個訊號同時出現（Q2轉Q1 + Q4加速 + Q3縮量）= 主升浪啟動前的最完整確認。" +
+    "</div>" +
+
+    // ── 與其他分析的關係 ──
+    "<div style='font-weight:600;color:#333;margin-bottom:6px'>⑥ 四象限 vs 其他分析的關係</div>" +
+    "<div style='background:#f5f5f5;border-radius:6px;padding:8px 10px;margin-bottom:12px;color:#444;line-height:1.9'>" +
+    "四象限是<b>角色分類工具</b>，告訴你每個分點在扮演什麼角色，但不告訴你「現在做了什麼」：<br>" +
+    "　→ 配合<b>重點分點監控（watchCard）</b>的逐日明細 = 確認各角色帳戶今天是否按劇本行動<br>" +
+    "　→ 配合<b>借券餘額（TWSE）</b>的絕對量 = 判斷 Q2 帳戶打壓彈藥還剩多少<br>" +
+    "　→ 配合<b>融資餘額</b>走勢 = 印證 Q3 洗盤進度（融資減少 = 散戶被洗出）<br>" +
+    "　→ 配合<b>相關係數矩陣</b> = 確認 Q2 帳戶與 Q4 帳戶是否互相負相關（確認換手鏈條）" +
+    "</div>" +
+
+    // ── 資料驅動結論 ──
+    "<div style='font-weight:600;color:#333;margin-bottom:6px'>本期資料結論</div>";
+
+  if (borrowExec.length > 0) {
+    phaseExpl += "<div style='border-left:3px solid #b71c1c;padding:6px 10px;background:#fff5f5;border-radius:0 4px 4px 0;margin-bottom:6px'>" +
+      "🔴 <b>借券執行帳戶（lend_r ≥ 0.30）</b>：" +
+      borrowExec.map(x => x.name + "（r=" + x.lend_r.toFixed(2) + "）").join("、") +
+      " — 賣出動作與借券增加高度同步，是本期借券打壓的主要執行者。觀察這些帳戶的跌日動作是否縮手，可提前判斷打壓結束時機。" +
+      "</div>";
+  }
+  if (bottomAccum.length > 0) {
+    phaseExpl += "<div style='border-left:3px solid #1565c0;padding:6px 10px;background:#f3f8ff;border-radius:0 4px 4px 0;margin-bottom:6px'>" +
+      "🔵 <b>底倉承接帳戶（Q4 或 lend_r ≤ −0.28）</b>：" +
+      bottomAccum.map(x => x.name).join("、") +
+      " — 逢跌積極買進，或在借券高峰時反向吸籌。這些帳戶持續活躍代表底部仍有強力承接，主力尚未放棄。" +
+      "</div>";
+  }
+  if (silentAccum.length > 0) {
+    phaseExpl += "<div style='border-left:3px solid #2e7d32;padding:6px 10px;background:#f0fff4;border-radius:0 4px 4px 0;margin-bottom:6px'>" +
+      "🟢 <b>靜默建倉帳戶（Q1）</b>：" +
+      silentAccum.slice(0,5).map(x => x.name + "（" + x.cum + "張）").join("、") +
+      "　合計買超 <b>" + q1Total + " 張</b>。漲跌都在買，代表對後市有高度信心，是最強的多頭支撐。" +
+      "</div>";
+  }
+  if (purePress.length > 0) {
+    phaseExpl += "<div style='border-left:3px solid #6a1b9a;padding:6px 10px;background:#f9f4ff;border-radius:0 4px 4px 0;margin-bottom:6px'>" +
+      "🟣 <b>持續賣出（Q3）</b>：" +
+      purePress.slice(0,5).map(x => x.name + "（" + x.cum + "張）").join("、") +
+      "　合計洗出浮籌 <b>" + q3Total + " 張</b>。漲跌段都在賣，為散戶斷頭或法人減碼。量越大代表籌碼越乾淨，底部確立後反彈空間越充足。" +
+      "</div>";
+  }
+
+  phaseExpl += "<div style='border-left:3px solid #e65100;padding:6px 10px;background:#fff8f0;border-radius:0 4px 4px 0;margin-top:4px'>" +
+    "📌 <b>最關鍵的觀察點</b>：Q2 借券帳戶的跌日動作是否從「賣超」轉為「買超或持平」，" +
+    "這是整個換手操作結束、主力準備啟動的最早訊號。配合 Q4 帳戶加速吸籌、Q3 量縮，三訊號同步出現即為底部確立。" +
+    "</div></div>";
+
+  document.getElementById("phaseNote").innerHTML = phaseExpl;
+})();
+
+// ── 重點分點監控 ─────────────────────────────────────────────
+(function() {
+  if (!WATCH || WATCH.length === 0) return;
+  const card = document.getElementById("watchCard");
+  card.style.display = "";
+  document.getElementById("watchTitle").textContent =
+    "重點分點監控（買進 / 賣出 / 淨超 / 累計）";
+
+  const COLORS = ["#1565c0","#e63946","#2e7d32","#6a1b9a","#e65100","#006064"];
+
+  // 自動偵測離群值：累計範圍 > 其他線中位數 3 倍 → 移到右軸
+  const ranges = WATCH.map(w => Math.max(...w.cum) - Math.min(...w.cum));
+  const sorted = [...ranges].sort((a,b) => a - b);
+  const median = sorted[Math.floor(sorted.length / 2)] || 1;
+  const threshold = median * 3;
+
+  const datasets = WATCH.map((w, i) => {
+    const isOutlier = ranges[i] > threshold;
+    return {
+      label: w.name + (isOutlier ? " ▶" : ""),
+      data:  w.cum,
+      borderColor: COLORS[i % COLORS.length],
+      backgroundColor: COLORS[i % COLORS.length] + "18",
+      borderWidth: isOutlier ? 1.5 : 2,
+      borderDash: isOutlier ? [4, 3] : [],
+      pointRadius: 2, tension: 0.2,
+      yAxisID: isOutlier ? "y2" : "y",
+    };
+  });
+  const hasOutlier = WATCH.some((w, i) => ranges[i] > threshold);
+
+  new Chart(document.getElementById("watchChart"), {
+    type: "line",
+    data: { labels: DATES, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: "top", labels: { font: { size: 11 },
+        filter: (item) => true } } },
+      scales: {
+        x:  { ticks: { maxTicksLimit: 20, font: { size: 10 } } },
+        y:  { position: "left",  title: { display: true, text: "累計淨買超（張）", font: { size: 10 } } },
+        y2: { position: "right", display: hasOutlier,
+              title: { display: hasOutlier, text: "▶ 右軸（大量級）", font: { size: 10 } },
+              grid: { drawOnChartArea: false } },
+      },
+    },
+  });
+
+  // 表頭：兩層 — 上層分點名稱（顏色與圖表折線同色）、下層買進/賣出/淨超
+  const head = document.getElementById("watchHead");
+  // 第一列：分點名稱 + 累計（顏色與圖表折線 COLORS[i] 相同）
+  let hHTML = "<th rowspan='2' style='font-size:11px;color:#999;vertical-align:middle'>日期</th>";
+  WATCH.forEach((w, i) => {
+    const lc = COLORS[i % COLORS.length];
+    const cumSign = w.total >= 0 ? "+" : "";
+    hHTML += "<th colspan='3' style='text-align:center;font-size:11px;border-left:2px solid #eee;" +
+      "border-bottom:1px solid #ddd;padding-bottom:3px'>" +
+      "<span style='display:inline-block;width:10px;height:10px;border-radius:50%;background:" + lc + ";margin-right:4px;vertical-align:middle'></span>" +
+      "<span style='color:" + lc + ";font-weight:600'>" + w.name + "</span>" +
+      "<br><span style='font-weight:400;font-size:10px;color:#888'>累計 " + cumSign + w.total + " 張</span></th>";
+  });
+  // 第二列：買進 / 賣出 / 淨超（每個分點重複）
+  hHTML += "</tr><tr>";
+  WATCH.forEach(() => {
+    hHTML +=
+      "<th style='text-align:right;font-size:10px;color:#e63946;font-weight:400;border-left:2px solid #eee;padding:2px 6px'>買進</th>" +
+      "<th style='text-align:right;font-size:10px;color:#888;font-weight:400;padding:2px 6px'>賣出</th>" +
+      "<th style='text-align:right;font-size:10px;color:#555;font-weight:600;padding:2px 6px'>淨超</th>";
+  });
+  head.innerHTML = hHTML;
+
+  // 表身：最近 20 天，倒序
+  const tbody = document.getElementById("watchBody");
+  const showN = Math.min(20, DATES.length);
+  for (let i = DATES.length - 1; i >= DATES.length - showN; i--) {
+    const tr = document.createElement("tr");
+    let rHTML = "<td style='font-size:11px;color:#888'>" + DATES[i] + "</td>";
+    WATCH.forEach((w, wi) => {
+      const lc  = COLORS[wi % COLORS.length];
+      const nc  = w.net[i] > 0 ? "#e63946" : w.net[i] < 0 ? "#1565c0" : "#aaa";
+      const ns  = w.net[i] > 0 ? "+" + w.net[i] : w.net[i];
+      rHTML +=
+        "<td style='text-align:right;color:#e63946;font-size:11px;border-left:2px solid " + lc + "44'>" + (w.buy[i]  || "—") + "</td>" +
+        "<td style='text-align:right;color:#888;font-size:11px'>"                                        + (w.sell[i] || "—") + "</td>" +
+        "<td style='text-align:right;font-weight:600;color:" + nc + ";font-size:11px'>"                  + (w.net[i] !== 0 ? ns : "—") + "</td>";
+    });
+    tr.innerHTML = rHTML;
+    tbody.appendChild(tr);
+  }
+  // ── 重點分點說明 ──
+  const watchBuyers = (WATCH||[]).filter(w => w.total > 0).sort((a,b) => b.total - a.total);
+  const watchSellers = (WATCH||[]).filter(w => w.total < 0).sort((a,b) => a.total - b.total);
+  let watchNote =
+    "<div style='background:#f9f9f9;border-radius:8px;padding:12px 16px;margin-top:14px'>" +
+    "<div style='font-size:11px;font-weight:600;color:#333;margin-bottom:8px'>▌ 這個圖在看什麼</div>" +
+    "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:8px'>" +
+    "追蹤 watchlist.json 裡<b>手動指定的重點分點</b>，顯示他們的<b>累計淨買超走勢</b>（折線圖）和近20日每日明細（表格）。" +
+    "正值 = 整段期間淨買入；負值 = 淨賣出。" +
+    "折線持續上升 = 該帳戶在吸籌；持續下降 = 在出貨或借券賣出。" +
+    "</div>" +
+    "<div style='font-size:11px;background:#e3f2fd;border-left:3px solid #1565c0;padding:6px 10px;border-radius:0 4px 4px 0;margin-bottom:8px'>" +
+    "🔎 <b>和「四象限分析」有什麼不同？</b><br>" +
+    "四象限分析 = 對所有前20大分點做角色分類（誰是借券帳戶？誰在承接？）<br>" +
+    "這裡的重點監控 = 只看 watchlist 裡的指定分點，追蹤每天的實際動作。<br>" +
+    "兩者互補：先用四象限判斷角色，再用這張表每日確認動向是否符合預期。" +
+    "</div>";
+
+  if (watchBuyers.length > 0) {
+    watchNote += "<div style='font-size:11px;border-left:3px solid #1565c0;padding:6px 10px;background:#f3f8ff;border-radius:0 4px 4px 0;margin-bottom:6px'>" +
+      "📈 <b>累計買超（主力持倉方向）</b>：" +
+      watchBuyers.map(w => w.name + " +" + w.total + "張").join("　") + "</div>";
+  }
+  if (watchSellers.length > 0) {
+    watchNote += "<div style='font-size:11px;border-left:3px solid #b71c1c;padding:6px 10px;background:#fff5f5;border-radius:0 4px 4px 0;margin-bottom:6px'>" +
+      "📉 <b>累計賣超（打壓 / 借券方向）</b>：" +
+      watchSellers.map(w => w.name + " " + w.total + "張").join("　") + "</div>";
+  }
+
+  watchNote += "<div style='font-size:11px;color:#444;background:#fff;border-left:3px solid #888;padding:6px 10px;border-radius:0 4px 4px 0;margin-top:4px'>" +
+    "📌 <b>怎麼看趨勢</b>：賣超帳戶的折線若在近期「由降轉平或上彎」= 借券壓力收縮；" +
+    "買超帳戶若近期加速上揚 = 主力正在加倉。兩者方向同步時為最強訊號。" +
+    "</div></div>";
+
+  document.getElementById("watchNote").innerHTML = watchNote;
+})();
+
+// ── 籌碼面綜合研判 ───────────────────────────────────────────
+(function() {
+  document.getElementById("conclusionTitle").textContent = "籌碼面綜合研判";
+  const body = document.getElementById("conclusionBody");
+
+  // 1. 換手偵測：買方分點被 ≥2 個賣方分點高度負相關包圍
+  const NEG = -0.55, POS = 0.60;
+  const buyBrokers  = DS.filter(d =>  d.isBuy).map(d => d.label);
+  const sellBrokers = DS.filter(d => !d.isBuy).map(d => d.label);
+  let buyerBroker = null, sellerPeers = [];
+  buyBrokers.forEach(b => {
+    const peers = CORR.filter(c => c.r <= NEG && (c.a === b || c.b === b))
+                      .map(c => ({ peer: c.a === b ? c.b : c.a, r: c.r }))
+                      .filter(x => sellBrokers.includes(x.peer));
+    if (peers.length > sellerPeers.length) { buyerBroker = b; sellerPeers = peers; }
+  });
+  const handoffDetected = buyerBroker && sellerPeers.length >= 2;
+  const spNames = sellerPeers.map(p => p.peer);
+  const sameOriginCount = CORR.filter(c => c.r >= POS && spNames.includes(c.a) && spNames.includes(c.b)).length;
+
+  // 2. 買方主力指標
+  const bkSk = STREAK.find(s => s.name === buyerBroker) || null;
+  const bCost = bkSk?.costBand?.avgCost  || null;
+  const bPnl  = bkSk?.costBand?.pnlPct   || null;
+  const bBuy  = bkSk?.costBand?.totalBuy || 0;
+  const bCurB = bkSk?.curBuy    || 0;
+  const bSm   = bkSk?.smartScore || 0;
+
+  // 主力×融資同向性統計
+  const buyerCells = bkSk?.cells || [];
+  let cBuyFinDown = 0, cBuyFinUp = 0, cSellFinUp = 0, cBuyDays = 0;
+  for (let i = 0; i < DATES.length; i++) {
+    const bv = buyerCells[i] || 0;
+    const fd = MARGIN.fin_diff[i];
+    if (fd == null) continue;
+    if (bv > 0)                 { cBuyDays++; fd < 0 ? cBuyFinDown++ : cBuyFinUp++; }
+    else if (bv < 0 && fd > 0) { cSellFinUp++; }
+  }
+  const handoffRate = cBuyDays > 0 ? Math.round(cBuyFinDown / cBuyDays * 100) : null;
+
+  // 3. 融資
+  const finBals   = MARGIN.fin_bal.filter(v => v != null);
+  const latestFin = finBals.length ? finBals[finBals.length - 1] : null;
+
+  // 4. 三大法人累計 + 今日最後一筆
+  const sumF = INST.foreign.reduce((a,b) => a+(b||0), 0);
+  const sumT = INST.trust.reduce((a,b)   => a+(b||0), 0);
+  const sumD = INST.dealer.reduce((a,b)  => a+(b||0), 0);
+  const sumI = Math.round(sumF + sumT + sumD);
+  const lastNonNull = arr => { for(let i=arr.length-1;i>=0;i--) if(arr[i]!=null) return arr[i]; return 0; };
+  const todayF = lastNonNull(INST.foreign);
+  const todayT = lastNonNull(INST.trust);
+  const todayD = lastNonNull(INST.dealer);
+  const todayI = Math.round(todayF + todayT + todayD);
+
+  // 5. 技術位
+  const allC    = OHLCV.close.filter(v => v != null);
+  const curP    = allC.length ? allC[allC.length - 1] : 0;
+  const srtC    = [...allC].sort((a,b) => b-a);
+  const periHigh = srtC[0] || 0;
+  const pct80C   = srtC[Math.floor(srtC.length * 0.2)] || 0;  // 近期 top-20% 收盤
+  const sup1     = bCost ? Math.round(bCost * 100)       / 100 : null;
+  const sup2     = bCost ? Math.round(bCost * 0.985 * 100) / 100 : null;
+  const res1     = pct80C  > 0 ? Math.round(pct80C  * 100) / 100 : null;
+  const res2     = periHigh > 0 ? Math.round(periHigh * 100) / 100 : null;
+
+  // ── 渲染輔助 ──
+  function mkSection(bColor, title, rows) {
+    const sec = document.createElement("div");
+    sec.className = "csec";
+    sec.style.borderLeftColor = bColor;
+    sec.innerHTML = "<div style='font-size:11px;font-weight:500;color:"+bColor+";margin-bottom:7px'>"+title+"</div>";
+    rows.forEach(([lbl, val, vc]) => {
+      const d = document.createElement("div");
+      d.className = "ckv";
+      d.innerHTML = "<span style='color:#666'>"+lbl+"</span>"+
+                    "<span style='font-weight:500;color:"+(vc||"#333")+"'>"+val+"</span>";
+      sec.appendChild(d);
+    });
+    body.appendChild(sec);
+  }
+
+  function mkPriceRow(items) {
+    const wrap = document.createElement("div");
+    wrap.style.cssText = "display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px";
+    items.forEach(([lbl, val, c, bg]) => {
+      if (val == null) return;
+      const d = document.createElement("div");
+      d.className = "cpbox";
+      d.style.background = bg || "#f5f7ff";
+      d.innerHTML = "<div style='font-size:10px;color:#888;margin-bottom:2px'>"+lbl+"</div>"+
+                    "<div style='font-size:17px;font-weight:500;color:"+c+";font-variant-numeric:tabular-nums'>"+
+                    val.toFixed(2)+"</div><div style='font-size:10px;color:#aaa'>元</div>";
+      wrap.appendChild(d);
+    });
+    body.appendChild(wrap);
+  }
+
+  // ── 換手結構 ──
+  if (handoffDetected) {
+    const spList = sellerPeers.sort((a,b) => a.r-b.r)
+                    .map(p => p.peer+"(r="+p.r.toFixed(2)+")").join("、");
+    mkSection("#1565c0", "▌ 換手結構分析（偵測到協同換手）", [
+      ["換手型態",   sellerPeers.length+" 家協同分點賣出 → "+buyerBroker+" 承接",           "#0d47a1"],
+      ["賣方分點",   spList.length > 64 ? spList.slice(0,64)+"…" : spList,                  "#546e7a"],
+      ["賣方同源",   sameOriginCount > 0 ? sameOriginCount+" 對 r≥+0.6（疑同主力多通道）" : "未偵測到同源對",
+                    sameOriginCount > 0 ? "#e65100" : "#888"],
+      ["強度比說明", "強度比＜50% 為換手雙腳計算假象，非控盤減弱訊號",                     "#999"],
+    ]);
+  } else {
+    mkSection("#9e9e9e", "▌ 換手結構分析", [
+      ["偵測結果", "未偵測到明顯換手結構（分點獨立操作）", "#666"],
+    ]);
+  }
+
+  // ── 籌碼現況 ──
+  const chipRows = [];
+  if (bCost) {
+    chipRows.push(["主力均成本（"+(buyerBroker||"買方")+"）",
+      bCost.toFixed(2)+" 元　浮盈 "+(bPnl >= 0 ? "+" : "")+bPnl.toFixed(2)+"%",
+      bPnl >= 0 ? "#1b5e20" : "#c62828"]);
+    chipRows.push(["累計買超 / 聰明錢",
+      bBuy.toFixed(0)+" 張　/ 　"+bSm.toFixed(1)+"%",
+      bSm >= 60 ? "#0d47a1" : "#546e7a"]);
+    if (handoffRate != null) {
+      const hrC = handoffRate >= 60 ? "#1b5e20" : handoffRate >= 40 ? "#e65100" : "#c62828";
+      const hrL = handoffRate >= 60 ? "籌碼轉換確認 ✓" :
+                  handoffRate >= 40 ? "部分換手" : "換手跡象不明";
+      chipRows.push(["  ↳ 買超日同時融資減少（換手確認率）",
+        handoffRate+"% （"+cBuyFinDown+"/"+cBuyDays+" 日）　"+hrL, hrC]);
+    }
+    if (cSellFinUp > 0) {
+      chipRows.push(["  ↳ 主力賣超＋融資增加（出貨警訊日）",
+        cSellFinUp+" 日",
+        cSellFinUp >= 3 ? "#c62828" : "#e65100"]);
+    }
+  }
+  if (latestFin != null) {
+    chipRows.push(["融資餘額（散戶壓力）",
+      latestFin.toLocaleString()+" 張",
+      latestFin > 20000 ? "#c62828" : "#e65100"]);
+  }
+  const instSign = sumI >= 0 ? "+" : "";
+  chipRows.push([META.days+"日三大法人淨",
+    instSign+sumI.toLocaleString()+" 張（外資 "+(sumF>=0?"+":"")+Math.round(sumF).toLocaleString()+"）",
+    sumI >= 0 ? "#1565c0" : sumI >= -5000 ? "#e65100" : "#c62828"]);
+  mkSection("#2e7d32", "▌ 籌碼現況", chipRows);
+
+  // ── 支撐 / 壓力位 ──
+  const priceLabel = document.createElement("div");
+  priceLabel.style.cssText = "font-size:11px;font-weight:500;color:#546e7a;margin-bottom:8px";
+  priceLabel.textContent = "▌ 技術位（支撐 / 壓力）";
+  body.appendChild(priceLabel);
+  mkPriceRow([
+    ["強支撐",          sup2,              "#1565c0", "#eef2ff"],
+    ["主力成本（支撐）", sup1,             "#1976d2", "#e8f0fe"],
+    ["現價",            curP > 0 ? curP : null, "#37474f", "#f5f5f5"],
+    ["壓力一",          res1,              "#e65100", "#fff3e0"],
+    ["壓力二（近高）",  res2,              "#c62828", "#fff0f0"],
+  ]);
+
+  // ── 操作研判 ──
+  let concText = "", concColor = "#333";
+  if (handoffDetected) {
+    const profitNote = bPnl != null
+      ? (Math.abs(bPnl) <= 5 ? "主力成本區間安全（浮盈"+(bPnl>=0?"+":"")+bPnl.toFixed(1)+"%），護盤動機存在。" : "")
+      : "";
+    const finNote = latestFin
+      ? "融資餘額 "+latestFin.toLocaleString()+" 張構成頭部壓力，突破壓力前留意解套賣壓。"
+      : "";
+    const todayISign = todayI >= 0 ? "+" : "";
+    const instNote = todayI > 300
+      ? "三大法人今日買超 "+todayISign+todayI.toLocaleString()+" 張，短線籌碼支撐。"
+      : todayI < -300
+      ? "三大法人今日賣超 "+todayI.toLocaleString()+" 張（"+META.days+"日累計 "+(sumI>=0?"+":"")+sumI.toLocaleString()+"），需持續追蹤。"
+      : Math.abs(sumI) < 5000
+      ? "三大法人今日小幅動作，帳面流出為換手結構所致，非實際退場。"
+      : sumI > 0 ? "三大法人"+META.days+"日累計買超，籌碼面支撐良好。"
+      : "三大法人今日小幅動作，"+META.days+"日累計淨賣 "+Math.abs(sumI).toLocaleString()+" 張，持續觀察。";
+    const confirmNote = handoffRate != null
+      ? "換手確認率 "+handoffRate+"%（主力買超日中融資同步縮減）。"
+      : "";
+    concText = "換手完成、籌碼改善。"+confirmNote+profitNote+finNote+instNote+"等待催化劑配合，可能啟動主升段。";
+    concColor = "#1b5e20";
+  } else {
+    const g = COMPOSITE.total;
+    concText = "未偵測換手結構，依綜合評分 "+g+" 分（"+COMPOSITE.grade+"）研判："+
+      (g >= 65 ? "籌碼面偏多，持續關注主力分點動向。" :
+       g >= 50 ? "籌碼面中性，觀望待突破訊號。" : "籌碼面偏弱，宜減碼審慎應對。");
+    concColor = COMPOSITE.color;
+  }
+  const opDiv = document.createElement("div");
+  opDiv.style.cssText = "border-left:3px solid "+concColor+";padding:12px 16px;background:"+concColor+"12;border-radius:0 8px 8px 0;margin-bottom:10px";
+  opDiv.innerHTML = "<div style='font-size:11px;font-weight:500;color:"+concColor+";margin-bottom:5px'>▌ 操作研判</div>"+
+                    "<div style='font-size:13px;line-height:1.8;color:#333'>"+concText+"</div>";
+  body.appendChild(opDiv);
+
+  const disc = document.createElement("div");
+  disc.style.cssText = "font-size:10px;color:#bbb;margin-top:8px;line-height:1.6";
+  disc.textContent = "★ 以上由系統依籌碼數據自動生成，僅供輔助研判，不構成投資建議。請搭配大盤環境、基本面與個人風控評估後操作。";
+  body.appendChild(disc);
+})();
+
+// ── 設定中文文字 ────────────────────────────────────────────
+document.getElementById("pageTitle").textContent =
+  META.stockName + "（" + META.stockId + "）分點報告";
+document.getElementById("h1").textContent =
+  META.stockName + "（" + META.stockId + "）分點進出分析報告";
+document.getElementById("sub").textContent =
+  "近" + META.days + "日每日曲線｜" + META.dateFrom + "～" + META.dateTo +
+  "｜資料：pscnet（統一證券）MoneyDJ";
+document.getElementById("chartTitle").textContent = "各分點每日淨買賣超曲線（張）";
+document.getElementById("legendHint").textContent =
+  "━ 實線粗＝買超前" + META.topN + "名　╌ 虛線細＝賣超前" + META.topN + "名";
+document.getElementById("chartNote").textContent =
+  "★ 每條線代表一個券商分點的每日淨買賣超（買進－賣出），正值為買超，負值為賣超。曲線持續向上＝主力持續加碼，由正轉負＝主力出場。";
+document.getElementById("buyTitle").textContent =
+  "買超前" + META.topN + "名（近" + META.rankDays + "日累計）";
+document.getElementById("sellTitle").textContent =
+  "賣超前" + META.topN + "名（近" + META.rankDays + "日累計）";
+document.getElementById("corrTitle").textContent = "分點互動關係分析（皮爾森相關係數）";
+document.getElementById("th_broker").textContent = "分點";
+document.getElementById("th_total").textContent  = "累計（張）";
+document.getElementById("thA").textContent       = "券商 A";
+document.getElementById("thB").textContent       = "券商 B";
+document.getElementById("thR").textContent       = "係數";
+document.getElementById("thLabel").textContent   = "關係判斷";
+document.getElementById("corrNote").innerHTML =
+  "<div style='background:#f9f9f9;border-radius:8px;padding:10px 14px;margin-top:8px'>" +
+  "<div style='font-size:11px;font-weight:600;color:#333;margin-bottom:6px'>▌ 這個分析在看什麼</div>" +
+  "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:6px'>" +
+  "資料來源：每個分點每天的<b>淨買超張數</b>（買進－賣出，來自 pscnet/MoneyDJ 分點資料）。" +
+  "用整段期間的逐日資料，計算兩兩分點之間的<b>皮爾森相關係數（r）</b>。" +
+  "</div>" +
+  "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:8px'>" +
+  "r 值的意義：r 接近 +1 = 兩個分點買賣方向幾乎完全相同（疑似同一主力的不同帳戶）；" +
+  "r 接近 −1 = 完全反向（一個買的時候另一個賣，疑似對倒或借券換手）；" +
+  "r 接近 0 = 兩者各自獨立、沒有聯動關係。" +
+  "</div>" +
+  "<div style='font-size:11px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px'>" +
+  "<div style='background:#e8f5e9;border-radius:4px;padding:6px 10px;text-align:center'>" +
+  "<b style='color:#1b5e20'>r &gt; +0.6</b><br><span style='color:#555'>高度同向<br>疑似同主力多帳戶</span></div>" +
+  "<div style='background:#fff8e1;border-radius:4px;padding:6px 10px;text-align:center'>" +
+  "<b style='color:#e65100'>−0.6 ～ +0.6</b><br><span style='color:#555'>獨立操作<br>無明顯聯動</span></div>" +
+  "<div style='background:#fce4ec;border-radius:4px;padding:6px 10px;text-align:center'>" +
+  "<b style='color:#b71c1c'>r &lt; −0.6</b><br><span style='color:#555'>高度反向<br>疑似借券換手 / 對倒</span></div>" +
+  "</div>" +
+  "<div style='font-size:11px;background:#e8f5e9;border-left:3px solid #2e7d32;padding:6px 10px;border-radius:0 4px 4px 0'>" +
+  "📌 <b>注意</b>：這裡的 r 是分點 vs 分點（誰跟誰同步）。四象限的 lend_r 是分點 vs 借券日增減（誰在執行借券）。" +
+  "都叫 r 但算的對象不同。" +
+  "</div></div>";
+
+// ── 主力連續布局 ────────────────────────────────────────────
+document.getElementById("streakTitle").textContent = "主力連續布局分析";
+document.getElementById("thSkBroker").textContent  = "分點";
+document.getElementById("thSkCur").textContent     = "當前狀態";
+document.getElementById("thSkMaxBuy").textContent  = "期間最長連買";
+document.getElementById("thSkMaxSell").textContent = "期間最長連賣";
+document.getElementById("thSkStatus").textContent  = "判斷";
+document.getElementById("heatTitle").textContent   = "逐日買賣熱力圖（深色=量大，藍=買超，紅=賣超，灰=無動作）";
+
+function streakLabel(s) {
+  if (s.curBuy  >= 7) return ["強勢吃貨", "#0d47a1"];
+  if (s.curBuy  >= 5) return ["持續布局", "#1565c0"];
+  if (s.curBuy  >= 3) return ["布局中",   "#1976d2"];
+  if (s.curBuy  >= 2) return ["連買中",   "#42a5f5"];
+  if (s.curSell >= 5) return ["持續出貨", "#b71c1c"];
+  if (s.curSell >= 3) return ["正在出貨", "#c62828"];
+  if (s.curSell >= 2) return ["連賣中",   "#e53935"];
+  if (s.curBuy  == 1) return ["今日買進", "#90caf9"];
+  if (s.curSell == 1) return ["今日賣出", "#ef9a9a"];
+  return ["觀望", "#9e9e9e"];
+}
+
+// streak 摘要表
+const skTbody = document.getElementById("streakRows");
+STREAK.forEach(s => {
+  const [lbl, lc] = streakLabel(s);
+  const curTxt = s.curBuy  > 0 ? "連買 " + s.curBuy  + " 日 ▲" :
+                 s.curSell > 0 ? "連賣 " + s.curSell + " 日 ▼" : "—";
+  const curColor = s.curBuy > 0 ? "#1565c0" : s.curSell > 0 ? "#e63946" : "#999";
+  const tr = document.createElement("tr");
+  tr.innerHTML =
+    "<td style='font-weight:" + (s.curBuy>=3||s.curSell>=3?"500":"400") + "'>" + s.name + "</td>" +
+    "<td style='color:" + curColor + ";font-variant-numeric:tabular-nums'>" + curTxt + "</td>" +
+    "<td style='text-align:center;color:#1565c0'>" + (s.maxBuy  || "—") + (s.maxBuy  ? " 日" : "") + "</td>" +
+    "<td style='text-align:center;color:#e63946'>" + (s.maxSell || "—") + (s.maxSell ? " 日" : "") + "</td>" +
+    "<td><span class='badge' style='background:" + lc + "22;color:" + lc + "'>" + lbl + "</span></td>";
+  skTbody.appendChild(tr);
+});
+
+// 熱力圖
+(function() {
+  const tbl = document.getElementById("heatTable");
+  const allVals = STREAK.flatMap(s => s.cells.map(Math.abs)).filter(v => v > 0);
+  const maxV = allVals.length ? Math.max(...allVals) : 1;
+
+  // 日期標題列
+  const hdr = tbl.insertRow();
+  const corner = hdr.insertCell();
+  corner.style.cssText = "min-width:90px;position:sticky;left:0;background:#fff;z-index:3";
+  DATES.forEach(d => {
+    const th = document.createElement("th");
+    th.textContent = d.slice(5);
+    th.style.cssText = "font-size:9px;color:#999;width:22px;padding:0 1px;text-align:center;font-weight:400";
+    hdr.appendChild(th);
+  });
+
+  STREAK.forEach(s => {
+    const row = tbl.insertRow();
+    const nc = row.insertCell();
+    nc.style.cssText = "font-size:11px;padding:1px 8px 1px 4px;text-align:right;white-space:nowrap;position:sticky;left:0;background:#fff;z-index:2";
+    nc.textContent = s.name;
+    s.cells.forEach((v, i) => {
+      const td = row.insertCell();
+      td.style.cssText = "width:22px;height:20px;border-radius:3px;cursor:default";
+      if (v > 0) {
+        const a = 0.15 + 0.75 * (v / maxV);
+        td.style.background = "rgba(21,101,192," + a.toFixed(2) + ")";
+      } else if (v < 0) {
+        const a = 0.15 + 0.75 * (Math.abs(v) / maxV);
+        td.style.background = "rgba(230,57,70," + a.toFixed(2) + ")";
+      } else {
+        td.style.background = "rgba(220,220,220,0.35)";
+      }
+      td.title = s.name + "  " + DATES[i] + "：" + (v > 0 ? "+" : "") + v.toFixed(1) + " 張";
+    });
+  });
+})();
+
+document.getElementById("streakNote").innerHTML =
+  "<div style='background:#f9f9f9;border-radius:8px;padding:10px 14px;margin-top:8px'>" +
+  "<div style='font-size:11px;font-weight:600;color:#333;margin-bottom:6px'>▌ 這兩個表在看什麼</div>" +
+  "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:8px'>" +
+  "上方「<b>連續布局表</b>」：每個分點連續幾天在買或賣，以及整段期間最長連買/連賣紀錄。" +
+  "「連買 ≥3 日」代表系統性布局（不是隨機散單），「連賣 ≥5 日」代表有計劃的出貨或借券打壓。" +
+  "</div>" +
+  "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:8px'>" +
+  "下方「<b>熱力圖</b>」：每一橫行 = 某個分點在整段期間每天的動作。" +
+  "藍色越深 = 買超越多；紅色越深 = 賣超越多；灰色 = 該天沒有動作。" +
+  "橫著看：這個分點在哪幾天最活躍？有沒有特定「時間窗口」集中進貨？" +
+  "縱著看：某一天哪些分點都在大量動？是協同操作還是各自獨立？" +
+  "</div>" +
+  "<div style='font-size:11px;background:#fffde7;border-left:3px solid #f57f17;padding:6px 10px;border-radius:0 4px 4px 0'>" +
+  "📌 <b>重點看</b>：連買日數有沒有創新高？熱力圖近期欄位有沒有從紅轉藍？這是主力從出貨轉吸籌的早期信號。" +
+  "</div></div>";
+
+// ── 先知分點 · Lead-lag + 聰明錢 ───────────────────────────
+document.getElementById("predTitle").textContent  = "先知分點 · 聰明錢分析";
+document.getElementById("llTitle").textContent    = "Lead-lag：今日買超 vs 後N日漲跌相關";
+document.getElementById("thLlBroker").textContent = "分點";
+document.getElementById("thLl1").textContent      = "後1日";
+document.getElementById("thLl2").textContent      = "後2日";
+document.getElementById("thLl3").textContent      = "後3日";
+document.getElementById("thLlBest").textContent   = "最佳";
+document.getElementById("smTitle").textContent    = "聰明錢：逢低買超比率";
+document.getElementById("thSmBroker").textContent = "分點";
+document.getElementById("thSmSmart").textContent  = "弱勢買（張）";
+document.getElementById("thSmDumb").textContent   = "強勢買（張）";
+document.getElementById("thSmScore").textContent  = "聰明錢%";
+
+function rColor(r) {
+  if (r == null) return "#ccc";
+  if (r >=  0.5) return "#0d47a1";
+  if (r >=  0.3) return "#1976d2";
+  if (r <= -0.5) return "#b71c1c";
+  if (r <= -0.3) return "#e53935";
+  return "#999";
+}
+function rFmt(r) {
+  if (r == null) return "—";
+  return (r >= 0 ? "+" : "") + r.toFixed(2);
+}
+function smLabel(score) {
+  if (score >= 70) return ["聰明錢 ★★★", "#0d47a1"];
+  if (score >= 50) return ["逢低布局 ★★", "#1976d2"];
+  if (score >= 30) return ["混合型 ★",    "#546e7a"];
+  if (score >  0)  return ["追漲型",       "#e65100"];
+  return ["無買進記錄", "#bbb"];
+}
+
+// Lead-lag 表（只顯示有買進活動的分點，依 bestR 排序）
+const llData = STREAK
+  .filter(s => s.smartBuy > 0 || s.dumbBuy > 0 || s.bestR != null)
+  .sort((a, b) => (Math.abs(b.bestR||0)) - (Math.abs(a.bestR||0)));
+const llTbody = document.getElementById("llRows");
+llData.forEach(s => {
+  const bestTag = s.bestLag
+    ? "<span class='badge' style='background:" + rColor(s.bestR) + "22;color:" + rColor(s.bestR) + "'>後" + s.bestLag + "日 " + rFmt(s.bestR) + "</span>"
+    : "<span style='color:#ccc'>—</span>";
+  const tr = document.createElement("tr");
+  tr.innerHTML =
+    "<td>" + s.name + "</td>" +
+    "<td style='text-align:center;color:" + rColor(s.leadLag[1]) + "'>" + rFmt(s.leadLag[1]) + "</td>" +
+    "<td style='text-align:center;color:" + rColor(s.leadLag[2]) + "'>" + rFmt(s.leadLag[2]) + "</td>" +
+    "<td style='text-align:center;color:" + rColor(s.leadLag[3]) + "'>" + rFmt(s.leadLag[3]) + "</td>" +
+    "<td>" + bestTag + "</td>";
+  llTbody.appendChild(tr);
+});
+
+// 聰明錢表（只顯示有買進的，依 smartScore 排序）
+const smData = STREAK
+  .filter(s => s.smartBuy > 0 || s.dumbBuy > 0)
+  .sort((a, b) => b.smartScore - a.smartScore);
+const smTbody = document.getElementById("smRows");
+smData.forEach(s => {
+  const [lbl, lc] = smLabel(s.smartScore);
+  const pct = s.smartScore;
+  const bar = "<div style='background:#e3f2fd;border-radius:3px;height:5px;width:100%;margin-top:3px'>" +
+    "<div style='background:" + lc + ";height:5px;border-radius:3px;width:" + Math.min(pct,100) + "%'></div></div>";
+  const tr = document.createElement("tr");
+  tr.innerHTML =
+    "<td>" + s.name + "</td>" +
+    "<td style='text-align:right;color:#1565c0'>" + (s.smartBuy || "—") + "</td>" +
+    "<td style='text-align:right;color:#e65100'>" + (s.dumbBuy  || "—") + "</td>" +
+    "<td><span class='badge' style='background:" + lc + "22;color:" + lc + "'>" + lbl + "</span>" +
+    "<span style='margin-left:6px;font-weight:700;color:" + lc + ";font-size:12px'>" + pct + "%</span>" + bar + "</td>";
+  smTbody.appendChild(tr);
+});
+
+// 動態判斷：有無分點同時達到 r>0.5 且 聰明錢>70%
+const predHits = STREAK.filter(s => (s.leadLag[1] || 0) >= 0.5 && s.smartScore >= 70);
+const predBest1 = [...STREAK].filter(s => s.leadLag[1] != null).sort((a,b) => b.leadLag[1]-a.leadLag[1])[0];
+const predBestSm = [...STREAK].filter(s => s.smartScore > 0).sort((a,b) => b.smartScore-a.smartScore)[0];
+
+document.getElementById("predNote").innerHTML =
+  "<div style='background:#f9f9f9;border-radius:8px;padding:12px 16px;margin-top:8px;font-size:11px'>" +
+
+  // ── 目的說明 ──
+  "<div style='font-weight:600;color:#333;margin-bottom:8px;font-size:12px'>▌ 這兩個表的目的：找出「有資訊優勢的主力帳戶」</div>" +
+  "<div style='color:#555;line-height:1.9;margin-bottom:12px'>" +
+  "散戶買賣跟隔天漲跌沒有關係（純粹隨機）。但主力或內部人在消息面、籌碼面有優勢，往往在上漲前提前買進、在下跌前提前賣出。" +
+  "這兩個表用兩種角度來偵測這種「提前知道」的行為。" +
+  "</div>" +
+
+  // ── Lead-lag 詳解 ──
+  "<div style='background:#e8f5e9;border-radius:6px;padding:10px 12px;margin-bottom:8px'>" +
+  "<div style='font-weight:600;color:#1b5e20;margin-bottom:6px'>① Lead-lag 先知性 — 看「後1日」那一欄</div>" +
+  "<div style='color:#444;line-height:1.9;margin-bottom:6px'>" +
+  "計算方式：把分析期間每一天的資料排成兩排：<br>" +
+  "　第一排 = 這個分點「今天」買了多少張（淨買超）<br>" +
+  "　第二排 = 「隔天」股價漲跌幅（%）<br>" +
+  "然後算這兩排數字的<b>相關係數 r</b>（範圍 −1 到 +1）。" +
+  "</div>" +
+  "<div style='display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:6px'>" +
+  "<div style='background:#fff;border-radius:4px;padding:5px 8px;border:1px solid #c8e6c9;text-align:center'><div style='color:#1b5e20;font-weight:700'>r = +0.7</div><div style='color:#555'>他買完<br>隔天常漲<br>強烈先知性</div></div>" +
+  "<div style='background:#fff;border-radius:4px;padding:5px 8px;border:1px solid #c8e6c9;text-align:center'><div style='color:#2e7d32;font-weight:700'>r = +0.5</div><div style='color:#555'>他買完<br>隔天偏向漲<br>有先知性</div></div>" +
+  "<div style='background:#fff;border-radius:4px;padding:5px 8px;border:1px solid #ddd;text-align:center'><div style='color:#999;font-weight:700'>r = 0.0</div><div style='color:#555'>買完漲跌<br>完全隨機<br>無優勢</div></div>" +
+  "<div style='background:#fff;border-radius:4px;padding:5px 8px;border:1px solid #ffcdd2;text-align:center'><div style='color:#c62828;font-weight:700'>r = −0.5</div><div style='color:#555'>他買完<br>隔天常跌<br>追高砸盤</div></div>" +
+  "</div>" +
+  "<div style='color:#444;line-height:1.8'>" +
+  "📌 <b>門檻：後1日 r &gt; +0.5</b> = 有先知性的帳戶。" +
+  (predBest1 ? "　目前後1日 r 最高的分點是 <b>" + predBest1.name + "（r=" + (predBest1.leadLag[1]>=0?"+":"") + predBest1.leadLag[1].toFixed(2) + "）</b>。" : "") +
+  "</div></div>" +
+
+  // ── 聰明錢詳解 ──
+  "<div style='background:#e3f2fd;border-radius:6px;padding:10px 12px;margin-bottom:8px'>" +
+  "<div style='font-weight:600;color:#0d47a1;margin-bottom:6px'>② 聰明錢% — 逢低吸籌比率</div>" +
+  "<div style='color:#444;line-height:1.9;margin-bottom:6px'>" +
+  "計算方式：看這個分點<b>買進</b>的那幾天，是在「股價下跌的日子」買，還是「股價上漲的日子」買：<br>" +
+  "　弱勢買（藍色）= 股價當天跌還在買 → 逢低吸籌（主力行為）<br>" +
+  "　強勢買（橘色）= 股價當天漲才買  → 追漲跟進（散戶行為）<br>" +
+  "聰明錢% = 弱勢買張數 ÷（弱勢買 + 強勢買）× 100" +
+  "</div>" +
+  "<div style='display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:6px'>" +
+  "<div style='background:#fff;border-radius:4px;padding:5px 8px;border:1px solid #90caf9;text-align:center'><div style='color:#0d47a1;font-weight:700'>&gt; 70%</div><div style='color:#555'>主力型<br>主動逢低買</div></div>" +
+  "<div style='background:#fff;border-radius:4px;padding:5px 8px;border:1px solid #ddd;text-align:center'><div style='color:#546e7a;font-weight:700'>30–70%</div><div style='color:#555'>混合型<br>漲跌都在買</div></div>" +
+  "<div style='background:#fff;border-radius:4px;padding:5px 8px;border:1px solid #ffccbc;text-align:center'><div style='color:#e65100;font-weight:700'>&lt; 30%</div><div style='color:#555'>追漲型<br>漲天才進場</div></div>" +
+  "</div>" +
+  "<div style='color:#444'>" +
+  "📌 門檻：<b>聰明錢% &gt; 70%</b> = 主力逢低吸籌行為。" +
+  (predBestSm ? "　目前最高的分點是 <b>" + predBestSm.name + "（" + predBestSm.smartScore + "%）</b>。" : "") +
+  "</div></div>" +
+
+  // ── 怎麼用 + 現狀結論 ──
+  "<div style='background:#fffde7;border-left:3px solid #f57f17;padding:8px 12px;border-radius:0 6px 6px 0;margin-bottom:8px'>" +
+  "<div style='font-weight:600;color:#e65100;margin-bottom:4px'>📌 怎麼用：兩個條件同時達標才算主力帳戶</div>" +
+  "<div style='color:#555;line-height:1.8'>" +
+  "條件①：後1日 r &gt; +0.5（他買完隔天股價常漲）<br>" +
+  "條件②：聰明錢% &gt; 70%（他習慣在股價下跌時買）<br>" +
+  "兩者都達標 = 「有計劃的主力帳戶」，最值得加入 watchlist 重點追蹤。<br>" +
+  "只達標①：有先知性但不挑時間點。　只達標②：逢低買進但未必有先知性。" +
+  "</div></div>" +
+
+  // 現狀結論（動態）
+  (predHits.length > 0
+    ? "<div style='background:#e8f5e9;border:1px solid #81c784;border-radius:6px;padding:8px 12px;color:#1b5e20;font-weight:600'>" +
+      "✅ 目前達標（r&gt;0.5 且 聰明錢&gt;70%）的分點：" + predHits.map(s=>s.name).join("、") + "　→ 建議加入 watchlist 追蹤。</div>"
+    : "<div style='background:#f5f5f5;border:1px solid #ddd;border-radius:6px;padding:8px 12px;color:#666'>" +
+      "ℹ️ 目前無分點同時滿足兩個條件（後1日 r &gt;+0.5 且 聰明錢 &gt;70%）。" +
+      "這是正常的，代表本期分析窗口內沒有明顯具資訊優勢的帳戶，或資料期間太短、樣本不足。" +
+      "可改用 <b>--days 120</b> 拉長分析期間後重新判斷。</div>") +
+
+  "</div>";
+
+// ── 主力成本帶 ────────────────────────────────────────────
+document.getElementById("costTitle").textContent  = "主力成本帶分析（籌碼浮盈 / 套牢判斷）";
+document.getElementById("thCostBroker").textContent = "分點";
+document.getElementById("thCostAvg").textContent   = "平均成本（元）";
+document.getElementById("thCostCur").textContent   = "現價（元）";
+document.getElementById("thCostPnl").textContent   = "浮盈（%）";
+document.getElementById("thCostStatus").textContent = "籌碼狀態";
+
+const costData = STREAK.filter(s => s.costBand && s.costBand.avgCost).slice();
+costData.sort((a, b) => b.costBand.totalBuy - a.costBand.totalBuy);
+
+const costTbody = document.getElementById("costRows");
+costData.forEach(s => {
+  const cb = s.costBand;
+  const pnl = cb.pnlPct;
+  const pnlColor = pnl >= 0 ? "#388e3c" : "#c62828";
+  const statusLabel = pnl >= 10 ? "大幅獲利" :
+                      pnl >= 3  ? "小幅獲利" :
+                      pnl >= 0  ? "微幅獲利" :
+                      pnl >= -5 ? "微幅浮虚" :
+                      pnl >= -10? "明顯套牢" : "深度套牢";
+  const statusColor = pnl >= 3 ? "#1b5e20" : pnl >= 0 ? "#388e3c" : pnl >= -5 ? "#e65100" : "#b71c1c";
+  const tr = document.createElement("tr");
+  tr.innerHTML =
+    "<td>" + s.name + "</td>" +
+    "<td style='text-align:right;font-variant-numeric:tabular-nums'>" + cb.avgCost.toFixed(2) + "</td>" +
+    "<td style='text-align:right;font-variant-numeric:tabular-nums'>" + cb.curPrice.toFixed(2) + "</td>" +
+    "<td style='text-align:right;color:" + pnlColor + ";font-variant-numeric:tabular-nums'>" +
+      (pnl >= 0 ? "+" : "") + pnl.toFixed(2) + "%</td>" +
+    "<td><span class='badge' style='background:" + statusColor + "22;color:" + statusColor + "'>" + statusLabel + "</span></td>";
+  costTbody.appendChild(tr);
+});
+document.getElementById("costNote").innerHTML =
+  "<div style='background:#f9f9f9;border-radius:8px;padding:10px 14px;margin-top:8px'>" +
+  "<div style='font-size:11px;font-weight:600;color:#333;margin-bottom:6px'>▌ 這個表在看什麼</div>" +
+  "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:8px'>" +
+  "計算每個分點在分析期間內「<b>淨買超日</b>的加權均價」，作為估算持倉成本。" +
+  "公式：Σ(買超量 × 當日均價) ÷ 買超總量（只算買超日，不算賣超日）。" +
+  "</div>" +
+  "<div style='display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;font-size:11px'>" +
+  "<div style='background:#e8f5e9;border-radius:4px;padding:6px 10px'>" +
+  "<b style='color:#1b5e20'>現價 &gt; 成本（獲利籌碼）</b><br>" +
+  "主力帳面獲利，籌碼穩定，不急於出貨。獲利越大越穩。" +
+  "</div>" +
+  "<div style='background:#fff5f5;border-radius:4px;padding:6px 10px'>" +
+  "<b style='color:#b71c1c'>現價 &lt; 成本（套牢籌碼）</b><br>" +
+  "主力帳面虧損，一旦解套可能出貨。套牢越深潛在賣壓越大。" +
+  "</div></div>" +
+  "<div style='font-size:11px;background:#fffde7;border-left:3px solid #f57f17;padding:6px 10px;border-radius:0 4px 4px 0'>" +
+  "📌 <b>注意</b>：分析天數越短，成本越高（只看近期高位買進）；天數越長才能涵蓋早期低價建倉。" +
+  "3715 建倉期從 2025/12 起，需 --days 120 才能看到真實建倉成本。" +
+  "</div></div>";
+
+// ── 買賣強度比趨勢 ────────────────────────────────────────
+document.getElementById("intensityTitle").textContent =
+  "追蹤分點買賣強度比趨勢（買量÷（買＋賣））";
+
+const intensityBaseline = {
+  id: "intensityBaseline",
+  afterDraw(chart) {
+    const {ctx, scales:{yRatio}} = chart;
+    if (!yRatio) return;
+    const y50 = yRatio.getPixelForValue(50);
+    ctx.save();
+    ctx.strokeStyle = "rgba(120,120,120,0.4)";
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(chart.chartArea.left, y50);
+    ctx.lineTo(chart.chartArea.right, y50);
+    ctx.stroke();
+    ctx.restore();
+  }
+};
+
+new Chart(document.getElementById("intensityChart"), {
+  type: "line",
+  data: {
+    labels: DATES,
+    datasets: [
+      {
+        label: "買超強度比（%）",
+        data: INTENSITY.ratio,
+        borderColor: "#1565c0",
+        backgroundColor: "rgba(21,101,192,0.08)",
+        tension: 0.3,
+        fill: true,
+        pointRadius: 3,
+        borderWidth: 2,
+        yAxisID: "yRatio",
+      },
+      {
+        label: "追蹤分點買量（張）",
+        data: INTENSITY.buy,
+        borderColor: "#43a047",
+        backgroundColor: "rgba(0,0,0,0)",
+        tension: 0.3,
+        fill: false,
+        pointRadius: 2,
+        borderWidth: 1.5,
+        borderDash: [5, 3],
+        yAxisID: "yVol",
+      },
+      {
+        label: "追蹤分點賣量（張）",
+        data: INTENSITY.sell,
+        borderColor: "#e63946",
+        backgroundColor: "rgba(0,0,0,0)",
+        tension: 0.3,
+        fill: false,
+        pointRadius: 2,
+        borderWidth: 1.5,
+        borderDash: [5, 3],
+        yAxisID: "yVol",
+      },
+    ]
+  },
+  plugins: [intensityBaseline],
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    interaction: { mode: "index", intersect: false },
+    plugins: {
+      legend: { position: "top", labels: { font: { size: 10 }, boxWidth: 10, padding: 8 } },
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            if (ctx.datasetIndex === 0)
+              return ctx.dataset.label + "：" + (ctx.raw != null ? ctx.raw.toFixed(1) : "—") + " %";
+            return ctx.dataset.label + "：" + (ctx.raw != null ? ctx.raw.toFixed(0) : "—") + " 張";
+          }
+        }
+      }
+    },
+    scales: {
+      x: { ticks: { font: { size: 10 }, maxRotation: 45 }, grid: { color: "#f0f0f0" } },
+      yRatio: {
+        position: "left",
+        min: 0, max: 100,
+        ticks: { font: { size: 10 }, callback: v => v + "%" },
+        grid: { color: "#f0f0f0" },
+        title: { display: true, text: "買超強度比（%）", font: { size: 11 } }
+      },
+      yVol: {
+        position: "right",
+        min: 0,
+        ticks: { font: { size: 10 }, callback: v => v + " 張" },
+        grid: { drawOnChartArea: false },
+        title: { display: true, text: "交易量（張）", font: { size: 11 } }
+      }
+    }
+  }
+});
+document.getElementById("intensityNote").innerHTML =
+  "<div style='background:#f9f9f9;border-radius:8px;padding:10px 14px;margin-top:8px'>" +
+  "<div style='font-size:11px;font-weight:600;color:#333;margin-bottom:6px'>▌ 這個圖在看什麼</div>" +
+  "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:8px'>" +
+  "「強度比」= 所有追蹤分點當天總買量 ÷（買量 ＋ 賣量）× 100%。" +
+  "代表這些重要分點今天「整體偏買還是偏賣」。" +
+  "</div>" +
+  "<div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px;font-size:11px'>" +
+  "<div style='background:#e8f5e9;border-radius:4px;padding:6px 10px;text-align:center'>" +
+  "<b style='color:#1b5e20'>&gt;60%</b><br>明顯偏買<br>主力進場意願強</div>" +
+  "<div style='background:#fff8e1;border-radius:4px;padding:6px 10px;text-align:center'>" +
+  "<b style='color:#e65100'>40%～60%</b><br>均衡區間<br>無明顯方向</div>" +
+  "<div style='background:#fff5f5;border-radius:4px;padding:6px 10px;text-align:center'>" +
+  "<b style='color:#b71c1c'>&lt;40%</b><br>明顯偏賣<br>打壓或出貨期</div>" +
+  "</div>" +
+  "<div style='font-size:11px;background:#fffde7;border-left:3px solid #f57f17;padding:6px 10px;border-radius:0 4px 4px 0'>" +
+  "📌 <b>重點看趨勢</b>：強度比連續多日回升且站上 50% = 主力從出貨轉吸籌的信號。" +
+  "搭配借券餘額看：強度比低但借券增加 = 主力借出股票讓別人打壓，自己暫時不動；強度比回升 = 打壓結束，開始承接。" +
+  "</div></div>";
+
+// ── K 線 × 分點累積疊圖 ──────────────────────────────────────
+(function() {
+  document.getElementById("overlayTitle").textContent =
+    "股價走勢 × 追蹤分點累積淨買賣超";
+
+  // 累積淨買賣超（全部 STREAK 分點）
+  const cumBroker = [];
+  let cum = 0;
+  for (let i = 0; i < DATES.length; i++) {
+    let daily = 0;
+    STREAK.forEach(s => { daily += (s.cells[i] || 0); });
+    cum += daily;
+    cumBroker.push(+cum.toFixed(1));
+  }
+
+  // 逐日漲跌著色插件
+  const dayColor = {
+    id: "dayColor",
+    beforeDraw(chart) {
+      const {ctx, chartArea:{left,right,top,bottom}, scales:{x}} = chart;
+      if (!x) return;
+      ctx.save();
+      DATES.forEach((_, i) => {
+        const o = OHLCV.open[i], c = OHLCV.close[i];
+        if (o == null || c == null) return;
+        const x0 = i === 0 ? left : (x.getPixelForValue(i-1) + x.getPixelForValue(i)) / 2;
+        const x1 = i === DATES.length-1 ? right : (x.getPixelForValue(i) + x.getPixelForValue(i+1)) / 2;
+        ctx.fillStyle = c >= o ? "rgba(200,230,200,0.18)" : "rgba(255,200,200,0.18)";
+        ctx.fillRect(x0, top, x1-x0, bottom-top);
+      });
+      ctx.restore();
+    }
+  };
+
+  new Chart(document.getElementById("overlayChart"), {
+    type: "line",
+    data: {
+      labels: DATES,
+      datasets: [
+        {
+          label: "收盤價（元）",
+          data: OHLCV.close,
+          borderColor: "#37474f",
+          backgroundColor: "rgba(0,0,0,0)",
+          tension: 0.2,
+          pointRadius: 2,
+          pointHoverRadius: 5,
+          borderWidth: 2,
+          yAxisID: "yPrice",
+        },
+        {
+          label: "分點累積淨買超（張）",
+          data: cumBroker,
+          borderColor: "#1565c0",
+          backgroundColor: "rgba(21,101,192,0.10)",
+          fill: true,
+          tension: 0.3,
+          pointRadius: 0,
+          pointHoverRadius: 4,
+          borderWidth: 2,
+          yAxisID: "yCum",
+        }
+      ]
+    },
+    plugins: [dayColor],
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: { position: "top", labels: { font:{size:10}, boxWidth:10, padding:8 } },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              if (ctx.datasetIndex === 0) return "收盤：" + ctx.raw + " 元";
+              return "累積淨買：" + (ctx.raw >= 0 ? "+" : "") + ctx.raw + " 張";
+            }
+          }
+        }
+      },
+      scales: {
+        x: { ticks:{ font:{size:10}, maxRotation:45 }, grid:{ color:"#f0f0f0" } },
+        yPrice: {
+          position: "left",
+          ticks: { font:{size:10}, callback: v => v + " 元" },
+          grid: { color:"#f0f0f0" },
+          title: { display:true, text:"收盤價（元）", font:{size:11} }
+        },
+        yCum: {
+          position: "right",
+          ticks: { font:{size:10}, callback: v => (v>=0?"+":"")+v+" 張" },
+          grid: { drawOnChartArea:false },
+          title: { display:true, text:"累積淨買賣超（張）", font:{size:11} }
+        }
+      }
+    }
+  });
+  // ── 斜率分析（不做四象限機械判斷）──
+  const latestCum   = cumBroker[cumBroker.length - 1] || 0;
+  const cum20ago    = cumBroker[Math.max(0, cumBroker.length - 21)] || 0;
+  const cum5ago     = cumBroker[Math.max(0, cumBroker.length - 6)]  || 0;
+  const cum3ago     = cumBroker[Math.max(0, cumBroker.length - 4)]  || 0;
+  const trend20     = Math.round(latestCum - cum20ago);
+  const trend5      = Math.round(latestCum - cum5ago);
+  const trend3      = Math.round(latestCum - cum3ago);
+
+  // 斜率放緩：近5日 vs 近20日日均值比較
+  const daily20avg  = trend20 / 20;
+  const daily5avg   = trend5  / 5;
+  const daily3avg   = trend3  / 3;
+
+  // 近5日斜率是否好轉（賣壓減輕 or 轉買）
+  let slopeNote = "", slopeColor = "#555", slopeBg = "#f9f9f9";
+  if (trend5 > 0) {
+    slopeNote = "近5日藍線轉升（+" + trend5 + " 張）→ 賣壓明顯減輕，追蹤分點整體轉為淨買入。";
+    slopeColor = "#1b5e20"; slopeBg = "#e8f5e9";
+  } else if (trend5 > daily20avg * 5 * 0.5 && trend5 < 0) {
+    slopeNote = "近5日賣壓大幅收縮（日均 " + Math.round(daily5avg) + " 張，較前20日均值 " + Math.round(daily20avg) + " 張明顯改善）→ 打壓力道減弱。";
+    slopeColor = "#e65100"; slopeBg = "#fff8f4";
+  } else if (trend5 < 0 && daily3avg > daily5avg * 0.5) {
+    slopeNote = "近5日賣壓仍重（日均 " + Math.round(daily5avg) + " 張），但近3日已顯著收縮（日均 " + Math.round(daily3avg) + " 張）→ 打壓力道出現鬆動跡象，觀察能否持續。";
+    slopeColor = "#e65100"; slopeBg = "#fff8f4";
+  } else {
+    slopeNote = "近5日賣壓持續（日均 " + Math.round(daily5avg) + " 張），近3日（日均 " + Math.round(daily3avg) + " 張）尚未見明顯收縮。";
+    slopeColor = "#b71c1c"; slopeBg = "#fff5f5";
+  }
+
+  const noteHTML =
+    "<div style='background:#f9f9f9;border-radius:8px;padding:12px 16px;margin-top:10px'>" +
+    "<div style='font-size:11px;font-weight:600;color:#333;margin-bottom:8px'>▌ 這個圖在看什麼</div>" +
+    "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:8px'>" +
+    "黑線 = 股價；藍線 = 所有被追蹤分點的<b>累計淨買超合計</b>（正 = 買多於賣；負 = 賣多於買）。" +
+    "背景綠色 = 當日收漲；紅色 = 當日收跌。" +
+    "</div>" +
+    "<div style='font-size:11px;background:#fff3e0;border-left:3px solid #e65100;padding:6px 10px;border-radius:0 4px 4px 0;margin-bottom:8px'>" +
+    "⚠️ <b>限制</b>：藍線包含所有追蹤分點（含大量借券賣方）。若賣方分點規模遠大於買方，藍線會長期為負，" +
+    "此時看<b>絕對方向</b>（漲跌）沒有意義。應看<b>斜率是否在收斂</b>（賣壓日均減少、藍線止跌）。" +
+    "</div>" +
+    "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:8px'>" +
+    "📊 <b>數據</b>：目前累計 " + (latestCum >= 0 ? "+" : "") + latestCum + " 張" +
+    "　｜　近20日變化：" + (trend20 >= 0 ? "+" : "") + trend20 + " 張（日均 " + Math.round(daily20avg) + "）" +
+    "　｜　近5日變化：" + (trend5 >= 0 ? "+" : "") + trend5 + " 張（日均 " + Math.round(daily5avg) + "）" +
+    "　｜　近3日變化：" + (trend3 >= 0 ? "+" : "") + trend3 + " 張" +
+    "</div>" +
+    "<div style='background:" + slopeBg + ";border-left:3px solid " + slopeColor + ";padding:8px 12px;border-radius:0 6px 6px 0;font-size:11px'>" +
+    "📌 <b>斜率研判</b>：" + slopeNote +
+    "</div></div>";
+
+  document.getElementById("overlayNote").innerHTML = noteHTML;
+})();
+
+// ── 三大法人 + 融資融券 ─────────────────────────────────────
+(function() {
+  const hasInst   = INST.foreign.some(v => v !== 0) || INST.trust.some(v => v !== 0) || INST.dealer.some(v => v !== 0);
+  const hasMargin = MARGIN.fin_bal.some(v => v != null);
+  if (!hasInst && !hasMargin) { document.getElementById("instCard").style.display="none"; return; }
+
+  document.getElementById("instTitle").textContent = "三大法人買賣超 × 融資融券";
+  document.getElementById("instChartTitle").textContent = "三大法人每日買賣超（張）";
+  document.getElementById("marginChartTitle").textContent = "融資增減（柱）× 融資餘額（線）";
+
+  // 三大法人堆疊柱狀圖
+  new Chart(document.getElementById("instChart"), {
+    type: "bar",
+    data: {
+      labels: DATES,
+      datasets: [
+        { label:"外資", data:INST.foreign, backgroundColor:"rgba(21,101,192,0.75)",  borderColor:"#1565c0", borderWidth:1, stack:"inst" },
+        { label:"投信", data:INST.trust,   backgroundColor:"rgba(46,125,50,0.75)",   borderColor:"#2e7d32", borderWidth:1, stack:"inst" },
+        { label:"自營", data:INST.dealer,  backgroundColor:"rgba(245,124,0,0.75)",   borderColor:"#f57c00", borderWidth:1, stack:"inst" },
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:"index", intersect:false },
+      plugins:{
+        legend:{ position:"top", labels:{ font:{size:10}, boxWidth:10, padding:6 } },
+        tooltip:{
+          callbacks:{
+            label: ctx => { if(!ctx.raw) return null; return ctx.dataset.label+"："+(ctx.raw>0?"+":"")+ctx.raw+" 張"; },
+            footer: items => { const s=items.reduce((a,b)=>a+(b.raw||0),0); return s?"合計："+(s>0?"+":"")+s.toFixed(1)+" 張":""; }
+          },
+          filter: item => item.raw !== null && item.raw !== 0,
+        }
+      },
+      scales:{
+        x:{ stacked:true, ticks:{font:{size:10},maxRotation:45}, grid:{color:"#f0f0f0"} },
+        y:{ stacked:true, ticks:{font:{size:10},callback:v=>(v>0?"+":"")+v+" 張"}, grid:{color:"#f0f0f0"},
+            title:{display:true,text:"買賣超（張）",font:{size:11}} }
+      }
+    }
+  });
+
+  // 融資增減柱 + 融資餘額線（雙 y 軸）
+  new Chart(document.getElementById("marginChart"), {
+    type: "bar",
+    data: {
+      labels: DATES,
+      datasets: [
+        { type:"bar",  label:"融資增減（張）", data:MARGIN.fin_diff,
+          backgroundColor: MARGIN.fin_diff.map(v => v==null?null : v>=0?"rgba(21,101,192,0.6)":"rgba(230,57,70,0.6)"),
+          borderWidth:0, yAxisID:"yDiff" },
+        { type:"line", label:"融資餘額（張）", data:MARGIN.fin_bal,
+          borderColor:"#1565c0", backgroundColor:"rgba(0,0,0,0)",
+          tension:0.3, pointRadius:2, borderWidth:2, yAxisID:"yBal" },
+        { type:"line", label:"融券餘額（張）", data:MARGIN.short_bal,
+          borderColor:"#e63946", backgroundColor:"rgba(0,0,0,0)",
+          tension:0.3, pointRadius:2, borderWidth:1.5, borderDash:[5,3], yAxisID:"yBal" },
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:"index", intersect:false },
+      plugins:{
+        legend:{ position:"top", labels:{ font:{size:10}, boxWidth:10, padding:6 } },
+        tooltip:{
+          callbacks:{
+            label: ctx => {
+              if(ctx.raw==null) return null;
+              const sign = ctx.raw >= 0 ? "+" : "";
+              return ctx.dataset.label+"："+sign+ctx.raw.toLocaleString()+" 張";
+            }
+          }
+        }
+      },
+      scales:{
+        x:{ ticks:{font:{size:10},maxRotation:45}, grid:{color:"#f0f0f0"} },
+        yDiff:{ position:"left",  ticks:{font:{size:10},callback:v=>(v>0?"+":"")+v}, grid:{color:"#f0f0f0"},
+                title:{display:true,text:"增減（張）",font:{size:11}} },
+        yBal: { position:"right", min:0, ticks:{font:{size:10},callback:v=>v.toLocaleString()},
+                grid:{drawOnChartArea:false}, title:{display:true,text:"餘額（張）",font:{size:11}} }
+      }
+    }
+  });
+
+  document.getElementById("instNote").innerHTML =
+    "<div style='background:#f9f9f9;border-radius:8px;padding:10px 14px;margin-top:8px'>" +
+    "<div style='font-size:11px;font-weight:600;color:#333;margin-bottom:6px'>▌ 這兩個圖在看什麼</div>" +
+    "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:8px'>" +
+    "上圖「<b>三大法人</b>」：外資（藍）/ 投信（綠）/ 自營商（橙）每天的買賣超張數，堆疊柱狀顯示合計方向。" +
+    "外資買超是最強信號（資金規模最大，決策有依據）；投信連買通常意味著基金在建倉，持股穩定；自營商偏短線，參考性較低。" +
+    "</div>" +
+    "<div style='font-size:11px;color:#555;line-height:1.8;margin-bottom:8px'>" +
+    "下圖「<b>融資融券</b>」：融資餘額（藍線）= 散戶借錢買股的總量；融資增減（柱）= 每天增加或減少多少。" +
+    "融券餘額（紅虛線）= 市場放空部位。" +
+    "</div>" +
+    "<div style='display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;font-size:11px'>" +
+    "<div style='background:#e8f5e9;border-radius:4px;padding:6px 10px'>" +
+    "<b style='color:#1b5e20'>外資連買 + 投信買進</b><br>機構聯動，是主升段前最可靠的信號。</div>" +
+    "<div style='background:#fff5f5;border-radius:4px;padding:6px 10px'>" +
+    "<b style='color:#b71c1c'>融資急升 + 股價漲</b><br>散戶追多，籌碼不穩，上漲過程隨時有斷頭賣壓。</div>" +
+    "<div style='background:#e3f2fd;border-radius:4px;padding:6px 10px'>" +
+    "<b style='color:#0d47a1'>融資急降</b><br>散戶去槓桿（自願或斷頭），籌碼清洗進行中。</div>" +
+    "<div style='background:#fff8e1;border-radius:4px;padding:6px 10px'>" +
+    "<b style='color:#e65100'>融券增加</b><br>放空者增加，若借券也同步增加 = 雙重打壓壓力。</div>" +
+    "</div>" +
+    "<div style='font-size:11px;background:#fffde7;border-left:3px solid #f57f17;padding:6px 10px;border-radius:0 4px 4px 0'>" +
+    "📌 <b>對 3715 的意義</b>：外資連買 + 投信加碼 = 主力拉升前的前兆；融資持續高位未退 = 上漲阻力（高點容易被斷頭壓回）。" +
+    "</div></div>";
+})();
+
+// ── 官股券商動向 ────────────────────────────────────────────
+if (GOV && GOV.series && GOV.series.length > 0) {
+  document.getElementById("govCard").style.display = "";
+  document.getElementById("govTitle").textContent  = "官股券商動向分析";
+  document.getElementById("thGovBroker").textContent = "分點名稱";
+  document.getElementById("thGovTotal").textContent  = "累計淨買賣超（張）";
+  document.getElementById("thGovDays").textContent   = "買超日 / 賣超日";
+  document.getElementById("thGovDir").textContent    = "方向判斷";
+
+  // 統計指標列
+  const statsEl = document.getElementById("govStats");
+  function statBox(label, val, color) {
+    const d = document.createElement("div");
+    d.style.cssText = "background:#f9f9f9;border-radius:8px;padding:8px 16px;text-align:center;min-width:100px";
+    d.innerHTML = "<div style='font-size:11px;color:#999;margin-bottom:3px'>" + label + "</div>" +
+                  "<div style='font-size:16px;font-weight:500;color:" + color + "'>" + val + "</div>";
+    statsEl.appendChild(d);
+  }
+  const totalSign = GOV.total >= 0 ? "+" : "";
+  statBox("期間合計（張）", totalSign + GOV.total.toLocaleString(),
+          GOV.total >= 0 ? "#1565c0" : "#e63946");
+  statBox("出現分點數", GOV.series.length, "#37474f");
+  statBox("護盤日（買超）", GOV.buyDays + " 天", "#388e3c");
+  statBox("賣壓日（賣超）", GOV.sellDays + " 天", "#c62828");
+
+  // 逐日堆疊柱狀圖
+  const govDs = GOV.series.map(s => ({
+    label:           s.name,
+    data:            s.data,
+    backgroundColor: s.color + "cc",
+    borderColor:     s.color,
+    borderWidth:     1,
+    stack:           "gov",
+  }));
+  new Chart(document.getElementById("govChart"), {
+    type: "bar",
+    data: { labels: DATES, datasets: govDs },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: "index", intersect: false },
+      plugins: {
+        legend: { position: "top", labels: { font: { size: 10 }, boxWidth: 10, padding: 8 } },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              if (!ctx.raw) return null;
+              const sign = ctx.raw > 0 ? "+" : "";
+              return ctx.dataset.label + "：" + sign + ctx.raw.toLocaleString() + " 張";
+            },
+            footer: items => {
+              const sum = items.reduce((a, b) => a + (b.raw || 0), 0);
+              return sum ? "合計：" + (sum > 0 ? "+" : "") + sum.toFixed(1) + " 張" : "";
+            }
+          },
+          filter: item => item.raw !== null && item.raw !== 0,
+        }
+      },
+      scales: {
+        x: { stacked: true, ticks: { font: { size: 10 }, maxRotation: 45 }, grid: { color: "#f0f0f0" } },
+        y: { stacked: true,
+             ticks: { font: { size: 10 }, callback: v => (v > 0 ? "+" : "") + v.toLocaleString() },
+             grid: { color: "#f0f0f0" },
+             title: { display: true, text: "淨買賣超（張）", font: { size: 11 } } }
+      }
+    }
+  });
+
+  // 明細表
+  const govTbody = document.getElementById("govRows");
+  GOV.series.forEach(s => {
+    const buyDays  = s.data.filter(v => v > 0).length;
+    const sellDays = s.data.filter(v => v < 0).length;
+    const sign     = s.total >= 0 ? "+" : "";
+    const dirColor = s.total >= 0 ? "#1565c0" : "#e63946";
+    const dirLabel = s.total > 5  ? "護盤 / 買進" :
+                     s.total < -5 ? "賣壓 / 出貨" : "中性 / 觀望";
+    const tr = document.createElement("tr");
+    tr.innerHTML =
+      "<td><span style='display:inline-block;width:10px;height:10px;border-radius:2px;background:" +
+        s.color + ";margin-right:6px;vertical-align:middle'></span>" + s.name + "</td>" +
+      "<td style='text-align:right;color:" + dirColor + ";font-variant-numeric:tabular-nums'>" +
+        sign + s.total.toLocaleString() + "</td>" +
+      "<td style='color:#555'>" + buyDays + " / " + sellDays + "</td>" +
+      "<td><span class='badge' style='background:" + dirColor + "22;color:" + dirColor + "'>" +
+        dirLabel + "</span></td>";
+    govTbody.appendChild(tr);
+  });
+  document.getElementById("govNote").innerHTML =
+    "<div style='font-size:11px;color:#555;margin-top:8px;line-height:1.8'>" +
+    "<b>官股券商</b>：台銀、土銀、兆豐、第一金、合庫、彰銀、華南、企銀（政府持股的券商）。" +
+    "官股券商合計淨買超 = 護盤（政府資金進場穩定市場）；合計淨賣超 = 無護盤壓力。" +
+    "<br>對中小型股意義不大（護盤通常針對指數大型股）；若出現在小型股則代表特殊情況。" +
+    "</div>";
+}
+
+// ── Legend：買超大→小，賣超大→小（張數絕對值）────────────
+const leg = document.getElementById("leg");
+const buyDs  = DS.filter(d => d.isBuy);   // 已按買超大→小
+const sellDs = DS.filter(d => !d.isBuy);  // 已按賣超大→小（最負在前）
+
+function makeLegItem(d, rank, container) {
+  const wrap = document.createElement("span");
+  wrap.className = "leg-item";
+  const line = document.createElement("span");
+  line.style.cssText = d.borderDash.length
+    ? "display:inline-block;width:18px;height:0;border-top:2px dashed "+d.borderColor+";vertical-align:middle;flex-shrink:0"
+    : "display:inline-block;width:18px;height:3px;background:"+d.borderColor+";border-radius:2px;vertical-align:middle;flex-shrink:0";
+  const txt = document.createElement("span");
+  txt.textContent = rank + ". " + d.label;
+  wrap.appendChild(line);
+  wrap.appendChild(txt);
+  container.appendChild(wrap);
+}
+
+// 買超區
+const buyHdr = document.createElement("div");
+buyHdr.style.cssText = "width:100%;font-size:11px;color:#1565c0;font-weight:500;margin:4px 0 4px;border-bottom:1px solid #e0e8ff;padding-bottom:2px";
+buyHdr.textContent = "▲ 買超前" + META.topN + "名（每日曲線）";
+leg.appendChild(buyHdr);
+buyDs.forEach((d, i) => makeLegItem(d, i+1, leg));
+
+// 賣超區
+const sellHdr = document.createElement("div");
+sellHdr.style.cssText = "width:100%;font-size:11px;color:#e63946;font-weight:500;margin:8px 0 4px;border-bottom:1px solid #ffe0e0;padding-bottom:2px";
+sellHdr.textContent = "▼ 賣超前" + META.topN + "名（每日曲線）";
+leg.appendChild(sellHdr);
+sellDs.forEach((d, i) => makeLegItem(d, i+1, leg));
+
+// ── 排行榜 ─────────────────────────────────────────────────
+function renderRank(data, tbodyId, color) {
+  const tbody = document.getElementById(tbodyId);
+  data.forEach((row, i) => {
+    const tr = document.createElement("tr");
+    const sign = row.val >= 0 ? "+" : "";
+    tr.innerHTML =
+      "<td style='color:#999'>"+(i+1)+"</td>" +
+      "<td>"+row.name+"</td>" +
+      "<td style='text-align:right;color:"+color+";font-variant-numeric:tabular-nums'>"+
+        sign+row.val.toLocaleString()+"</td>";
+    tbody.appendChild(tr);
+  });
+}
+renderRank(BUY_R,  "buyRows",  "#1565c0");
+renderRank(SELL_R, "sellRows", "#e63946");
+
+// ── 相關係數表 ──────────────────────────────────────────────
+const corrTbody = document.getElementById("corrRows");
+CORR.forEach(row => {
+  const tr = document.createElement("tr");
+  const sign = row.r >= 0 ? "+" : "";
+  tr.innerHTML =
+    "<td>"+row.a+"</td><td>"+row.b+"</td>" +
+    "<td style='text-align:right'>"+sign+row.r.toFixed(2)+"</td>" +
+    "<td><span class='badge' style='background:"+row.color+"22;color:"+row.color+"'>"+row.label+"</span></td>";
+  corrTbody.appendChild(tr);
+});
+
+// ── Chart.js ────────────────────────────────────────────────
+const chartDs = DS.map(d => ({
+  label:           d.label,
+  data:            d.data,
+  borderColor:     d.borderColor,
+  backgroundColor: d.bgColor,
+  pointRadius:     d.pointRadius,
+  pointHoverRadius:7,
+  borderWidth:     d.borderWidth,
+  borderDash:      d.borderDash,
+  tension:         0.3,
+  spanGaps:        false,
+}));
+
+const zeroLine = {
+  id: "zeroLine",
+  afterDraw(chart) {
+    const {ctx, scales:{y}} = chart;
+    const y0 = y.getPixelForValue(0);
+    ctx.save();
+    ctx.strokeStyle = "rgba(0,0,0,0.15)";
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4,4]);
+    ctx.beginPath();
+    ctx.moveTo(chart.chartArea.left, y0);
+    ctx.lineTo(chart.chartArea.right, y0);
+    ctx.stroke();
+    ctx.restore();
+  }
+};
+
+const xhair = {
+  id: 'xhair',
+  afterDraw(chart) {
+    if (!chart.tooltip._active?.length) return;
+    const {ctx, chartArea:{top,bottom}} = chart;
+    const x = chart.tooltip._active[0].element.x;
+    ctx.save();
+    ctx.beginPath(); ctx.moveTo(x,top); ctx.lineTo(x,bottom);
+    ctx.strokeStyle='rgba(180,210,255,0.35)'; ctx.lineWidth=1;
+    ctx.setLineDash([4,3]); ctx.stroke(); ctx.restore();
+  }
+};
+
+new Chart(document.getElementById("mainChart"), {
+  type: "line",
+  data: { labels: DATES, datasets: chartDs },
+  plugins: [zeroLine, xhair],
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode:"index", intersect:false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: ctx => ctx[0].label,
+          label: ctx => {
+            if (ctx.raw === null || ctx.raw === 0) return null;
+            const sign = ctx.raw > 0 ? "+" : "";
+            return ctx.dataset.label + "：" + sign + ctx.raw.toLocaleString() + " 張";
+          },
+          // 排序：買超（正值大→小）先，賣超（負值小→大）後
+          afterBody: () => [],
+        },
+        itemSort: (a, b) => b.raw - a.raw,
+        filter: item => item.raw !== null && item.raw !== 0,
+      }
+    },
+    scales: {
+      x: { ticks:{ font:{size:11}, maxRotation:45 }, grid:{ color:"#f0f0f0" } },
+      y: {
+        ticks:{ font:{size:11}, callback: v=>(v>0?"+":"")+v.toLocaleString() },
+        grid:{ color:"#f0f0f0" },
+        title:{ display:true, text:"淨買賣超（張）", font:{size:12} }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
