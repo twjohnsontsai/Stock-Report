@@ -144,9 +144,10 @@ if('serviceWorker' in navigator){
   if(isIOS&&!installed&&!sessionStorage.getItem('sw-ios')){
     const b=document.createElement('div');
     b.style.cssText='position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#17130a;border-top:1px solid rgba(192,152,64,.35);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;font-size:.8rem;color:#c09840;gap:8px';
+    const isCN=/^zh(-hans)?(-cn|-sg|-my)?$/i.test(navigator.language)||navigator.language==='zh';
     b.innerHTML=isChrome
-      ? '<span>請用 <b>Safari</b> 開啟，再點分享 → 加入主畫面</span>'
-      : '<span>點下方 <b>分享</b>（□↑）→「加入主畫面」即可安裝</span>';
+      ? (isCN?'<span>请用 <b>Safari</b> 打开，再点共享 → 添加到主屏幕</span>':'<span>請用 <b>Safari</b> 開啟，再點分享 → 加入主畫面</span>')
+      : (isCN?'<span>点下方 <b>共享</b>（□↑）→「添加到主屏幕」即可安装</span>':'<span>點下方 <b>分享</b>（□↑）→「加入主畫面」即可安裝</span>');
     b.innerHTML+='<button onclick="this.parentNode.remove();sessionStorage.setItem(\'sw-ios\',1)" style="background:none;border:none;color:#604e1a;font-size:1.1rem;cursor:pointer;flex-shrink:0">✕</button>';
     document.body.appendChild(b);
   }
