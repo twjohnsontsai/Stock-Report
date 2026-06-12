@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>投资股海</title>
+<meta name="theme-color" content="#c09840">
+<link rel="manifest" href="/Stock-Report/manifest.json">
+<link rel="apple-touch-icon" href="/Stock-Report/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -127,6 +130,26 @@ a:hover::after{left:150%}
   var pk=document.querySelector('.pk');
   if(pk){for(var i=0;i<14;i++){var s=document.createElement('span');var sz=(1+Math.random()*2).toFixed(1);s.style.cssText='left:'+Math.floor(Math.random()*100)+'%;width:'+sz+'px;height:'+sz+'px;--dur:'+(7+Math.random()*8).toFixed(1)+'s;--delay:'+(Math.random()*10).toFixed(1)+'s;--dx:'+(Math.random()*32-16).toFixed(1)+'px';pk.appendChild(s);}}
   document.querySelectorAll('li').forEach(function(el,i){el.style.animationDelay=(0.28+i*0.09).toFixed(2)+'s'});
+})();
+</script>
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/Stock-Report/sw.js',{scope:'/Stock-Report/'}).catch(()=>{});
+}
+// iOS 加到主畫面提示
+(function(){
+  const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  const installed=window.matchMedia('(display-mode:standalone)').matches||navigator.standalone;
+  const isChrome=/crios/i.test(navigator.userAgent);
+  if(isIOS&&!installed&&!sessionStorage.getItem('sw-ios')){
+    const b=document.createElement('div');
+    b.style.cssText='position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#17130a;border-top:1px solid rgba(192,152,64,.35);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;font-size:.8rem;color:#c09840;gap:8px';
+    b.innerHTML=isChrome
+      ? '<span>请用 <b>Safari</b> 打开，再点分享 → 加入主画面</span>'
+      : '<span>点下方 <b>分享</b>（□↑）→「加入主画面」即可安装</span>';
+    b.innerHTML+='<button onclick="this.parentNode.remove();sessionStorage.setItem(\'sw-ios\',1)" style="background:none;border:none;color:#604e1a;font-size:1.1rem;cursor:pointer;flex-shrink:0">✕</button>';
+    document.body.appendChild(b);
+  }
 })();
 </script>
 </body>
