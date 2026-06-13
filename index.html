@@ -142,6 +142,19 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('/Stock-Report/sw.js',{scope:'/Stock-Report/'})
     .catch(function(){});
 }
+// iOS 加入主畫面提示（Android 由系統自動處理）
+(function(){
+  var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
+  var isStandalone=window.navigator.standalone===true;
+  if(!isIOS||isStandalone)return;
+  var shown=sessionStorage.getItem('pwa-tip');
+  if(shown)return;
+  var tip=document.createElement('div');
+  tip.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1408;border:1px solid #c09840;border-radius:12px;padding:12px 18px;font-size:13px;color:#e5d9c0;z-index:9999;max-width:320px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.7);line-height:1.6';
+  tip.innerHTML='<span style="color:#c09840;font-weight:600">加入主畫面</span><br>點擊底部 <span style="color:#58a6ff">分享</span> 按鈕 → 選「<span style="color:#58a6ff">加入主畫面</span>」<br><span style="font-size:11px;color:#6a8298">即可像 App 一樣開啟</span><div style="margin-top:8px"><button onclick="this.parentNode.parentNode.remove();sessionStorage.setItem(\'pwa-tip\',1)" style="background:none;border:1px solid #604e1a;color:#9a8870;border-radius:6px;padding:4px 14px;font-size:12px;cursor:pointer">知道了</button></div>';
+  document.body.appendChild(tip);
+  sessionStorage.setItem('pwa-tip',1);
+})();
 </script>
 </body>
 </html>
