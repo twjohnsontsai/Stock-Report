@@ -4,12 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>投资股海</title>
-<meta name="theme-color" content="#c09840">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="股海">
-<link rel="manifest" href="/Stock-Report/manifest.json">
-<link rel="apple-touch-icon" href="/Stock-Report/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -90,7 +84,6 @@ a:hover::after{left:150%}
     <div class="sec-title">每日籌碼摘要</div>
     <ul>
     <li><a href="daily_20260612.html">&#128202; 每日籌碼摘要 2026-06-12</a></li>
-
     <li><a href="daily_20260611.html">&#128202; 每日籌碼摘要 2026-06-11</a></li>
     <li><a href="daily_20260605.html">&#128202; 每日籌碼摘要 2026-06-05</a></li>
     <li><a href="daily_20260604.html">&#128202; 每日籌碼摘要 2026-06-04</a></li>
@@ -101,8 +94,8 @@ a:hover::after{left:150%}
     <li><a href="daily_20260528.html">&#128202; 每日籌碼摘要 2026-05-28</a></li>
     </ul>
   </div>
-    <div class="sec frame" style="margin-top:20px">
-    <div class="sec-title">飆股觀察清單（有期貨×處置股 空頭撤退反攻）</div>
+  <div class="sec frame" style="margin-top:20px">
+    <div class="sec-title">飆股觀察清單</div>
     <ul>
     <li><a href="watchlist_20260614.html">&#128269; 飆股觀察清單 2026-06-14</a></li>
     <li><a href="watchlist_20260613.html">&#128269; 飆股觀察清單 2026-06-13</a></li>
@@ -112,6 +105,8 @@ a:hover::after{left:150%}
   <div class="sec frame" style="margin-top:20px">
     <div class="sec-title">財經節目日報</div>
     <ul>
+    <li><a href="財經日報_2026-06-13_晚間.html" class="na">&#128221; 財經日報 2026-06-13（晚間）（報告）</a></li>
+    <li><a href="財經日報_2026-06-13_晚間.pdf" class="na">&#127916; 財經日報 2026-06-13（晚間）（簡報 PDF）</a></li>
     <li><a href="財經日報_2026-06-12_晚間.html" class="na">&#128221; 財經日報 2026-06-12（晚間）（報告）</a></li>
     <li><a href="財經日報_2026-06-12_晚間.pdf" class="na">&#127916; 財經日報 2026-06-12（晚間）（簡報 PDF）</a></li>
     <li><a href="財經日報_2026-06-12_日間.html" class="na">&#128221; 財經日報 2026-06-12（日間）（報告）</a></li>
@@ -120,13 +115,9 @@ a:hover::after{left:150%}
     <li><a href="財經日報_2026-06-11_晚間.pdf" class="na">&#127916; 財經日報 2026-06-11（晚間）（簡報 PDF）</a></li>
     <li><a href="財經日報_2026-06-11_日間.html" class="na">&#128221; 財經日報 2026-06-11（日間）（報告）</a></li>
     <li><a href="財經日報_2026-06-11_日間.pdf" class="na">&#127916; 財經日報 2026-06-11（日間）（簡報 PDF）</a></li>
-    <li><a href="財經日報_2026-06-10_晚間.html" class="na">&#128221; 財經日報 2026-06-10（晚間）（報告）</a></li>
-    <li><a href="財經日報_2026-06-10_晚間.pdf" class="na">&#127916; 財經日報 2026-06-10（晚間）（簡報 PDF）</a></li>
-    <li><a href="財經日報_2026-06-10_日間.html" class="na">&#128221; 財經日報 2026-06-10（日間）（報告）</a></li>
-    <li><a href="財經日報_2026-06-10_日間.pdf" class="na">&#127916; 財經日報 2026-06-10（日間）（簡報 PDF）</a></li>
     </ul>
   </div>
-  <p class="ft">最後更新 &middot; 2026-06-14</p>
+  <p class="ft">最後更新 &middot; 2026-06-13</p>
   <p class="ft" style="margin-top:10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px">
     <span>&#9888; 数据来源TWSE，相关分析仅供投资参考，下单前请自行斟酌</span>
     <span>設計：蔡炯辉 &nbsp;｜&nbsp; Powered by Claude Code</span>
@@ -137,49 +128,6 @@ a:hover::after{left:150%}
   var pk=document.querySelector('.pk');
   if(pk){for(var i=0;i<14;i++){var s=document.createElement('span');var sz=(1+Math.random()*2).toFixed(1);s.style.cssText='left:'+Math.floor(Math.random()*100)+'%;width:'+sz+'px;height:'+sz+'px;--dur:'+(7+Math.random()*8).toFixed(1)+'s;--delay:'+(Math.random()*10).toFixed(1)+'s;--dx:'+(Math.random()*32-16).toFixed(1)+'px';pk.appendChild(s);}}
   document.querySelectorAll('li').forEach(function(el,i){el.style.animationDelay=(0.28+i*0.09).toFixed(2)+'s'});
-})();
-</script>
-<script>
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/Stock-Report/sw.js',{scope:'/Stock-Report/'})
-    .catch(function(){});
-}
-// iOS PWA 引導
-(function(){
-  var ua=navigator.userAgent;
-  var isIOS=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
-  if(!isIOS)return;
-  var isStandalone=window.navigator.standalone===true;
-  if(isStandalone)return;
-  // 非 Safari：Chrome(CriOS) / Firefox(FxiOS) / Edge(EdgiOS) / Line / WeChat
-  var isSafari=!/CriOS|FxiOS|EdgiOS|OPiOS|FBIOS|Line|MicroMessenger/.test(ua)&&/Safari/.test(ua);
-  if(!isSafari){
-    // 全屏遮罩，引導用 Safari 開啟
-    var ov=document.createElement('div');
-    ov.style.cssText='position:fixed;inset:0;background:rgba(13,11,7,0.97);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;font-family:system-ui,sans-serif';
-    var url=location.href;
-    ov.innerHTML='<div style="font-size:48px;margin-bottom:16px">🧭</div>'
-      +'<div style="color:#c09840;font-size:20px;font-weight:600;margin-bottom:12px">請用 Safari 開啟</div>'
-      +'<div style="color:#9a8870;font-size:14px;line-height:1.8;margin-bottom:28px">此網站支援加入主畫面功能<br>需在 <b style="color:#e5d9c0">Safari</b> 中開啟才能使用</div>'
-      +'<button id="pwa-copy" style="background:#c09840;color:#0d0b07;border:none;border-radius:24px;padding:14px 32px;font-size:16px;font-weight:700;cursor:pointer;margin-bottom:12px;width:100%;max-width:280px">複製連結</button>'
-      +'<div id="pwa-copied" style="color:#3a6b55;font-size:13px;min-height:20px"></div>'
-      +'<div style="color:#453c25;font-size:12px;margin-top:24px">複製後開啟 Safari，貼上網址即可</div>';
-    document.body.appendChild(ov);
-    document.getElementById('pwa-copy').addEventListener('click',function(){
-      if(navigator.clipboard){navigator.clipboard.writeText(url);}
-      else{var t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);}
-      document.getElementById('pwa-copied').textContent='✅ 已複製！請開啟 Safari 貼上';
-    });
-    return;
-  }
-  // Safari：底部加入主畫面提示
-  var shown=sessionStorage.getItem('pwa-tip');
-  if(shown)return;
-  var tip=document.createElement('div');
-  tip.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1408;border:1px solid #c09840;border-radius:12px;padding:12px 18px;font-size:13px;color:#e5d9c0;z-index:9999;max-width:320px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.7);line-height:1.6';
-  tip.innerHTML='<span style="color:#c09840;font-weight:600">加入主畫面</span><br>點擊底部 <span style="color:#58a6ff">分享</span> 按鈕 → 選「<span style="color:#58a6ff">加入主畫面</span>」<br><span style="font-size:11px;color:#6a8298">即可像 App 一樣開啟</span><div style="margin-top:8px"><button onclick="this.parentNode.parentNode.remove();sessionStorage.setItem(\'pwa-tip\',1)" style="background:none;border:1px solid #604e1a;color:#9a8870;border-radius:6px;padding:4px 14px;font-size:12px;cursor:pointer">知道了</button></div>';
-  document.body.appendChild(tip);
-  sessionStorage.setItem('pwa-tip',1);
 })();
 </script>
 </body>
