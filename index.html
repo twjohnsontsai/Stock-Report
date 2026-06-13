@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>投资股海</title>
+<meta name="theme-color" content="#c09840">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="股海">
+<link rel="manifest" href="/Stock-Report/manifest.json">
+<link rel="apple-touch-icon" href="/Stock-Report/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -130,6 +136,12 @@ a:hover::after{left:150%}
   if(pk){for(var i=0;i<14;i++){var s=document.createElement('span');var sz=(1+Math.random()*2).toFixed(1);s.style.cssText='left:'+Math.floor(Math.random()*100)+'%;width:'+sz+'px;height:'+sz+'px;--dur:'+(7+Math.random()*8).toFixed(1)+'s;--delay:'+(Math.random()*10).toFixed(1)+'s;--dx:'+(Math.random()*32-16).toFixed(1)+'px';pk.appendChild(s);}}
   document.querySelectorAll('li').forEach(function(el,i){el.style.animationDelay=(0.28+i*0.09).toFixed(2)+'s'});
 })();
+</script>
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/Stock-Report/sw.js',{scope:'/Stock-Report/'})
+    .catch(function(){});
+}
 </script>
 </body>
 </html>

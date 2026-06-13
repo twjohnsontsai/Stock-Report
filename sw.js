@@ -1,4 +1,4 @@
-const CACHE = 'stock-v1';
+const CACHE = 'stock-v2';
 const BASE = '/Stock-Report';
 
 self.addEventListener('install', e => {
