@@ -38,14 +38,10 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
 .cond-list{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
 .cond{font-size:.7rem;padding:2px 8px;border-radius:2px;background:rgba(58,107,85,.15);border:1px solid rgba(58,107,85,.3);color:#5dade2}
 .cond.strong{background:rgba(192,152,64,.15);border-color:var(--gold-dim);color:var(--gold)}
-/* 出場策略 */
-.exit-box{margin:10px 0 6px;padding:10px 14px;border-radius:3px;font-size:.75rem;line-height:1.85;background:rgba(39,174,96,.05);border:1px solid rgba(39,174,96,.2);border-left:3px solid #27ae60}
-.exit-box .exit-title{color:#2ecc71;font-weight:700;font-size:.72rem;letter-spacing:.08em;margin-bottom:4px}
-.exit-step{display:flex;align-items:flex-start;gap:8px;margin:3px 0;color:var(--text-dim)}
-.exit-step .step-tag{flex-shrink:0;font-size:.65rem;padding:1px 6px;border-radius:2px;font-weight:700;margin-top:1px}
-.step-tag.watch{background:rgba(230,126,34,.2);border:1px solid rgba(230,126,34,.5);color:#e67e22}
-.step-tag.reduce{background:rgba(231,76,60,.2);border:1px solid rgba(231,76,60,.5);color:#e74c3c}
-.step-tag.exit{background:rgba(231,76,60,.35);border:1px solid #e74c3c;color:#ff6b6b}
+/* 出場警示 */
+.exit-box{margin:8px 0 6px;padding:8px 14px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.25);border-left:3px solid #e74c3c}
+.exit-days{font-size:.92rem;font-weight:700;color:#e74c3c}
+.exit-detail{font-size:.67rem;color:var(--text-muted);margin-top:2px;letter-spacing:.03em}
 /* 連結按鈕 */
 .chart-link{display:block;margin-top:10px;padding:10px 16px;background:linear-gradient(180deg,#1d1708 0%,#141006 100%);border:1px solid var(--border);border-left:2px solid var(--gold-dim);color:var(--text-dim);text-decoration:none;font-size:.82rem;letter-spacing:.05em;transition:all .2s}
 .chart-link:hover{border-left-color:var(--gold);color:var(--gold-hi);padding-left:20px}
@@ -130,12 +126,8 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
     </div>
     <div class="eps-note">獲利穩健成長，財報品質最佳。4次處置籌碼最乾淨，解除後漲停是最強進場確認信號。</div>
     <div class="exit-box">
-      <div class="exit-title">&#9654; 出場推算（假設自 6/12 起每交易日均觸注意股）</div>
-      <div class="exit-step"><span class="step-tag watch">Day 1</span>6/12 ✓已觸發</div>
-      <div class="exit-step"><span class="step-tag watch">Day 2</span>6/15（週一）</div>
-      <div class="exit-step"><span class="step-tag watch">Day 3</span>6/16 → 減至 5 成</div>
-      <div class="exit-step"><span class="step-tag reduce">Day 4</span>6/17 → 減至 2 成</div>
-      <div class="exit-step"><span class="step-tag exit">Day 5</span>6/18 公告處置 → <b>6/18 盤中出清，6/19 起處置生效</b></div>
+      <div class="exit-days">&#128293; 最快 4 個交易日後處置（假設每日觸注意股）</div>
+      <div class="exit-detail">6/12 Day1 ✓ → 6/15 → 6/16 → 6/17 → <b style="color:#e74c3c">6/18 公告，6/19 生效</b>　出場：6/18 盤中</div>
     </div>
     <a class="chart-link" href="2455_guf_cycle_chart.html">&#128200; 期貨OI &times; 借券 &times; 前十大週期全景圖 &#8594;</a>
   </div>
@@ -176,12 +168,8 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
     </div>
     <div class="eps-note">連3季虧損後Q1首次轉正，最強財報加持。OI降48%空頭大量撤退，外資同步大買，財報+籌碼雙重確認。</div>
     <div class="exit-box">
-      <div class="exit-title">&#9654; 出場推算（預計 6/17 解除，解除日起假設每日觸注意股）</div>
-      <div class="exit-step"><span class="step-tag watch">Day 1</span>6/17 解除日（進場日）</div>
-      <div class="exit-step"><span class="step-tag watch">Day 2</span>6/18</div>
-      <div class="exit-step"><span class="step-tag watch">Day 3</span>6/19 → 減至 5 成</div>
-      <div class="exit-step"><span class="step-tag reduce">Day 4</span>6/20 → 減至 2 成</div>
-      <div class="exit-step"><span class="step-tag exit">Day 5</span>6/23 公告處置 → <b>6/23 盤中出清，6/24 起第5次處置生效（20分撮合）</b></div>
+      <div class="exit-days">&#128293; 最快 7 個交易日後處置（預計 6/17 解除，假設每日觸注意股）</div>
+      <div class="exit-detail">解除 6/17 Day1 → 6/18 → 6/19 → 6/20 → <b style="color:#e74c3c">6/23 公告，6/24 生效（第5次，20分撮合）</b>　出場：6/23 盤中</div>
     </div>
     <a class="chart-link" href="2337_dif_cycle_chart.html">&#128200; 期貨OI &times; 借券 &times; 前十大週期全景圖 &#8594;</a>
   </div>
@@ -222,12 +210,8 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
     </div>
     <div class="eps-note">仍虧損但幅度極小（-0.06），Q2是否轉盈是關鍵。均線多頭+漲停確認空頭回補，但財報待觀察。</div>
     <div class="exit-box">
-      <div class="exit-title">&#9654; 出場推算（預計 6/18 解除，解除日起假設每日觸注意股）</div>
-      <div class="exit-step"><span class="step-tag watch">Day 1</span>6/18 解除日（進場日）</div>
-      <div class="exit-step"><span class="step-tag watch">Day 2</span>6/19</div>
-      <div class="exit-step"><span class="step-tag watch">Day 3</span>6/20 → 減至 5 成</div>
-      <div class="exit-step"><span class="step-tag reduce">Day 4</span>6/23 → 減至 2 成</div>
-      <div class="exit-step"><span class="step-tag exit">Day 5</span>6/24 公告處置 → <b>6/24 盤中出清，6/25 起第4次處置生效</b></div>
+      <div class="exit-days">&#128293; 最快 8 個交易日後處置（預計 6/18 解除，假設每日觸注意股）</div>
+      <div class="exit-detail">解除 6/18 Day1 → 6/19 → 6/20 → 6/23 → <b style="color:#e74c3c">6/24 公告，6/25 生效（第4次）</b>　出場：6/24 盤中</div>
     </div>
     <a class="chart-link" href="6116_oef_cycle_chart.html">&#128200; 期貨OI &times; 借券 &times; 前十大週期全景圖 &#8594;</a>
   </div>
@@ -267,12 +251,8 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
     </div>
     <div class="eps-note">Q4/Q3獲利後Q1轉虧，財報有疑慮。技術面多頭+漲停確認，但基本面需謹慎，宜觀察Q2方向。</div>
     <div class="exit-box">
-      <div class="exit-title">&#9654; 出場推算（解除後 0 次注意，假設自 6/15 起每日觸注意股）</div>
-      <div class="exit-step"><span class="step-tag watch">Day 1</span>6/15（週一）</div>
-      <div class="exit-step"><span class="step-tag watch">Day 2</span>6/16</div>
-      <div class="exit-step"><span class="step-tag watch">Day 3</span>6/17 → 減至 5 成</div>
-      <div class="exit-step"><span class="step-tag reduce">Day 4</span>6/18 → 減至 2 成</div>
-      <div class="exit-step"><span class="step-tag exit">Day 5</span>6/19 公告處置 → <b>6/19 盤中出清，6/20 起第4次處置生效</b></div>
+      <div class="exit-days">&#128293; 最快 5 個交易日後處置（假設自 6/15 起每日觸注意股）</div>
+      <div class="exit-detail">6/15 Day1 → 6/16 → 6/17 → 6/18 → <b style="color:#e74c3c">6/19 公告，6/20 生效（第4次）</b>　出場：6/19 盤中</div>
     </div>
     <a class="chart-link" href="3532_qdf_cycle_chart.html">&#128200; 期貨OI &times; 借券 &times; 前十大週期全景圖 &#8594;</a>
   </div>
