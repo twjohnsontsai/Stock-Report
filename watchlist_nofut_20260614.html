@@ -4,372 +4,705 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>飆股觀察名單（無期貨）2026-06-14</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0d0b07;--border:#2a2010;--gold:#c09840;--gold-dim:#604e1a;--gold-hi:#d4aa50;--verd:#3a6b55;--text:#e5d9c0;--text-dim:#9a8870;--text-muted:#453c25;--red:#c0392b;--green:#27ae60}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Serif TC',serif;background:var(--bg);color:var(--text);min-height:100vh;padding:40px 20px}
-.wrap{max-width:780px;margin:0 auto}
-a.back{display:inline-block;margin-bottom:22px;font-size:.75rem;color:var(--text-muted);text-decoration:none}
-a.back:hover{color:var(--text-dim)}
-h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-indent:.4em;margin-bottom:4px}
-.sub{color:var(--text-muted);font-size:.7rem;letter-spacing:.15em;margin-bottom:24px}
-.card{position:relative;padding:18px 20px;border:1px solid var(--border);background:linear-gradient(135deg,#18130a 0%,#110d05 100%);margin-bottom:14px}
-.card::before{content:'';position:absolute;top:-1px;left:-1px;width:12px;height:12px;border-top:2px solid var(--verd);border-left:2px solid var(--verd)}
-.card::after{content:'';position:absolute;bottom:-1px;right:-1px;width:12px;height:12px;border-bottom:2px solid var(--verd);border-right:2px solid var(--verd)}
-.card-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-.score{background:rgba(192,152,64,.18);border:1px solid var(--gold-dim);border-radius:3px;padding:3px 10px;font-size:.95rem;font-weight:700;color:var(--gold);flex-shrink:0}
-.code{font-size:1rem;color:var(--text);font-weight:400}
-.tag-nofut{font-size:.65rem;padding:2px 7px;border-radius:2px;background:rgba(52,73,94,.25);border:1px solid rgba(52,73,94,.5);color:#7fb3d3;flex-shrink:0}
-.count-badge{font-size:.7rem;padding:2px 9px;border-radius:2px;background:rgba(192,152,64,.12);border:1px solid var(--gold-dim);color:var(--gold);font-weight:600;flex-shrink:0}
-.status{font-size:.72rem;padding:2px 8px;border-radius:2px;flex-shrink:0}
-.status.punish{background:rgba(192,57,43,.2);border:1px solid rgba(192,57,43,.5);color:#e74c3c}
-.status.released{background:rgba(39,174,96,.15);border:1px solid rgba(39,174,96,.4);color:#2ecc71}
-.data-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:10px}
-.data-cell{background:#0d0f0a;border:1px solid #1e2010;border-radius:3px;padding:7px 10px}
-.data-cell .label{font-size:.62rem;color:var(--text-muted);letter-spacing:.1em;margin-bottom:3px}
-.data-cell .val{font-size:.88rem;font-weight:700}
-.val.pos{color:#2ecc71}.val.neg{color:#e74c3c}.val.neu{color:var(--text-dim)}
-.cond-title{font-size:.65rem;color:var(--text-muted);letter-spacing:.12em;margin-bottom:6px}
-.cond-list{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
-.cond{font-size:.7rem;padding:2px 8px;border-radius:2px;background:rgba(58,107,85,.15);border:1px solid rgba(58,107,85,.3);color:#5dade2}
-.cond.strong{background:rgba(192,152,64,.15);border-color:var(--gold-dim);color:var(--gold)}
-.fin-bar-wrap{margin:6px 0 4px;background:#1a1208;border:1px solid #2a2010;border-radius:3px;height:7px;overflow:hidden}
-.fin-bar{height:100%;border-radius:3px}
-.fin-label{font-size:.68rem;color:var(--text-muted);margin-bottom:2px;display:flex;justify-content:space-between}
-.exit-box{margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c}
-.exit-days{font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px}
-.exit-detail{font-size:.68rem;color:var(--text-muted);line-height:1.7}
-.notice{background:rgba(41,128,185,.06);border:1px solid rgba(41,128,185,.2);border-left:3px solid #2980b9;padding:10px 14px;margin-bottom:20px;font-size:.78rem;line-height:1.8;color:var(--text-dim)}
-.ft{margin-top:28px;font-size:.68rem;color:var(--text-muted);text-align:center;border-top:1px solid var(--border);padding-top:12px}
+body{font-family:"Microsoft JhengHei",Arial,sans-serif;background:#0d1117;color:#e6edf3;padding:22px 32px;max-width:900px;font-size:15px;line-height:1.6}
+h1{color:#f0f6fc;font-size:20px;padding-bottom:12px;border-bottom:2px solid #21262d;margin-bottom:8px}
+.meta{color:#8b949e;font-size:13px;margin-bottom:20px}
+.footer{margin-top:26px;font-size:12px;color:#484f58;line-height:2;border-top:1px solid #21262d;padding-top:14px}
+a.back{display:inline-block;margin-bottom:18px;font-size:13px;color:#58a6ff;text-decoration:none}
+a.back:hover{text-decoration:underline}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <a class="back" href="index.html">&#8592; 返回投資股海</a>
-  <h1>飆股觀察名單（無期貨）</h1>
-  <p class="sub">2026-06-14 ｜ F 名單空頭撤退 × 無個股期貨 ｜ 評分≥50分</p>
-  <div class="notice">
-    &#9670; <b>本名單與含期貨名單分開</b>：無法查詢期貨未平倉（OI）降幅，評分不含 OI 項目（最高差 -15分）。<br>
-    &#9670; 處置出場規則（TWSE 第6條第1項）：<b>連續5個營業日列注意股 → 公告處置</b>，公告日盤中出清，隔日生效（20分撮合）。
+<a class="back" href="index.html">&#8592; 返回投資股海</a>
+<h1>飆股觀察名單（無期貨）</h1>
+<div class="meta">
+  📅 2026-06-14 ｜ F 名單空頭撤退 × 無個股期貨 ｜ 入選 <b style="color:#c084fc">15</b> 支（評分≥50分）
+</div>
+
+<div style="background:#110d1a;border:1px solid #4c1d95;border-radius:8px;
+     padding:14px 18px;margin-bottom:16px;font-size:13px;line-height:2">
+  <div style="color:#c084fc;font-weight:700;margin-bottom:8px">▸ 選股標準（無期貨）</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;color:#c9d1d9">
+    <span><b style="color:#a78bfa">Universe</b>：無個股期貨 ∩ 今年曾被處置 ∩ (處置中 or 近7日解除)</span>
+    <span><b style="color:#a78bfa">入選門檻</b>：≥ 50 分</span>
+    <span>均線趨勢：SMA20↑+SMA60↑ <b>15分</b>｜僅SMA60↑ <b>8分</b></span>
+    <span>KD超賣：K &lt; 20 <b>15分</b>｜K 20~25 <b>10分</b></span>
+    <span>近20日跌停記錄（處置期打壓證據）：<b>15分</b></span>
+    <span>近5日漲停★（解除後多方反攻確認）：<b>20分</b></span>
+    <span>外資買超：&gt;500張 <b>20分</b>｜100~500張 <b>12分</b>｜&gt;0 <b>5分</b></span>
+    <span>借券餘額距高峰降幅：≥40% <b>15分</b>｜20~40% <b>8分</b></span>
+    <span>今年處置次數加分：2次 <b>+5</b>｜3次 <b>+10</b>｜4次 <b>+15</b>｜≥5次 <b>+20</b></span>
+    <span>狀態加分：處置剩1~5天 or 解除0~3天 <b>+5</b></span>
+  </div>
+  <div style="color:#6d28d9;margin-top:6px;font-size:12px">
+    ★ 核心邏輯同 E 名單；無個股期貨故不含 OI 降幅項目（最高差 -15分）
+  </div>
+</div>
+
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">3021</span>
+    <span style="color:#c9d1d9;font-size:15px">鴻名</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#1a2b00;color:#7ee787;border:1px solid #238636;border-radius:4px;padding:1px 8px;font-size:12px">處置中 剩3天</span>
+    <span style="color:#8b949e;font-size:13px;font-weight:700">■■ 今年2次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#1a7f37">75分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#1a7f37;width:75%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">多頭均線</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">KD超賣K=23</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近20日跌停</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近5日漲停★</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">外資+11張(小)</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">今年2次處置(+5)</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">處置剩3天</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 29.9</span>
+    <span>KD K=23.5</span>
+    <span>外資 +11張</span>
+    <span>借券 237張（峰值0，降無歷史）</span>
+    <span>融資 4.2%（1張 / 限24）</span>
+  </div>
+  <div style="font-size:11px;color:#8b949e;margin:6px 0">借券餘額 237張（無歷史高峰資料）</div><div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:4px 0 2px"><span>融資使用率（1張 / 限額24張）</span><span style="color:#2ecc71;font-weight:700">4.2%&nbsp;極乾淨</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#27ae60,#2ecc71);width:4.2%;height:100%;border-radius:3px"></div></div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+0.19</span><span style="background:#0d2b0d;color:#3fb950;border:1px solid #238636;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">首次轉盈★</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:21%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.09</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.43</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:33%;background:#f85149;height:14px;border-radius:2px"></div></div><span style="color:#f85149;width:40px;text-align:right;font-weight:700">-0.14</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:44%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.19</span></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>2.5億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>2.6億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>2.5億</b> </span></div>
+    </div>
+  </div>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">仍在處置中（剩 3 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">3167</span>
+    <span style="color:#c9d1d9;font-size:15px">大量</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#161b22;color:#8b949e;border:1px solid #30363d;border-radius:4px;padding:1px 8px;font-size:12px">解除6天</span>
+    <span style="color:#f85149;font-size:13px;font-weight:700">■■■■■■■ 今年7次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#1a7f37">70分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#1a7f37;width:70%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">多頭均線</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近20日跌停</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近5日漲停★</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">今年7次處置(+20)</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 806.0</span>
+    <span>KD K=39.1</span>
+    <span>外資 -718張</span>
+    <span>借券 1,364張（峰值0，降無歷史）</span>
+    <span>融資 52.2%（12張 / 限23）</span>
+  </div>
+  <div style="font-size:11px;color:#8b949e;margin:6px 0">借券餘額 1,364張（無歷史高峰資料）</div><div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:4px 0 2px"><span>融資使用率（12張 / 限額23張）</span><span style="color:#e74c3c;font-weight:700">52.2%&nbsp;偏高</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#27ae60,#e74c3c);width:52.2%;height:100%;border-radius:3px"></div></div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+3.19</span><span style="background:#0c1e40;color:#58a6ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季增</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:62%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+1.99</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:76%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+2.44</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:84%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+2.68</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+3.19</span></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>7.7億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>8.6億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>9.6億</b> </span></div>
+    </div>
+  </div>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">已解除 &gt;5天，短期觸處置條件機率降低</div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">4722</span>
+    <span style="color:#c9d1d9;font-size:15px">國精化</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#161b22;color:#8b949e;border:1px solid #30363d;border-radius:4px;padding:1px 8px;font-size:12px">解除6天</span>
+    <span style="color:#8b949e;font-size:13px;font-weight:700">■ 今年1次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#1a7f37">68分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#1a7f37;width:68%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">SMA60↑</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">KD超賣K=21</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近20日跌停</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近5日漲停★</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">借券降40%</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 226.5</span>
+    <span>KD K=20.8</span>
+    <span>外資 -354張</span>
+    <span>借券 1,974張（峰值3,315，降40%）</span>
+    <span>融資 61.5%（16張 / 限26）</span>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:6px 0 2px"><span>借券餘額</span><span style="color:#2ecc71;font-weight:700">1,974張&nbsp;距高峰降40%</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#1a6b3a,#27ae60);width:40%;height:100%;border-radius:3px"></div></div><div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:4px 0 2px"><span>融資使用率（16張 / 限額26張）</span><span style="color:#e74c3c;font-weight:700">61.5%&nbsp;偏高</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#27ae60,#e74c3c);width:61.5%;height:100%;border-radius:3px"></div></div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+0.22</span><span style="background:#2b0e0e;color:#f85149;border:1px solid #da3633;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季減</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:2%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.02</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.81</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:83%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.67</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:27%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.22</span></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>3.2億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>3.8億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>3.0億</b> </span></div>
+    </div>
+  </div>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">已解除 &gt;5天，短期觸處置條件機率降低</div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">8454</span>
+    <span style="color:#c9d1d9;font-size:15px">富邦媒</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#1a2b00;color:#7ee787;border:1px solid #238636;border-radius:4px;padding:1px 8px;font-size:12px">處置中 剩10天</span>
+    <span style="color:#8b949e;font-size:13px;font-weight:700">■■ 今年2次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#1a7f37">67分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#1a7f37;width:67%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">多頭均線</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近20日跌停</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近5日漲停★</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">外資+129張</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">今年2次處置(+5)</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 356.5</span>
+    <span>KD K=75.9</span>
+    <span>外資 +129張</span>
+    <span>借券 8,287張（峰值0，降無歷史）</span>
+    <span>融資 1.5%（1張 / 限66）</span>
+  </div>
+  <div style="font-size:11px;color:#8b949e;margin:6px 0">借券餘額 8,287張（無歷史高峰資料）</div><div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:4px 0 2px"><span>融資使用率（1張 / 限額66張）</span><span style="color:#2ecc71;font-weight:700">1.5%&nbsp;極乾淨</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#27ae60,#2ecc71);width:1.5%;height:100%;border-radius:3px"></div></div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+2.43</span><span style="background:#2b0e0e;color:#f85149;border:1px solid #da3633;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季減</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:74%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+2.58</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:61%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+2.11</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+3.48</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:70%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+2.43</span></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>91.4億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>82.8億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>89.9億</b> </span></div>
+    </div>
+  </div>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">仍在處置中（剩 10 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">6449</span>
+    <span style="color:#c9d1d9;font-size:15px">鈺邦</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#2b1d00;color:#f0883e;border:1px solid #9e6a03;border-radius:4px;padding:1px 8px;font-size:12px">剛解除 2天前</span>
+    <span style="color:#e3b341;font-size:13px;font-weight:700">■■■ 今年3次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#1a7f37">65分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#1a7f37;width:65%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">多頭均線</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近20日跌停</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近5日漲停★</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">今年3次處置(+10)</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">解除2天</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 421.0</span>
+    <span>KD K=61.7</span>
+    <span>外資 -51張</span>
+    <span>借券 429張（峰值0，降無歷史）</span>
+    <span>融資 13.0%（3張 / 限23）</span>
+  </div>
+  <div style="font-size:11px;color:#8b949e;margin:6px 0">借券餘額 429張（無歷史高峰資料）</div><div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:4px 0 2px"><span>融資使用率（3張 / 限額23張）</span><span style="color:#e67e22;font-weight:700">13.0%&nbsp;乾淨</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#27ae60,#e67e22);width:13.0%;height:100%;border-radius:3px"></div></div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+2.11</span><span style="background:#2b0e0e;color:#f85149;border:1px solid #da3633;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季減</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:39%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.99</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:89%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+2.28</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+2.57</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:82%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+2.11</span></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>4.0億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>4.6億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>4.4億</b> </span></div>
+    </div>
+  </div>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">假設每日觸注意股：06/14 Day1(已觸) → 6/15 Day3 → 6/16 Day4 → 6/17 Day5<br><b style='color:#e74c3c'>🔥 6/17 公告處置 → 6/18 生效</b>&nbsp;&nbsp;出場：6/17 盤中</div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">2375</span>
+    <span style="color:#c9d1d9;font-size:15px">凱美</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#2b1d00;color:#f0883e;border:1px solid #9e6a03;border-radius:4px;padding:1px 8px;font-size:12px">剛解除 2天前</span>
+    <span style="color:#8b949e;font-size:13px;font-weight:700">■ 今年1次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#1a7f37">60分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#1a7f37;width:60%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">多頭均線</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近5日漲停★</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">外資+577張</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">解除2天</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 172.5</span>
+    <span>KD K=70.0</span>
+    <span>外資 +577張</span>
+    <span>借券 2,379張（峰值0，降無歷史）</span>
+    <span>融資 33.3%（9張 / 限27）</span>
+  </div>
+  <div style="font-size:11px;color:#8b949e;margin:6px 0">借券餘額 2,379張（無歷史高峰資料）</div><div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:4px 0 2px"><span>融資使用率（9張 / 限額27張）</span><span style="color:#e74c3c;font-weight:700">33.3%&nbsp;偏高</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#27ae60,#e74c3c);width:33.3%;height:100%;border-radius:3px"></div></div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+0.78</span><span style="background:#2b0e0e;color:#f85149;border:1px solid #da3633;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季減</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:14%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.19</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+1.35</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:71%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.96</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:58%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.78</span></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>4.9億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>5.3億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>5.0億</b> </span></div>
+    </div>
+  </div>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">假設每日觸注意股：06/14 Day1(已觸) → 6/15 Day3 → 6/16 Day4 → 6/17 Day5<br><b style='color:#e74c3c'>🔥 6/17 公告處置 → 6/18 生效</b>&nbsp;&nbsp;出場：6/17 盤中</div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">2472</span>
+    <span style="color:#c9d1d9;font-size:15px">立隆電</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#2b1d00;color:#f0883e;border:1px solid #9e6a03;border-radius:4px;padding:1px 8px;font-size:12px">剛解除 2天前</span>
+    <span style="color:#8b949e;font-size:13px;font-weight:700">■ 今年1次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#1a7f37">60分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#1a7f37;width:60%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">多頭均線</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近20日跌停</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近5日漲停★</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">外資+16張(小)</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">解除2天</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 371.5</span>
+    <span>KD K=54.3</span>
+    <span>外資 +16張</span>
+    <span>借券 4,506張（峰值0，降無歷史）</span>
+    <span>融資 36.6%（15張 / 限41）</span>
+  </div>
+  <div style="font-size:11px;color:#8b949e;margin:6px 0">借券餘額 4,506張（無歷史高峰資料）</div><div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:4px 0 2px"><span>融資使用率（15張 / 限額41張）</span><span style="color:#e74c3c;font-weight:700">36.6%&nbsp;偏高</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#27ae60,#e74c3c);width:36.6%;height:100%;border-radius:3px"></div></div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+1.60</span><span style="background:#2b0e0e;color:#f85149;border:1px solid #da3633;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季減</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:34%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+1.22</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:65%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+2.29</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+3.54</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:45%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+1.60</span></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>11.2億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>12.0億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>12.1億</b> </span></div>
+    </div>
+  </div>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">假設每日觸注意股：06/14 Day1(已觸) → 6/15 Day3 → 6/16 Day4 → 6/17 Day5<br><b style='color:#e74c3c'>🔥 6/17 公告處置 → 6/18 生效</b>&nbsp;&nbsp;出場：6/17 盤中</div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">3026</span>
+    <span style="color:#c9d1d9;font-size:15px">禾伸堂</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#2b1d00;color:#f0883e;border:1px solid #9e6a03;border-radius:4px;padding:1px 8px;font-size:12px">剛解除 3天前</span>
+    <span style="color:#f85149;font-size:13px;font-weight:700">■■■■■ 今年5次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#1a7f37">60分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#1a7f37;width:60%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">多頭均線</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近5日漲停★</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">今年5次處置(+20)</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">解除3天</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 764.0</span>
+    <span>KD K=77.7</span>
+    <span>外資 -170張</span>
+    <span>借券 2,234張（峰值0，降無歷史）</span>
+    <span>融資 22.0%（9張 / 限41）</span>
+  </div>
+  <div style="font-size:11px;color:#8b949e;margin:6px 0">借券餘額 2,234張（無歷史高峰資料）</div><div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:4px 0 2px"><span>融資使用率（9張 / 限額41張）</span><span style="color:#e74c3c;font-weight:700">22.0%&nbsp;尚可</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#27ae60,#e74c3c);width:22.0%;height:100%;border-radius:3px"></div></div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+2.86</span><span style="background:#0c1e40;color:#58a6ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季增</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:49%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+1.39</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:59%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+1.68</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:64%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+1.83</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+2.86</span></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>12.9億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>14.3億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>12.9億</b> </span></div>
+    </div>
+  </div>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">假設每日觸注意股：06/14 Day1(已觸) → 6/15 Day4 → 6/16 Day5<br><b style='color:#e74c3c'>🔥 6/16 公告處置 → 6/17 生效</b>&nbsp;&nbsp;出場：6/16 盤中</div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">6890</span>
+    <span style="color:#c9d1d9;font-size:15px">來億-KY</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#1a2b00;color:#7ee787;border:1px solid #238636;border-radius:4px;padding:1px 8px;font-size:12px">處置中 剩12天</span>
+    <span style="color:#8b949e;font-size:13px;font-weight:700">■■ 今年2次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#1a7f37">60分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#1a7f37;width:60%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">多頭均線</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近20日跌停</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近5日漲停★</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">外資+73張(小)</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">今年2次處置(+5)</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 256.0</span>
+    <span>KD K=88.1</span>
+    <span>外資 +73張</span>
+    <span>借券 3,606張（峰值0，降無歷史）</span>
+    <span>融資 1.6%（1張 / 限62）</span>
+  </div>
+  <div style="font-size:11px;color:#8b949e;margin:6px 0">借券餘額 3,606張（無歷史高峰資料）</div><div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:4px 0 2px"><span>融資使用率（1張 / 限額62張）</span><span style="color:#2ecc71;font-weight:700">1.6%&nbsp;極乾淨</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#27ae60,#2ecc71);width:1.6%;height:100%;border-radius:3px"></div></div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+0.75</span><span style="background:#2b0e0e;color:#f85149;border:1px solid #da3633;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季減</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:89%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+3.45</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:53%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+2.04</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+3.86</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:19%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.75</span></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>27.8億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>42.1億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>36.1億</b> </span></div>
+    </div>
+  </div>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">仍在處置中（剩 12 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">7610</span>
+    <span style="color:#c9d1d9;font-size:15px">聯友金屬-創</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#1a2b00;color:#7ee787;border:1px solid #238636;border-radius:4px;padding:1px 8px;font-size:12px">處置中 剩3天</span>
+    <span style="color:#f85149;font-size:13px;font-weight:700">■■■■■■ 今年6次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#1a7f37">60分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#1a7f37;width:60%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">多頭均線</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近20日跌停</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">外資+53張(小)</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">今年6次處置(+20)</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">處置剩3天</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 1590.0</span>
+    <span>KD K=43.8</span>
+    <span>外資 +53張</span>
+    <span>借券 55張（峰值0，降無歷史）</span>
+    
+  </div>
+  <div style="font-size:11px;color:#8b949e;margin:6px 0">借券餘額 55張（無歷史高峰資料）</div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+10.87</span><span style="background:#0c1e40;color:#58a6ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季增</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:8%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.91</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:11%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+1.25</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:34%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+3.70</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+10.87</span></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>4.6億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>5.6億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>6.2億</b> </span></div>
+    </div>
+  </div>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">仍在處置中（剩 3 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">1568</span>
+    <span style="color:#c9d1d9;font-size:15px">倉佑</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#1a2b00;color:#7ee787;border:1px solid #238636;border-radius:4px;padding:1px 8px;font-size:12px">處置中 剩3天</span>
+    <span style="color:#8b949e;font-size:13px;font-weight:700">■■ 今年2次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#bf8700">55分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#bf8700;width:55%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">多頭均線</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">KD超賣K=22</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近20日跌停</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">外資+16張(小)</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">今年2次處置(+5)</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">處置剩3天</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 39.6</span>
+    <span>KD K=21.9</span>
+    <span>外資 +16張</span>
+    <span>借券 616張（峰值0，降無歷史）</span>
+    <span>融資 23.1%（6張 / 限26）</span>
+  </div>
+  <div style="font-size:11px;color:#8b949e;margin:6px 0">借券餘額 616張（無歷史高峰資料）</div><div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:4px 0 2px"><span>融資使用率（6張 / 限額26張）</span><span style="color:#e74c3c;font-weight:700">23.1%&nbsp;尚可</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#27ae60,#e74c3c);width:23.1%;height:100%;border-radius:3px"></div></div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+0.51</span><span style="background:#0c1e40;color:#58a6ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季增</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:2%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.01</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:67%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.34</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:94%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.48</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.51</span></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>1.1億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>1.1億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>0.9億</b> </span></div>
+    </div>
+  </div>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">仍在處置中（剩 3 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">4807</span>
+    <span style="color:#c9d1d9;font-size:15px">日成-KY</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#1a2b00;color:#7ee787;border:1px solid #238636;border-radius:4px;padding:1px 8px;font-size:12px">處置中 剩8天</span>
+    <span style="color:#8b949e;font-size:13px;font-weight:700">■ 今年1次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#bf8700">55分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#bf8700;width:55%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">多頭均線</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近20日跌停</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近5日漲停★</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">外資+52張(小)</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 41.0</span>
+    <span>KD K=85.4</span>
+    <span>外資 +52張</span>
+    <span>借券 265張（峰值0，降無歷史）</span>
+    <span>融資 8.3%（1張 / 限12）</span>
+  </div>
+  <div style="font-size:11px;color:#8b949e;margin:6px 0">借券餘額 265張（無歷史高峰資料）</div><div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:4px 0 2px"><span>融資使用率（1張 / 限額12張）</span><span style="color:#2ecc71;font-weight:700">8.3%&nbsp;極乾淨</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#27ae60,#2ecc71);width:8.3%;height:100%;border-radius:3px"></div></div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+1.70</span><span style="background:#0c1e40;color:#58a6ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季增</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:52%;background:#f85149;height:14px;border-radius:2px"></div></div><span style="color:#f85149;width:40px;text-align:right;font-weight:700">-0.88</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:34%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.57</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:19%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.32</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+1.70</span></div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>2.5億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>1.7億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>2.1億</b> </span></div>
+    </div>
+  </div>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">仍在處置中（剩 8 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">6806</span>
+    <span style="color:#c9d1d9;font-size:15px">森崴能源</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#2b1d00;color:#f0883e;border:1px solid #9e6a03;border-radius:4px;padding:1px 8px;font-size:12px">剛解除 3天前</span>
+    <span style="color:#f85149;font-size:13px;font-weight:700">■■■■■ 今年5次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#bf8700">55分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#bf8700;width:55%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">KD深超賣K=5</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近20日跌停</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">今年5次處置(+20)</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">解除3天</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 4.0</span>
+    <span>KD K=4.8</span>
+    <span>外資 +0張</span>
+    <span>借券 0張（峰值0，降無歷史）</span>
+    
   </div>
   
-  <div class="card">
-    <div class="card-head">
-      <span class="score">75分</span>
-      <span class="code">3021 鴻名</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年2次處置</span>
-      <span class="status punish">⚠ 處置剩3天</span>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#f85149">-6.73</span><span style="background:#0c1e40;color:#58a6ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季增</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:60%;background:#f85149;height:14px;border-radius:2px"></div></div><span style="color:#f85149;width:40px;text-align:right;font-weight:700">-16.81</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#f85149;height:14px;border-radius:2px"></div></div><span style="color:#f85149;width:40px;text-align:right;font-weight:700">-28.17</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:48%;background:#f85149;height:14px;border-radius:2px"></div></div><span style="color:#f85149;width:40px;text-align:right;font-weight:700">-13.66</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:24%;background:#f85149;height:14px;border-radius:2px"></div></div><span style="color:#f85149;width:40px;text-align:right;font-weight:700">-6.73</span></div>
     </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">29.9</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val pos">+11張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">23.5</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#9a8870">237張（無歷史高峰資料）</span></div><div class="fin-label" style="margin-top:6px"><span>融資使用率（1張 / 限額24張）</span><span style="color:#2ecc71;font-weight:700">4.2%&nbsp;極乾淨</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:4.2%;background:linear-gradient(90deg,#27ae60,#2ecc71)"></div></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">多頭均線</span><span class="cond">KD超賣K=23</span><span class="cond">近20日跌停</span><span class="cond strong">近5日漲停★</span><span class="cond strong">外資+11張(小)</span><span class="cond">今年2次處置(+5)</span><span class="cond">處置剩3天</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">仍在處置中（剩 3 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>29.1億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>10.5億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>7.8億</b> </span></div>
     </div>
   </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">70分</span>
-      <span class="code">3167 大量</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年7次處置</span>
-      <span class="status released">✓ 解除6天</span>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">假設每日觸注意股：06/14 Day1(已觸) → 6/15 Day4 → 6/16 Day5<br><b style='color:#e74c3c'>🔥 6/16 公告處置 → 6/17 生效</b>&nbsp;&nbsp;出場：6/16 盤中</div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">6442</span>
+    <span style="color:#c9d1d9;font-size:15px">光聖</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#1a2b00;color:#7ee787;border:1px solid #238636;border-radius:4px;padding:1px 8px;font-size:12px">處置中 剩8天</span>
+    <span style="color:#f85149;font-size:13px;font-weight:700">■■■■ 今年4次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#bf8700">50分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#bf8700;width:50%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">多頭均線</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近20日跌停</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">外資+31張(小)</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">今年4次處置(+15)</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 1855.0</span>
+    <span>KD K=32.8</span>
+    <span>外資 +31張</span>
+    <span>借券 1,511張（峰值0，降無歷史）</span>
+    <span>融資 30.0%（6張 / 限20）</span>
+  </div>
+  <div style="font-size:11px;color:#8b949e;margin:6px 0">借券餘額 1,511張（無歷史高峰資料）</div><div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:4px 0 2px"><span>融資使用率（6張 / 限額20張）</span><span style="color:#e74c3c;font-weight:700">30.0%&nbsp;尚可</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#27ae60,#e74c3c);width:30.0%;height:100%;border-radius:3px"></div></div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+7.82</span><span style="background:#2b0e0e;color:#f85149;border:1px solid #da3633;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季減</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:27%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+2.60</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:73%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+7.03</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+9.59</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:82%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+7.82</span></div>
     </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">806.0</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val neg">-718張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">39.1</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#9a8870">1,364張（無歷史高峰資料）</span></div><div class="fin-label" style="margin-top:6px"><span>融資使用率（12張 / 限額23張）</span><span style="color:#e74c3c;font-weight:700">52.2%&nbsp;偏高</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:52.2%;background:linear-gradient(90deg,#27ae60,#e74c3c)"></div></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">多頭均線</span><span class="cond">近20日跌停</span><span class="cond strong">近5日漲停★</span><span class="cond">今年7次處置(+20)</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">已解除 &gt;5天，短期觸處置條件機率降低</div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>10.1億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>8.9億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>17.3億</b> </span></div>
     </div>
   </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">68分</span>
-      <span class="code">4722 國精化</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年1次處置</span>
-      <span class="status released">✓ 解除6天</span>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">仍在處置中（剩 8 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
+  </div>
+</div>
+<div style="background:#0a0d12;border:1px solid #6d28d9;border-radius:8px;padding:14px 18px;margin-bottom:10px">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap">
+    <span style="font-size:18px;font-weight:700;color:#f0f6fc">8021</span>
+    <span style="color:#c9d1d9;font-size:15px">尖點</span>
+    <span style="background:#0d1b2e;color:#79c0ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:12px">無期貨</span>
+    <span style="background:#161b22;color:#8b949e;border:1px solid #30363d;border-radius:4px;padding:1px 8px;font-size:12px">解除6天</span>
+    <span style="color:#f85149;font-size:13px;font-weight:700">■■■■ 今年4次</span>
+    <span style="margin-left:auto;font-size:24px;font-weight:900;color:#bf8700">50分</span>
+  </div>
+  <div style="background:#1a1023;border-radius:4px;height:6px;margin-bottom:10px">
+    <div style="background:#bf8700;width:50%;height:6px;border-radius:4px"></div>
+  </div>
+  <div style="margin-bottom:8px"><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">多頭均線</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">近5日漲停★</span><span style="display:inline-block;background:#1a0a2e;color:#c084fc;border:1px solid #6d28d9;border-radius:4px;padding:1px 8px;font-size:12px;margin:2px">今年4次處置(+15)</span></div>
+  <div style="font-size:12px;color:#8b949e;display:flex;gap:20px;flex-wrap:wrap;margin-bottom:8px">
+    <span>收盤 522.0</span>
+    <span>KD K=76.3</span>
+    <span>外資 -6288張</span>
+    <span>借券 2,535張（峰值0，降無歷史）</span>
+    <span>融資 35.1%（13張 / 限37）</span>
+  </div>
+  <div style="font-size:11px;color:#8b949e;margin:6px 0">借券餘額 2,535張（無歷史高峰資料）</div><div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin:4px 0 2px"><span>融資使用率（13張 / 限額37張）</span><span style="color:#e74c3c;font-weight:700">35.1%&nbsp;偏高</span></div><div style="background:#1a1208;border:1px solid #21262d;border-radius:3px;height:5px;overflow:hidden;margin-bottom:6px"><div style="background:linear-gradient(90deg,#27ae60,#e74c3c);width:35.1%;height:100%;border-radius:3px"></div></div>
+  
+<div style="background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:10px 14px;margin-top:8px">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <span style="color:#8b949e;font-size:12px;font-weight:700">📊 財報</span>
+    <span style="font-size:13px;color:#c9d1d9">2026-03 EPS</span><span style="font-size:16px;font-weight:700;color:#3fb950">+1.17</span><span style="background:#0c1e40;color:#58a6ff;border:1px solid #1f6feb;border-radius:4px;padding:1px 8px;font-size:11px;margin-left:6px">季增</span>
+    <span style="margin-left:auto;font-size:11px;color:#8b949e">Q2 2026截止 2026/08/14（60天後）</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">季度 EPS</div>
+      <div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-06</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:47%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.55</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-09</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:66%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+0.77</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2025-12</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:91%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+1.06</span></div><div style="display:flex;align-items:center;gap:6px;margin:2px 0;font-size:12px"><span style="color:#8b949e;width:50px;text-align:right">2026-03</span><div style="flex:1;background:#161b22;border-radius:2px;height:14px"><div style="width:100%;background:#3fb950;height:14px;border-radius:2px"></div></div><span style="color:#3fb950;width:40px;text-align:right;font-weight:700">+1.17</span></div>
     </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">226.5</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val neg">-354張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">20.8</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#2ecc71;font-weight:700">1,974張&nbsp;（距高峰降40%）</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:40%;background:linear-gradient(90deg,#1a6b3a,#27ae60)"></div></div><div class="fin-label" style="margin-top:6px"><span>融資使用率（16張 / 限額26張）</span><span style="color:#e74c3c;font-weight:700">61.5%&nbsp;偏高</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:61.5%;background:linear-gradient(90deg,#27ae60,#e74c3c)"></div></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">SMA60↑</span><span class="cond">KD超賣K=21</span><span class="cond">近20日跌停</span><span class="cond strong">近5日漲停★</span><span class="cond">借券降40%</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">已解除 &gt;5天，短期觸處置條件機率降低</div>
+    <div>
+      <div style="font-size:11px;color:#484f58;margin-bottom:4px">月營收</div>
+      <div style="line-height:2"><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/03 <b>4.7億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/04 <b>5.2億</b> </span><span style="margin-right:10px;font-size:12px;color:#c9d1d9">2026/05 <b>6.2億</b> </span></div>
     </div>
   </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">67分</span>
-      <span class="code">8454 富邦媒</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年2次處置</span>
-      <span class="status punish">⚠ 處置剩10天</span>
-    </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">356.5</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val pos">+129張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">75.9</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#9a8870">8,287張（無歷史高峰資料）</span></div><div class="fin-label" style="margin-top:6px"><span>融資使用率（1張 / 限額66張）</span><span style="color:#2ecc71;font-weight:700">1.5%&nbsp;極乾淨</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:1.5%;background:linear-gradient(90deg,#27ae60,#2ecc71)"></div></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">多頭均線</span><span class="cond">近20日跌停</span><span class="cond strong">近5日漲停★</span><span class="cond strong">外資+129張</span><span class="cond">今年2次處置(+5)</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">仍在處置中（剩 10 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
-    </div>
+</div>
+  <div style="margin:8px 0 4px;padding:8px 12px;border-radius:3px;background:rgba(231,76,60,.07);border:1px solid rgba(231,76,60,.2);border-left:3px solid #e74c3c">
+    <div style="font-size:.8rem;font-weight:700;color:#e74c3c;margin-bottom:3px">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
+    <div style="font-size:.68rem;color:#8b949e;line-height:1.7">已解除 &gt;5天，短期觸處置條件機率降低</div>
   </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">65分</span>
-      <span class="code">6449 鈺邦</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年3次處置</span>
-      <span class="status released">✓ 解除2天</span>
-    </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">421.0</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val neg">-51張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">61.7</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#9a8870">429張（無歷史高峰資料）</span></div><div class="fin-label" style="margin-top:6px"><span>融資使用率（3張 / 限額23張）</span><span style="color:#e67e22;font-weight:700">13.0%&nbsp;乾淨</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:13.0%;background:linear-gradient(90deg,#27ae60,#e67e22)"></div></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">多頭均線</span><span class="cond">近20日跌停</span><span class="cond strong">近5日漲停★</span><span class="cond">今年3次處置(+10)</span><span class="cond">解除2天</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">假設每日觸注意股：06/14 Day1(已觸) → 6/15 Day3 → 6/16 Day4 → 6/17 Day5<br><b style='color:#e74c3c'>🔥 6/17 公告處置 → 6/18 生效</b>&nbsp;&nbsp;出場：6/17 盤中</div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">60分</span>
-      <span class="code">2375 凱美</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年1次處置</span>
-      <span class="status released">✓ 解除2天</span>
-    </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">172.5</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val pos">+577張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">70.0</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#9a8870">2,379張（無歷史高峰資料）</span></div><div class="fin-label" style="margin-top:6px"><span>融資使用率（9張 / 限額27張）</span><span style="color:#e74c3c;font-weight:700">33.3%&nbsp;偏高</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:33.3%;background:linear-gradient(90deg,#27ae60,#e74c3c)"></div></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">多頭均線</span><span class="cond strong">近5日漲停★</span><span class="cond strong">外資+577張</span><span class="cond">解除2天</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">假設每日觸注意股：06/14 Day1(已觸) → 6/15 Day3 → 6/16 Day4 → 6/17 Day5<br><b style='color:#e74c3c'>🔥 6/17 公告處置 → 6/18 生效</b>&nbsp;&nbsp;出場：6/17 盤中</div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">60分</span>
-      <span class="code">2472 立隆電</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年1次處置</span>
-      <span class="status released">✓ 解除2天</span>
-    </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">371.5</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val pos">+16張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">54.3</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#9a8870">4,506張（無歷史高峰資料）</span></div><div class="fin-label" style="margin-top:6px"><span>融資使用率（15張 / 限額41張）</span><span style="color:#e74c3c;font-weight:700">36.6%&nbsp;偏高</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:36.6%;background:linear-gradient(90deg,#27ae60,#e74c3c)"></div></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">多頭均線</span><span class="cond">近20日跌停</span><span class="cond strong">近5日漲停★</span><span class="cond strong">外資+16張(小)</span><span class="cond">解除2天</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">假設每日觸注意股：06/14 Day1(已觸) → 6/15 Day3 → 6/16 Day4 → 6/17 Day5<br><b style='color:#e74c3c'>🔥 6/17 公告處置 → 6/18 生效</b>&nbsp;&nbsp;出場：6/17 盤中</div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">60分</span>
-      <span class="code">3026 禾伸堂</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年5次處置</span>
-      <span class="status released">✓ 解除3天</span>
-    </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">764.0</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val neg">-170張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">77.7</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#9a8870">2,234張（無歷史高峰資料）</span></div><div class="fin-label" style="margin-top:6px"><span>融資使用率（9張 / 限額41張）</span><span style="color:#e74c3c;font-weight:700">22.0%&nbsp;尚可</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:22.0%;background:linear-gradient(90deg,#27ae60,#e74c3c)"></div></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">多頭均線</span><span class="cond strong">近5日漲停★</span><span class="cond">今年5次處置(+20)</span><span class="cond">解除3天</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">假設每日觸注意股：06/14 Day1(已觸) → 6/15 Day4 → 6/16 Day5<br><b style='color:#e74c3c'>🔥 6/16 公告處置 → 6/17 生效</b>&nbsp;&nbsp;出場：6/16 盤中</div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">60分</span>
-      <span class="code">6890 來億-KY</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年2次處置</span>
-      <span class="status punish">⚠ 處置剩12天</span>
-    </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">256.0</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val pos">+73張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">88.1</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#9a8870">3,606張（無歷史高峰資料）</span></div><div class="fin-label" style="margin-top:6px"><span>融資使用率（1張 / 限額62張）</span><span style="color:#2ecc71;font-weight:700">1.6%&nbsp;極乾淨</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:1.6%;background:linear-gradient(90deg,#27ae60,#2ecc71)"></div></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">多頭均線</span><span class="cond">近20日跌停</span><span class="cond strong">近5日漲停★</span><span class="cond strong">外資+73張(小)</span><span class="cond">今年2次處置(+5)</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">仍在處置中（剩 12 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">60分</span>
-      <span class="code">7610 聯友金屬-創</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年6次處置</span>
-      <span class="status punish">⚠ 處置剩3天</span>
-    </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">1590.0</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val pos">+53張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">43.8</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#9a8870">55張（無歷史高峰資料）</span></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">多頭均線</span><span class="cond">近20日跌停</span><span class="cond strong">外資+53張(小)</span><span class="cond">今年6次處置(+20)</span><span class="cond">處置剩3天</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">仍在處置中（剩 3 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">55分</span>
-      <span class="code">1568 倉佑</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年2次處置</span>
-      <span class="status punish">⚠ 處置剩3天</span>
-    </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">39.6</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val pos">+16張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">21.9</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#9a8870">616張（無歷史高峰資料）</span></div><div class="fin-label" style="margin-top:6px"><span>融資使用率（6張 / 限額26張）</span><span style="color:#e74c3c;font-weight:700">23.1%&nbsp;尚可</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:23.1%;background:linear-gradient(90deg,#27ae60,#e74c3c)"></div></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">多頭均線</span><span class="cond">KD超賣K=22</span><span class="cond">近20日跌停</span><span class="cond strong">外資+16張(小)</span><span class="cond">今年2次處置(+5)</span><span class="cond">處置剩3天</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">仍在處置中（剩 3 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">55分</span>
-      <span class="code">4807 日成-KY</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年1次處置</span>
-      <span class="status punish">⚠ 處置剩8天</span>
-    </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">41.0</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val pos">+52張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">85.4</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#9a8870">265張（無歷史高峰資料）</span></div><div class="fin-label" style="margin-top:6px"><span>融資使用率（1張 / 限額12張）</span><span style="color:#2ecc71;font-weight:700">8.3%&nbsp;極乾淨</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:8.3%;background:linear-gradient(90deg,#27ae60,#2ecc71)"></div></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">多頭均線</span><span class="cond">近20日跌停</span><span class="cond strong">近5日漲停★</span><span class="cond strong">外資+52張(小)</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">仍在處置中（剩 8 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">55分</span>
-      <span class="code">6806 森崴能源</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年5次處置</span>
-      <span class="status released">✓ 解除3天</span>
-    </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">4.0</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val neu">0張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">4.8</div></div>
-    </div>
-    
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">KD深超賣K=5</span><span class="cond">近20日跌停</span><span class="cond">今年5次處置(+20)</span><span class="cond">解除3天</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">假設每日觸注意股：06/14 Day1(已觸) → 6/15 Day4 → 6/16 Day5<br><b style='color:#e74c3c'>🔥 6/16 公告處置 → 6/17 生效</b>&nbsp;&nbsp;出場：6/16 盤中</div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">50分</span>
-      <span class="code">6442 光聖</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年4次處置</span>
-      <span class="status punish">⚠ 處置剩8天</span>
-    </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">1855.0</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val pos">+31張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">32.8</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#9a8870">1,511張（無歷史高峰資料）</span></div><div class="fin-label" style="margin-top:6px"><span>融資使用率（6張 / 限額20張）</span><span style="color:#e74c3c;font-weight:700">30.0%&nbsp;尚可</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:30.0%;background:linear-gradient(90deg,#27ae60,#e74c3c)"></div></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">多頭均線</span><span class="cond">近20日跌停</span><span class="cond strong">外資+31張(小)</span><span class="cond">今年4次處置(+15)</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">仍在處置中（剩 8 個交易日，解除後才開始計算）<br><small style='color:#e67e22'>⚠ 解除後若連續5日觸注意股 → 再次處置</small></div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-head">
-      <span class="score">50分</span>
-      <span class="code">8021 尖點</span>
-      <span class="tag-nofut">無期貨</span>
-      <span class="count-badge">今年4次處置</span>
-      <span class="status released">✓ 解除6天</span>
-    </div>
-    <div class="data-row">
-      <div class="data-cell"><div class="label">收盤價（06/14）</div><div class="val neu">522.0</div></div>
-      <div class="data-cell"><div class="label">外資今日</div><div class="val neg">-6288張</div></div>
-      <div class="data-cell"><div class="label">KD K值</div><div class="val neu">76.3</div></div>
-    </div>
-    <div class="fin-label"><span>借券餘額</span><span style="color:#9a8870">2,535張（無歷史高峰資料）</span></div><div class="fin-label" style="margin-top:6px"><span>融資使用率（13張 / 限額37張）</span><span style="color:#e74c3c;font-weight:700">35.1%&nbsp;偏高</span></div><div class="fin-bar-wrap"><div class="fin-bar" style="width:35.1%;background:linear-gradient(90deg,#27ae60,#e74c3c)"></div></div>
-    <div class="cond-title">◆ 入選條件</div>
-    <div class="cond-list"><span class="cond">多頭均線</span><span class="cond strong">近5日漲停★</span><span class="cond">今年4次處置(+15)</span></div>
-    <div class="exit-box">
-      <div class="exit-days">⏱ 出場推算（TWSE：連續5日注意股→處置）</div>
-      <div class="exit-detail">已解除 &gt;5天，短期觸處置條件機率降低</div>
-    </div>
-  </div>
-  <p class="ft">數據來源 TWSE &#183; 相關分析僅供投資參考</p>
+</div>
+<div class="footer">
+  數據來源 TWSE ｜ 相關分析僅供投資參考，不構成任何買賣建議
 </div>
 </body>
 </html>
