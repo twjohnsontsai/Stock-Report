@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>富邦媒 8454 — 現貨籌碼週期圖</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#090c12;color:#c9d1d9;font-family:system-ui,sans-serif;padding:8px}
+h1{color:#e3b341;font-size:.95rem;margin-bottom:2px}
+.sub{color:#8b949e;font-size:.72rem;margin-bottom:6px}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:5px;margin-bottom:6px}
+.sc{background:#0d1520;border:1px solid #21262d;border-radius:4px;padding:5px 8px}
+.sc .v{font-size:.95rem;font-weight:700;color:#58a6ff}
+.sc .l{color:#8b949e;font-size:.65rem;margin-top:1px}
+.panel{background:#0f1420;border:1px solid #1e2635;border-radius:4px;padding:4px 8px;margin-bottom:4px;position:relative}
+.ptitle{color:#79c0ff;font-size:.72rem;font-weight:600;margin-bottom:2px;display:flex;align-items:center;gap:6px}
+.tag{background:#1a2535;border:1px solid #30363d;border-radius:2px;padding:0 4px;font-size:.62rem;color:#8b949e}
+.legend{display:flex;flex-wrap:wrap;gap:6px;font-size:.65rem;margin-bottom:3px}
+.lg{display:flex;align-items:center;gap:3px}
+.ld{width:8px;height:8px;border-radius:1px;flex-shrink:0}
+.hp{position:fixed;background:rgba(10,13,20,.40);border:1px solid rgba(58,69,85,.6);border-radius:6px;padding:8px 12px;font-size:.78rem;z-index:999;display:none;pointer-events:none;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.6)}
+.hp .hdate{color:#e3b341;font-weight:700;margin-bottom:5px;font-size:.82rem;border-bottom:1px solid #2a3345;padding-bottom:4px}
+.hp .hrow{display:flex;justify-content:space-between;gap:16px;margin:2px 0;line-height:1.6}
+.hp .hk{color:#6a7a8e}.hp .hv{font-weight:600;color:#dde4ee}
+table{width:100%;border-collapse:collapse;font-size:.78rem;margin-top:6px}
+th{background:#1a2030;color:#e3b341;padding:6px 8px;border:1px solid #2a3040;text-align:left}
+td{padding:5px 8px;border:1px solid #1e2635}
+tr:nth-child(even){background:#111825}
+a.back{display:inline-block;margin-bottom:10px;font-size:.75rem;color:#8b949e;text-decoration:none}
+a.back:hover{color:#c9d1d9}
+</style>
+</head>
+<body>
+<a class="back" href="watchlist_nofut_20260614.html">&#8592; 返回無期貨名單</a>
+<h1>8454 富邦媒 — 現貨 × 借券 × 籌碼 週期圖（無期貨）</h1>
+<p class="sub">
+  2025/01~2026/06
+  ｜ <span style="background:rgba(210,153,34,.2);padding:1px 6px;border-radius:3px">橙色=注意股期間（8筆）</span>
+  ｜ <span style="background:rgba(224,80,80,.2);padding:1px 6px;border-radius:3px">紅色=處置期間（20天）</span>
+</p>
+<div class="stats">
+  <div class="sc"><div class="v">356.5</div><div class="l">最新收盤價</div></div>
+  <div class="sc"><div class="v">1</div><div class="l">今年被處置次數</div></div>
+  <div class="sc"><div class="v">8</div><div class="l">注意股記錄（筆）</div></div>
+  <div class="sc"><div class="v">無</div><div class="l">借券歷史資料</div></div>
+</div>
+
+<div id="hp" class="hp">
+  <div class="hdate" id="hdate">—</div>
+  <div class="hrow"><span class="hk">現貨</span><span class="hv" id="hs">—</span></div>
+  <div class="hrow"><span class="hk">成交量</span><span class="hv" id="hv">—</span></div>
+  
+  
+  <div id="hflag" style="margin-top:4px;font-size:.7rem"></div>
+</div>
+
+<div class="panel">
+<div class="ptitle">① 現貨 8454 富邦媒 — K線 + MA</div>
+<div class="legend">
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(255,255,255,.85);margin-right:3px"></span>MA5</span>
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(255,220,0,.9);margin-right:3px"></span>MA10</span>
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(255,120,0,.9);margin-right:3px"></span>MA20</span>
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(180,100,255,.9);margin-right:3px"></span>MA60</span>
+  <span class="lg"><span class="ld" style="background:rgba(210,153,34,.9)"></span>注意期</span>
+  <span class="lg"><span class="ld" style="background:#ff3232"></span>處置期</span>
+</div>
+<div style="position:relative;height:450px"><canvas id="c1"></canvas></div>
+</div>
+
+
+
+
+<div class="panel">
+<div class="ptitle">② 處置週期分析表</div>
+<table>
+<tr><th>處置開始</th><th>處置結束</th><th>解除後首日</th><th>解除時股價</th><th>追蹤20日高點漲幅</th><th>備注</th></tr>
+<tr><td colspan="6" style="color:#484f58">暫無處置週期資料</td></tr>
+</table>
+</div>
+
+<script>
+const DATES=["20260601", "20260602", "20260603", "20260604", "20260605", "20260608", "20260609", "20260610", "20260611", "20260612"];
+const SO=[240.0, 237.0, 267.0, 302.0, 333.0, 336.5, 399.0, 416.0, 411.0, 396.0],SH=[254.0, 265.5, 292.0, 321.0, 353.0, 388.0, 426.5, 467.0, 425.0, 396.0],SL=[236.5, 231.0, 265.0, 300.0, 294.5, 336.5, 399.0, 389.0, 396.0, 356.5],SC=[241.5, 265.5, 292.0, 321.0, 353.0, 388.0, 426.5, 449.5, 396.0, 356.5],SV=[6217.906, 5770.329, 6858.476, 8086.217, 4338.756, 3356.913, 3503.276, 4053.663, 2379.285, 1025.75];
+const SMA5=[null, null, null, null, 294.6, 323.9, 356.1, 387.6, 402.6, 403.3],SMA10=[null, null, null, null, null, null, null, null, null, 348.95],SMA20=[null, null, null, null, null, null, null, null, null, null],SMA60=[null, null, null, null, null, null, null, null, null, null];
+const LSELL=[null, null, null, null, null, null, null, null, null, null],LRET=[null, null, null, null, null, null, null, null, null, null],LBAL=[null, null, null, null, null, null, null, null, null, null];
+const IFOR=[null, null, null, null, null, null, null, null, null, null];
+const NOTICE=[false, true, true, true, true, true, true, true, true, false];
+const PUNISH=[false, false, false, false, true, true, true, true, true, true];
+const CUP='#e05050',CDN='#3fb950';
+const ALL_CHARTS={};
+const LPAD=0,RPAD=62;
+
+const xhairPlugin={id:'xhair',afterDraw(chart){
+  if(chart._xhairIdx==null)return;
+  const {ctx,chartArea,scales:{x,y}}=chart;if(!x||!y)return;
+  const px=x.getPixelForValue(chart._xhairIdx);
+  if(px<chartArea.left||px>chartArea.right)return;
+  ctx.save();ctx.beginPath();ctx.moveTo(px,chartArea.top);ctx.lineTo(px,chartArea.bottom);
+  ctx.strokeStyle='rgba(255,220,50,0.75)';ctx.lineWidth=1.5;ctx.setLineDash([3,2]);ctx.stroke();ctx.restore();
+}};
+
+function drawBands(ctx,x,y,arr,fillClr,barClr,barH){
+  let inB=false,sx=0;
+  function flush(ex){ctx.fillStyle=fillClr;ctx.fillRect(sx,y.top,ex-sx,y.bottom-y.top);ctx.fillStyle=barClr;ctx.fillRect(sx,y.top,ex-sx,barH);}
+  arr.forEach((v,i)=>{const xp=x.getPixelForValue(i);if(v&&!inB){inB=true;sx=xp;}if(!v&&inB){inB=false;flush(xp);}});
+  if(inB)flush(x.getPixelForValue(arr.length-1)+8);
+}
+function noticeBgPlugin(id){return {id:'nb_'+id,beforeDraw(chart){
+  const {ctx,chartArea,scales:{x,y}}=chart;if(!x||!y)return;
+  ctx.save();
+  drawBands(ctx,x,y,NOTICE,'rgba(220,160,0,.04)','rgba(220,160,0,.90)',4);
+  drawBands(ctx,x,y,PUNISH,'rgba(255,40,40,.06)','rgba(255,50,50,.95)',6);
+  ctx.restore();
+}};}
+
+const XS={ticks:{maxTicksLimit:12,color:'#7a8899',font:{size:9}},grid:{color:'rgba(255,255,255,.04)'}};
+const YS={position:'right',ticks:{color:'#7a8899',font:{size:9}},grid:{color:'rgba(255,255,255,.05)'}};
+const BASE_OPT={responsive:true,maintainAspectRatio:false,animation:false,
+  plugins:{legend:{display:false},tooltip:{enabled:false}},
+  onHover(evt,elems,chart){
+    const pts=chart.getElementsAtEventForMode(evt,'index',{intersect:false},false);
+    if(!pts.length)return;syncAll(pts[0].index,chart.id);showPanel(pts[0].index);
+  }
+};
+
+function syncAll(idx,srcId){
+  Object.entries(ALL_CHARTS).forEach(([id,c])=>{c._xhairIdx=idx;if(id!==srcId)c.tooltip.setActiveElements([{datasetIndex:0,index:idx}],{x:0,y:0});c.update('none');});
+}
+
+let _hpX=0,_hpY=0;
+document.addEventListener('mousemove',e=>{_hpX=e.clientX;_hpY=e.clientY;const hp=document.getElementById('hp');if(hp.style.display==='block')_posHP(hp);});
+function _posHP(hp){const W=window.innerWidth,H=window.innerHeight,rw=hp.offsetWidth||220,rh=hp.offsetHeight||200;hp.style.left=((_hpX+18+rw>W)?_hpX-rw-8:_hpX+18)+'px';hp.style.top=((_hpY+rh>H)?H-rh-8:_hpY+4)+'px';}
+function _fmt(v,u){return v!=null?v+u:'—';}
+function _fmtS(v){return v!=null?'O'+SO[v]+' H'+SH[v]+' L'+SL[v]+' C'+SC[v]:'—';}
+function showPanel(i){
+  const hp=document.getElementById('hp');hp.style.display='block';_posHP(hp);
+  const d=DATES[i];document.getElementById('hdate').textContent=d?d.slice(0,4)+'/'+d.slice(4,6)+'/'+d.slice(6):'—';
+  document.getElementById('hs').textContent=_fmtS(SC[i]!=null?i:null);
+  document.getElementById('hv').textContent=SV[i]!=null?SV[i].toFixed(0)+' 張':'—';
+  
+  
+  const fl=[];if(NOTICE[i])fl.push('<span style="color:#e3b341">⚠ 注意股</span>');if(PUNISH[i])fl.push('<span style="color:#e05050">🔴 處置中</span>');
+  document.getElementById('hflag').innerHTML=fl.join(' ');
+}
+
+const MA_STYLES=[{label:'MA5',color:'rgba(255,255,255,.85)',width:1},{label:'MA10',color:'rgba(255,220,0,.85)',width:1},{label:'MA20',color:'rgba(255,120,0,.85)',width:1.2},{label:'MA60',color:'rgba(180,100,255,.85)',width:1.5}];
+
+const colors=DATES.map((_,i)=>SC[i]!=null&&SC[i]>=SO[i]?CUP:CDN);
+const vcol=DATES.map((_,i)=>SC[i]!=null&&SC[i]>=SO[i]?'rgba(224,80,80,.3)':'rgba(63,185,80,.3)');
+const maxV=Math.max(...SV.filter(v=>v!=null&&!isNaN(v)));
+const maDsets=[SMA5,SMA10,SMA20,SMA60].map((arr,i)=>{const st=MA_STYLES[i];return {label:st.label,data:arr,type:'line',borderColor:st.color,backgroundColor:'transparent',pointRadius:0,tension:.1,borderWidth:st.width,yAxisID:'y'};});
+const c1=new Chart('c1',{type:'bar',data:{labels:DATES,datasets:[
+  {label:'vol',data:SV,backgroundColor:vcol,barThickness:6,yAxisID:'yv'},
+  {label:'wick',data:DATES.map((_,i)=>SC[i]!=null?[SL[i],SH[i]]:null),backgroundColor:colors,barThickness:1.5,grouped:false,yAxisID:'y'},
+  {label:'body',data:DATES.map((_,i)=>SC[i]!=null?[Math.min(SO[i],SC[i]),Math.max(SO[i],SC[i])]:null),backgroundColor:colors,barThickness:6,grouped:false,yAxisID:'y'},
+  ...maDsets]},
+  options:{...BASE_OPT,layout:{padding:{left:LPAD+58,right:RPAD}},scales:{x:XS,y:{...YS,afterFit(s){s.width=52;},afterDataLimits(s){s.max*=1.02;s.min*=0.98;}},yv:{display:false,min:0,max:maxV*4,grid:{display:false}}}},
+  plugins:[noticeBgPlugin('c1'),xhairPlugin]});
+ALL_CHARTS['c1']=c1;
+
+
+
+
+document.querySelectorAll('canvas').forEach(c=>{
+  c.addEventListener('mouseleave',()=>{document.getElementById('hp').style.display='none';Object.values(ALL_CHARTS).forEach(ch=>{ch._xhairIdx=null;ch.update('none');});});
+});
+</script>
+</body>
+</html>
