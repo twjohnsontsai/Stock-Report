@@ -144,7 +144,7 @@ const SP10DIVST=[false, false, false, false, false, true, false, false, false, f
 const NOTICE=[false, false, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, true, false, false, false, false, false, true, true, false, true, false, false, true, false, false, true, true, false, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, true, false, false, false, false, false, true, false, true, false, true, true, false, false, false, false, false, true, true, true, false, false, true, true, true, false, false, false, false, false, false, false, false];
 const PUNISH=[false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true, true, true, true, true];
 const WAVES=[{"sig_date": "20250121", "sig_idx": 13, "low_date": "20250116", "low": 18.2, "high_date": "20250213", "high": 21.4, "gain": 17.6, "s_low": 18.1, "s_high": 21.4, "s_gain": 17.9, "has_notice": false}, {"sig_date": "20250220", "sig_idx": 28, "low_date": "20250217", "low": 20.4, "high_date": "20250226", "high": 23.7, "gain": 15.9, "s_low": 20.4, "s_high": 23.6, "s_gain": 15.9, "has_notice": false}, {"sig_date": "20250422", "sig_idx": 68, "low_date": "20250417", "low": 18.6, "high_date": "20250521", "high": 22.2, "gain": 19.0, "s_low": 18.7, "s_high": 22.4, "s_gain": 19.5, "has_notice": false}, {"sig_date": "20250522", "sig_idx": 89, "low_date": "20250527", "low": 20.6, "high_date": "20250618", "high": 23.4, "gain": 13.6, "s_low": 20.7, "s_high": 23.5, "s_gain": 13.5, "has_notice": false}, {"sig_date": "20250619", "sig_idx": 108, "low_date": "20250623", "low": 20.8, "high_date": "20250619", "high": 23.0, "gain": 10.3, "s_low": 22.1, "s_high": 23.1, "s_gain": 4.5, "has_notice": false}, {"sig_date": "20250804", "sig_idx": 140, "low_date": "20250801", "low": 18.0, "high_date": "20250818", "high": 20.0, "gain": 10.5, "s_low": 18.0, "s_high": 19.9, "s_gain": 10.8, "has_notice": false}, {"sig_date": "20250821", "sig_idx": 153, "low_date": "20250821", "low": 18.9, "high_date": "20250919", "high": 28.9, "gain": 52.9, "s_low": 19.1, "s_high": 28.9, "s_gain": 51.3, "has_notice": false}, {"sig_date": "20250926", "sig_idx": 179, "low_date": "20250926", "low": 24.2, "high_date": "20251029", "high": 39.8, "gain": 64.8, "s_low": 24.1, "s_high": 39.7, "s_gain": 64.4, "has_notice": true}, {"sig_date": "20251120", "sig_idx": 214, "low_date": "20251124", "low": 33.2, "high_date": "20251210", "high": 39.6, "gain": 19.2, "s_low": 33.3, "s_high": 39.6, "s_gain": 18.9, "has_notice": true}, {"sig_date": "20251218", "sig_idx": 234, "low_date": "20251215", "low": 36.0, "high_date": "20260121", "high": 78.7, "gain": 118.6, "s_low": 35.9, "s_high": 78.8, "s_gain": 119.8, "has_notice": true}, {"sig_date": "20260318", "sig_idx": 288, "low_date": "20260313", "low": 100.0, "high_date": "20260320", "high": 170.0, "gain": 70.0, "s_low": 104.5, "s_high": 170.0, "s_gain": 62.7, "has_notice": true}];
-const SIGDATES=new Set(["20250926", "20250522", "20260318", "20250821", "20250422", "20250619", "20250804", "20250121", "20250220", "20251120", "20251218"]);
+const SIGDATES=new Set(["20250821", "20251218", "20260318", "20250926", "20250121", "20250804", "20251120", "20250619", "20250422", "20250220", "20250522"]);
 const CUP='#e05050',CDN='#3fb950',CNOTI_BAR='rgba(220,160,0,.85)',CPUN_BAR='rgba(255,40,40,.95)',CSIG='rgba(88,166,255,.5)';
 const ALL_CHARTS={};
 const LPAD=58,RPAD=62;
@@ -251,7 +251,7 @@ function mkKlineWithVol(id,opens,closes,highs,lows,vols,mas=[],extraPlugins=[]){
     {label:'wick',data:DATES.map((_,i)=>closes[i]!=null?[lows[i],highs[i]]:null),backgroundColor:colors,barThickness:1.5,grouped:false,yAxisID:'y'},
     {label:'body',data:DATES.map((_,i)=>closes[i]!=null?[Math.min(opens[i],closes[i]),Math.max(opens[i],closes[i])]:null),backgroundColor:colors,barThickness:6,grouped:false,yAxisID:'y'},
     ...maDsets]},
-    options:{...BASE_OPT,layout:{padding:{left:LPAD}},scales:{x:XS,y:{...YS,afterDataLimits(s){s.max*=1.02;s.min*=0.98;}},yv:{display:false,min:0,max:maxV*4,grid:{display:false}}}},
+    options:{...BASE_OPT,layout:{padding:{left:LPAD+58,right:RPAD}},scales:{x:XS,y:{...YS,afterFit(s){s.width=52;},afterDataLimits(s){s.max*=1.02;s.min*=0.98;}},yv:{display:false,min:0,max:maxV*4,grid:{display:false}}}},
     plugins:[noticeBgPlugin(id),sigLines,xhairPlugin,...extraPlugins]});
   ALL_CHARTS[id]=c;return c;
 }
@@ -263,7 +263,7 @@ mkKlineWithVol('c4',SO,SC,SH,SL,SV,[SMA5,SMA10,SMA20,SMA60],[wavePlugin('s')]);
 const c3=new Chart('c3',{type:'bar',data:{labels:DATES,datasets:[
   {label:'OI增減',data:FOICHG,backgroundColor:FOICHG.map(v=>v==null?'transparent':v>0?'rgba(63,185,80,.7)':'rgba(224,80,80,.7)'),barThickness:4,yAxisID:'y'},
   {label:'OI',data:FOI,type:'line',borderColor:'rgba(88,166,255,.7)',backgroundColor:'rgba(88,166,255,.08)',fill:true,pointRadius:0,tension:.15,borderWidth:1.2,yAxisID:'y2'}]},
-  options:{...BASE_OPT,layout:{padding:{left:LPAD}},scales:{x:XS,y:{...YS,position:'left',afterFit(s){s.width=58;}},y2:{...YS,afterFit(s){s.width=52;}}}},
+  options:{...BASE_OPT,layout:{padding:{left:LPAD,right:RPAD}},scales:{x:XS,y:{...YS,position:'left',afterFit(s){s.width=58;}},y2:{...YS,afterFit(s){s.width=52;}}}},
   plugins:[noticeBgPlugin('c3'),sigLines,xhairPlugin]});
 ALL_CHARTS['c3']=c3;
 
@@ -271,7 +271,7 @@ ALL_CHARTS['c3']=c3;
 const c7=new Chart('c7',{type:'line',data:{labels:DATES,datasets:[
   {label:'特定多口',data:SP10B,borderColor:'#ef5350',backgroundColor:'rgba(239,83,80,.1)',fill:true,pointRadius:0,tension:.2,borderWidth:1.5},
   {label:'特定空口',data:SP10S,borderColor:'#43a047',backgroundColor:'rgba(67,160,71,.1)',fill:true,pointRadius:0,tension:.2,borderWidth:1.5}]},
-  options:{...BASE_OPT,layout:{padding:{left:LPAD,right:RPAD}},scales:{x:XS,y:{...YS,position:'right',afterFit(s){s.width=52;}}}},
+  options:{...BASE_OPT,layout:{padding:{left:LPAD+58,right:RPAD}},scales:{x:XS,y:{...YS,position:'right',afterFit(s){s.width=52;}}}},
   plugins:[noticeBgPlugin('c7'),xhairPlugin]});
 ALL_CHARTS['c7']=c7;
 
@@ -280,7 +280,7 @@ const c5=new Chart('c5',{type:'bar',data:{labels:DATES,datasets:[
   {label:'借券賣出',data:LSELL,backgroundColor:'rgba(224,80,80,.6)',barThickness:4,yAxisID:'y'},
   {label:'還券',data:LRET.map(v=>v!=null?Math.abs(v):null),backgroundColor:'rgba(63,185,80,.6)',barThickness:4,yAxisID:'y'},
   {label:'借券餘額',data:LBAL,type:'line',borderColor:'rgba(88,166,255,.9)',backgroundColor:'rgba(88,166,255,.05)',fill:true,pointRadius:0,tension:.2,borderWidth:1.5,yAxisID:'y2'}]},
-  options:{...BASE_OPT,layout:{padding:{left:LPAD}},scales:{x:XS,y:{...YS,position:'left',afterFit(s){s.width=58;}},y2:{...YS,afterFit(s){s.width=52;}}}},
+  options:{...BASE_OPT,layout:{padding:{left:LPAD,right:RPAD}},scales:{x:XS,y:{...YS,position:'left',afterFit(s){s.width=58;}},y2:{...YS,afterFit(s){s.width=52;}}}},
   plugins:[noticeBgPlugin('c5'),xhairPlugin]});
 ALL_CHARTS['c5']=c5;
 
