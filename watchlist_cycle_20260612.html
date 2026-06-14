@@ -3,43 +3,163 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>飆股觀察名單 2026-06-12</title>
+<title>飆股觀察名單 2026-06-12（有期貨）</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0d0b07;--border:#2a2010;--gold:#c09840;--gold-dim:#604e1a;--gold-hi:#d4aa50;--verd:#3a6b55;--text:#e5d9c0;--text-dim:#9a8870;--text-muted:#453c25}
+:root{--bg:#0d0b07;--border:#2a2010;--gold:#c09840;--gold-dim:#604e1a;--gold-hi:#d4aa50;--verd:#3a6b55;--text:#e5d9c0;--text-dim:#9a8870;--text-muted:#453c25;--red:#c0392b;--green:#27ae60;--blue:#2980b9}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Noto Serif TC',serif;background:var(--bg);color:var(--text);min-height:100vh;padding:40px 20px}
-.wrap{max-width:680px;margin:0 auto}
-h1{color:var(--gold);font-size:1.2rem;font-weight:300;letter-spacing:.4em;text-indent:.4em;margin-bottom:6px}
-.sub{color:var(--text-muted);font-size:.72rem;letter-spacing:.18em;margin-bottom:28px}
-.frame{position:relative;padding:20px;border:1px solid var(--border);background:linear-gradient(135deg,#18130a 0%,#110d05 100%)}
-.frame::before{content:'';position:absolute;top:-1px;left:-1px;width:14px;height:14px;border-top:2px solid var(--verd);border-left:2px solid var(--verd)}
-.frame::after{content:'';position:absolute;bottom:-1px;right:-1px;width:14px;height:14px;border-bottom:2px solid var(--verd);border-right:2px solid var(--verd)}
-.label{font-size:.7rem;color:var(--verd);letter-spacing:.2em;margin-bottom:14px}
-ul{list-style:none}
-li{margin:6px 0}
-a{display:block;padding:12px 16px 12px 20px;background:linear-gradient(180deg,#1d1708 0%,#141006 100%);border:1px solid var(--border);border-left:2px solid var(--gold-dim);color:var(--text-dim);text-decoration:none;font-size:.88rem;letter-spacing:.05em;transition:all .2s}
-a:hover{border-left-color:var(--gold);color:var(--gold-hi);padding-left:24px}
-.score{display:inline-block;background:rgba(192,152,64,.15);border:1px solid var(--gold-dim);border-radius:3px;padding:1px 7px;font-size:.72rem;color:var(--gold);margin-right:8px;vertical-align:middle}
-.back{display:inline-block;margin-bottom:22px;font-size:.75rem;color:var(--text-muted);text-decoration:none;letter-spacing:.1em}
-.back:hover{color:var(--text-dim)}
+.wrap{max-width:780px;margin:0 auto}
+a.back{display:inline-block;margin-bottom:22px;font-size:.75rem;color:var(--text-muted);text-decoration:none;letter-spacing:.1em}
+a.back:hover{color:var(--text-dim)}
+h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-indent:.4em;margin-bottom:4px}
+.sub{color:var(--text-muted);font-size:.7rem;letter-spacing:.15em;margin-bottom:24px}
+.key-msg{background:rgba(192,152,64,.07);border:1px solid var(--gold-dim);border-left:3px solid var(--gold);padding:12px 16px;margin-bottom:22px;font-size:.82rem;line-height:1.8;color:var(--text-dim)}
+.key-msg b{color:var(--gold)}
+/* 股票卡片 */
+.card{position:relative;padding:18px 20px;border:1px solid var(--border);background:linear-gradient(135deg,#18130a 0%,#110d05 100%);margin-bottom:14px}
+.card::before{content:'';position:absolute;top:-1px;left:-1px;width:12px;height:12px;border-top:2px solid var(--verd);border-left:2px solid var(--verd)}
+.card::after{content:'';position:absolute;bottom:-1px;right:-1px;width:12px;height:12px;border-bottom:2px solid var(--verd);border-right:2px solid var(--verd)}
+.card-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.score{background:rgba(192,152,64,.18);border:1px solid var(--gold-dim);border-radius:3px;padding:3px 10px;font-size:.95rem;font-weight:700;color:var(--gold);flex-shrink:0}
+.code{font-size:1.05rem;color:var(--text);font-weight:400;letter-spacing:.05em}
+.status{font-size:.72rem;padding:2px 8px;border-radius:2px;flex-shrink:0}
+.status.punish{background:rgba(192,57,43,.2);border:1px solid rgba(192,57,43,.5);color:#e74c3c}
+.status.released{background:rgba(39,174,96,.15);border:1px solid rgba(39,174,96,.4);color:#2ecc71}
+/* 數據列 */
+.data-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:12px}
+.data-cell{background:#0d0f0a;border:1px solid #1e2010;border-radius:3px;padding:8px 10px}
+.data-cell .label{font-size:.62rem;color:var(--text-muted);letter-spacing:.1em;margin-bottom:3px}
+.data-cell .val{font-size:.9rem;font-weight:700}
+.val.pos{color:#2ecc71}.val.neg{color:#e74c3c}.val.neu{color:var(--text-dim)}
+/* 評分條件 */
+.cond-title{font-size:.65rem;color:var(--text-muted);letter-spacing:.12em;margin-bottom:6px}
+.cond-list{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.cond{font-size:.7rem;padding:2px 8px;border-radius:2px;background:rgba(58,107,85,.15);border:1px solid rgba(58,107,85,.3);color:#5dade2}
+.cond.strong{background:rgba(192,152,64,.15);border-color:var(--gold-dim);color:var(--gold)}
+/* 連結按鈕 */
+.chart-link{display:block;margin-top:10px;padding:10px 16px;background:linear-gradient(180deg,#1d1708 0%,#141006 100%);border:1px solid var(--border);border-left:2px solid var(--gold-dim);color:var(--text-dim);text-decoration:none;font-size:.82rem;letter-spacing:.05em;transition:all .2s}
+.chart-link:hover{border-left-color:var(--gold);color:var(--gold-hi);padding-left:20px}
+/* 財報評語 */
+.eps-note{font-size:.75rem;color:var(--text-dim);line-height:1.6;margin-top:6px;padding:6px 10px;border-left:2px solid var(--gold-dim);background:rgba(192,152,64,.04)}
 .ft{margin-top:30px;font-size:.68rem;color:var(--text-muted);text-align:center;letter-spacing:.1em;border-top:1px solid var(--border);padding-top:14px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <a class="back" href="index.html">&#8592; 返回投資股海</a>
-  <h1>飆股觀察名單</h1>
-  <p class="sub">2026-06-12 ｜ E 名單空頭撤退反攻 &#8805;50分 ｜ 期現籌碼週期全景圖</p>
-  <div class="frame">
-    <div class="label">&#9670; 期貨OI &times; 借券 &times; 前十大特定交易人 週期全景圖</div>
-    <ul>
-      <li><a href="2455_guf_cycle_chart.html"><span class="score">103分</span>2455 全新 &times; GUF — 期貨OI&times;借券&times;前十大週期圖</a></li>
-      <li><a href="2337_dif_cycle_chart.html"><span class="score">88分</span>2337 旺宏 &times; DIF — 期貨OI&times;借券&times;前十大週期圖</a></li>
-      <li><a href="6116_oef_cycle_chart.html"><span class="score">85分</span>6116 彩晶 &times; OEF — 期貨OI&times;借券&times;前十大週期圖</a></li>
-    </ul>
+  <h1>飆股觀察名單（有期貨）</h1>
+  <p class="sub">2026-06-12 ｜ E 名單空頭撤退反攻 &#8805;50分 ｜ 評分條件 + Q1財報 + 期現週期圖</p>
+
+  <div class="key-msg">
+    <b>本週最強反攻候選：2337 旺宏</b><br>
+    Q1 EPS +0.90，連3季虧損後首次轉正——正好解釋為何空頭撤退（OI降48%）、外資大買（+2,733張）。財報與籌碼雙重確認，是本週最強反攻候選。
   </div>
-  <p class="ft">數據來源 TWSE &middot; 相關分析僅供投資參考，下單前請自行斟酌</p>
+
+  <!-- 2455 全新 -->
+  <div class="card">
+    <div class="card-head">
+      <span class="score">103分</span>
+      <span class="code">2455 全新 &times; GUF</span>
+      <span class="status released">&#10003; 解除4天</span>
+    </div>
+    <div class="data-row">
+      <div class="data-cell"><div class="label">Q1 2026 EPS</div><div class="val pos">+1.06</div></div>
+      <div class="data-cell"><div class="label">EPS 趨勢</div><div class="val pos">季增</div></div>
+      <div class="data-cell"><div class="label">今年處置次數</div><div class="val neu">4次</div></div>
+      <div class="data-cell"><div class="label">Q2 財報截止</div><div class="val neu">8/14（62天）</div></div>
+    </div>
+    <div class="cond-title">&#9670; 入選條件</div>
+    <div class="cond-list">
+      <span class="cond strong">解除後漲停★ +20</span>
+      <span class="cond">近20日跌停 +15</span>
+      <span class="cond">外資買超+1334張 +12</span>
+      <span class="cond">借券距高峰降53% +15</span>
+      <span class="cond">今年4次處置 +15</span>
+      <span class="cond">解除後0~3天 +5</span>
+    </div>
+    <div class="eps-note">獲利穩健成長，財報品質最佳。4次處置籌碼最乾淨，解除後漲停是最強進場確認信號。</div>
+    <a class="chart-link" href="2455_guf_cycle_chart.html">&#128200; 期貨OI &times; 借券 &times; 前十大週期全景圖 &#8594;</a>
+  </div>
+
+  <!-- 2337 旺宏 -->
+  <div class="card">
+    <div class="card-head">
+      <span class="score">88分</span>
+      <span class="code">2337 旺宏 &times; DIF</span>
+      <span class="status punish">&#9888; 處置剩3天</span>
+    </div>
+    <div class="data-row">
+      <div class="data-cell"><div class="label">Q1 2026 EPS</div><div class="val pos">+0.90</div></div>
+      <div class="data-cell"><div class="label">EPS 趨勢</div><div class="val pos">首次轉盈 &#9733;</div></div>
+      <div class="data-cell"><div class="label">今年處置次數</div><div class="val neu">4次</div></div>
+      <div class="data-cell"><div class="label">Q2 財報截止</div><div class="val neu">8/14（62天）</div></div>
+    </div>
+    <div class="cond-title">&#9670; 入選條件</div>
+    <div class="cond-list">
+      <span class="cond">KD K=23 超賣 +10</span>
+      <span class="cond">近20日跌停 +15</span>
+      <span class="cond strong">外資買超+2733張 +20</span>
+      <span class="cond strong">期貨OI距高峰降48% +15</span>
+      <span class="cond">今年4次處置 +15</span>
+      <span class="cond">處置剩1~5天 +5</span>
+    </div>
+    <div class="eps-note">連3季虧損後Q1首次轉正，最強財報加持。OI降48%空頭大量撤退，外資同步大買，財報+籌碼雙重確認。</div>
+    <a class="chart-link" href="2337_dif_cycle_chart.html">&#128200; 期貨OI &times; 借券 &times; 前十大週期全景圖 &#8594;</a>
+  </div>
+
+  <!-- 6116 彩晶 -->
+  <div class="card">
+    <div class="card-head">
+      <span class="score">85分</span>
+      <span class="code">6116 彩晶 &times; OEF</span>
+      <span class="status punish">&#9888; 處置剩4天</span>
+    </div>
+    <div class="data-row">
+      <div class="data-cell"><div class="label">Q1 2026 EPS</div><div class="val neg">-0.06</div></div>
+      <div class="data-cell"><div class="label">EPS 趨勢</div><div class="val neu">虧損收窄</div></div>
+      <div class="data-cell"><div class="label">今年處置次數</div><div class="val neu">3次</div></div>
+      <div class="data-cell"><div class="label">Q2 財報截止</div><div class="val neu">8/14（62天）</div></div>
+    </div>
+    <div class="cond-title">&#9670; 入選條件</div>
+    <div class="cond-list">
+      <span class="cond">SMA20↑+SMA60↑ 多頭趨勢 +15</span>
+      <span class="cond">近20日跌停 +15</span>
+      <span class="cond strong">近5日漲停★ +20</span>
+      <span class="cond">外資買超+853張 +12</span>
+      <span class="cond">今年3次處置 +10</span>
+      <span class="cond">處置剩1~5天 +5</span>
+    </div>
+    <div class="eps-note">仍虧損但幅度極小（-0.06），Q2是否轉盈是關鍵。均線多頭+漲停確認空頭回補，但財報待觀察。</div>
+    <a class="chart-link" href="6116_oef_cycle_chart.html">&#128200; 期貨OI &times; 借券 &times; 前十大週期全景圖 &#8594;</a>
+  </div>
+
+  <!-- 3532 台勝科 -->
+  <div class="card">
+    <div class="card-head">
+      <span class="score">65分</span>
+      <span class="code">3532 台勝科 &times; QDF</span>
+      <span class="status released">&#10003; 解除2天</span>
+    </div>
+    <div class="data-row">
+      <div class="data-cell"><div class="label">Q1 2026 EPS</div><div class="val neg">-0.18</div></div>
+      <div class="data-cell"><div class="label">EPS 趨勢</div><div class="val neg">季減</div></div>
+      <div class="data-cell"><div class="label">今年處置次數</div><div class="val neu">3次</div></div>
+      <div class="data-cell"><div class="label">Q2 財報截止</div><div class="val neu">8/14（62天）</div></div>
+    </div>
+    <div class="cond-title">&#9670; 入選條件</div>
+    <div class="cond-list">
+      <span class="cond">SMA20↑+SMA60↑ 多頭趨勢 +15</span>
+      <span class="cond">近20日跌停 +15</span>
+      <span class="cond strong">近5日漲停★ +20</span>
+      <span class="cond">今年3次處置 +10</span>
+      <span class="cond">解除後0~3天 +5</span>
+    </div>
+    <div class="eps-note">Q4/Q3獲利後Q1轉虧，財報有疑慮。技術面多頭+漲停確認，但基本面需謹慎，宜觀察Q2方向。</div>
+    <a class="chart-link" href="3532_qdf_cycle_chart.html">&#128200; 期貨OI &times; 借券 &times; 前十大週期全景圖 &#8594;</a>
+  </div>
+
+  <p class="ft">數據來源 TWSE &middot; EPS 數據來源公開財報 &middot; 相關分析僅供投資參考，下單前請自行斟酌</p>
 </div>
 </body>
 </html>
