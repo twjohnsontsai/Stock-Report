@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>群創 3481 — 期現籌碼週期全景圖</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#090c12;color:#c9d1d9;font-family:system-ui,sans-serif;padding:8px}
+h1{color:#e3b341;font-size:.95rem;margin-bottom:2px}
+.sub{color:#8b949e;font-size:.72rem;margin-bottom:6px}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:5px;margin-bottom:6px}
+.sc{background:#0d1520;border:1px solid #21262d;border-radius:4px;padding:5px 8px}
+.sc .v{font-size:.95rem;font-weight:700;color:#58a6ff}
+.sc .l{color:#8b949e;font-size:.65rem;margin-top:1px}
+.panel{background:#0f1420;border:1px solid #1e2635;border-radius:4px;padding:4px 8px;margin-bottom:4px;position:relative}
+.ptitle{color:#79c0ff;font-size:.72rem;font-weight:600;margin-bottom:2px;display:flex;align-items:center;gap:6px}
+.tag{background:#1a2535;border:1px solid #30363d;border-radius:2px;padding:0 4px;font-size:.62rem;color:#8b949e}
+.legend{display:flex;flex-wrap:wrap;gap:6px;font-size:.65rem;margin-bottom:3px}
+.lg{display:flex;align-items:center;gap:3px}
+.ld{width:8px;height:8px;border-radius:1px;flex-shrink:0}
+.hp{position:fixed;background:rgba(10,13,20,.40);border:1px solid rgba(58,69,85,.6);
+     border-radius:6px;padding:8px 12px;font-size:.78rem;z-index:999;
+     display:none;pointer-events:none;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.6)}
+.hp .hdate{color:#e3b341;font-weight:700;margin-bottom:5px;font-size:.82rem;border-bottom:1px solid #2a3345;padding-bottom:4px}
+.hp .hrow{display:flex;justify-content:space-between;gap:16px;margin:2px 0;line-height:1.6}
+.hp .hk{color:#6a7a8e}.hp .hv{font-weight:600;color:#dde4ee}
+table{width:100%;border-collapse:collapse;font-size:.78rem;margin-top:6px}
+th{background:#1a2030;color:#e3b341;padding:6px 8px;border:1px solid #2a3040;text-align:left}
+td{padding:5px 8px;border:1px solid #1e2635}
+tr:nth-child(even){background:#111825}
+</style>
+</head>
+<body>
+<h1>群創 3481 — 期貨 DQF × 現貨 × 借券 × 籌碼 週期全景對比</h1>
+<p class="sub">
+  2025/01~2026/06
+  ｜ <span style="background:rgba(210,153,34,.2);padding:1px 6px;border-radius:3px">橙色=注意股期間（22筆）</span>
+  ｜ <span style="background:rgba(224,80,80,.2);padding:1px 6px;border-radius:3px">紅色=被處置期間（28天）</span>
+  ｜ <span style="color:#58a6ff">藍虛線=OI背離訊號</span>
+</p>
+<div class="stats">
+  <div class="sc"><div class="v">10/10</div><div class="l">OI訊號勝率（>10%）</div></div>
+  <div class="sc"><div class="v" style="color:#3fb950">+22.6%</div><div class="l">期貨平均波段漲幅</div></div>
+  <div class="sc"><div class="v" style="color:#d29922">+22.6%</div><div class="l">注意期後訊號均漲</div></div>
+  <div class="sc"><div class="v" style="color:#d29922">~60</div><div class="l">目標推估（現價×1.23）</div></div>
+</div>
+
+<div id="hp" class="hp">
+  <div class="hdate" id="hdate">—</div>
+  <div class="hrow"><span class="hk">期F</span><span class="hv" id="hf">—</span></div>
+  <div class="hrow"><span class="hk">現S</span><span class="hv" id="hs">—</span></div>
+  <div class="hrow"><span class="hk">OI</span><span class="hv" id="hoi">—</span></div>
+  <div class="hrow"><span class="hk">OI增減</span><span class="hv" id="hoipc">—</span></div>
+  <div style="color:#58a6ff;font-size:.68rem;margin:4px 0 2px;border-top:1px solid #2a3345;padding-top:4px">借券</div>
+  <div class="hrow"><span class="hk">借賣出</span><span class="hv" id="hls">—</span></div>
+  <div class="hrow"><span class="hk">還券</span><span class="hv" id="hlr" style="color:#3fb950">—</span></div>
+  <div class="hrow"><span class="hk">借券餘額</span><span class="hv" id="hlb">—</span></div>
+  <div class="hrow"><span class="hk">特多</span><span class="hv" id="hsp10b">—</span></div>
+  <div class="hrow"><span class="hk">特空</span><span class="hv" id="hsp10s">—</span></div>
+  <div id="hflag" style="margin-top:4px;font-size:.7rem"></div>
+</div>
+
+<div class="panel">
+<div class="ptitle">① 期貨 DQF — K線</div>
+<div class="legend">
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(255,255,255,.85);margin-right:3px"></span>MA5</span>
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(255,220,0,.9);margin-right:3px"></span>MA10</span>
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(255,120,0,.9);margin-right:3px"></span>MA20</span>
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(180,100,255,.9);margin-right:3px"></span>MA60</span>
+  <span class="lg"><span class="ld" style="background:rgba(210,153,34,.9)"></span>注意期</span>
+  <span class="lg"><span class="ld" style="background:#ff3232"></span>處置期</span>
+</div>
+<div style="position:relative;height:450px"><canvas id="c1"></canvas></div>
+</div>
+
+<div class="panel">
+<div class="ptitle">② 現貨 3481 群創 — K線</div>
+<div class="legend">
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(255,255,255,.85);margin-right:3px"></span>MA5</span>
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(255,220,0,.9);margin-right:3px"></span>MA10</span>
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(255,120,0,.9);margin-right:3px"></span>MA20</span>
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(180,100,255,.9);margin-right:3px"></span>MA60</span>
+</div>
+<div style="position:relative;height:450px"><canvas id="c4"></canvas></div>
+</div>
+
+<div class="panel" style="border-color:#2a4060">
+<div class="ptitle" style="color:#f0c040">◆ 核心分析組 — OI・前十大特定・借券（三者聯動即為主要訊號）</div>
+</div>
+
+<div class="panel">
+<div class="ptitle">③ DQF 未平倉口數 + 日增減 <span class="tag">OI增=建倉｜OI減=回補</span></div>
+<div class="legend">
+  <span class="lg"><span class="ld" style="background:rgba(88,166,255,.6)"></span>OI總量（口）</span>
+  <span class="lg"><span class="ld" style="background:#3fb950"></span>日增（正=加倉）</span>
+  <span class="lg"><span class="ld" style="background:#e05050"></span>日減（負=回補）</span>
+</div>
+<div style="position:relative;height:200px"><canvas id="c3"></canvas></div>
+</div>
+
+<div class="panel">
+<div class="ptitle">④ 前十大特定交易人 <span class="tag">DQF 多口 / 空口（TAIFEX）｜間距縮小=空方回補</span></div>
+<div class="legend">
+  <span class="lg"><span class="ld" style="background:#ef5350"></span>多口持倉</span>
+  <span class="lg"><span class="ld" style="background:#43a047"></span>空口持倉</span>
+</div>
+<div style="position:relative;height:400px"><canvas id="c7"></canvas></div>
+</div>
+
+<div class="panel">
+<div class="ptitle">⑤ 借券賣出 / 還券 / 餘額 <span class="tag">借賣↑空壓大｜還券↑空方撤退</span></div>
+<div class="legend">
+  <span class="lg"><span class="ld" style="background:#e05050"></span>借券賣出</span>
+  <span class="lg"><span class="ld" style="background:#3fb950"></span>還券</span>
+  <span class="lg"><span class="ld" style="background:#58a6ff"></span>借券餘額（右軸）</span>
+</div>
+<div style="position:relative;height:200px"><canvas id="c5"></canvas></div>
+</div>
+
+<div class="panel">
+<div class="ptitle">⑥ 背離訊號明細表</div>
+<table>
+<tr><th>訊號日</th><th>期貨波段（低→高）</th><th>現貨對應</th><th>狀態</th></tr>
+<tr><td>20250116</td><td style="color:#3fb950">13.4 → 15.2 (+13.8%)</td><td style="color:#58a6ff">13.4 → 15.2 (+13.4%)</td><td>一般</td></tr><tr><td>20250328</td><td style="color:#3fb950">15.0 → 16.0 (+6.7%)</td><td style="color:#58a6ff">15.5 → 16.0 (+3.2%)</td><td>一般</td></tr><tr><td>20250428</td><td style="color:#3fb950">13.6 → 14.5 (+6.2%)</td><td style="color:#58a6ff">13.7 → 14.6 (+6.2%)</td><td>一般</td></tr><tr><td>20250522</td><td style="color:#3fb950">12.4 → 13.4 (+7.2%)</td><td style="color:#58a6ff">13.1 → 13.4 (+2.7%)</td><td>一般</td></tr><tr><td>20250619</td><td style="color:#3fb950">11.2 → 12.5 (+12.1%)</td><td style="color:#58a6ff">11.2 → 12.5 (+11.6%)</td><td>一般</td></tr><tr><td>20250901</td><td style="color:#3fb950">13.1 → 14.4 (+9.9%)</td><td style="color:#58a6ff">13.1 → 14.4 (+9.9%)</td><td>一般</td></tr><tr><td>20250918</td><td style="color:#3fb950">13.2 → 15.8 (+20.5%)</td><td style="color:#58a6ff">13.2 → 15.8 (+19.7%)</td><td>一般</td></tr><tr><td>20251020</td><td style="color:#3fb950">13.8 → 14.8 (+7.3%)</td><td style="color:#58a6ff">14.2 → 14.6 (+2.8%)</td><td>一般</td></tr><tr><td>20251124</td><td style="color:#3fb950">12.1 → 14.6 (+20.7%)</td><td style="color:#58a6ff">12.1 → 14.6 (+20.2%)</td><td>一般</td></tr><tr><td>20260424</td><td style="color:#3fb950">22.8 → 50.6 (+121.4%)</td><td style="color:#58a6ff">23.0 → 49.1 (+113.5%)</td><td>一般</td></tr>
+</table>
+</div>
+
+<script>
+const DATES=["20260102", "20260105", "20260106", "20260107", "20260108", "20260109", "20260112", "20260113", "20260114", "20260115", "20260116", "20260119", "20260120", "20260121", "20260122", "20260123", "20260126", "20260127", "20260128", "20260129", "20260130", "20260202", "20260203", "20260204", "20260205", "20260206", "20260209", "20260210", "20260211", "20260223", "20260224", "20260225", "20260226", "20260302", "20260303", "20260304", "20260305", "20260306", "20260309", "20260310", "20260311", "20260312", "20260313", "20260316", "20260317", "20260318", "20260319", "20260320", "20260323", "20260324", "20260325", "20260326", "20260327", "20260330", "20260331", "20260401", "20260402", "20260407", "20260408", "20260409", "20260410", "20260413", "20260414", "20260415", "20260416", "20260417", "20260420", "20260421", "20260422", "20260423", "20260424", "20260427", "20260428", "20260429", "20260430", "20260504", "20260505", "20260506", "20260507", "20260508", "20260511", "20260512", "20260513", "20260514", "20260515", "20260518", "20260519", "20260520", "20260521", "20260522", "20260525", "20260526", "20260527", "20260528", "20260529", "20260601", "20260602", "20260603", "20260604", "20260605", "20260608", "20260609", "20260610", "20260611", "20260612"];
+const FO=[16.95, 18.65, 20.7, 22.2, 21.7, 20.85, 20.95, 23.1, 23.0, 24.35, 25.45, 26.8, 28.6, 26.55, 28.9, 25.35, 24.5, 24.65, 23.5, 22.55, 21.3, 21.0, 21.85, 21.1, 23.05, 21.2, 22.95, 21.4, 21.25, 22.35, 23.75, 25.85, 25.2, 25.4, 29.25, 24.2, 25.55, 25.65, 25.3, 29.9, 28.05, 30.9, 30.15, 29.4, 27.9, 28.0, 27.65, 27.5, 24.5, 25.65, 25.65, 26.1, 24.25, 24.15, 24.2, 25.0, 25.4, 25.2, 24.8, 26.35, 27.65, 25.75, 26.95, 27.55, 28.25, 27.3, 25.9, 26.4, 26.2, 25.9, 23.7, 23.3, 24.45, 24.5, 23.95, 24.15, 25.15, 28.0, 29.4, 30.0, 32.8, 35.4, 36.05, 38.15, 36.1, 35.1, 39.2, 37.3, 39.0, 42.7, 49.1, 53.6, 47.7, 51.6, 48.6, 53.5, 57.7, 57.8, 56.8, 54.1, 48.1, 48.2, 45.95, 42.15, 49.8],FH=[18.65, 20.05, 22.05, 23.5, 22.2, 21.6, 22.35, 23.55, 25.15, 25.75, 27.15, 29.4, 28.65, 28.05, 30.25, 26.15, 25.4, 24.7, 24.5, 22.65, 22.9, 22.3, 22.1, 23.25, 24.0, 22.5, 23.0, 21.6, 22.25, 24.0, 25.1, 27.5, 26.95, 29.35, 29.85, 26.1, 26.4, 28.0, 28.0, 30.4, 30.05, 33.05, 31.55, 29.95, 29.55, 28.7, 28.45, 28.0, 25.4, 26.2, 26.2, 26.6, 25.05, 24.65, 25.05, 26.1, 26.0, 25.45, 26.6, 28.15, 27.75, 26.6, 28.0, 28.45, 29.15, 27.3, 26.55, 26.7, 26.6, 26.0, 24.25, 24.7, 25.0, 24.65, 24.3, 25.25, 27.35, 29.35, 30.7, 31.9, 32.8, 36.05, 38.35, 38.8, 39.0, 39.6, 39.4, 37.9, 41.85, 46.0, 50.6, 54.0, 52.1, 52.8, 51.5, 56.6, 59.1, 61.3, 57.5, 54.2, 48.1, 49.75, 50.6, 46.85, 50.4],FL=[16.25, 18.55, 20.0, 20.75, 20.8, 19.45, 20.7, 22.0, 22.7, 23.9, 25.15, 26.6, 26.9, 24.8, 25.2, 23.85, 24.05, 22.7, 22.15, 20.95, 20.15, 20.35, 20.65, 20.85, 21.7, 19.9, 21.05, 20.95, 20.95, 21.95, 23.0, 24.25, 24.2, 25.2, 25.65, 23.15, 24.75, 25.25, 25.2, 27.15, 28.05, 30.7, 29.7, 26.8, 27.55, 26.95, 26.9, 25.95, 23.7, 23.8, 24.95, 24.7, 23.95, 23.65, 23.7, 24.8, 24.7, 23.95, 24.7, 25.7, 25.3, 25.5, 26.55, 27.05, 27.2, 25.45, 25.45, 25.7, 25.5, 23.25, 22.85, 22.85, 24.0, 23.8, 23.55, 24.0, 25.0, 26.9, 28.45, 28.8, 31.35, 33.85, 34.1, 35.2, 35.4, 34.0, 37.3, 35.8, 38.45, 42.4, 48.6, 45.55, 44.65, 46.9, 47.9, 52.2, 53.5, 55.8, 54.5, 49.95, 48.1, 44.15, 44.55, 39.2, 47.3],FC=[18.25, 20.05, 22.05, 22.25, 20.9, 20.4, 22.35, 23.0, 24.5, 25.15, 26.85, 28.95, 27.45, 25.75, 25.4, 24.25, 24.75, 23.2, 22.35, 21.4, 21.95, 21.3, 21.2, 23.25, 21.8, 21.95, 21.2, 21.1, 21.95, 23.2, 25.0, 24.5, 26.85, 28.35, 25.65, 24.05, 26.25, 27.95, 27.95, 27.4, 30.05, 33.0, 29.7, 27.5, 27.9, 27.9, 26.95, 26.3, 24.9, 24.55, 26.05, 24.8, 25.05, 24.5, 23.85, 25.15, 24.8, 24.15, 26.25, 27.25, 26.0, 26.55, 27.5, 27.65, 27.35, 25.55, 26.35, 26.3, 25.75, 23.75, 23.25, 24.4, 24.3, 23.9, 23.95, 24.95, 27.35, 28.6, 30.25, 29.9, 32.8, 36.05, 37.75, 36.15, 36.05, 39.15, 37.5, 36.6, 41.85, 46.0, 50.6, 47.35, 52.1, 46.9, 51.5, 56.6, 56.9, 58.7, 55.4, 53.4, 48.1, 49.45, 44.55, 46.5, 48.1],FV=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+const FMA5=[16.1, 17.38, 18.79, 19.96, 20.7, 21.13, 21.59, 21.78, 22.23, 23.08, 24.37, 25.69, 26.58, 26.83, 26.88, 26.36, 25.52, 24.67, 23.99, 23.19, 22.73, 22.04, 21.64, 21.82, 21.9, 21.9, 21.88, 21.86, 21.6, 21.88, 22.49, 23.15, 24.3, 25.58, 26.07, 25.88, 26.23, 26.45, 26.37, 26.72, 27.92, 29.27, 29.62, 29.53, 29.63, 29.2, 27.99, 27.31, 26.79, 26.12, 25.75, 25.32, 25.07, 24.99, 24.85, 24.67, 24.67, 24.49, 24.84, 25.52, 25.69, 26.04, 26.71, 26.99, 27.01, 26.92, 26.88, 26.64, 26.26, 25.54, 25.08, 24.69, 24.29, 23.92, 23.96, 24.3, 24.89, 25.75, 27.02, 28.21, 29.78, 31.52, 33.35, 34.53, 35.76, 37.03, 37.32, 37.09, 38.23, 40.22, 42.51, 44.48, 47.58, 48.59, 49.69, 50.89, 52.8, 54.12, 55.82, 56.2, 54.5, 53.01, 50.18, 48.4, 47.34],FMA10=[14.5, 15.26, 16.18, 17.14, 17.92, 18.61, 19.48, 20.28, 21.1, 21.89, 22.75, 23.64, 24.18, 24.53, 24.98, 25.36, 25.6, 25.62, 25.41, 25.04, 24.54, 23.78, 23.16, 22.9, 22.54, 22.32, 21.96, 21.75, 21.71, 21.89, 22.2, 22.51, 23.08, 23.59, 23.98, 24.18, 24.69, 25.38, 25.98, 26.4, 26.9, 27.75, 28.03, 27.95, 28.18, 28.56, 28.63, 28.46, 28.16, 27.88, 27.48, 26.66, 26.19, 25.89, 25.48, 25.21, 24.99, 24.78, 24.92, 25.18, 25.18, 25.36, 25.6, 25.92, 26.26, 26.3, 26.46, 26.68, 26.62, 26.28, 26.0, 25.78, 25.46, 25.09, 24.75, 24.69, 24.79, 25.02, 25.47, 26.08, 27.04, 28.2, 29.55, 30.78, 31.99, 33.4, 34.42, 35.22, 36.38, 37.99, 39.77, 40.9, 42.33, 43.41, 44.96, 46.7, 48.64, 50.85, 52.21, 52.95, 52.7, 52.9, 52.15, 52.11, 51.77],FMA20=[14.09, 14.37, 14.75, 15.15, 15.5, 15.83, 16.27, 16.75, 17.31, 17.92, 18.63, 19.45, 20.18, 20.84, 21.45, 21.99, 22.54, 22.96, 23.25, 23.46, 23.65, 23.71, 23.67, 23.72, 23.76, 23.84, 23.78, 23.69, 23.56, 23.46, 23.37, 23.15, 23.12, 23.25, 23.26, 23.25, 23.32, 23.56, 23.84, 24.14, 24.55, 25.13, 25.56, 25.77, 26.08, 26.37, 26.66, 26.92, 27.07, 27.14, 27.19, 27.2, 27.11, 26.92, 26.83, 26.88, 26.81, 26.62, 26.54, 26.53, 26.33, 26.01, 25.9, 25.9, 25.88, 25.76, 25.73, 25.73, 25.77, 25.73, 25.59, 25.57, 25.53, 25.5, 25.51, 25.5, 25.62, 25.85, 26.05, 26.18, 26.52, 26.99, 27.51, 27.93, 28.37, 29.05, 29.6, 30.12, 30.92, 32.04, 33.4, 34.55, 35.94, 37.09, 38.47, 40.05, 41.53, 43.04, 44.29, 45.47, 46.23, 46.9, 47.24, 47.76, 48.36],FMA60=[13.83, 13.91, 14.02, 14.14, 14.23, 14.33, 14.46, 14.6, 14.76, 14.94, 15.16, 15.41, 15.63, 15.83, 16.02, 16.2, 16.38, 16.54, 16.69, 16.82, 16.96, 17.08, 17.2, 17.37, 17.52, 17.66, 17.79, 17.93, 18.08, 18.26, 18.47, 18.67, 18.92, 19.18, 19.4, 19.59, 19.8, 20.04, 20.28, 20.5, 20.76, 21.07, 21.33, 21.55, 21.78, 22.01, 22.24, 22.45, 22.64, 22.84, 23.06, 23.27, 23.47, 23.67, 23.85, 24.04, 24.23, 24.38, 24.54, 24.71, 24.84, 24.95, 25.04, 25.13, 25.24, 25.32, 25.39, 25.44, 25.47, 25.44, 25.38, 25.31, 25.25, 25.22, 25.2, 25.21, 25.25, 25.34, 25.48, 25.62, 25.8, 26.04, 26.32, 26.54, 26.77, 27.06, 27.33, 27.59, 27.92, 28.3, 28.73, 29.11, 29.53, 29.84, 30.27, 30.81, 31.32, 31.83, 32.29, 32.73, 33.03, 33.3, 33.55, 33.86, 34.2];
+const SMA5=[15.96, 17.24, 18.64, 19.81, 20.55, 20.93, 21.35, 21.51, 21.96, 22.8, 24.12, 25.48, 26.38, 26.93, 27.02, 26.5, 25.65, 24.83, 23.86, 23.04, 22.6, 21.92, 21.5, 21.64, 21.74, 21.74, 21.73, 21.75, 21.54, 21.85, 22.46, 23.16, 24.31, 25.63, 26.15, 26.13, 26.41, 26.55, 26.4, 26.72, 27.83, 29.22, 29.66, 29.56, 29.59, 29.12, 27.99, 27.3, 26.84, 26.2, 25.74, 25.28, 24.99, 24.91, 24.78, 24.66, 24.59, 24.44, 24.76, 25.38, 25.57, 25.9, 26.54, 26.82, 26.88, 26.86, 26.83, 26.58, 26.18, 25.55, 25.05, 24.68, 24.35, 24.02, 23.99, 24.27, 24.86, 25.61, 26.77, 27.86, 29.36, 31.01, 32.89, 34.02, 35.36, 36.64, 37.03, 36.92, 37.96, 39.67, 41.75, 43.4, 46.05, 47.21, 48.48, 49.88, 51.98, 53.82, 55.7, 56.24, 54.69, 53.27, 50.25, 48.48, 47.45],SMA10=[14.39, 15.14, 16.05, 17.0, 17.77, 18.44, 19.29, 20.08, 20.88, 21.68, 22.52, 23.42, 23.94, 24.44, 24.91, 25.31, 25.56, 25.6, 25.4, 25.03, 24.55, 23.78, 23.16, 22.75, 22.39, 22.17, 21.82, 21.62, 21.59, 21.8, 22.1, 22.44, 23.03, 23.58, 24.0, 24.3, 24.78, 25.43, 26.01, 26.44, 26.98, 27.82, 28.1, 27.98, 28.16, 28.48, 28.6, 28.48, 28.2, 27.9, 27.43, 26.64, 26.14, 25.88, 25.49, 25.2, 24.94, 24.72, 24.84, 25.08, 25.12, 25.24, 25.49, 25.79, 26.13, 26.21, 26.36, 26.56, 26.5, 26.21, 25.96, 25.76, 25.46, 25.1, 24.77, 24.66, 24.77, 24.98, 25.4, 25.92, 26.82, 27.94, 29.25, 30.4, 31.61, 33.0, 34.02, 34.9, 35.99, 37.52, 39.2, 40.22, 41.48, 42.58, 44.08, 45.82, 47.69, 49.94, 51.46, 52.36, 52.28, 52.62, 52.04, 52.09, 51.85],SMA20=[14.01, 14.29, 14.66, 15.06, 15.4, 15.71, 16.13, 16.6, 17.16, 17.76, 18.45, 19.27, 20.0, 20.72, 21.34, 21.88, 22.43, 22.84, 23.14, 23.35, 23.54, 23.6, 23.56, 23.6, 23.65, 23.74, 23.7, 23.62, 23.49, 23.41, 23.32, 23.12, 23.1, 23.17, 23.2, 23.23, 23.3, 23.53, 23.8, 24.12, 24.54, 25.13, 25.57, 25.78, 26.08, 26.38, 26.7, 26.95, 27.11, 27.16, 27.2, 27.22, 27.12, 26.93, 26.82, 26.84, 26.77, 26.6, 26.52, 26.49, 26.27, 25.94, 25.82, 25.83, 25.81, 25.71, 25.65, 25.64, 25.67, 25.65, 25.54, 25.5, 25.48, 25.44, 25.45, 25.44, 25.57, 25.77, 25.95, 26.07, 26.38, 26.84, 27.36, 27.75, 28.19, 28.83, 29.4, 29.94, 30.69, 31.72, 33.01, 34.08, 35.37, 36.49, 37.84, 39.41, 40.86, 42.42, 43.72, 44.94, 45.74, 46.42, 46.76, 47.34, 47.96],SMA60=[13.79, 13.87, 13.98, 14.09, 14.18, 14.27, 14.39, 14.53, 14.69, 14.87, 15.08, 15.33, 15.55, 15.77, 15.96, 16.13, 16.32, 16.48, 16.62, 16.76, 16.89, 17.01, 17.13, 17.29, 17.44, 17.58, 17.71, 17.84, 17.99, 18.18, 18.39, 18.59, 18.83, 19.1, 19.33, 19.53, 19.73, 19.97, 20.2, 20.43, 20.7, 21.01, 21.26, 21.48, 21.71, 21.94, 22.18, 22.39, 22.58, 22.78, 23.0, 23.2, 23.41, 23.61, 23.79, 23.98, 24.17, 24.32, 24.49, 24.65, 24.78, 24.89, 24.98, 25.07, 25.18, 25.28, 25.35, 25.4, 25.42, 25.41, 25.36, 25.28, 25.23, 25.18, 25.16, 25.17, 25.21, 25.3, 25.42, 25.56, 25.73, 25.97, 26.25, 26.45, 26.69, 26.97, 27.25, 27.51, 27.82, 28.18, 28.58, 28.93, 29.32, 29.62, 30.04, 30.56, 31.06, 31.6, 32.06, 32.5, 32.8, 33.07, 33.31, 33.64, 33.99];
+const FOI=[18647, 21211, 27548, 26773, 26043, 24170, 28016, 27563, 29620, 28026, 32748, 36648, 36833, 39065, 33771, 31975, 33624, 32055, 30448, 30106, 34452, 29535, 27573, 29239, 25950, 22968, 22758, 22603, 21007, 23021, 26131, 31639, 37835, 55768, 49843, 42242, 35352, 50624, 39225, 41305, 57278, 54550, 53946, 49188, 50541, 52068, 42717, 39916, 36927, 32919, 32680, 32535, 32505, 31853, 29175, 28131, 27759, 28545, 30096, 32111, 30918, 29676, 30280, 39772, 33617, 31947, 31688, 31821, 33200, 32639, 29357, 29047, 28701, 29036, 29242, 27884, 28967, 35927, 61663, 59074, 63544, 66703, 78541, 74552, 78993, 80777, 77994, 79429, 75178, 76931, 79328, 66316, 77484, 71113, 66174, 66472, 61197, 60165, 58386, 51999, 51624, 50465, 47715, 49819, 51060],FOIPC=[-3.0, 13.8, 29.9, -2.8, -2.7, -7.2, 15.9, -1.6, 7.5, -5.4, 16.8, 11.9, 0.5, 6.1, -13.6, -5.3, 5.2, -4.7, -5.0, -1.1, 14.4, -14.3, -6.6, 6.0, -11.2, -11.5, -0.9, -0.7, -7.1, 9.6, 13.5, 21.1, 19.6, 47.4, -10.6, -15.2, -16.3, 43.2, -22.5, 5.3, 38.7, -4.8, -1.1, -8.8, 2.8, 3.0, -18.0, -6.6, -7.5, -10.9, -0.7, -0.4, -0.1, -2.0, -8.4, -3.6, -1.3, 2.8, 5.4, 6.7, -3.7, -4.0, 2.0, 31.3, -15.5, -5.0, -0.8, 0.4, 4.3, -1.7, -10.1, -1.1, -1.2, 1.2, 0.7, -4.6, 3.9, 24.0, null, -4.2, 7.6, 5.0, 17.7, -5.1, 6.0, 2.3, -3.4, 1.8, -5.4, 2.3, 3.1, -16.4, 16.8, -8.2, -6.9, 0.5, -7.9, -1.7, -3.0, -10.9, -0.7, -2.2, -5.4, 4.4, 2.5],FOICHG=[-568, 2564, 6337, -775, -730, -1873, 3846, -453, 2057, -1594, 4722, 3900, 185, 2232, -5294, -1796, 1649, -1569, -1607, -342, 4346, -4917, -1962, 1666, -3289, -2982, -210, -155, -1596, 2014, 3110, 5508, 6196, 17933, -5925, -7601, -6890, 15272, -11399, 2080, 15973, -2728, -604, -4758, 1353, 1527, -9351, -2801, -2989, -4008, -239, -145, -30, -652, -2678, -1044, -372, 786, 1551, 2015, -1193, -1242, 604, 9492, -6155, -1670, -259, 133, 1379, -561, -3282, -310, -346, 335, 206, -1358, 1083, 6960, null, -2589, 4470, 3159, 11838, -3989, 4441, 1784, -2783, 1435, -4251, 1753, 2397, -13012, 11168, -6371, -4939, 298, -5275, -1032, -1779, -6387, -375, -1159, -2750, 2104, 1241];
+const SO=[16.95, 18.8, 20.5, 22.55, 22.0, 21.0, 21.0, 22.25, 23.05, 24.9, 25.6, 27.6, 27.9, 26.2, 28.4, 25.0, 24.55, 24.5, 23.55, 22.3, 21.8, 20.85, 21.8, 21.3, 23.25, 21.2, 22.5, 21.15, 21.3, 22.7, 23.6, 26.3, 25.05, 25.5, 29.3, 24.5, 26.45, 25.6, 25.5, 29.5, 28.45, 31.0, 30.25, 29.35, 27.9, 28.3, 27.7, 27.8, 24.95, 26.0, 25.5, 26.0, 24.6, 24.25, 24.5, 25.05, 25.3, 25.3, 24.7, 26.5, 27.55, 26.0, 26.75, 27.6, 28.2, 27.05, 26.05, 26.35, 26.0, 25.8, 24.2, 23.5, 24.3, 24.4, 24.05, 24.15, 25.15, 27.8, 28.8, 29.85, 32.0, 34.7, 35.8, 38.4, 35.8, 35.95, 38.15, 37.8, 38.0, 42.45, 49.1, 52.0, 47.0, 50.2, 48.55, 54.5, 58.0, 57.0, 56.9, 53.3, 48.35, 49.95, 47.4, 42.6, 50.5],SH=[18.5, 19.9, 21.85, 23.6, 22.0, 21.1, 22.0, 23.45, 24.5, 25.5, 26.65, 29.1, 28.0, 28.0, 29.15, 25.95, 25.35, 24.55, 24.3, 22.65, 22.8, 22.2, 22.0, 23.0, 23.8, 22.5, 22.5, 21.45, 22.2, 24.0, 24.85, 27.3, 27.0, 29.0, 29.8, 25.95, 26.7, 27.6, 27.95, 29.9, 30.3, 33.3, 31.4, 30.05, 29.4, 28.85, 28.3, 28.0, 26.0, 26.45, 26.15, 26.55, 24.9, 24.6, 25.05, 25.95, 25.9, 25.5, 26.45, 28.0, 27.55, 26.5, 27.85, 28.3, 28.9, 27.05, 26.4, 26.6, 26.3, 25.95, 24.3, 24.7, 25.0, 24.7, 24.3, 25.15, 27.25, 28.9, 30.1, 31.45, 32.3, 35.5, 37.95, 38.65, 38.4, 39.4, 39.2, 38.0, 40.6, 44.65, 49.1, 52.2, 50.2, 52.2, 51.0, 56.1, 58.8, 60.5, 57.0, 54.0, 48.35, 50.6, 50.0, 46.95, 50.5],SL=[16.2, 18.8, 20.15, 21.0, 20.55, 19.6, 21.0, 22.1, 23.05, 23.8, 25.4, 27.55, 27.1, 24.8, 25.2, 23.8, 24.05, 22.7, 22.05, 21.0, 20.25, 20.7, 20.75, 21.3, 21.7, 20.8, 21.0, 20.9, 21.3, 22.15, 22.9, 24.1, 24.15, 25.45, 25.7, 24.15, 24.8, 25.15, 25.3, 27.2, 28.35, 30.75, 29.7, 26.8, 27.55, 27.2, 27.25, 26.1, 24.95, 24.1, 25.15, 25.0, 24.05, 23.65, 23.8, 24.8, 24.65, 24.0, 24.7, 25.7, 25.4, 25.5, 26.5, 27.0, 27.2, 25.8, 25.5, 25.7, 25.5, 23.9, 23.0, 22.95, 24.0, 23.9, 23.65, 24.05, 25.15, 26.8, 28.15, 28.65, 31.05, 33.6, 33.85, 35.0, 35.25, 34.55, 37.2, 36.0, 38.0, 42.35, 49.1, 44.65, 44.45, 46.2, 47.65, 53.7, 53.6, 56.2, 55.2, 50.3, 48.35, 46.6, 44.3, 40.25, 48.5],SC=[18.1, 19.9, 21.85, 22.15, 20.75, 20.0, 22.0, 22.65, 24.4, 24.95, 26.6, 28.8, 27.15, 27.15, 25.4, 24.0, 24.55, 23.05, 22.3, 21.3, 21.8, 21.15, 20.95, 23.0, 21.8, 21.8, 21.1, 21.05, 21.95, 23.35, 24.85, 24.6, 26.8, 28.55, 25.95, 24.75, 26.0, 27.5, 27.8, 27.55, 30.3, 32.95, 29.7, 27.3, 27.7, 27.95, 27.3, 26.25, 25.0, 24.5, 25.65, 25.0, 24.8, 24.6, 23.85, 25.05, 24.65, 24.05, 26.2, 26.95, 26.0, 26.3, 27.25, 27.6, 27.25, 25.9, 26.15, 26.0, 25.6, 24.1, 23.4, 24.3, 24.35, 23.95, 23.95, 24.8, 27.25, 28.1, 29.75, 29.4, 32.3, 35.5, 37.5, 35.4, 36.1, 38.7, 37.45, 36.95, 40.6, 44.65, 49.1, 45.7, 50.2, 46.4, 51.0, 56.1, 56.2, 59.4, 55.8, 53.7, 48.35, 49.1, 44.3, 46.95, 48.55],SV=[788088.302, 536713.013, 1042548.581, 358140.346, 218271.681, 171731.636, 123914.785, 207098.185, 172851.849, 174985.764, 203092.092, 243265.641, 207345.365, 760462.27, 818328.662, 742847.757, 451933.019, 595999.754, 640592.249, 524119.98, 836782.756, 421571.722, 310032.753, 458130.335, 600991.125, 322639.61, 269303.363, 144484.305, 270430.86, 462559.596, 531318.022, 1049054.947, 837945.188, 1001949.319, 1047600.389, 604985.488, 722993.701, 845038.403, 979280.613, 1310469.76, 1134573.679, 1690701.447, 1369365.716, 1001913.513, 789814.927, 482808.305, 367916.783, 501309.223, 269438.843, 388539.761, 274222.757, 248645.74, 174519.266, 192998.701, 308334.588, 328715.661, 280976.969, 179826.978, 368105.745, 585534.13, 391667.912, 196853.66, 412731.989, 490740.497, 559188.666, 338854.98, 216671.979, 191605.469, 164011.004, 347083.2, 233909.107, 259067.26, 130750.892, 132951.07, 103739.94, 152389.741, 486930.201, 845750.567, 860297.129, 785095.023, 417999.548, 833426.756, 1379646.184, 998720.739, 892798.512, 948858.076, 711814.824, 624777.587, 524601.29, 388361.57, 68442.854, 1463227.218, 1370411.333, 1259689.849, 897327.645, 478118.322, 1163170.448, 972688.727, 170430.089, 177087.727, 88824.555, 124513.602, 130115.713, 174746.924, 95654.891];
+const LSELL=[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],LRET=[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],LBAL=[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+const IFOR=[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+const SP10B=[4038, 3897, 7784, 5893, 4022, 3654, 3741, 4352, 2674, 2827, 5577, 8100, 7063, 914, 0, 0, 0, 1027, 544, 2458, 2045, 1779, 1728, 1829, 398, 642, 398, 398, 650, 1158, 2839, 4379, 5106, 7527, 0, 2237, 0, 4481, 4599, 498, 10878, 4487, 1392, 2691, 1512, 831, 783, 1234, 3910, 3751, 3343, 3388, 3072, 2808, 3853, 3776, 4128, 4723, 5263, 2745, 3032, 2844, 2920, 6014, 5113, 3605, 3206, 3515, 2419, 5808, 7249, 7399, 7299, 7594, 7321, 5924, 5629, 6573, 12511, 9782, 11201, 14417, 13236, 8467, 10602, 10893, 10106, 6298, 9056, 9249, 8868, 3418, 3835, 1490, 1249, 2233, 3057, 2475, 2454, 2454, 2454, 3424, 3809, 5878, 4171],SP10S=[14920, 15698, 9539, 11556, 9370, 9913, 12466, 13376, 13972, 11835, 12307, 11953, 12001, 14815, 17082, 15996, 16632, 18204, 17616, 19660, 23514, 21673, 21153, 22020, 19693, 19092, 19128, 19199, 18384, 17255, 24109, 27192, 25906, 33644, 30173, 26721, 25052, 33892, 24715, 26867, 37025, 31051, 36088, 34790, 34098, 29965, 30048, 28290, 25141, 17065, 17100, 16891, 17774, 16796, 15077, 14500, 13909, 15599, 18087, 17928, 18568, 17011, 15938, 19792, 21495, 20823, 19834, 20624, 22069, 23522, 20662, 20563, 19907, 20311, 20556, 19249, 17907, 21423, 32384, 30975, 33396, 35633, 41101, 41669, 40589, 44938, 43224, 45322, 50761, 51194, 49270, 41213, 51681, 48782, 42696, 41046, 41957, 37635, 38502, 35634, 35489, 36070, 33301, 36526, 38755];
+const T10B=[5486, 6749, 9329, 7922, 7768, 7701, 8924, 6328, 6188, 5957, 9087, 12622, 12481, 10480, 10545, 9595, 9960, 7460, 6701, 6671, 8231, 6442, 5996, 6178, 4843, 4663, 4729, 5023, 4995, 5009, 6833, 9073, 11271, 22217, 19630, 15599, 12260, 23576, 13934, 13192, 25507, 15380, 10465, 10877, 10741, 7887, 7999, 7753, 8734, 10730, 10203, 9960, 10069, 9900, 8872, 7331, 7683, 8263, 9256, 7639, 7382, 7161, 7480, 10494, 10036, 8769, 9335, 9119, 9543, 9559, 9487, 9637, 9537, 9834, 10062, 9104, 9718, 13353, 23161, 21169, 22075, 25150, 33089, 27104, 30562, 29084, 28222, 26247, 23774, 23366, 22583, 18640, 18601, 16855, 15970, 15019, 12535, 13533, 13450, 11832, 10482, 11055, 13060, 15369, 15754],T10S=[15554, 16286, 19813, 18924, 16420, 16562, 18729, 19776, 20353, 18544, 20889, 23122, 23270, 20245, 22582, 21796, 22282, 23404, 21266, 22199, 25614, 22873, 21681, 22555, 20238, 19092, 19128, 19199, 18384, 17255, 24109, 28192, 31512, 43536, 37932, 33401, 25702, 39065, 28815, 29903, 42175, 38199, 38544, 35627, 35137, 31908, 31812, 29964, 27484, 20744, 19958, 19783, 20048, 19654, 17935, 17359, 16796, 18486, 19819, 20727, 21347, 19092, 18931, 24094, 25597, 23907, 23464, 23420, 24865, 25027, 22466, 22387, 21845, 22270, 22518, 21243, 21012, 25081, 43572, 42265, 44487, 46858, 55202, 53032, 54836, 57145, 55157, 49230, 52974, 53474, 54476, 43158, 53626, 50591, 44505, 42905, 45016, 40695, 41477, 39509, 39364, 39686, 38168, 41685, 43314];
+const SP10NET=[10882, 11801, 1755, 5663, 5348, 6259, 8725, 9024, 11298, 9008, 6730, 3853, 4938, 13901, 17082, 15996, 16632, 17177, 17072, 17202, 21469, 19894, 19425, 20191, 19295, 18450, 18730, 18801, 17734, 16097, 21270, 22813, 20800, 26117, 30173, 24484, 25052, 29411, 20116, 26369, 26147, 26564, 34696, 32099, 32586, 29134, 29265, 27056, 21231, 13314, 13757, 13503, 14702, 13988, 11224, 10724, 9781, 10876, 12824, 15183, 15536, 14167, 13018, 13778, 16382, 17218, 16628, 17109, 19650, 17714, 13413, 13164, 12608, 12717, 13235, 13325, 12278, 14850, 19873, 21193, 22195, 21216, 27865, 33202, 29987, 34045, 33118, 39024, 41705, 41945, 40402, 37795, 47846, 47292, 41447, 38813, 38900, 35160, 36048, 33180, 33035, 32646, 29492, 30648, 34584];
+const SP10DIV=[false, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, true, true, true, true, true, false, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true, true, true, false];
+const SP10DIVST=[false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, true, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false];
+const NOTICE=[true, true, true, true, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, true, false, false, true, false, true, false, true, true, true, true, false, true, false, false, false, false, false, false, false];
+const PUNISH=[false, false, false, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true, true, true, true];
+const WAVES=[{"sig_date": "20250116", "sig_idx": 10, "low_date": "20250113", "low": 13.4, "high_date": "20250220", "high": 15.2, "gain": 13.8, "s_low": 13.4, "s_high": 15.2, "s_gain": 13.4, "has_notice": false}, {"sig_date": "20250328", "sig_idx": 53, "low_date": "20250331", "low": 15.0, "high_date": "20250328", "high": 16.0, "gain": 6.7, "s_low": 15.5, "s_high": 16.0, "s_gain": 3.2, "has_notice": false}, {"sig_date": "20250428", "sig_idx": 72, "low_date": "20250430", "low": 13.6, "high_date": "20250514", "high": 14.5, "gain": 6.2, "s_low": 13.7, "s_high": 14.6, "s_gain": 6.2, "has_notice": false}, {"sig_date": "20250522", "sig_idx": 89, "low_date": "20250527", "low": 12.4, "high_date": "20250522", "high": 13.4, "gain": 7.2, "s_low": 13.1, "s_high": 13.4, "s_gain": 2.7, "has_notice": false}, {"sig_date": "20250619", "sig_idx": 108, "low_date": "20250623", "low": 11.2, "high_date": "20250813", "high": 12.5, "gain": 12.1, "s_low": 11.2, "s_high": 12.5, "s_gain": 11.6, "has_notice": false}, {"sig_date": "20250901", "sig_idx": 160, "low_date": "20250827", "low": 13.1, "high_date": "20250902", "high": 14.4, "gain": 9.9, "s_low": 13.1, "s_high": 14.4, "s_gain": 9.9, "has_notice": false}, {"sig_date": "20250918", "sig_idx": 173, "low_date": "20250916", "low": 13.2, "high_date": "20251009", "high": 15.8, "gain": 20.5, "s_low": 13.2, "s_high": 15.8, "s_gain": 19.7, "has_notice": false}, {"sig_date": "20251020", "sig_idx": 192, "low_date": "20251022", "low": 13.8, "high_date": "20251020", "high": 14.8, "gain": 7.3, "s_low": 14.2, "s_high": 14.6, "s_gain": 2.8, "has_notice": false}, {"sig_date": "20251124", "sig_idx": 216, "low_date": "20251124", "low": 12.1, "high_date": "20251208", "high": 14.6, "gain": 20.7, "s_low": 12.1, "s_high": 14.6, "s_gain": 20.2, "has_notice": false}, {"sig_date": "20260424", "sig_idx": 313, "low_date": "20260424", "low": 22.8, "high_date": "20260525", "high": 50.6, "gain": 121.4, "s_low": 23.0, "s_high": 49.1, "s_gain": 113.5, "has_notice": false}];
+const SIGDATES=new Set(["20250328", "20250901", "20260424", "20250619", "20250428", "20250522", "20251020", "20250116", "20251124", "20250918"]);
+const CUP='#e05050',CDN='#3fb950',CNOTI_BAR='rgba(220,160,0,.85)',CPUN_BAR='rgba(255,40,40,.95)',CSIG='rgba(88,166,255,.5)';
+const ALL_CHARTS={};
+const LPAD=58,RPAD=62;
+
+const xhairPlugin={id:'xhair',afterDraw(chart){
+  if(chart._xhairIdx==null)return;
+  const {ctx,chartArea,scales:{x,y}}=chart;if(!x||!y)return;
+  const px=x.getPixelForValue(chart._xhairIdx);
+  if(px<chartArea.left||px>chartArea.right)return;
+  ctx.save();ctx.beginPath();ctx.moveTo(px,chartArea.top);ctx.lineTo(px,chartArea.bottom);
+  ctx.strokeStyle='rgba(255,220,50,0.75)';ctx.lineWidth=1.5;ctx.setLineDash([3,2]);ctx.stroke();ctx.restore();
+}};
+
+function drawBands(ctx,x,y,arr,fillClr,barClr,barH){
+  let inB=false,sx=0;
+  function flush(ex){ctx.fillStyle=fillClr;ctx.fillRect(sx,y.top,ex-sx,y.bottom-y.top);ctx.fillStyle=barClr;ctx.fillRect(sx,y.top,ex-sx,barH);}
+  arr.forEach((v,i)=>{const xp=x.getPixelForValue(i);if(v&&!inB){inB=true;sx=xp;}if(!v&&inB){inB=false;flush(xp);}});
+  if(inB)flush(x.getPixelForValue(arr.length-1)+8);
+}
+function noticeBgPlugin(id){return {id:'nb_'+id,beforeDraw(chart){
+  const {ctx,chartArea,scales:{x,y}}=chart;if(!x||!y)return;
+  ctx.save();
+  drawBands(ctx,x,y,NOTICE,'rgba(220,160,0,.04)','rgba(220,160,0,.90)',4);
+  drawBands(ctx,x,y,PUNISH,'rgba(255,40,40,.06)','rgba(255,50,50,.95)',6);
+  ctx.restore();
+}};}
+
+const sigLines={id:'sigLines',afterDraw(chart){
+  const {ctx,scales:{x,y}}=chart;if(!x||!y)return;
+  ctx.save();
+  DATES.forEach((d,i)=>{if(!SIGDATES.has(d))return;const xp=x.getPixelForValue(i);
+    ctx.beginPath();ctx.moveTo(xp,y.top);ctx.lineTo(xp,y.bottom);
+    ctx.strokeStyle=CSIG;ctx.lineWidth=1.2;ctx.setLineDash([3,3]);ctx.stroke();ctx.setLineDash([]);
+  });ctx.restore();
+}};
+
+function wavePlugin(priceKey){return {id:'wave_'+priceKey,afterDraw(chart){
+  const {ctx,scales:{x,y}}=chart;if(!x||!y)return;
+  ctx.save();
+  WAVES.forEach(w=>{
+    const lD=w.low_date,hD=w.high_date;
+    const lP=priceKey==='f'?w.low:w.s_low;const hP=priceKey==='f'?w.high:w.s_high;
+    const gn=priceKey==='f'?w.gain:w.s_gain;
+    if(!lP||!hP||!gn)return;
+    const li=DATES.indexOf(lD),hi=DATES.indexOf(hD);if(li<0||hi<0)return;
+    const lx=x.getPixelForValue(li),ly=y.getPixelForValue(lP);
+    const hx=x.getPixelForValue(hi),hy=y.getPixelForValue(hP);
+    ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(hx,hy);
+    ctx.strokeStyle='rgba(63,185,80,.3)';ctx.lineWidth=1.2;ctx.setLineDash([4,3]);ctx.stroke();ctx.setLineDash([]);
+    ctx.beginPath();ctx.arc(lx,ly,5,0,2*Math.PI);ctx.fillStyle=CUP;ctx.fill();
+    ctx.fillStyle='#fff';ctx.font='bold 8px sans-serif';ctx.textAlign='center';ctx.fillText('L',lx,ly+3);
+    ctx.beginPath();ctx.arc(hx,hy,5,0,2*Math.PI);ctx.fillStyle=CDN;ctx.fill();
+    ctx.fillStyle='#fff';ctx.textAlign='center';ctx.fillText('H',hx,hy+3);
+    ctx.fillStyle=CUP;ctx.font='bold 10px sans-serif';ctx.textAlign='center';
+    ctx.fillText('+'+gn+'%',(lx+hx)/2,Math.min(ly,hy)-12);
+  });ctx.restore();
+}};}
+
+const XS={ticks:{maxTicksLimit:12,color:'#7a8899',font:{size:9}},grid:{color:'rgba(255,255,255,.04)'}};
+const YS={position:'right',ticks:{color:'#7a8899',font:{size:9}},grid:{color:'rgba(255,255,255,.05)'}};
+const BASE_OPT={responsive:true,maintainAspectRatio:false,animation:false,
+  plugins:{legend:{display:false},tooltip:{enabled:false}},
+  onHover(evt,elems,chart){
+    const pts=chart.getElementsAtEventForMode(evt,'index',{intersect:false},false);
+    if(!pts.length)return;syncAll(pts[0].index,chart.id);showPanel(pts[0].index);
+  }
+};
+
+function syncAll(idx,srcId){
+  Object.entries(ALL_CHARTS).forEach(([id,c])=>{c._xhairIdx=idx;if(id!==srcId)c.tooltip.setActiveElements([{datasetIndex:0,index:idx}],{x:0,y:0});c.update('none');});
+}
+
+let _hpX=0,_hpY=0;
+document.addEventListener('mousemove',e=>{_hpX=e.clientX;_hpY=e.clientY;const hp=document.getElementById('hp');if(hp.style.display==='block')_posHP(hp);});
+function _posHP(hp){const W=window.innerWidth,H=window.innerHeight,rw=hp.offsetWidth||220,rh=hp.offsetHeight||200;hp.style.left=((_hpX+18+rw>W)?_hpX-rw-8:_hpX+18)+'px';hp.style.top=((_hpY+rh>H)?H-rh-8:_hpY+4)+'px';}
+function _fmt(v,u){return v!=null?v+u:'—';}
+function _fmtF(v){return v!=null?'O'+FO[v]+' H'+FH[v]+' L'+FL[v]+' C'+FC[v]:'—';}
+function _fmtS(v){return v!=null?'O'+SO[v]+' H'+SH[v]+' L'+SL[v]+' C'+SC[v]:'—';}
+function showPanel(i){
+  const hp=document.getElementById('hp');hp.style.display='block';_posHP(hp);
+  const d=DATES[i];document.getElementById('hdate').textContent=d?d.slice(0,4)+'/'+d.slice(4,6)+'/'+d.slice(6):'—';
+  document.getElementById('hf').textContent=_fmtF(FC[i]!=null?i:null);
+  document.getElementById('hs').textContent=_fmtS(SC[i]!=null?i:null);
+  document.getElementById('hoi').textContent=_fmt(FOI[i],' 口');
+  const chg=FOICHG[i];const pcEl=document.getElementById('hoipc');
+  pcEl.textContent=chg!=null?(chg>0?'+':'')+chg+' 口':'—';pcEl.style.color=chg==null?'#dde4ee':chg>0?'#3fb950':CDN;
+  document.getElementById('hls').textContent=_fmt(LSELL[i],' 張');
+  const lr=LRET[i];document.getElementById('hlr').textContent=lr!=null?Math.abs(lr)+' 張':'—';
+  document.getElementById('hlb').textContent=_fmt(LBAL[i],' 張');
+  document.getElementById('hsp10b').textContent=_fmt(SP10B[i],' 口');
+  document.getElementById('hsp10s').textContent=_fmt(SP10S[i],' 口');
+  const fl=[];if(NOTICE[i])fl.push('<span style="color:#e3b341">⚠ 注意股</span>');if(PUNISH[i])fl.push('<span style="color:#e05050">🔴 處置中</span>');
+  document.getElementById('hflag').innerHTML=fl.join(' ');
+}
+
+const MA_STYLES=[{label:'MA5',color:'rgba(255,255,255,.85)',width:1},{label:'MA10',color:'rgba(255,220,0,.85)',width:1},{label:'MA20',color:'rgba(255,120,0,.85)',width:1.2},{label:'MA60',color:'rgba(180,100,255,.85)',width:1.5}];
+function mkKlineWithVol(id,opens,closes,highs,lows,vols,mas=[],extraPlugins=[]){
+  const colors=DATES.map((_,i)=>closes[i]!=null&&closes[i]>=opens[i]?CUP:CDN);
+  const vcol=DATES.map((_,i)=>closes[i]!=null&&closes[i]>=opens[i]?'rgba(224,80,80,.3)':'rgba(63,185,80,.3)');
+  const maxV=Math.max(...vols.filter(v=>v!=null&&!isNaN(v)));
+  const maDsets=mas.map((arr,i)=>{const st=MA_STYLES[i]||{label:'MA',color:'#aaa',width:1};return {label:st.label,data:arr,type:'line',borderColor:st.color,backgroundColor:'transparent',pointRadius:0,tension:.1,borderWidth:st.width,yAxisID:'y'};});
+  const c=new Chart(id,{type:'bar',data:{labels:DATES,datasets:[
+    {label:'vol',data:vols,backgroundColor:vcol,barThickness:6,yAxisID:'yv'},
+    {label:'wick',data:DATES.map((_,i)=>closes[i]!=null?[lows[i],highs[i]]:null),backgroundColor:colors,barThickness:1.5,grouped:false,yAxisID:'y'},
+    {label:'body',data:DATES.map((_,i)=>closes[i]!=null?[Math.min(opens[i],closes[i]),Math.max(opens[i],closes[i])]:null),backgroundColor:colors,barThickness:6,grouped:false,yAxisID:'y'},
+    ...maDsets]},
+    options:{...BASE_OPT,layout:{padding:{left:LPAD}},scales:{x:XS,y:{...YS,afterDataLimits(s){s.max*=1.02;s.min*=0.98;}},yv:{display:false,min:0,max:maxV*4,grid:{display:false}}}},
+    plugins:[noticeBgPlugin(id),sigLines,xhairPlugin,...extraPlugins]});
+  ALL_CHARTS[id]=c;return c;
+}
+
+mkKlineWithVol('c1',FO,FC,FH,FL,FV,[FMA5,FMA10,FMA20,FMA60],[wavePlugin('f')]);
+mkKlineWithVol('c4',SO,SC,SH,SL,SV,[SMA5,SMA10,SMA20,SMA60],[wavePlugin('s')]);
+
+// OI 面板
+const c3=new Chart('c3',{type:'bar',data:{labels:DATES,datasets:[
+  {label:'OI增減',data:FOICHG,backgroundColor:FOICHG.map(v=>v==null?'transparent':v>0?'rgba(63,185,80,.7)':'rgba(224,80,80,.7)'),barThickness:4,yAxisID:'y'},
+  {label:'OI',data:FOI,type:'line',borderColor:'rgba(88,166,255,.7)',backgroundColor:'rgba(88,166,255,.08)',fill:true,pointRadius:0,tension:.15,borderWidth:1.2,yAxisID:'y2'}]},
+  options:{...BASE_OPT,layout:{padding:{left:LPAD}},scales:{x:XS,y:{...YS,position:'left',afterFit(s){s.width=58;}},y2:{...YS,afterFit(s){s.width=52;}}}},
+  plugins:[noticeBgPlugin('c3'),sigLines,xhairPlugin]});
+ALL_CHARTS['c3']=c3;
+
+// 前十大特定
+const c7=new Chart('c7',{type:'line',data:{labels:DATES,datasets:[
+  {label:'特定多口',data:SP10B,borderColor:'#ef5350',backgroundColor:'rgba(239,83,80,.1)',fill:true,pointRadius:0,tension:.2,borderWidth:1.5},
+  {label:'特定空口',data:SP10S,borderColor:'#43a047',backgroundColor:'rgba(67,160,71,.1)',fill:true,pointRadius:0,tension:.2,borderWidth:1.5}]},
+  options:{...BASE_OPT,layout:{padding:{left:LPAD,right:RPAD}},scales:{x:XS,y:{...YS,position:'right',afterFit(s){s.width=52;}}}},
+  plugins:[noticeBgPlugin('c7'),xhairPlugin]});
+ALL_CHARTS['c7']=c7;
+
+// 借券
+const c5=new Chart('c5',{type:'bar',data:{labels:DATES,datasets:[
+  {label:'借券賣出',data:LSELL,backgroundColor:'rgba(224,80,80,.6)',barThickness:4,yAxisID:'y'},
+  {label:'還券',data:LRET.map(v=>v!=null?Math.abs(v):null),backgroundColor:'rgba(63,185,80,.6)',barThickness:4,yAxisID:'y'},
+  {label:'借券餘額',data:LBAL,type:'line',borderColor:'rgba(88,166,255,.9)',backgroundColor:'rgba(88,166,255,.05)',fill:true,pointRadius:0,tension:.2,borderWidth:1.5,yAxisID:'y2'}]},
+  options:{...BASE_OPT,layout:{padding:{left:LPAD}},scales:{x:XS,y:{...YS,position:'left',afterFit(s){s.width=58;}},y2:{...YS,afterFit(s){s.width=52;}}}},
+  plugins:[noticeBgPlugin('c5'),xhairPlugin]});
+ALL_CHARTS['c5']=c5;
+
+document.querySelectorAll('canvas').forEach(c=>{
+  c.addEventListener('mouseleave',()=>{document.getElementById('hp').style.display='none';Object.values(ALL_CHARTS).forEach(ch=>{ch._xhairIdx=null;ch.update('none');});});
+});
+</script>
+</body>
+</html>
