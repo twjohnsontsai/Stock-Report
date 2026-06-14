@@ -30,6 +30,9 @@
   #expand{flex:1;overflow-y:auto;background:#0d0f14;padding:0 10px 20px}
   h2{font-size:13px;color:#aaa;padding:14px 0 4px;margin:0}
   .legend-row{font-size:11px;padding:2px 0 8px;color:#aaa}
+
+/* 禁止滑鼠滾輪縮放圖表 */
+.plotly .cursor-crosshair,.plotly .cursor-pointer{touch-action:pan-y;}
 </style>
 </head>
 <body>
@@ -173,7 +176,7 @@ const shapes = D.phases.map((p, i) => ({
 }));
 layout.shapes = shapes;
 
-Plotly.newPlot('chart', traces, layout, {responsive:true,scrollZoom:true,
+Plotly.newPlot('chart', traces, layout, {responsive:true,scrollZoom:false,
   modeBarButtonsToRemove:['select2d','lasso2d']});
 
 // ── chip_analyzer 風格懸停面板 ────────────────────────────────────────────────
@@ -551,5 +554,20 @@ if (OPT.strikes && OPT.strikes.length > 0) {
 })();
 </script>
 </div><!-- #expand -->
+
+<script>
+// 強制關閉所有圖表的 scrollZoom
+window.addEventListener('load', function() {
+  ['chart','rally-chart','spot-chart','opt-chart','signal-chart'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if(el && el._fullLayout) {
+      Plotly.update(id, {}, {}, {scrollZoom: false});
+    }
+    if(el) {
+      el.addEventListener('wheel', function(e){ e.stopPropagation(); }, {passive:false});
+    }
+  });
+});
+</script>
 </body>
 </html>
