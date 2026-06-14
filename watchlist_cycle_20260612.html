@@ -38,6 +38,14 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
 .cond-list{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
 .cond{font-size:.7rem;padding:2px 8px;border-radius:2px;background:rgba(58,107,85,.15);border:1px solid rgba(58,107,85,.3);color:#5dade2}
 .cond.strong{background:rgba(192,152,64,.15);border-color:var(--gold-dim);color:var(--gold)}
+/* 出場策略 */
+.exit-box{margin:10px 0 6px;padding:10px 14px;border-radius:3px;font-size:.75rem;line-height:1.85;background:rgba(39,174,96,.05);border:1px solid rgba(39,174,96,.2);border-left:3px solid #27ae60}
+.exit-box .exit-title{color:#2ecc71;font-weight:700;font-size:.72rem;letter-spacing:.08em;margin-bottom:4px}
+.exit-step{display:flex;align-items:flex-start;gap:8px;margin:3px 0;color:var(--text-dim)}
+.exit-step .step-tag{flex-shrink:0;font-size:.65rem;padding:1px 6px;border-radius:2px;font-weight:700;margin-top:1px}
+.step-tag.watch{background:rgba(230,126,34,.2);border:1px solid rgba(230,126,34,.5);color:#e67e22}
+.step-tag.reduce{background:rgba(231,76,60,.2);border:1px solid rgba(231,76,60,.5);color:#e74c3c}
+.step-tag.exit{background:rgba(231,76,60,.35);border:1px solid #e74c3c;color:#ff6b6b}
 /* 連結按鈕 */
 .chart-link{display:block;margin-top:10px;padding:10px 16px;background:linear-gradient(180deg,#1d1708 0%,#141006 100%);border:1px solid var(--border);border-left:2px solid var(--gold-dim);color:var(--text-dim);text-decoration:none;font-size:.82rem;letter-spacing:.05em;transition:all .2s}
 .chart-link:hover{border-left-color:var(--gold);color:var(--gold-hi);padding-left:20px}
@@ -121,6 +129,13 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
       <span class="cond">解除後0~3天 +5</span>
     </div>
     <div class="eps-note">獲利穩健成長，財報品質最佳。4次處置籌碼最乾淨，解除後漲停是最強進場確認信號。</div>
+    <div class="exit-box">
+      <div class="exit-title">&#9654; 出場策略（依注意股計數）</div>
+      <div class="exit-step"><span class="step-tag watch">注意</span>每日收盤後確認是否公布為注意股，6/10+6/12已是2次，10日窗口已開啟</div>
+      <div class="exit-step"><span class="step-tag watch">Day 3</span>若第3次連續觸注意股 → 持股減至5成，留意隔日走勢</div>
+      <div class="exit-step"><span class="step-tag reduce">Day 4</span>第4次連續注意股 → 再減至2成，明日即將公告處置</div>
+      <div class="exit-step"><span class="step-tag exit">Day 5</span>第5次連續注意股公告當日 → <b>盤中全數出清</b>，隔日處置生效成交困難</div>
+    </div>
     <a class="chart-link" href="2455_guf_cycle_chart.html">&#128200; 期貨OI &times; 借券 &times; 前十大週期全景圖 &#8594;</a>
   </div>
 
@@ -159,6 +174,13 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
       <span class="cond">處置剩1~5天 +5</span>
     </div>
     <div class="eps-note">連3季虧損後Q1首次轉正，最強財報加持。OI降48%空頭大量撤退，外資同步大買，財報+籌碼雙重確認。</div>
+    <div class="exit-box">
+      <div class="exit-title">&#9654; 出場策略（解除後啟動計數，預計 ~6/17 起）</div>
+      <div class="exit-step"><span class="step-tag watch">解除日</span>解除後首日強反彈進場，同步開始計算連續注意股天數（解除日起算）</div>
+      <div class="exit-step"><span class="step-tag watch">Day 3</span>第3次連續注意股 → 持股減至5成，反彈已大部分兌現</div>
+      <div class="exit-step"><span class="step-tag reduce">Day 4</span>第4次連續注意股 → 再減至2成，明日極可能公告第5次處置</div>
+      <div class="exit-step"><span class="step-tag exit">Day 5</span>第5次連續注意股公告當日 → <b>盤中全數出清</b>（20分撮合將啟動，流動性大幅下降）</div>
+    </div>
     <a class="chart-link" href="2337_dif_cycle_chart.html">&#128200; 期貨OI &times; 借券 &times; 前十大週期全景圖 &#8594;</a>
   </div>
 
@@ -197,6 +219,13 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
       <span class="cond">處置剩1~5天 +5</span>
     </div>
     <div class="eps-note">仍虧損但幅度極小（-0.06），Q2是否轉盈是關鍵。均線多頭+漲停確認空頭回補，但財報待觀察。</div>
+    <div class="exit-box">
+      <div class="exit-title">&#9654; 出場策略（解除後啟動計數，預計 ~6/18 起）</div>
+      <div class="exit-step"><span class="step-tag watch">解除日</span>解除後首日確認成交量是否放大，量縮則不追，同步計算注意股天數</div>
+      <div class="exit-step"><span class="step-tag watch">Day 3</span>第3次連續注意股 → 持股減至5成，獲利優先保護</div>
+      <div class="exit-step"><span class="step-tag reduce">Day 4</span>第4次連續注意股 → 再減至2成，準備全出</div>
+      <div class="exit-step"><span class="step-tag exit">Day 5</span>第5次連續注意股公告當日 → <b>盤中全數出清</b>（進入第4次處置，財報仍虧損反彈動能有限）</div>
+    </div>
     <a class="chart-link" href="6116_oef_cycle_chart.html">&#128200; 期貨OI &times; 借券 &times; 前十大週期全景圖 &#8594;</a>
   </div>
 
@@ -234,6 +263,13 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
       <span class="cond">解除後0~3天 +5</span>
     </div>
     <div class="eps-note">Q4/Q3獲利後Q1轉虧，財報有疑慮。技術面多頭+漲停確認，但基本面需謹慎，宜觀察Q2方向。</div>
+    <div class="exit-box">
+      <div class="exit-title">&#9654; 出場策略（解除日6/10，目前0/5連續，窗口至6/23）</div>
+      <div class="exit-step"><span class="step-tag watch">目前</span>解除後無連續注意股，窗口安全。持股可續抱，每日收盤後確認是否觸注意</div>
+      <div class="exit-step"><span class="step-tag watch">Day 3</span>若突然出現第3次連續注意股 → 立刻減至5成，趨勢已見頂訊號</div>
+      <div class="exit-step"><span class="step-tag reduce">Day 4</span>第4次連續注意股 → 再減至2成，Q1財報虧損支撐力弱</div>
+      <div class="exit-step"><span class="step-tag exit">Day 5</span>第5次連續注意股公告當日 → <b>盤中全數出清</b>（第4次處置啟動，財報虧損不宜持有）</div>
+    </div>
     <a class="chart-link" href="3532_qdf_cycle_chart.html">&#128200; 期貨OI &times; 借券 &times; 前十大週期全景圖 &#8594;</a>
   </div>
 
