@@ -105,6 +105,7 @@ tr:nth-child(even){background:#111825}
 <div class="legend">
   <span class="lg"><span class="ld" style="background:#ef5350"></span>多口持倉</span>
   <span class="lg"><span class="ld" style="background:#43a047"></span>空口持倉</span>
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(255,220,50,.85);margin-right:3px;border-top:2px dashed rgba(255,220,50,.85)"></span>多口↑空口↓背離訊號（黃燈）</span>
 </div>
 <div style="position:relative;height:400px"><canvas id="c7"></canvas></div>
 </div>
@@ -144,7 +145,7 @@ const SP10DIVST=[false, false, false, false, false, false, false, false, false, 
 const NOTICE=[false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, true, false, true, true, true, true, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, true, true, true, true, true, true, true, true, false, false, false, true, true, false];
 const PUNISH=[false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true];
 const WAVES=[{"sig_date": "20250324", "sig_idx": 49, "low_date": "20250327", "low": 8.2, "high_date": "20250324", "high": 8.4, "gain": 2.3, "s_low": 8.3, "s_high": 8.5, "s_gain": 1.8, "has_notice": false}, {"sig_date": "20250417", "sig_idx": 65, "low_date": "20250417", "low": 6.8, "high_date": "20250513", "high": 7.7, "gain": 13.8, "s_low": 6.8, "s_high": 7.8, "s_gain": 14.0, "has_notice": false}, {"sig_date": "20250522", "sig_idx": 89, "low_date": "20250528", "low": 7.2, "high_date": "20250522", "high": 7.5, "gain": 4.9, "s_low": 7.4, "s_high": 7.6, "s_gain": 1.6, "has_notice": false}, {"sig_date": "20250722", "sig_idx": 129, "low_date": "20250722", "low": 6.8, "high_date": "20250729", "high": 7.6, "gain": 12.4, "s_low": 6.7, "s_high": 7.6, "s_gain": 13.8, "has_notice": false}, {"sig_date": "20250825", "sig_idx": 152, "low_date": "20250820", "low": 7.4, "high_date": "20250925", "high": 9.0, "gain": 21.0, "s_low": 7.3, "s_high": 8.9, "s_gain": 22.3, "has_notice": false}, {"sig_date": "20251021", "sig_idx": 190, "low_date": "20251023", "low": 7.4, "high_date": "20251021", "high": 7.6, "gain": 3.1, "s_low": 7.4, "s_high": 7.5, "s_gain": 2.0, "has_notice": false}, {"sig_date": "20251120", "sig_idx": 211, "low_date": "20251124", "low": 6.8, "high_date": "20251217", "high": 7.6, "gain": 11.4, "s_low": 6.9, "s_high": 7.7, "s_gain": 11.8, "has_notice": false}, {"sig_date": "20251218", "sig_idx": 231, "low_date": "20251219", "low": 7.4, "high_date": "20260108", "high": 11.8, "gain": 59.9, "s_low": 7.3, "s_high": 11.7, "s_gain": 58.9, "has_notice": false}, {"sig_date": "20260506", "sig_idx": 317, "low_date": "20260430", "low": 8.1, "high_date": "20260603", "high": 22.1, "gain": 173.5, "s_low": 8.1, "s_high": 22.7, "s_gain": 179.2, "has_notice": false}];
-const SIGDATES=new Set(["20250825", "20250722", "20250417", "20251218", "20250324", "20260506", "20251120", "20251021", "20250522"]);
+const SIGDATES=new Set(["20250522", "20250722", "20260506", "20251218", "20250417", "20250825", "20251120", "20251021", "20250324"]);
 const CUP='#e05050',CDN='#3fb950',CNOTI_BAR='rgba(220,160,0,.85)',CPUN_BAR='rgba(255,40,40,.95)',CSIG='rgba(88,166,255,.5)';
 const ALL_CHARTS={};
 const LPAD=58,RPAD=62;
@@ -267,12 +268,32 @@ const c3=new Chart('c3',{type:'bar',data:{labels:DATES,datasets:[
   plugins:[noticeBgPlugin('c3'),sigLines,xhairPlugin]});
 ALL_CHARTS['c3']=c3;
 
+// 前十大背離插件：多口↑且空口↓時黃色背景+起始虛線
+const div10Plugin={id:'div10',afterDraw(chart){
+  const {ctx,chartArea,scales:{x,y}}=chart;if(!x||!y)return;
+  ctx.save();
+  let inDiv=false,sx=0;
+  SP10DIV.forEach((v,i)=>{
+    const xp=x.getPixelForValue(i);
+    if(v&&!inDiv){inDiv=true;sx=xp;}
+    if(!v&&inDiv){inDiv=false;ctx.fillStyle='rgba(255,220,50,.07)';ctx.fillRect(sx,chartArea.top,xp-sx,chartArea.bottom-chartArea.top);}
+  });
+  if(inDiv){const xp=x.getPixelForValue(SP10DIV.length-1)+8;ctx.fillStyle='rgba(255,220,50,.07)';ctx.fillRect(sx,chartArea.top,xp-sx,chartArea.bottom-chartArea.top);}
+  SP10DIVST.forEach((v,i)=>{
+    if(!v)return;
+    const xp=x.getPixelForValue(i);
+    ctx.beginPath();ctx.moveTo(xp,chartArea.top);ctx.lineTo(xp,chartArea.bottom);
+    ctx.strokeStyle='rgba(255,220,50,.85)';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);ctx.stroke();ctx.setLineDash([]);
+  });
+  ctx.restore();
+}};
+
 // 前十大特定
 const c7=new Chart('c7',{type:'line',data:{labels:DATES,datasets:[
   {label:'特定多口',data:SP10B,borderColor:'#ef5350',backgroundColor:'rgba(239,83,80,.1)',fill:true,pointRadius:0,tension:.2,borderWidth:1.5},
   {label:'特定空口',data:SP10S,borderColor:'#43a047',backgroundColor:'rgba(67,160,71,.1)',fill:true,pointRadius:0,tension:.2,borderWidth:1.5}]},
   options:{...BASE_OPT,layout:{padding:{left:LPAD+58,right:RPAD}},scales:{x:XS,y:{...YS,position:'right',afterFit(s){s.width=52;}}}},
-  plugins:[noticeBgPlugin('c7'),xhairPlugin]});
+  plugins:[noticeBgPlugin('c7'),xhairPlugin,div10Plugin]});
 ALL_CHARTS['c7']=c7;
 
 // 借券

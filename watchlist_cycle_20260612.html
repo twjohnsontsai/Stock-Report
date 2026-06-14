@@ -52,6 +52,14 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
 .risk.low{background:rgba(39,174,96,.15);border:1px solid rgba(39,174,96,.4);color:#2ecc71}
 .risk.mid{background:rgba(230,126,34,.15);border:1px solid rgba(230,126,34,.4);color:#e67e22}
 .risk.high{background:rgba(192,57,43,.2);border:1px solid rgba(192,57,43,.5);color:#e74c3c}
+/* 警示燈 */
+@keyframes pulse-red{0%,100%{box-shadow:0 0 0 0 rgba(231,76,60,.6)}70%{box-shadow:0 0 0 6px rgba(231,76,60,0)}}
+@keyframes pulse-orange{0%,100%{box-shadow:0 0 0 0 rgba(230,126,34,.5)}70%{box-shadow:0 0 0 5px rgba(230,126,34,0)}}
+.alert-dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.alert-dot.red{background:#e74c3c;animation:pulse-red 1.4s ease infinite}
+.alert-dot.orange{background:#e67e22;animation:pulse-orange 2s ease infinite}
+.alert-dot.green{background:#2ecc71}
+.punish-est{font-size:.72rem;padding:6px 10px;background:rgba(192,57,43,.06);border:1px solid rgba(192,57,43,.2);border-left:3px solid #e74c3c;margin:6px 0;line-height:1.7;color:var(--text-dim)}
 /* 說明框 */
 .info-box{background:rgba(41,128,185,.06);border:1px solid rgba(41,128,185,.2);border-left:3px solid #2980b9;padding:12px 16px;margin-bottom:18px;font-size:.78rem;line-height:1.9;color:var(--text-dim)}
 .info-box b{color:#5dade2}
@@ -68,8 +76,9 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
     <b>&#9670; 融資利用率（融資餘額 ÷ 融資限額）</b><br>
     反映散戶槓桿程度。<b>愈低代表籌碼愈乾淨</b>，空頭洗盤後散戶已退出，主力成本低，解除後反彈空間大。<br>
     &#9679; &lt;10%：極乾淨，籌碼最優質 &nbsp;&#9679; 10~20%：乾淨，符合入選條件 &nbsp;&#9679; 20~30%：尚可，宜觀察 &nbsp;&#9679; &gt;30%：偏高，風險較大<br><br>
-    <b>&#9670; 再被處置風險</b><br>
-    解除後若 10 個交易日內再次出現連續漲跌停（達觸發條件），將再進入注意／處置。近期籌碼面（融資低 + OI回補 + 外資買進）可降低此風險。
+    <b>&#9670; 再被處置風險 &amp; 預估下次被處置時間</b><br>
+    解除後若再次出現連續漲跌停達觸發門檻，將再進入注意／處置。依今年處置頻率估算下次觸發窗口：<b>次數愈多 → 間隔愈短 → 風險愈高</b>。<br>
+    ⚠ 警示機制：<span class="alert-dot red" style="display:inline-block;vertical-align:middle;margin:0 4px"></span>紅燈=高風險（仍在處置中）&nbsp;<span class="alert-dot orange" style="display:inline-block;vertical-align:middle;margin:0 4px"></span>橙燈=中風險（近期解除）&nbsp;<span class="alert-dot green" style="display:inline-block;vertical-align:middle;margin:0 4px"></span>綠燈=低風險
   </div>
 
   <div class="key-msg">
@@ -82,7 +91,7 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
     <div class="card-head">
       <span class="score">103分</span>
       <span class="code">2455 全新 &times; GUF</span>
-      <span class="sector">記憶體／NAND Flash</span>
+      <span class="sector">光通訊／LED</span>
       <span class="status released">&#10003; 解除4天</span>
     </div>
     <div class="data-row">
@@ -93,9 +102,10 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
     </div>
     <div class="fin-label"><span>融資利用率（6/12）</span><span style="color:#2ecc71;font-weight:700">20.4%　乾淨</span></div>
     <div class="fin-bar-wrap"><div class="fin-bar" style="width:20.4%;background:linear-gradient(90deg,#27ae60,#2ecc71)"></div></div>
-    <div style="display:flex;align-items:center;gap:10px;margin:8px 0 10px;font-size:.72rem;color:var(--text-muted)">
-      再被處置風險：<span class="risk low">低</span><span style="margin-left:6px">已解除4天，漲停確認多方進場，短期再觸發機率低</span>
+    <div style="display:flex;align-items:center;gap:10px;margin:8px 0 4px;font-size:.72rem;color:var(--text-muted)">
+      <span class="alert-dot red"></span>再被處置風險：<span class="risk high">高（注意股 ×2）</span><span style="margin-left:6px">6/10、6/12 解除後已再觸發2次注意股，距下一次處置僅差若干次漲跌停</span>
     </div>
+    <div class="punish-est">&#9888; <b>警報：</b>解除後短短4天內已2次觸發注意股警示。若再出現連續漲跌停達門檻，將即刻進入第5次處置。&#128337; 年均4次，本次間距可能更短 → 預估再處置窗口：<b>6月下旬～7月上旬</b></div>
     <div class="cond-title">&#9670; 入選條件</div>
     <div class="cond-list">
       <span class="cond strong">解除後漲停★ +20</span>
@@ -125,9 +135,10 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
     </div>
     <div class="fin-label"><span>融資利用率（6/12）</span><span style="color:#2ecc71;font-weight:700">17.5%　乾淨</span></div>
     <div class="fin-bar-wrap"><div class="fin-bar" style="width:17.5%;background:linear-gradient(90deg,#27ae60,#2ecc71)"></div></div>
-    <div style="display:flex;align-items:center;gap:10px;margin:8px 0 10px;font-size:.72rem;color:var(--text-muted)">
-      再被處置風險：<span class="risk mid">中</span><span style="margin-left:6px">仍在處置中剩3天，解除後需觀察成交量是否再觸發條件</span>
+    <div style="display:flex;align-items:center;gap:10px;margin:8px 0 4px;font-size:.72rem;color:var(--text-muted)">
+      <span class="alert-dot red"></span>再被處置風險：<span class="risk high">高（處置中）</span><span style="margin-left:6px">仍在處置中剩3天，解除後需觀察是否再觸發</span>
     </div>
+    <div class="punish-est">&#128337; 年均4次，解除後間距約7~8週 → 本次解除後預估下次觸發窗口：<b>2026年8月中旬</b></div>
     <div class="cond-title">&#9670; 入選條件</div>
     <div class="cond-list">
       <span class="cond">KD K=23 超賣 +10</span>
@@ -157,9 +168,10 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
     </div>
     <div class="fin-label"><span>融資利用率（6/12）</span><span style="color:#2ecc71;font-weight:700">3.8%　極乾淨</span></div>
     <div class="fin-bar-wrap"><div class="fin-bar" style="width:3.8%;background:linear-gradient(90deg,#1a6b3a,#27ae60)"></div></div>
-    <div style="display:flex;align-items:center;gap:10px;margin:8px 0 10px;font-size:.72rem;color:var(--text-muted)">
-      再被處置風險：<span class="risk mid">中</span><span style="margin-left:6px">仍在處置中剩4天，融資極低籌碼優質，但面板景氣需關注</span>
+    <div style="display:flex;align-items:center;gap:10px;margin:8px 0 4px;font-size:.72rem;color:var(--text-muted)">
+      <span class="alert-dot red"></span>再被處置風險：<span class="risk high">高（處置中）</span><span style="margin-left:6px">仍在處置中剩4天，融資極低籌碼優質，但解除後仍需觀察</span>
     </div>
+    <div class="punish-est">&#128337; 年均3次，解除後間距約8~10週 → 本次解除後預估下次觸發窗口：<b>2026年9月上旬</b></div>
     <div class="cond-title">&#9670; 入選條件</div>
     <div class="cond-list">
       <span class="cond">SMA20↑+SMA60↑ 多頭趨勢 +15</span>
@@ -189,9 +201,10 @@ h1{color:var(--gold);font-size:1.15rem;font-weight:300;letter-spacing:.4em;text-
     </div>
     <div class="fin-label"><span>融資利用率（6/12）</span><span style="color:#2ecc71;font-weight:700">10.7%　乾淨</span></div>
     <div class="fin-bar-wrap"><div class="fin-bar" style="width:10.7%;background:linear-gradient(90deg,#27ae60,#2ecc71)"></div></div>
-    <div style="display:flex;align-items:center;gap:10px;margin:8px 0 10px;font-size:.72rem;color:var(--text-muted)">
-      再被處置風險：<span class="risk mid">中低</span><span style="margin-left:6px">解除2天，漲停已出現，但Q1財報轉虧，若漲幅過急可能再觸發</span>
+    <div style="display:flex;align-items:center;gap:10px;margin:8px 0 4px;font-size:.72rem;color:var(--text-muted)">
+      <span class="alert-dot orange"></span>再被處置風險：<span class="risk mid">中</span><span style="margin-left:6px">解除2天，近期解除仍需觀察，若漲幅過急可能再觸發注意</span>
     </div>
+    <div class="punish-est">&#128337; 年均3次，處置間距約8~10週 → 預估下次觸發窗口：<b>2026年9月上旬</b></div>
     <div class="cond-title">&#9670; 入選條件</div>
     <div class="cond-list">
       <span class="cond">SMA20↑+SMA60↑ 多頭趨勢 +15</span>
