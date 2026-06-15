@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>來億-KY 6890 — 現貨籌碼週期圖</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#090c12;color:#c9d1d9;font-family:system-ui,sans-serif;padding:8px}
+h1{color:#e3b341;font-size:.95rem;margin-bottom:2px}
+.sub{color:#8b949e;font-size:.72rem;margin-bottom:6px}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:5px;margin-bottom:6px}
+.sc{background:#0d1520;border:1px solid #21262d;border-radius:4px;padding:5px 8px}
+.sc .v{font-size:.95rem;font-weight:700;color:#58a6ff}
+.sc .l{color:#8b949e;font-size:.65rem;margin-top:1px}
+.panel{background:#0f1420;border:1px solid #1e2635;border-radius:4px;padding:4px 8px;margin-bottom:4px;position:relative}
+.ptitle{color:#79c0ff;font-size:.72rem;font-weight:600;margin-bottom:2px;display:flex;align-items:center;gap:6px}
+.tag{background:#1a2535;border:1px solid #30363d;border-radius:2px;padding:0 4px;font-size:.62rem;color:#8b949e}
+.legend{display:flex;flex-wrap:wrap;gap:6px;font-size:.65rem;margin-bottom:3px}
+.lg{display:flex;align-items:center;gap:3px}
+.ld{width:8px;height:8px;border-radius:1px;flex-shrink:0}
+.hp{position:fixed;background:rgba(10,13,20,.40);border:1px solid rgba(58,69,85,.6);border-radius:6px;padding:8px 12px;font-size:.78rem;z-index:999;display:none;pointer-events:none;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.6)}
+.hp .hdate{color:#e3b341;font-weight:700;margin-bottom:5px;font-size:.82rem;border-bottom:1px solid #2a3345;padding-bottom:4px}
+.hp .hrow{display:flex;justify-content:space-between;gap:16px;margin:2px 0;line-height:1.6}
+.hp .hk{color:#6a7a8e}.hp .hv{font-weight:600;color:#dde4ee}
+table{width:100%;border-collapse:collapse;font-size:.78rem;margin-top:6px}
+th{background:#1a2030;color:#e3b341;padding:6px 8px;border:1px solid #2a3040;text-align:left}
+td{padding:5px 8px;border:1px solid #1e2635}
+tr:nth-child(even){background:#111825}
+a.back{display:inline-block;margin-bottom:10px;font-size:.75rem;color:#8b949e;text-decoration:none}
+a.back:hover{color:#c9d1d9}
+</style>
+</head>
+<body>
+<a class="back" href="watchlist_nofut_20260616.html">&#8592; 返回無期貨名單</a>
+<h1>6890 來億-KY — 現貨 × 借券 × 籌碼 週期圖（無期貨）</h1>
+<p class="sub">
+  2025/01~2026/06
+  ｜ <span style="background:rgba(210,153,34,.2);padding:1px 6px;border-radius:3px">橙色=注意股期間（9筆）</span>
+  ｜ <span style="background:rgba(224,80,80,.2);padding:1px 6px;border-radius:3px">紅色=處置期間（18天）</span>
+</p>
+<div class="stats">
+  <div class="sc"><div class="v">230.5</div><div class="l">最新收盤價</div></div>
+  <div class="sc"><div class="v">1</div><div class="l">今年被處置次數</div></div>
+  <div class="sc"><div class="v">9</div><div class="l">注意股記錄（筆）</div></div>
+  <div class="sc"><div class="v">無</div><div class="l">借券歷史資料</div></div>
+</div>
+
+<div id="hp" class="hp">
+  <div class="hdate" id="hdate">—</div>
+  <div class="hrow"><span class="hk">現貨</span><span class="hv" id="hs">—</span></div>
+  <div class="hrow"><span class="hk">成交量</span><span class="hv" id="hv">—</span></div>
+  
+  
+  <div id="hflag" style="margin-top:4px;font-size:.7rem"></div>
+</div>
+
+<div class="panel">
+<div class="ptitle">① 現貨 6890 來億-KY — K線 + MA</div>
+<div class="legend">
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(255,255,255,.85);margin-right:3px"></span>MA5</span>
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(255,220,0,.9);margin-right:3px"></span>MA10</span>
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(255,120,0,.9);margin-right:3px"></span>MA20</span>
+  <span class="lg"><span style="display:inline-block;width:14px;height:2px;background:rgba(180,100,255,.9);margin-right:3px"></span>MA60</span>
+  <span class="lg"><span class="ld" style="background:rgba(210,153,34,.9)"></span>注意期</span>
+  <span class="lg"><span class="ld" style="background:#ff3232"></span>處置期</span>
+</div>
+<div style="position:relative;height:450px"><canvas id="c1"></canvas></div>
+</div>
+
+
+
+
+<div class="panel">
+<div class="ptitle">② 處置週期分析表</div>
+<table>
+<tr><th>處置開始</th><th>處置結束</th><th>解除後首日</th><th>解除時股價</th><th>追蹤20日高點漲幅</th><th>備注</th></tr>
+<tr><td colspan="6" style="color:#484f58">暫無處置週期資料</td></tr>
+</table>
+</div>
+
+<script>
+const DATES=["20260102", "20260105", "20260106", "20260107", "20260108", "20260109", "20260112", "20260113", "20260114", "20260115", "20260116", "20260119", "20260120", "20260121", "20260122", "20260123", "20260126", "20260127", "20260128", "20260129", "20260130", "20260202", "20260203", "20260204", "20260205", "20260206", "20260209", "20260210", "20260211", "20260223", "20260224", "20260225", "20260226", "20260302", "20260303", "20260304", "20260305", "20260306", "20260309", "20260310", "20260311", "20260312", "20260313", "20260316", "20260317", "20260318", "20260319", "20260320", "20260323", "20260324", "20260325", "20260326", "20260327", "20260330", "20260331", "20260401", "20260402", "20260407", "20260408", "20260409", "20260410", "20260413", "20260414", "20260415", "20260416", "20260417", "20260420", "20260421", "20260422", "20260423", "20260424", "20260427", "20260428", "20260429", "20260430", "20260504", "20260505", "20260506", "20260507", "20260508", "20260511", "20260512", "20260513", "20260514", "20260515", "20260518", "20260519", "20260520", "20260521", "20260522", "20260525", "20260526", "20260527", "20260528", "20260529", "20260601", "20260602", "20260603", "20260604", "20260605", "20260608", "20260609", "20260610", "20260611", "20260612", "20260615"];
+const SO=[252.0, 250.5, 235.5, 237.0, 239.5, 243.0, 252.5, 260.0, 255.0, 256.5, 252.0, 244.5, 240.0, 244.0, 241.5, 246.0, 239.0, 241.0, 245.5, 236.0, 236.5, 229.0, 227.5, 211.5, 219.0, 215.5, 209.5, 209.0, 203.0, 201.0, 211.0, 204.5, 200.0, 195.0, 196.0, 187.5, 182.0, 182.0, 169.0, 172.0, 163.5, 162.5, 159.0, 161.0, 172.0, 174.0, 172.0, 170.5, 168.5, 183.0, 170.5, 164.5, 163.5, 160.5, 158.0, 164.0, 168.0, 168.5, 162.0, 160.0, 152.5, 150.0, 152.0, 153.0, 160.5, 172.5, 175.5, 172.5, 169.0, 170.5, 166.0, 159.0, 155.5, 160.0, 158.0, 157.5, 156.0, 160.0, 147.0, 154.5, 153.0, 162.5, 170.0, 163.5, 162.5, 166.0, 164.5, 167.5, 169.5, 167.0, 171.0, 170.5, 171.5, 171.5, 171.0, 169.0, 177.5, 201.0, 208.5, 231.5, 222.5, 248.0, 273.0, 281.0, 279.0, 250.0],SH=[255.0, 252.0, 240.0, 241.5, 243.5, 253.5, 261.0, 260.0, 258.0, 256.5, 252.0, 244.5, 250.0, 244.0, 244.5, 248.0, 241.5, 248.0, 245.5, 237.0, 239.5, 237.0, 229.5, 218.0, 226.0, 215.5, 210.0, 210.0, 203.0, 212.0, 211.0, 205.0, 203.0, 200.5, 196.5, 187.5, 185.0, 183.5, 172.5, 174.0, 168.0, 162.5, 164.0, 172.5, 174.5, 178.0, 172.0, 175.0, 188.0, 184.0, 170.5, 169.5, 166.0, 161.5, 162.0, 169.5, 173.0, 168.5, 163.0, 161.0, 154.0, 152.5, 156.0, 160.0, 172.0, 184.5, 178.0, 172.5, 170.5, 170.5, 167.0, 159.0, 162.5, 160.0, 160.5, 160.0, 159.5, 160.0, 157.0, 157.5, 163.0, 171.5, 170.0, 167.0, 168.0, 169.5, 178.0, 174.0, 170.0, 169.0, 171.0, 173.0, 173.0, 172.5, 171.0, 177.0, 191.5, 210.5, 231.5, 249.0, 255.0, 274.0, 285.5, 284.0, 279.0, 250.0],SL=[250.5, 230.5, 233.0, 235.5, 239.0, 243.0, 248.0, 249.5, 250.5, 246.0, 245.0, 239.0, 239.0, 237.5, 240.0, 238.5, 233.5, 239.5, 233.5, 230.5, 224.0, 225.0, 214.5, 211.5, 214.5, 206.0, 203.0, 206.0, 191.5, 197.5, 201.5, 194.0, 197.5, 195.0, 189.0, 178.0, 181.0, 177.5, 165.0, 169.0, 161.0, 158.5, 156.0, 161.0, 167.5, 171.5, 165.0, 169.0, 168.0, 166.5, 163.5, 164.5, 161.5, 156.5, 157.0, 163.0, 165.5, 157.5, 158.0, 150.0, 151.0, 149.0, 152.0, 153.0, 158.5, 172.5, 163.5, 167.0, 166.5, 163.0, 157.0, 153.5, 155.0, 155.0, 155.5, 155.0, 155.5, 154.0, 142.0, 150.0, 152.5, 162.5, 162.5, 161.0, 161.0, 164.0, 164.5, 164.0, 166.0, 166.0, 167.0, 168.0, 168.5, 167.0, 167.0, 169.0, 175.5, 198.0, 207.5, 230.5, 222.5, 243.0, 270.0, 274.0, 256.0, 230.5],SC=[250.5, 234.0, 235.0, 239.0, 241.0, 250.5, 255.5, 252.0, 255.0, 248.5, 245.0, 239.0, 243.0, 237.5, 244.5, 239.0, 238.0, 242.0, 234.5, 231.5, 225.0, 225.5, 215.0, 218.0, 215.0, 206.0, 209.0, 209.0, 199.0, 210.0, 202.0, 197.5, 203.0, 195.5, 190.0, 181.5, 181.0, 178.0, 169.5, 171.5, 163.5, 160.0, 162.5, 172.0, 174.5, 174.0, 171.5, 172.5, 181.5, 166.5, 164.5, 165.5, 165.5, 158.0, 160.5, 167.5, 168.0, 157.5, 159.5, 150.5, 151.5, 151.0, 153.0, 156.5, 172.0, 175.5, 168.0, 169.5, 169.5, 163.5, 159.0, 155.5, 159.5, 157.0, 156.5, 157.0, 158.0, 155.0, 154.5, 154.0, 161.0, 168.5, 163.5, 161.5, 165.5, 164.0, 167.0, 165.5, 166.0, 169.0, 169.5, 169.0, 170.5, 169.5, 167.5, 174.5, 191.5, 210.5, 231.5, 242.5, 249.5, 274.0, 280.0, 284.0, 256.0, 230.5],SV=[356.232, 1831.575, 636.952, 477.759, 512.96, 810.529, 908.352, 935.691, 484.54, 597.488, 304.168, 541.383, 360.323, 555.729, 298.31, 371.194, 386.859, 653.717, 1051.011, 552.555, 1021.543, 891.469, 1375.98, 660.987, 791.405, 1111.634, 787.207, 402.526, 1983.161, 988.7, 673.507, 966.763, 422.419, 651.55, 902.601, 1035.56, 879.992, 734.368, 810.032, 410.806, 1151.394, 797.055, 607.639, 934.416, 914.622, 811.494, 878.794, 1069.434, 1734.481, 1252.075, 732.061, 537.808, 263.203, 744.668, 386.241, 405.575, 673.57, 677.893, 549.16, 1038.01, 491.214, 453.485, 555.916, 791.263, 1322.459, 1473.386, 2164.914, 578.793, 491.295, 601.188, 460.642, 405.229, 329.568, 304.163, 344.612, 297.919, 271.427, 530.922, 1352.913, 747.248, 551.261, 884.74, 411.412, 342.301, 471.617, 453.777, 1169.5, 782.442, 415.336, 344.334, 442.515, 380.486, 386.391, 580.646, 509.764, 930.807, 2485.806, 4246.125, 5824.715, 9871.425, 5514.357, 2762.813, 2780.253, 1882.01, 344.971, 560.578];
+const SMA5=[252.1, 247.9, 244.1, 241.8, 239.9, 239.9, 244.2, 247.6, 250.8, 252.3, 251.2, 247.9, 246.1, 242.6, 241.8, 240.6, 240.4, 240.2, 239.6, 237.0, 234.2, 231.7, 226.3, 223.0, 219.7, 215.9, 212.6, 211.4, 207.6, 206.6, 205.8, 203.5, 202.3, 201.6, 197.6, 193.5, 190.2, 185.2, 180.0, 176.3, 172.7, 168.5, 165.4, 165.9, 166.5, 168.6, 170.9, 172.9, 174.8, 173.2, 171.3, 170.1, 168.7, 164.0, 162.8, 163.4, 163.9, 162.3, 162.6, 160.6, 157.4, 154.0, 153.1, 152.5, 156.8, 161.6, 165.0, 168.3, 170.9, 169.2, 165.9, 163.4, 161.4, 158.9, 157.5, 157.1, 157.6, 156.7, 156.2, 155.7, 156.5, 158.6, 160.3, 161.7, 164.0, 164.6, 164.3, 164.7, 165.6, 166.3, 167.4, 167.8, 168.8, 169.5, 169.2, 170.2, 174.7, 182.7, 195.1, 210.1, 225.1, 241.6, 255.5, 266.0, 268.7, 264.9],SMA10=[252.75, 251.8, 249.9, 247.85, 246.25, 246.0, 246.05, 245.85, 246.3, 246.1, 245.55, 246.05, 246.85, 246.7, 247.05, 245.9, 244.15, 243.15, 241.1, 239.4, 237.4, 236.05, 233.25, 231.3, 228.35, 225.05, 222.15, 218.85, 215.3, 213.15, 210.85, 208.05, 206.85, 204.6, 202.1, 199.65, 196.85, 193.75, 190.8, 186.95, 183.1, 179.35, 175.3, 172.95, 171.4, 170.65, 169.7, 169.15, 170.35, 169.85, 169.95, 170.5, 170.8, 169.4, 168.0, 167.35, 167.0, 165.5, 163.3, 161.7, 160.4, 158.95, 157.7, 157.55, 158.7, 159.5, 159.5, 160.7, 161.7, 163.0, 163.75, 164.2, 164.85, 164.9, 163.35, 161.5, 160.5, 159.05, 157.55, 156.6, 156.8, 158.1, 158.5, 158.95, 159.85, 160.55, 161.45, 162.5, 163.65, 165.15, 166.0, 166.05, 166.75, 167.55, 167.75, 168.8, 171.25, 175.75, 182.3, 189.65, 197.65, 208.15, 219.1, 230.55, 239.4, 245.0],SMA20=[260.42, 257.8, 255.4, 253.25, 251.38, 250.2, 249.62, 249.05, 248.95, 249.05, 249.15, 248.92, 248.38, 247.28, 246.65, 245.95, 245.1, 244.5, 243.7, 242.75, 241.48, 241.05, 240.05, 239.0, 237.7, 235.48, 233.15, 231.0, 228.2, 226.28, 224.12, 222.05, 220.05, 217.95, 215.22, 212.35, 209.5, 206.3, 203.05, 200.05, 196.98, 193.7, 191.08, 188.78, 186.75, 185.15, 183.28, 181.45, 180.58, 178.4, 176.52, 174.92, 173.05, 171.18, 169.7, 169.0, 168.35, 167.32, 166.82, 165.78, 165.18, 164.72, 164.25, 163.48, 163.35, 163.43, 163.25, 163.1, 162.5, 162.35, 162.07, 161.57, 161.28, 161.22, 161.02, 160.5, 160.0, 159.88, 159.62, 159.8, 160.28, 161.15, 161.68, 161.93, 161.6, 161.02, 160.98, 160.78, 160.6, 160.88, 161.4, 162.07, 162.62, 163.25, 163.8, 164.68, 166.35, 169.12, 172.98, 177.4, 181.82, 187.1, 192.92, 199.05, 203.58, 206.9],SMA60=[249.18, 249.31, 249.22, 248.97, 248.88, 249.12, 249.35, 249.59, 249.89, 250.12, 250.32, 250.35, 250.41, 250.57, 250.95, 251.22, 251.48, 251.88, 252.13, 252.16, 252.02, 252.02, 251.91, 251.88, 251.77, 251.38, 250.77, 250.2, 249.5, 249.18, 248.49, 247.78, 246.77, 245.32, 243.8, 242.01, 240.35, 238.79, 236.82, 234.91, 232.96, 230.85, 228.84, 227.01, 225.28, 223.61, 222.02, 220.5, 219.24, 217.91, 216.6, 215.3, 213.82, 212.13, 210.52, 209.1, 207.65, 206.04, 204.52, 202.86, 201.21, 199.82, 198.46, 197.08, 195.93, 194.68, 193.22, 191.85, 190.42, 189.01, 187.58, 186.18, 184.79, 183.45, 181.98, 180.62, 179.28, 177.83, 176.5, 175.21, 174.14, 173.19, 172.33, 171.39, 170.57, 169.87, 169.17, 168.44, 167.89, 167.21, 166.67, 166.19, 165.65, 165.22, 164.84, 164.72, 164.9, 165.44, 166.48, 167.66, 169.09, 170.99, 172.95, 174.82, 176.18, 177.12];
+const LSELL=[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],LRET=[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],LBAL=[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+const IFOR=[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+const NOTICE=[false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true, true, true, false, false];
+const PUNISH=[false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true, true];
+const CUP='#e05050',CDN='#3fb950';
+const ALL_CHARTS={};
+const LPAD=0,RPAD=62;
+
+const xhairPlugin={id:'xhair',afterDraw(chart){
+  if(chart._xhairIdx==null)return;
+  const {ctx,chartArea,scales:{x,y}}=chart;if(!x||!y)return;
+  const px=x.getPixelForValue(chart._xhairIdx);
+  if(px<chartArea.left||px>chartArea.right)return;
+  ctx.save();ctx.beginPath();ctx.moveTo(px,chartArea.top);ctx.lineTo(px,chartArea.bottom);
+  ctx.strokeStyle='rgba(255,220,50,0.75)';ctx.lineWidth=1.5;ctx.setLineDash([3,2]);ctx.stroke();ctx.restore();
+}};
+
+function drawBands(ctx,x,y,arr,fillClr,barClr,barH){
+  let inB=false,sx=0;
+  function flush(ex){ctx.fillStyle=fillClr;ctx.fillRect(sx,y.top,ex-sx,y.bottom-y.top);ctx.fillStyle=barClr;ctx.fillRect(sx,y.top,ex-sx,barH);}
+  arr.forEach((v,i)=>{const xp=x.getPixelForValue(i);if(v&&!inB){inB=true;sx=xp;}if(!v&&inB){inB=false;flush(xp);}});
+  if(inB)flush(x.getPixelForValue(arr.length-1)+8);
+}
+function noticeBgPlugin(id){return {id:'nb_'+id,beforeDraw(chart){
+  const {ctx,chartArea,scales:{x,y}}=chart;if(!x||!y)return;
+  ctx.save();
+  drawBands(ctx,x,y,NOTICE,'rgba(220,160,0,.04)','rgba(220,160,0,.90)',4);
+  drawBands(ctx,x,y,PUNISH,'rgba(255,40,40,.06)','rgba(255,50,50,.95)',6);
+  ctx.restore();
+}};}
+
+const XS={ticks:{maxTicksLimit:12,color:'#7a8899',font:{size:9}},grid:{color:'rgba(255,255,255,.04)'}};
+const YS={position:'right',ticks:{color:'#7a8899',font:{size:9}},grid:{color:'rgba(255,255,255,.05)'}};
+const BASE_OPT={responsive:true,maintainAspectRatio:false,animation:false,
+  plugins:{legend:{display:false},tooltip:{enabled:false}},
+  onHover(evt,elems,chart){
+    const pts=chart.getElementsAtEventForMode(evt,'index',{intersect:false},false);
+    if(!pts.length)return;syncAll(pts[0].index,chart.id);showPanel(pts[0].index);
+  }
+};
+
+function syncAll(idx,srcId){
+  Object.entries(ALL_CHARTS).forEach(([id,c])=>{c._xhairIdx=idx;if(id!==srcId)c.tooltip.setActiveElements([{datasetIndex:0,index:idx}],{x:0,y:0});c.update('none');});
+}
+
+let _hpX=0,_hpY=0;
+document.addEventListener('mousemove',e=>{_hpX=e.clientX;_hpY=e.clientY;const hp=document.getElementById('hp');if(hp.style.display==='block')_posHP(hp);});
+function _posHP(hp){const W=window.innerWidth,H=window.innerHeight,rw=hp.offsetWidth||220,rh=hp.offsetHeight||200;hp.style.left=((_hpX+18+rw>W)?_hpX-rw-8:_hpX+18)+'px';hp.style.top=((_hpY+rh>H)?H-rh-8:_hpY+4)+'px';}
+function _fmt(v,u){return v!=null?v+u:'—';}
+function _fmtS(v){return v!=null?'O'+SO[v]+' H'+SH[v]+' L'+SL[v]+' C'+SC[v]:'—';}
+function showPanel(i){
+  const hp=document.getElementById('hp');hp.style.display='block';_posHP(hp);
+  const d=DATES[i];document.getElementById('hdate').textContent=d?d.slice(0,4)+'/'+d.slice(4,6)+'/'+d.slice(6):'—';
+  document.getElementById('hs').textContent=_fmtS(SC[i]!=null?i:null);
+  document.getElementById('hv').textContent=SV[i]!=null?SV[i].toFixed(0)+' 張':'—';
+  
+  
+  const fl=[];if(NOTICE[i])fl.push('<span style="color:#e3b341">⚠ 注意股</span>');if(PUNISH[i])fl.push('<span style="color:#e05050">🔴 處置中</span>');
+  document.getElementById('hflag').innerHTML=fl.join(' ');
+}
+
+const MA_STYLES=[{label:'MA5',color:'rgba(255,255,255,.85)',width:1},{label:'MA10',color:'rgba(255,220,0,.85)',width:1},{label:'MA20',color:'rgba(255,120,0,.85)',width:1.2},{label:'MA60',color:'rgba(180,100,255,.85)',width:1.5}];
+
+const colors=DATES.map((_,i)=>SC[i]!=null&&SC[i]>=SO[i]?CUP:CDN);
+const vcol=DATES.map((_,i)=>SC[i]!=null&&SC[i]>=SO[i]?'rgba(224,80,80,.3)':'rgba(63,185,80,.3)');
+const maxV=Math.max(...SV.filter(v=>v!=null&&!isNaN(v)));
+const maDsets=[SMA5,SMA10,SMA20,SMA60].map((arr,i)=>{const st=MA_STYLES[i];return {label:st.label,data:arr,type:'line',borderColor:st.color,backgroundColor:'transparent',pointRadius:0,tension:.1,borderWidth:st.width,yAxisID:'y'};});
+const c1=new Chart('c1',{type:'bar',data:{labels:DATES,datasets:[
+  {label:'vol',data:SV,backgroundColor:vcol,barThickness:6,yAxisID:'yv'},
+  {label:'wick',data:DATES.map((_,i)=>SC[i]!=null?[SL[i],SH[i]]:null),backgroundColor:colors,barThickness:1.5,grouped:false,yAxisID:'y'},
+  {label:'body',data:DATES.map((_,i)=>SC[i]!=null?[Math.min(SO[i],SC[i]),Math.max(SO[i],SC[i])]:null),backgroundColor:colors,barThickness:6,grouped:false,yAxisID:'y'},
+  ...maDsets]},
+  options:{...BASE_OPT,layout:{padding:{left:LPAD+58,right:RPAD}},scales:{x:XS,y:{...YS,afterFit(s){s.width=52;},afterDataLimits(s){s.max*=1.02;s.min*=0.98;}},yv:{display:false,min:0,max:maxV*4,grid:{display:false}}}},
+  plugins:[noticeBgPlugin('c1'),xhairPlugin]});
+ALL_CHARTS['c1']=c1;
+
+
+
+
+document.querySelectorAll('canvas').forEach(c=>{
+  c.addEventListener('mouseleave',()=>{document.getElementById('hp').style.display='none';Object.values(ALL_CHARTS).forEach(ch=>{ch._xhairIdx=null;ch.update('none');});});
+});
+</script>
+</body>
+</html>
