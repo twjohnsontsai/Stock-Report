@@ -5,81 +5,92 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>財經日報_2026-06-17_晚間（簡報）</title>
 <style>
-*{box-sizing:border-box}
-body{font-family:system-ui,-apple-system,sans-serif;background:#0d1520;color:#c9d1d9;
-      max-width:900px;margin:0 auto;padding:28px 20px;line-height:1.8;font-size:1.05rem}
-h1{color:#58a6ff;font-size:1.5rem;border-bottom:2px solid #21262d;padding-bottom:12px;margin-bottom:24px}
-.card{background:#111922;border:1px solid #21262d;border-radius:10px;
-       padding:20px 24px;margin:16px 0}
-.card h2{color:#e3b341;font-size:1.15rem;margin-top:0;border-bottom:1px solid #2d3340;
-          padding-bottom:8px;margin-bottom:16px}
-h3{color:#79c0ff;font-size:1.05rem;margin-top:16px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0a0f1a;font-family:system-ui,-apple-system,sans-serif;color:#c9d1d9;overflow:hidden}
+#deck{width:100%;height:100vh;display:flex;flex-direction:column}
+#progress{height:3px;background:#e3b341;width:0%;transition:width .3s ease}
+.slide-wrapper{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 60px;overflow-y:auto}
+/* 投影片內容 */
+.slide,.slide-cover,.slide-source{max-width:860px;width:100%;line-height:1.75;font-size:1.1rem}
+.slide-cover h1{color:#58a6ff;font-size:2rem;border-bottom:2px solid #21262d;padding-bottom:16px;margin-bottom:20px}
+.slide h2,.slide-source h2{color:#e3b341;font-size:1.5rem;border-bottom:1px solid #2d3340;padding-bottom:10px;margin-bottom:20px}
+.slide-source{color:#8b949e;font-size:.95rem}
+.slide-source h2{color:#8b949e;font-size:1.1rem}
+.slide-source a{color:#6e7681}
+h3{color:#79c0ff;font-size:1.1rem;margin:18px 0 8px}
+p{margin:8px 0}
+ul,ol{padding-left:1.5em}
+li{margin:6px 0}
+strong{color:#f0f6fc}
 a{color:#58a6ff;word-break:break-all}
 a:hover{color:#a5d6ff}
-ul,ol{padding-left:1.4em}
-li{margin:6px 0}
-table{border-collapse:collapse;width:100%;margin:14px 0}
-th{background:#1a2030;color:#e3b341;padding:10px 14px;text-align:left;border:1px solid #30363d}
-td{padding:10px 14px;border:1px solid #30363d;vertical-align:top}
-tr:nth-child(even){background:#161b22}
-strong{color:#f0f6fc}
-hr{border:none;border-top:1px solid #21262d;margin:16px 0}
-p{margin:8px 0}
-.source-section{margin-top:28px;padding-top:16px;border-top:2px solid #21262d;
-                  color:#8b949e;font-size:.9rem}
-.source-section h2{color:#8b949e;font-size:1rem;margin-top:0}
-.source-section a{color:#6e7681}
-.source-section li{margin:3px 0}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:.95rem}
+th{background:#1a2030;color:#e3b341;padding:9px 14px;text-align:left;border:1px solid #30363d}
+td{padding:9px 14px;border:1px solid #30363d;vertical-align:top}
+tr:nth-child(even){background:#111922}
+hr{border:none;border-top:1px solid #21262d;margin:14px 0}
+/* 控制列 */
+#ctrl{display:flex;align-items:center;justify-content:center;gap:24px;padding:14px 40px;background:#06090f;border-top:1px solid #1c2333;flex-shrink:0}
+#ctrl button{background:#1a2030;border:1px solid #30363d;color:#c9d1d9;padding:8px 22px;border-radius:6px;font-size:1rem;cursor:pointer;transition:background .2s}
+#ctrl button:hover{background:#21262d}
+#ctrl button:disabled{opacity:.3;cursor:default}
+#counter{color:#8b949e;font-size:.9rem;min-width:70px;text-align:center}
+/* 返回按鈕 */
+#mob-back{position:fixed;bottom:70px;left:20px;z-index:9999;background:rgba(0,0,0,.45);border:1px solid rgba(192,152,64,.45);color:#58a6ff;padding:8px 18px;border-radius:20px;font-size:1rem;font-weight:700;text-decoration:none;backdrop-filter:blur(6px)}
 </style>
 </head>
 <body>
 <a id="mob-back" onclick="var fb=location.hostname.includes('github.io')?'https://twjohnsontsai.github.io/Stock-Report/':'https://twweiyuan.com/#stock';history.length>1?history.back():location.href=fb" href="javascript:void(0)" title="返回">&#8592; 返回</a>
-<style>#mob-back{display:block;position:fixed;bottom:20px;left:20px;z-index:9999;background:rgba(0,0,0,.35);border:1px solid rgba(192,152,64,.45);color:#58a6ff;padding:10px 22px;border-radius:24px;font-size:1.2rem;font-weight:700;text-decoration:none;backdrop-filter:blur(6px)}</style>
-<h1>2026年AI浪潮與全球經濟新賽局：市場趨勢、投資分析與資產配置簡報</h1>
+<div id="deck">
+  <div id="progress"></div>
+  <div class="slide-wrapper" id="s0" style="display:flex"><div class="slide slide-cover"><h1>2026年AI浪潮與全球經濟新賽局：市場趨勢、投資分析與資產配置簡報</h1>
 <p>本簡報旨在彙整近期關於AI硬體轉型、被動元件產業週期、ETF市場發展及全球宏觀經濟動向之核心觀察。內容綜合多位產業專家與財經評論員之分析，探討技術革新如何驅動市場資金流向，並提供具體的投資策略建議。</p>
 <hr />
-<div class="card"><h2>一、 執行摘要</h2>
+</div></div>
+<div class="slide-wrapper" id="s1" style="display:none"><div class="slide"><h2>一、 執行摘要</h2>
 <p>當前全球AI發展正進入「算力需求」與「成本控製」的平衡期。雲端巨頭為降低訓練與推論成本，正加速從通用型GPU轉向自行研發的ASIC（專用集成電路）晶片。與此同時，台灣經濟基本面強勁，2026年GDP增長預期上修至9%甚至10%。在資金面上，台灣ETF規模已突破9兆元大關，投資行為正從單純追逐熱門股轉向多元資產配置與主動式管理。整體市場氣氛在技術指標修復與地緣政治風險降溫（如美伊停火預期）下，呈現蓄勢待發的態勢。</p>
 <hr />
-</div><div class="card"><h2>二、 關鍵主題詳細分析</h2>
+</div></div>
+<div class="slide-wrapper" id="s2" style="display:none"><div class="slide"><h2>二、 關鍵主題詳細分析</h2>
 <h3>1. AI硬體新賽局：ASIC伺服器的崛起</h3>
 <p>AI伺服器的算力競爭正分化為兩條路徑：以NVIDIA GPU為主的通用型路徑，以及雲端巨頭（CSP）自行研發ASIC的路徑。</p>
 <ul>
-<li><strong>成長動能：</strong> 預計到2026年，ASIC伺服器出貨成長率將達4.6%，GPU為16.1%。雖然GPU成長率較高，但ASIC市場規模預計在2027年提前引爆，達到700至800億美元<a href="https://youtu.be/eWzpSwHIP94" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／錢冠州】</a>。</li>
-<li><strong>成本優勢：</strong> 雲端巨頭開發ASIC（如Google的TPU、Amazon的Trainium/Inferentia）可節省約65%的持有成本。ASIC針對特定功能（如搜尋引擎或社群媒體）設計，具備更高的功耗比與更低的總持有成本<a href="https://youtu.be/eWzpSwHIP94" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／錢冠州】</a>。</li>
+<li><strong>成長動能：</strong> 預計到2026年，ASIC伺服器出貨成長率將達4.6%，GPU為16.1%。雖然GPU成長率較高，但ASIC市場規模預計在2027年提前引爆，達到700至800億美元【股市現場／錢冠州】。</li>
+<li><strong>成本優勢：</strong> 雲端巨頭開發ASIC（如Google的TPU、Amazon的Trainium/Inferentia）可節省約65%的持有成本。ASIC針對特定功能（如搜尋引擎或社群媒體）設計，具備更高的功耗比與更低的總持有成本【股市現場／錢冠州】。</li>
 <li><strong>關鍵受益企業：</strong><ul>
-<li><strong>聯發科：</strong> 打敗博通（Broadcom），成為Google TPU核心供應鏈，預估2027年營收目標上看120億美元，並取得NVIDIA NVLink授權<a href="https://youtu.be/eWzpSwHIP94" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／錢冠州】</a>。</li>
-<li><strong>世芯-KY：</strong> 作為AWS的核心供應鏈，其3奈米製程產品預計於2026年量產，客戶佔比高達70%<a href="https://youtu.be/eWzpSwHIP94" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／錢冠州】</a>。</li>
+<li><strong>聯發科：</strong> 打敗博通（Broadcom），成為Google TPU核心供應鏈，預估2027年營收目標上看120億美元，並取得NVIDIA NVLink授權【股市現場／錢冠州】。</li>
+<li><strong>世芯-KY：</strong> 作為AWS的核心供應鏈，其3奈米製程產品預計於2026年量產，客戶佔比高達70%【股市現場／錢冠州】。</li>
 </ul>
 </li>
 </ul>
 <h3>2. 被動元件產業三部曲：從標準品到AI特製化</h3>
 <p>被動元件（MLCC、電感）正迎來類似2017-2018年的大循環，但動能從智慧型手機轉向AI伺服器。</p>
 <ul>
-<li><strong>需求結構變化：</strong> 過去主要為中低階標準品，現今由AI伺服器驅動高規格需求（高容值、高耐壓MLCC及特殊規格電感）。AI對MLCC的銷量需求比傳統市高出十倍<a href="https://youtu.be/h6LTISoI9s4" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【錢線百分百／聖潔】</a>。</li>
-<li><strong>供應缺口：</strong> 高階產品製程複雜，產能不足，設備交期長達1.5年。預計未來三年供需將持續吃緊<a href="https://youtu.be/h6LTISoI9s4" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【錢線百分百／聖潔】</a>。</li>
-<li><strong>潛在黑馬：</strong> 三系瑞（Cyntec）在AI伺服器電感領域佔比達41.75%，成功打入NVIDIA與AMD供應鏈，打破美日大廠壟斷<a href="https://youtu.be/h6LTISoI9s4" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【錢線百分百／聖潔】</a>。</li>
+<li><strong>需求結構變化：</strong> 過去主要為中低階標準品，現今由AI伺服器驅動高規格需求（高容值、高耐壓MLCC及特殊規格電感）。AI對MLCC的銷量需求比傳統市高出十倍【錢線百分百／聖潔】。</li>
+<li><strong>供應缺口：</strong> 高階產品製程複雜，產能不足，設備交期長達1.5年。預計未來三年供需將持續吃緊【錢線百分百／聖潔】。</li>
+<li><strong>潛在黑馬：</strong> 三系瑞（Cyntec）在AI伺服器電感領域佔比達41.75%，成功打入NVIDIA與AMD供應鏈，打破美日大廠壟斷【錢線百分百／聖潔】。</li>
 </ul>
 <h3>3. ETF市場盛況與資產配置優化</h3>
 <p>台灣ETF市場發展迅速，從0050誕生至今，總規模已達9兆元，展現極強的「金融軟實力」。</p>
 <ul>
 <li><strong>黃仁勳「五層蛋糕論」配置：</strong><ul>
 <li>底層能源：綠色電力ETF（如00920）。</li>
-<li>晶片、基礎設施、模型、落地運用：半導體ETF（如00892）<a href="https://youtu.be/mH0vP1yxDoA" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【理財達人秀／黃昭棠】</a>。</li>
+<li>晶片、基礎設施、模型、落地運用：半導體ETF（如00892）【理財達人秀／黃昭棠】。</li>
 </ul>
 </li>
-<li><strong>主動式基金 vs. 被動式ETF：</strong> 數據顯示，許多主動式台股基金長期績效遠勝被動式ETF（十年報酬率有高達31倍者）。投資者不應過度追求溢價的新ETF，應關注績效穩健的長青基金<a href="https://youtu.be/h6LTISoI9s4" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【錢線百分百／齊風】</a>。</li>
-<li><strong>防禦型配置：</strong> 在行情熱絡時，建議搭配金融股、房地產REITs、生技股或高股息債券進行防禦性平衡<a href="https://youtu.be/h6LTISoI9s4" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【錢線百分百／齊風】</a>。</li>
+<li><strong>主動式基金 vs. 被動式ETF：</strong> 數據顯示，許多主動式台股基金長期績效遠勝被動式ETF（十年報酬率有高達31倍者）。投資者不應過度追求溢價的新ETF，應關注績效穩健的長青基金【錢線百分百／齊風】。</li>
+<li><strong>防禦型配置：</strong> 在行情熱絡時，建議搭配金融股、房地產REITs、生技股或高股息債券進行防禦性平衡【錢線百分百／齊風】。</li>
 </ul>
 <h3>4. 技術面指標與操作法：定心與定法</h3>
 <p>在市場震盪期，建立紀律性的操作法（定法）是投資成功的關鍵。</p>
 <ul>
-<li><strong>均線操作：</strong> 沿著五日均線操作，不破不賣。即使盤中劇烈震盪，只要收盤未跌破設定的法規（如月線或十日線），應保持定力，避免被「洗盤」<a href="https://youtu.be/KTDIcYhWpEM" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【理財達人秀／朱家泓】</a>。</li>
-<li><strong>恐慌指標利用：</strong> 當VIX指數極速飆升時，通常是中長線的好買點<a href="https://youtu.be/RLnCXCzSqUY" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【理財達人秀／張林忠】</a>。</li>
-<li><strong>集團與投信作帳：</strong> 六月下旬應聚焦投信與集團（如華新、連電、中美晶）的半年報作帳行情<a href="https://youtu.be/KTDIcYhWpEM" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【理財達人秀／翁士峻】</a>。</li>
+<li><strong>均線操作：</strong> 沿著五日均線操作，不破不賣。即使盤中劇烈震盪，只要收盤未跌破設定的法規（如月線或十日線），應保持定力，避免被「洗盤」【理財達人秀／朱家泓】。</li>
+<li><strong>恐慌指標利用：</strong> 當VIX指數極速飆升時，通常是中長線的好買點【理財達人秀／張林忠】。</li>
+<li><strong>集團與投信作帳：</strong> 六月下旬應聚焦投信與集團（如華新、連電、中美晶）的半年報作帳行情【理財達人秀／翁士峻】。</li>
 </ul>
 <hr />
-</div><div class="card"><h2>三、 重要語錄與背景</h2>
+</div></div>
+<div class="slide-wrapper" id="s3" style="display:none"><div class="slide"><h2>三、 重要語錄與背景</h2>
 <table>
 <thead>
 <tr>
@@ -117,7 +128,8 @@ p{margin:8px 0}
 </tbody>
 </table>
 <hr />
-</div><div class="card"><h2>四、 產業動態觀察表</h2>
+</div></div>
+<div class="slide-wrapper" id="s4" style="display:none"><div class="slide"><h2>四、 產業動態觀察表</h2>
 <table>
 <thead>
 <tr>
@@ -155,7 +167,8 @@ p{margin:8px 0}
 </tbody>
 </table>
 <hr />
-</div><div class="card"><h2>五、 行動洞察與建議</h2>
+</div></div>
+<div class="slide-wrapper" id="s5" style="display:none"><div class="slide"><h2>五、 行動洞察與建議</h2>
 <ol>
 <li><strong>關注ASIC轉型機會：</strong> 聯發科與世芯-KY在ASIC領域的地位已逐漸超越傳統美系大廠（博通、馬維爾），其長期營收目標具備高爆發力，適合分批佈局。</li>
 <li><strong>落實「回後買上漲」策略：</strong> 針對多頭結構明確的族群（如光學、被動元件），待回撤至月線或十日線且指標交叉向上時再行介入，避免在高點追價。</li>
@@ -164,7 +177,8 @@ p{margin:8px 0}
 <li><strong>掌握作帳行情時間點：</strong> 六月最後兩週為投信與集團衝刺績效的關鍵期，優先選擇投本比高且具備熱門AI題材的中小型個股。</li>
 </ol>
 <hr />
-</div><div class="card"><h2>⚠ 警告：以下節目今日未抓到影片</h2>
+</div></div>
+<div class="slide-wrapper" id="s6" style="display:none"><div class="slide"><h2>⚠ 警告：以下節目今日未抓到影片</h2>
 <ul>
 <li>理財金錢道</li>
 <li>就市論勢</li>
@@ -175,7 +189,8 @@ p{margin:8px 0}
 <p>可能原因：頻道尚未上傳、標題關鍵字不符、或網路問題。</p>
 </blockquote>
 <hr />
-</div><div class="source-section"><h2>來源影片</h2>
+</div></div>
+<div class="slide-wrapper" id="s7" style="display:none"><div class="slide-source"><h2>來源影片</h2>
 <h3>股市全芳位</h3>
 <ul>
 <li><a href="https://youtu.be/zO0sacF1B1s">守住周線短線續強，偏多至日KD交叉向下｜20260617 #李蜀芳 分析師 #股市全芳位</a></li>
@@ -223,6 +238,29 @@ p{margin:8px 0}
 <li><a href="https://youtu.be/RLnCXCzSqUY">【理財達人秀】超級央行週 最恐慌已過？ 股期量大指路 低軌為何不漲？｜李兆華、張林忠 2026.06.16 part3</a></li>
 <li><a href="https://youtu.be/uC0KL2WvH0A">【理財達人秀】華許迎首秀 震盪下照賺？ 電源+IC設計 節前看大做小｜李兆華、紀緯明 2026.06.16 part2</a></li>
 <li><a href="https://youtu.be/pnDz6P4bV7U">【理財達人秀】輝達明示沒問題 再創高 被動、矽晶圓、光學 買強｜李兆華、蔡明翰 2026.06.16 part1</a></li>
-</ul></div>
+</ul></div></div>
+  <div id="ctrl">
+    <button id="btnPrev" onclick="go(-1)" disabled>&#9664; 上一頁</button>
+    <span id="counter">1 / 8</span>
+    <button id="btnNext" onclick="go(1)">下一頁 &#9654;</button>
+  </div>
+</div>
+<script>
+var cur=0,tot=8;
+function go(d){
+  document.getElementById('s'+cur).style.display='none';
+  cur=Math.max(0,Math.min(tot-1,cur+d));
+  document.getElementById('s'+cur).style.display='flex';
+  document.getElementById('counter').textContent=(cur+1)+' / '+tot;
+  document.getElementById('btnPrev').disabled=cur===0;
+  document.getElementById('btnNext').disabled=cur===tot-1;
+  document.getElementById('progress').style.width=((cur+1)/tot*100)+'%';
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')go(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(-1);
+});
+document.getElementById('progress').style.width=(1/tot*100)+'%';
+</script>
 </body>
 </html>

@@ -5,62 +5,73 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>財經日報_2026-06-16_晚間（簡報）</title>
 <style>
-*{box-sizing:border-box}
-body{font-family:system-ui,-apple-system,sans-serif;background:#0d1520;color:#c9d1d9;
-      max-width:900px;margin:0 auto;padding:28px 20px;line-height:1.8;font-size:1.05rem}
-h1{color:#58a6ff;font-size:1.5rem;border-bottom:2px solid #21262d;padding-bottom:12px;margin-bottom:24px}
-.card{background:#111922;border:1px solid #21262d;border-radius:10px;
-       padding:20px 24px;margin:16px 0}
-.card h2{color:#e3b341;font-size:1.15rem;margin-top:0;border-bottom:1px solid #2d3340;
-          padding-bottom:8px;margin-bottom:16px}
-h3{color:#79c0ff;font-size:1.05rem;margin-top:16px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0a0f1a;font-family:system-ui,-apple-system,sans-serif;color:#c9d1d9;overflow:hidden}
+#deck{width:100%;height:100vh;display:flex;flex-direction:column}
+#progress{height:3px;background:#e3b341;width:0%;transition:width .3s ease}
+.slide-wrapper{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 60px;overflow-y:auto}
+/* 投影片內容 */
+.slide,.slide-cover,.slide-source{max-width:860px;width:100%;line-height:1.75;font-size:1.1rem}
+.slide-cover h1{color:#58a6ff;font-size:2rem;border-bottom:2px solid #21262d;padding-bottom:16px;margin-bottom:20px}
+.slide h2,.slide-source h2{color:#e3b341;font-size:1.5rem;border-bottom:1px solid #2d3340;padding-bottom:10px;margin-bottom:20px}
+.slide-source{color:#8b949e;font-size:.95rem}
+.slide-source h2{color:#8b949e;font-size:1.1rem}
+.slide-source a{color:#6e7681}
+h3{color:#79c0ff;font-size:1.1rem;margin:18px 0 8px}
+p{margin:8px 0}
+ul,ol{padding-left:1.5em}
+li{margin:6px 0}
+strong{color:#f0f6fc}
 a{color:#58a6ff;word-break:break-all}
 a:hover{color:#a5d6ff}
-ul,ol{padding-left:1.4em}
-li{margin:6px 0}
-table{border-collapse:collapse;width:100%;margin:14px 0}
-th{background:#1a2030;color:#e3b341;padding:10px 14px;text-align:left;border:1px solid #30363d}
-td{padding:10px 14px;border:1px solid #30363d;vertical-align:top}
-tr:nth-child(even){background:#161b22}
-strong{color:#f0f6fc}
-hr{border:none;border-top:1px solid #21262d;margin:16px 0}
-p{margin:8px 0}
-.source-section{margin-top:28px;padding-top:16px;border-top:2px solid #21262d;
-                  color:#8b949e;font-size:.9rem}
-.source-section h2{color:#8b949e;font-size:1rem;margin-top:0}
-.source-section a{color:#6e7681}
-.source-section li{margin:3px 0}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:.95rem}
+th{background:#1a2030;color:#e3b341;padding:9px 14px;text-align:left;border:1px solid #30363d}
+td{padding:9px 14px;border:1px solid #30363d;vertical-align:top}
+tr:nth-child(even){background:#111922}
+hr{border:none;border-top:1px solid #21262d;margin:14px 0}
+/* 控制列 */
+#ctrl{display:flex;align-items:center;justify-content:center;gap:24px;padding:14px 40px;background:#06090f;border-top:1px solid #1c2333;flex-shrink:0}
+#ctrl button{background:#1a2030;border:1px solid #30363d;color:#c9d1d9;padding:8px 22px;border-radius:6px;font-size:1rem;cursor:pointer;transition:background .2s}
+#ctrl button:hover{background:#21262d}
+#ctrl button:disabled{opacity:.3;cursor:default}
+#counter{color:#8b949e;font-size:.9rem;min-width:70px;text-align:center}
+/* 返回按鈕 */
+#mob-back{position:fixed;bottom:70px;left:20px;z-index:9999;background:rgba(0,0,0,.45);border:1px solid rgba(192,152,64,.45);color:#58a6ff;padding:8px 18px;border-radius:20px;font-size:1rem;font-weight:700;text-decoration:none;backdrop-filter:blur(6px)}
 </style>
 </head>
 <body>
 <a id="mob-back" onclick="var fb=location.hostname.includes('github.io')?'https://twjohnsontsai.github.io/Stock-Report/':'https://twweiyuan.com/#stock';history.length>1?history.back():location.href=fb" href="javascript:void(0)" title="返回">&#8592; 返回</a>
-<style>#mob-back{display:block;position:fixed;bottom:20px;left:20px;z-index:9999;background:rgba(0,0,0,.35);border:1px solid rgba(192,152,64,.45);color:#58a6ff;padding:10px 22px;border-radius:24px;font-size:1.2rem;font-weight:700;text-decoration:none;backdrop-filter:blur(6px)}</style>
-<h1>2026年AI浪潮下半場：產業轉型、資本市場動能與關鍵零組件深度簡報</h1>
+<div id="deck">
+  <div id="progress"></div>
+  <div class="slide-wrapper" id="s0" style="display:flex"><div class="slide slide-cover"><h1>2026年AI浪潮下半場：產業轉型、資本市場動能與關鍵零組件深度簡報</h1>
 <p>本簡報旨在彙整近期金融市場對於 AI 產業鏈、半導體發展、被動元件超級循環以及台股資本市場動能的深度分析，提供投資決策之關鍵洞察。</p>
-<div class="card"><h2>壹、 執行摘要</h2>
+</div></div>
+<div class="slide-wrapper" id="s1" style="display:none"><div class="slide"><h2>壹、 執行摘要</h2>
 <p>2026年下半年的全球市場仍聚焦於 AI 軍備競賽的延伸。隨着 OpenAI、Anthropic 與 SpaceX 等 AI 巨頭進入 IPO 階段，資本市場對 AI 的估值體系正在重構。產業層面，焦點已從單純的晶片算力，擴散至支撐 AI 運行的「電力管理（HVDC/BBU）」、數據傳輸的「光電整合（CPO/矽光子）」以及底層硬件的「被動元件（MLCC/電阻）」。此外，傳統的金融與營建族群亦在政策與資金輪動下出現轉機。</p>
-</div><div class="card"><h2>貳、 核心主題深度分析</h2>
+</div></div>
+<div class="slide-wrapper" id="s2" style="display:none"><div class="slide"><h2>貳、 核心主題深度分析</h2>
 <h3>一、 AI 資本市場狂熱：IPO 熱潮與超高估值</h3>
 <p>AI 巨頭的掛牌計劃成爲市場關注焦點，其估值已超越傳統企業範疇。
-*   <strong>SpaceX 估值飆升：</strong> SpaceX（Space S）掛牌兩天內股價大漲 40%，其市值估計從 1.6 兆美元跳升至 2.2 兆美元，規模已超越台積電。<a href="https://youtu.be/a-HuGqvOlvc" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【理財達人秀／王建文】</a>
-*   <strong>IPO 軍備競賽：</strong> OpenAI 計劃掛牌，背後股東包含軟銀、英偉達、亞馬遜與微軟；Anthropic 的估值亦接近 1 兆美元。這顯示 AI 的熱度不僅侷限於硬件銷售，更轉向資本市場的長期佈局。<a href="https://youtu.be/a-HuGqvOlvc" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【理財達人秀／王建文】</a></p>
+*   <strong>SpaceX 估值飆升：</strong> SpaceX（Space S）掛牌兩天內股價大漲 40%，其市值估計從 1.6 兆美元跳升至 2.2 兆美元，規模已超越台積電。【理財達人秀／王建文】
+*   <strong>IPO 軍備競賽：</strong> OpenAI 計劃掛牌，背後股東包含軟銀、英偉達、亞馬遜與微軟；Anthropic 的估值亦接近 1 兆美元。這顯示 AI 的熱度不僅侷限於硬件銷售，更轉向資本市場的長期佈局。【理財達人秀／王建文】</p>
 <h3>二、 被動元件的超級循環（Super Cycle）</h3>
 <p>AI 服務器的功耗劇增，帶動被動元件規格全面升級，形成新一輪漲價潮。
-*   <strong>需求翻倍：</strong> 在 GB200 時代，MLCC 用量約 30 萬顆，到 B200 時代則跳增至 50 萬顆，增長近一倍。此外，800V 高壓直流（HVDC）系統需要更高耐壓、高容值的組件。<a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠】</a>
-*   <strong>產能排擠效應：</strong> 村田製作所（Murata）等日韓大廠將產能移往 AI 用高階 MLCC，導致中低階標準型產品出現缺口。高階 MLCC 生產難度大、良率僅約 50%，交期已拉長至 50 天以上。<a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠、孫嘉明】</a>
+*   <strong>需求翻倍：</strong> 在 GB200 時代，MLCC 用量約 30 萬顆，到 B200 時代則跳增至 50 萬顆，增長近一倍。此外，800V 高壓直流（HVDC）系統需要更高耐壓、高容值的組件。【股市現場／胡毓棠】
+*   <strong>產能排擠效應：</strong> 村田製作所（Murata）等日韓大廠將產能移往 AI 用高階 MLCC，導致中低階標準型產品出現缺口。高階 MLCC 生產難度大、良率僅約 50%，交期已拉長至 50 天以上。【股市現場／胡毓棠、孫嘉明】
 *   <strong>關鍵規格分析：</strong>
     *   <strong>NP0 電容：</strong> 具備接近零的溫度係數，確保在 AI 服務器極大電流變動下性能穩定。
-    *   <strong>牛角電容（Snap-in）：</strong> 具備特殊腳位可直接嵌入 PCB，承受高電壓、大電流，是 AI 數據中心電源模組的核心需求。<a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠】</a></p>
+    *   <strong>牛角電容（Snap-in）：</strong> 具備特殊腳位可直接嵌入 PCB，承受高電壓、大電流，是 AI 數據中心電源模組的核心需求。【股市現場／胡毓棠】</p>
 <h3>三、 光通訊與 CPO 的轉型與比價</h3>
 <p>數據中心對數據傳輸速率的要求，促使產業向矽光子與 CPO（共同封裝光學）轉型。
-*   <strong>新舊 CPO 輪動：</strong> 市場正從「舊 CPO」（傳統光模組）轉向「新 CPO」（矽光子整合）。大立光（Largan）明確表示將轉型攻入矽光子與 CPO 領域，以避免被 AI 時代淘汰。<a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠】</a>
-*   <strong>產能佈局：</strong> 訊芯（Luxshare）作爲鴻海集團 CPO 核心，其 800G 光收發模組已在越南廠量產，預期 2026 年底月產能將大幅度增長，並與 Broadcom 深度合作開發下一代 CPO 解決方案。<a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠】</a></p>
+*   <strong>新舊 CPO 輪動：</strong> 市場正從「舊 CPO」（傳統光模組）轉向「新 CPO」（矽光子整合）。大立光（Largan）明確表示將轉型攻入矽光子與 CPO 領域，以避免被 AI 時代淘汰。【股市現場／胡毓棠】
+*   <strong>產能佈局：</strong> 訊芯（Luxshare）作爲鴻海集團 CPO 核心，其 800G 光收發模組已在越南廠量產，預期 2026 年底月產能將大幅度增長，並與 Broadcom 深度合作開發下一代 CPO 解決方案。【股市現場／胡毓棠】</p>
 <h3>四、 台積電與半導體供應鏈</h3>
 <ul>
-<li><strong>神山新高：</strong> 外資對台積電目標價看至 3500 元，主要基於其在 AI 晶片及先進封裝（CoWoS）的壟斷地位。<a href="https://youtu.be/v4xP_0swwIw" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【錢線百分百／劉祝華】</a></li>
-<li><strong>聯發科 ASIC 轉型：</strong> 聯發科（發哥）積極切入 ASIC（特殊應用晶片）賽道，其 IP 比重提升將拉高整體本益比評價，被視爲具備「萬金爺」潛力的個股。<a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠】</a></li>
+<li><strong>神山新高：</strong> 外資對台積電目標價看至 3500 元，主要基於其在 AI 晶片及先進封裝（CoWoS）的壟斷地位。【錢線百分百／劉祝華】</li>
+<li><strong>聯發科 ASIC 轉型：</strong> 聯發科（發哥）積極切入 ASIC（特殊應用晶片）賽道，其 IP 比重提升將拉高整體本益比評價，被視爲具備「萬金爺」潛力的個股。【股市現場／胡毓棠】</li>
 </ul>
-</div><div class="card"><h2>參、 產業關鍵數據對比</h2>
+</div></div>
+<div class="slide-wrapper" id="s3" style="display:none"><div class="slide"><h2>參、 產業關鍵數據對比</h2>
 <h3>被動元件關鍵廠商與技術優勢表</h3>
 <table>
 <thead>
@@ -76,34 +87,35 @@ p{margin:8px 0}
 <td style="text-align: left;"><strong>國巨 (Yageo)</strong></td>
 <td style="text-align: left;">極大成者 (MLCC/電阻)</td>
 <td style="text-align: left;">目標價 1000 元成爲地板價，AI 產品接單比 (B/B ratio) 達 1.4。</td>
-<td style="text-align: left;"><a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠、孫嘉明】</a></td>
+<td style="text-align: left;">【股市現場／胡毓棠、孫嘉明】</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>和伸堂 (Holy Stone)</strong></td>
 <td style="text-align: left;">NP0 電容 (高階規格)</td>
 <td style="text-align: left;">NP0 技術領先，全球市佔率估計達 80%-90%，受惠 AI 穩壓需求。</td>
-<td style="text-align: left;"><a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠、孫嘉明】</a></td>
+<td style="text-align: left;">【股市現場／胡毓棠、孫嘉明】</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>金山電 (King Sou)</strong></td>
 <td style="text-align: left;">牛角電容</td>
 <td style="text-align: left;">針對 AI 服務器大電流開發，具備技術深度與領先地位。</td>
-<td style="text-align: left;"><a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠】</a></td>
+<td style="text-align: left;">【股市現場／胡毓棠】</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>華新科 (Walsin)</strong></td>
 <td style="text-align: left;">MLCC/電阻</td>
 <td style="text-align: left;">產能利用率回升，電阻產能利用率達 90%，受惠標準品缺貨。</td>
-<td style="text-align: left;"><a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠】</a></td>
+<td style="text-align: left;">【股市現場／胡毓棠】</td>
 </tr>
 </tbody>
 </table>
 <h3>其他轉型潛力股</h3>
 <ul>
-<li><strong>TPK-KY：</strong> 從觸控轉向半導體「玻璃基板」加工，引進鐳射鑽孔設備，搶攻台積電與 Intel 供應鏈。<a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠】</a></li>
-<li><strong>摺米：</strong> 從傳統光學元件轉向 AI 眼鏡、矽光子度膜技術及玻璃基板先進封裝，具備低位階轉機題材。<a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠】</a></li>
+<li><strong>TPK-KY：</strong> 從觸控轉向半導體「玻璃基板」加工，引進鐳射鑽孔設備，搶攻台積電與 Intel 供應鏈。【股市現場／胡毓棠】</li>
+<li><strong>摺米：</strong> 從傳統光學元件轉向 AI 眼鏡、矽光子度膜技術及玻璃基板先進封裝，具備低位階轉機題材。【股市現場／胡毓棠】</li>
 </ul>
-</div><div class="card"><h2>肆、 投資洞察與策略指導</h2>
+</div></div>
+<div class="slide-wrapper" id="s4" style="display:none"><div class="slide"><h2>肆、 投資洞察與策略指導</h2>
 <h3>一、 財務指標估算八步驟：散戶變專家</h3>
 <p>文件揭露了一套透過公開資訊提前掌握個股價值的邏輯（以鴻海爲例）：
 1.  查詢最新一期<strong>累積營收年增率</strong>。
@@ -113,22 +125,24 @@ p{margin:8px 0}
 5.  計算<strong>預估稅後淨利</strong>（預估營收 × 稅後淨利率）。
 6.  計算<strong>預估 EPS</strong>（預估稅後淨利 ÷ 發行股數）。
 7.  設定合適的<strong>盈餘分配率</strong>（參考近三年平均值）。
-8.  計算<strong>預估現金股利</strong>。<a href="https://youtu.be/v4xP_0swwIw" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【錢線百分百／慶龍】</a></p>
+8.  計算<strong>預估現金股利</strong>。【錢線百分百／慶龍】</p>
 <h3>二、 操作實務建議</h3>
 <ul>
-<li><strong>老 AI 股回測：</strong> 緯創、廣達、鴻海等「老 AI」在激情的吃完「萬人宴」後，正進行月線保衛戰。分析認爲本益比已降至合理區間（如緯創約 10-15 倍），下半年隨著輝達新產品推動，仍具備支撐。<a href="https://youtu.be/v4xP_0swwIw" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【錢線百分百／製成、魁老師】</a></li>
-<li><strong>電力管理族群：</strong> HVDC 與 BBU 是 AI 資料中心不可或缺的環節，雖然近期股價偏冷，但隨着英偉達與谷歌導入 800V 系統，長期趨勢確定，應關注低接機會。<a href="https://youtu.be/a-HuGqvOlvc" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【理財達人秀／王建文】</a></li>
-<li><strong>技術指標操作：</strong> 針對高波動的 CPO 或被動元件族群，建議觀察「季線」或「五日線」。強勢股應守住生命線，離均線過遠時不宜追高，待拉回修正乖離後再介入。<a href="https://youtu.be/5K5JoVp98Sg" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【理財達人秀／王建文、股市現場／胡毓棠】</a></li>
+<li><strong>老 AI 股回測：</strong> 緯創、廣達、鴻海等「老 AI」在激情的吃完「萬人宴」後，正進行月線保衛戰。分析認爲本益比已降至合理區間（如緯創約 10-15 倍），下半年隨著輝達新產品推動，仍具備支撐。【錢線百分百／製成、魁老師】</li>
+<li><strong>電力管理族群：</strong> HVDC 與 BBU 是 AI 資料中心不可或缺的環節，雖然近期股價偏冷，但隨着英偉達與谷歌導入 800V 系統，長期趨勢確定，應關注低接機會。【理財達人秀／王建文】</li>
+<li><strong>技術指標操作：</strong> 針對高波動的 CPO 或被動元件族群，建議觀察「季線」或「五日線」。強勢股應守住生命線，離均線過遠時不宜追高，待拉回修正乖離後再介入。【理財達人秀／王建文、股市現場／胡毓棠】</li>
 </ul>
-</div><div class="card"><h2>伍、 關鍵引言錄</h2>
+</div></div>
+<div class="slide-wrapper" id="s5" style="display:none"><div class="slide"><h2>伍、 關鍵引言錄</h2>
 <blockquote>
-<p>「2026年就是爲台積電而生，台積電不跌，大盤根本不可能大跌。」——<a href="https://youtu.be/v4xP_0swwIw" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【錢線百分百／魁老師】</a></p>
-<p>「AI 眼鏡將是新世代最有機會成長的消費性產品，手機的使用頻率將會逐漸降低。」——<a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠】</a></p>
-<p>「被動元件現在的漲價循環，比較像記憶體早期剛開始漲價的階段，後市需求比2018年更大。」——<a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／胡毓棠】</a></p>
-<p>「市場資金很聰明，看到台股創高，本益比低、配息高的金融股就會成爲避風港與吸金焦點。」——<a href="https://youtu.be/W1-_3N3TU0A" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【股市現場／玉堂】</a></p>
+<p>「2026年就是爲台積電而生，台積電不跌，大盤根本不可能大跌。」——【錢線百分百／魁老師】</p>
+<p>「AI 眼鏡將是新世代最有機會成長的消費性產品，手機的使用頻率將會逐漸降低。」——【股市現場／胡毓棠】</p>
+<p>「被動元件現在的漲價循環，比較像記憶體早期剛開始漲價的階段，後市需求比2018年更大。」——【股市現場／胡毓棠】</p>
+<p>「市場資金很聰明，看到台股創高，本益比低、配息高的金融股就會成爲避風港與吸金焦點。」——【股市現場／玉堂】</p>
 </blockquote>
 <hr />
-</div><div class="card"><h2>⚠ 警告：以下節目今日未抓到影片</h2>
+</div></div>
+<div class="slide-wrapper" id="s6" style="display:none"><div class="slide"><h2>⚠ 警告：以下節目今日未抓到影片</h2>
 <ul>
 <li>就市論勢</li>
 <li>財經8點檔</li>
@@ -138,7 +152,8 @@ p{margin:8px 0}
 <p>可能原因：頻道尚未上傳、標題關鍵字不符、或網路問題。</p>
 </blockquote>
 <hr />
-</div><div class="source-section"><h2>來源影片</h2>
+</div></div>
+<div class="slide-wrapper" id="s7" style="display:none"><div class="slide-source"><h2>來源影片</h2>
 <h3>股市全芳位</h3>
 <ul>
 <li><a href="https://youtu.be/AIZbHnQCWmM">周線正乖離過大震盪難免！騰落指標宜改善｜20260616 #李蜀芳 分析師 #股市全芳位</a></li>
@@ -182,6 +197,29 @@ p{margin:8px 0}
 <h3>Catch大錢潮</h3>
 <ul>
 <li><a href="https://youtu.be/3lVE8MUAfA0">1.8兆神話還是泡沫? 馬斯克宇宙夢值天價? 日本散戶搶當太空富翁?│20260616│Catch大錢潮</a></li>
-</ul></div>
+</ul></div></div>
+  <div id="ctrl">
+    <button id="btnPrev" onclick="go(-1)" disabled>&#9664; 上一頁</button>
+    <span id="counter">1 / 8</span>
+    <button id="btnNext" onclick="go(1)">下一頁 &#9654;</button>
+  </div>
+</div>
+<script>
+var cur=0,tot=8;
+function go(d){
+  document.getElementById('s'+cur).style.display='none';
+  cur=Math.max(0,Math.min(tot-1,cur+d));
+  document.getElementById('s'+cur).style.display='flex';
+  document.getElementById('counter').textContent=(cur+1)+' / '+tot;
+  document.getElementById('btnPrev').disabled=cur===0;
+  document.getElementById('btnNext').disabled=cur===tot-1;
+  document.getElementById('progress').style.width=((cur+1)/tot*100)+'%';
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')go(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(-1);
+});
+document.getElementById('progress').style.width=(1/tot*100)+'%';
+</script>
 </body>
 </html>

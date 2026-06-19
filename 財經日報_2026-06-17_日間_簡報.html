@@ -5,41 +5,51 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>財經日報_2026-06-17_日間（簡報）</title>
 <style>
-*{box-sizing:border-box}
-body{font-family:system-ui,-apple-system,sans-serif;background:#0d1520;color:#c9d1d9;
-      max-width:900px;margin:0 auto;padding:28px 20px;line-height:1.8;font-size:1.05rem}
-h1{color:#58a6ff;font-size:1.5rem;border-bottom:2px solid #21262d;padding-bottom:12px;margin-bottom:24px}
-.card{background:#111922;border:1px solid #21262d;border-radius:10px;
-       padding:20px 24px;margin:16px 0}
-.card h2{color:#e3b341;font-size:1.15rem;margin-top:0;border-bottom:1px solid #2d3340;
-          padding-bottom:8px;margin-bottom:16px}
-h3{color:#79c0ff;font-size:1.05rem;margin-top:16px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0a0f1a;font-family:system-ui,-apple-system,sans-serif;color:#c9d1d9;overflow:hidden}
+#deck{width:100%;height:100vh;display:flex;flex-direction:column}
+#progress{height:3px;background:#e3b341;width:0%;transition:width .3s ease}
+.slide-wrapper{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 60px;overflow-y:auto}
+/* 投影片內容 */
+.slide,.slide-cover,.slide-source{max-width:860px;width:100%;line-height:1.75;font-size:1.1rem}
+.slide-cover h1{color:#58a6ff;font-size:2rem;border-bottom:2px solid #21262d;padding-bottom:16px;margin-bottom:20px}
+.slide h2,.slide-source h2{color:#e3b341;font-size:1.5rem;border-bottom:1px solid #2d3340;padding-bottom:10px;margin-bottom:20px}
+.slide-source{color:#8b949e;font-size:.95rem}
+.slide-source h2{color:#8b949e;font-size:1.1rem}
+.slide-source a{color:#6e7681}
+h3{color:#79c0ff;font-size:1.1rem;margin:18px 0 8px}
+p{margin:8px 0}
+ul,ol{padding-left:1.5em}
+li{margin:6px 0}
+strong{color:#f0f6fc}
 a{color:#58a6ff;word-break:break-all}
 a:hover{color:#a5d6ff}
-ul,ol{padding-left:1.4em}
-li{margin:6px 0}
-table{border-collapse:collapse;width:100%;margin:14px 0}
-th{background:#1a2030;color:#e3b341;padding:10px 14px;text-align:left;border:1px solid #30363d}
-td{padding:10px 14px;border:1px solid #30363d;vertical-align:top}
-tr:nth-child(even){background:#161b22}
-strong{color:#f0f6fc}
-hr{border:none;border-top:1px solid #21262d;margin:16px 0}
-p{margin:8px 0}
-.source-section{margin-top:28px;padding-top:16px;border-top:2px solid #21262d;
-                  color:#8b949e;font-size:.9rem}
-.source-section h2{color:#8b949e;font-size:1rem;margin-top:0}
-.source-section a{color:#6e7681}
-.source-section li{margin:3px 0}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:.95rem}
+th{background:#1a2030;color:#e3b341;padding:9px 14px;text-align:left;border:1px solid #30363d}
+td{padding:9px 14px;border:1px solid #30363d;vertical-align:top}
+tr:nth-child(even){background:#111922}
+hr{border:none;border-top:1px solid #21262d;margin:14px 0}
+/* 控制列 */
+#ctrl{display:flex;align-items:center;justify-content:center;gap:24px;padding:14px 40px;background:#06090f;border-top:1px solid #1c2333;flex-shrink:0}
+#ctrl button{background:#1a2030;border:1px solid #30363d;color:#c9d1d9;padding:8px 22px;border-radius:6px;font-size:1rem;cursor:pointer;transition:background .2s}
+#ctrl button:hover{background:#21262d}
+#ctrl button:disabled{opacity:.3;cursor:default}
+#counter{color:#8b949e;font-size:.9rem;min-width:70px;text-align:center}
+/* 返回按鈕 */
+#mob-back{position:fixed;bottom:70px;left:20px;z-index:9999;background:rgba(0,0,0,.45);border:1px solid rgba(192,152,64,.45);color:#58a6ff;padding:8px 18px;border-radius:20px;font-size:1rem;font-weight:700;text-decoration:none;backdrop-filter:blur(6px)}
 </style>
 </head>
 <body>
 <a id="mob-back" onclick="var fb=location.hostname.includes('github.io')?'https://twjohnsontsai.github.io/Stock-Report/':'https://twweiyuan.com/#stock';history.length>1?history.back():location.href=fb" href="javascript:void(0)" title="返回">&#8592; 返回</a>
-<style>#mob-back{display:block;position:fixed;bottom:20px;left:20px;z-index:9999;background:rgba(0,0,0,.35);border:1px solid rgba(192,152,64,.45);color:#58a6ff;padding:10px 22px;border-radius:24px;font-size:1.2rem;font-weight:700;text-decoration:none;backdrop-filter:blur(6px)}</style>
-<h1>2026年6月17日 金融市場與AI產業深度簡報</h1>
-<div class="card"><h2>執行摘要</h2>
+<div id="deck">
+  <div id="progress"></div>
+  <div class="slide-wrapper" id="s0" style="display:flex"><div class="slide slide-cover"><h1>2026年6月17日 金融市場與AI產業深度簡報</h1>
+</div></div>
+<div class="slide-wrapper" id="s1" style="display:none"><div class="slide"><h2>執行摘要</h2>
 <p>本報告綜合分析 2026 年 6 月 17 日之全球與台灣金融市場動態。當前市場呈現高度分化，美股道瓊指數創下歷史新高，但受 AI 龍頭 OpenAI 巨額虧損與獲利了結壓力影響，費城半導體指數大幅拉回。台灣股市則在台指期結算之際展現韌性，由台積電、金融股及被動元件族群領軍，指數站穩所有均線之上。AI 產業正從單純的算力競賽演變為「資本對抗」與「結構性元件缺貨」雙軌發展，特別是被動元件（MLCC、電感、電阻）與光學共同封裝（CPO）技術正迎來新一波爆發期。</p>
 <hr />
-</div><div class="card"><h2>關鍵主題分析</h2>
+</div></div>
+<div class="slide-wrapper" id="s2" style="display:none"><div class="slide"><h2>關鍵主題分析</h2>
 <h3>1. AI 產業的資本對抗與 OpenAI 財務危機</h3>
 <p>AI 熱潮背後的經濟實況逐漸浮現。OpenAI 的支出速度遠超營收成長，反映出算力成本的巨大壓力。
 *   <strong>支出與營收失衡：</strong> OpenAI 2025 年支出高達 340 億美元（研發佔 190 億），但營收僅 130 億美元，淨損較前一年暴增七倍【非凡Morning Call／葉俞璘】。
@@ -47,10 +57,10 @@ p{margin:8px 0}
 *   <strong>未來演進：</strong> AI 發展正朝向「超級人工智慧（ASI）」邁進，預期將引爆更龐大的伺服器建置潮，並帶動 NAND Flash 與 SSD 的倍數成長【非凡Morning Call／葉俞璘】。</p>
 <h3>2. 被動元件：AI 驅動的結構性漲價潮</h3>
 <p>被動元件族群被視為當前最具爆發力的領域，主因是 AI 伺服器（如 GB200）對高品質元件的需求量大增，導致嚴重供不應求。
-*   <strong>全球漲價趨勢：</strong> 日本大廠加美工（NCC）發布漲價訊息後股價飆漲，中國華強北亦出現搶貨潮，漲幅驚人<a href="https://youtu.be/wfOwZe00oDg" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【金融曼哈頓／阮蕙慈】</a>。
+*   <strong>全球漲價趨勢：</strong> 日本大廠加美工（NCC）發布漲價訊息後股價飆漲，中國華強北亦出現搶貨潮，漲幅驚人【金融曼哈頓／阮蕙慈】。
 *   <strong>關鍵技術 NPO MLCC 與 SP-CAP：</strong> 
-    *   NPO MLCC 因溫度係數接近 0，在 AI 高電流波動下表現穩定，目前由<strong>和伸堂</strong>市佔率最高，股價連噴四根漲停<a href="https://youtu.be/wfOwZe00oDg" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【金融曼哈頓／阮蕙慈】</a>。
-    *   SP-CAP 產品因必須放置於 GPU 旁，需求爆發。台灣某業者（外號「金玉滿糖」）直接對標松下（Panasonic），並已進入輝達供應鏈<a href="https://youtu.be/wfOwZe00oDg" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【金融曼哈頓／阮蕙慈】</a>。
+    *   NPO MLCC 因溫度係數接近 0，在 AI 高電流波動下表現穩定，目前由<strong>和伸堂</strong>市佔率最高，股價連噴四根漲停【金融曼哈頓／阮蕙慈】。
+    *   SP-CAP 產品因必須放置於 GPU 旁，需求爆發。台灣某業者（外號「金玉滿糖」）直接對標松下（Panasonic），並已進入輝達供應鏈【金融曼哈頓／阮蕙慈】。
 *   <strong>產業地位提升：</strong> 業界認為記憶體與儲存架構已從配角轉為核心主角，AMD 併購記憶體技術新創 MAX 公司即為明證【非凡Morning Call／陳韋如】。</p>
 <h3>3. 半導體新技術：CoWoS、FOPLP 與 CPO</h3>
 <p>台積電在先進封裝領域持續領先，並帶動供應鏈體系。
@@ -63,7 +73,8 @@ p{margin:8px 0}
 <li><strong>日本央行升息：</strong> 日銀升息一碼至 1%，創 31 年新高，但日股因不確定性消除反而衝破 7 萬點大關【非凡Morning Call／陳韋如】。</li>
 </ul>
 <hr />
-</div><div class="card"><h2>重點個股動態與數據彙整</h2>
+</div></div>
+<div class="slide-wrapper" id="s3" style="display:none"><div class="slide"><h2>重點個股動態與數據彙整</h2>
 <table>
 <thead>
 <tr>
@@ -90,7 +101,7 @@ p{margin:8px 0}
 <td style="text-align: left;"><strong>被動元件</strong></td>
 <td style="text-align: left;">和伸堂 (2458)</td>
 <td style="text-align: left;">NP0 MLCC 領先者，股價連噴四根漲停。</td>
-<td style="text-align: left;"><a href="https://youtu.be/wfOwZe00oDg" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【金融曼哈頓／阮蕙慈】</a></td>
+<td style="text-align: left;">【金融曼哈頓／阮蕙慈】</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>光學/CPO</strong></td>
@@ -119,25 +130,28 @@ p{margin:8px 0}
 </tbody>
 </table>
 <hr />
-</div><div class="card"><h2>重要語錄</h2>
+</div></div>
+<div class="slide-wrapper" id="s4" style="display:none"><div class="slide"><h2>重要語錄</h2>
 <blockquote>
 <p>「AI 的競賽已經變成了一場資本的對抗，科技巨頭必須持續投入算力與資料中心建設，才能夠守住領先地位。」
 ——【非凡Morning Call／葉俞璘】引述專家分析</p>
 <p>「被動元件這一波是 AI 帶動的結構性改變，缺貨漲價才剛開始，就像早期記憶體起漲的第一段，後面有更大的空間。」
-——<a href="https://youtu.be/wfOwZe00oDg" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【金融曼哈頓／阮蕙慈】</a></p>
+——【金融曼哈頓／阮蕙慈】</p>
 <p>「台積電只要擁有了面板級封裝這項技術，就能永遠保持第一。」
 ——【非凡Morning Call／葉俞璘】引述台積電董事長魏哲家</p>
 </blockquote>
 <hr />
-</div><div class="card"><h2>具體洞察與行動建議</h2>
+</div></div>
+<div class="slide-wrapper" id="s5" style="display:none"><div class="slide"><h2>具體洞察與行動建議</h2>
 <ol>
-<li><strong>節前卡位策略：</strong> 隨著台指期結算與端午假期前賣壓化解，市場呈現「凹洞量」後的換手格局。強勢股（如被動元件、光學鏡頭）往往在節前就會開始蠢蠢欲動，投資者應趁震盪拉回時佈局「結後標股」<a href="https://youtu.be/wfOwZe00oDg" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【金融曼哈頓／阮蕙慈】</a>。</li>
-<li><strong>關注漲價傳導效應：</strong> 被動元件漲價趨勢已從 MLCC 蔓延至電阻，且 ODN 廠商已接受漲價，第三、四季仍有上漲空間。可留意國巨家族中如凱美（牛角電容）等具備特殊題材的個股<a href="https://youtu.be/wfOwZe00oDg" target="_blank" style="color:#e3b341;text-decoration:underline;font-weight:500;cursor:pointer">【金融曼哈頓／阮蕙慈】</a>。</li>
+<li><strong>節前卡位策略：</strong> 隨著台指期結算與端午假期前賣壓化解，市場呈現「凹洞量」後的換手格局。強勢股（如被動元件、光學鏡頭）往往在節前就會開始蠢蠢欲動，投資者應趁震盪拉回時佈局「結後標股」【金融曼哈頓／阮蕙慈】。</li>
+<li><strong>關注漲價傳導效應：</strong> 被動元件漲價趨勢已從 MLCC 蔓延至電阻，且 ODN 廠商已接受漲價，第三、四季仍有上漲空間。可留意國巨家族中如凱美（牛角電容）等具備特殊題材的個股【金融曼哈頓／阮蕙慈】。</li>
 <li><strong>避風港選擇：</strong> 當科技股因漲多面臨費半重挫壓力時，金融股（因獲利創高）與重電概念股（因 AI 資料中心對電力的長期需求）具備較強的抗震能力【非凡Morning Call／鄧凱銘】。</li>
 <li><strong>留意技術升級商機：</strong> 蘋果預計明年推動全新品項（AI 助理智慧眼鏡、二代折疊機），相關鏡頭（大立光）與 PCB（華通）設備更新需求值得長期追蹤【非凡Morning Call／陳韋如】。</li>
 </ol>
 <hr />
-</div><div class="card"><h2>⚠ 警告：以下節目今日未抓到影片</h2>
+</div></div>
+<div class="slide-wrapper" id="s6" style="display:none"><div class="slide"><h2>⚠ 警告：以下節目今日未抓到影片</h2>
 <ul>
 <li>非凡最前線</li>
 <li>正午最前線</li>
@@ -146,7 +160,8 @@ p{margin:8px 0}
 <p>可能原因：頻道尚未上傳、標題關鍵字不符、或網路問題。</p>
 </blockquote>
 <hr />
-</div><div class="source-section"><h2>來源影片</h2>
+</div></div>
+<div class="slide-wrapper" id="s7" style="display:none"><div class="slide-source"><h2>來源影片</h2>
 <h3>非凡Morning Call</h3>
 <ul>
 <li><a href="https://youtu.be/gOPKEc0Z1G0">道瓊創高.費半摔5% 台指夜盤挫 超微併記憶體新創 大立光 CPO大驚奇技術領先3個世代 波若威.華通.毅嘉光通訊商機爆發｜主播陳韋如｜【非凡Morning Call】20260617｜非凡財經新聞</a></li>
@@ -156,6 +171,29 @@ p{margin:8px 0}
 <h3>金融曼哈頓</h3>
 <ul>
 <li><a href="https://youtu.be/wfOwZe00oDg">20260617金融曼哈頓 #阮蕙慈 #金融曼哈頓 #大華國際投顧</a></li>
-</ul></div>
+</ul></div></div>
+  <div id="ctrl">
+    <button id="btnPrev" onclick="go(-1)" disabled>&#9664; 上一頁</button>
+    <span id="counter">1 / 8</span>
+    <button id="btnNext" onclick="go(1)">下一頁 &#9654;</button>
+  </div>
+</div>
+<script>
+var cur=0,tot=8;
+function go(d){
+  document.getElementById('s'+cur).style.display='none';
+  cur=Math.max(0,Math.min(tot-1,cur+d));
+  document.getElementById('s'+cur).style.display='flex';
+  document.getElementById('counter').textContent=(cur+1)+' / '+tot;
+  document.getElementById('btnPrev').disabled=cur===0;
+  document.getElementById('btnNext').disabled=cur===tot-1;
+  document.getElementById('progress').style.width=((cur+1)/tot*100)+'%';
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')go(1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(-1);
+});
+document.getElementById('progress').style.width=(1/tot*100)+'%';
+</script>
 </body>
 </html>
