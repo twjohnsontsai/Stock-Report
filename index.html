@@ -35,8 +35,9 @@ a.na:hover{border-left-color:#b04040;color:#e8c0b0;border-color:#5a2818;backgrou
 .frame::before{content:'';position:absolute;top:-1px;left:-1px;width:16px;height:16px;border-top:2px solid var(--verd);border-left:2px solid var(--verd)}
 .frame::after{content:'';position:absolute;bottom:-1px;right:-1px;width:16px;height:16px;border-bottom:2px solid var(--verd);border-right:2px solid var(--verd)}
 .ft{margin-top:40px;text-align:center;font-size:.7rem;color:var(--text-muted);letter-spacing:.12em;padding-top:16px;border-top:1px solid var(--border)}
-.ticker-wrap{display:flex;align-items:stretch;border:1px solid var(--gold-dim);background:linear-gradient(180deg,#1d1708 0%,#141006 100%);margin-bottom:18px;overflow:hidden;border-radius:2px}
-.ticker-lbl{background:var(--gold);color:#0d0b07;padding:10px 16px;font-size:.68rem;font-weight:700;letter-spacing:.18em;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;border-right:1px solid rgba(192,152,64,.5)}
+.ticker-outer{position:sticky;top:0;z-index:20;width:100%;border-bottom:1px solid var(--gold-dim)}
+.ticker-wrap{display:flex;align-items:stretch;background:linear-gradient(180deg,#1a1208 0%,#110d05 100%);overflow:hidden}
+.ticker-lbl{background:var(--gold);color:#0d0b07;padding:10px 20px;font-size:.68rem;font-weight:700;letter-spacing:.2em;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;border-right:2px solid rgba(192,152,64,.6)}
 .ticker-track{overflow:hidden;flex:1}
 .ticker-scroll{display:flex;animation:tkr 35s linear infinite;white-space:nowrap;will-change:transform}
 .ticker-scroll:hover{animation-play-state:paused}
@@ -72,25 +73,7 @@ a:hover::after{left:150%}
 </head>
 <body>
 <div class="pk" aria-hidden="true"></div>
-<div class="wrap">
-  <div class="hd">
-    <svg class="emblem" width="54" height="54" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-      <circle cx="28" cy="28" r="26.5" stroke="currentColor" stroke-width=".5" opacity=".3"/>
-      <circle cx="28" cy="28" r="20" stroke="currentColor" stroke-width=".5" opacity=".2"/>
-      <polygon points="28,4 41,12 48,24 48,32 41,44 28,52 15,44 8,32 8,24 15,12" stroke="currentColor" stroke-width=".75" opacity=".55"/>
-      <polygon points="28,16 38,28 28,40 18,28" stroke="currentColor" stroke-width="1" opacity=".8"/>
-      <circle cx="28" cy="28" r="2" fill="currentColor"/>
-      <circle cx="28" cy="4" r="1.2" fill="currentColor" opacity=".5"/>
-      <circle cx="28" cy="52" r="1.2" fill="currentColor" opacity=".5"/>
-      <circle cx="8" cy="28" r="1.2" fill="currentColor" opacity=".5"/>
-      <circle cx="48" cy="28" r="1.2" fill="currentColor" opacity=".5"/>
-    </svg>
-    <div class="hd-rule"><div class="hd-gem"></div></div>
-    <h1>股 市 每 日 戰 報</h1>
-    <p>大盤走勢 &middot; 每日個股籌碼分析摘要 &middot; 飆股選股／期貨掃描 &middot; 財經節目日報</p>
-    <div class="hd-rule2"></div>
-  </div>
-
+<div class="ticker-outer">
   <div class="ticker-wrap">
     <span class="ticker-lbl">今 日 新 增</span>
     <div class="ticker-track">
@@ -113,6 +96,25 @@ a:hover::after{left:150%}
         </span>
       </div>
     </div>
+  </div>
+</div>
+<div class="wrap">
+  <div class="hd">
+    <svg class="emblem" width="54" height="54" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+      <circle cx="28" cy="28" r="26.5" stroke="currentColor" stroke-width=".5" opacity=".3"/>
+      <circle cx="28" cy="28" r="20" stroke="currentColor" stroke-width=".5" opacity=".2"/>
+      <polygon points="28,4 41,12 48,24 48,32 41,44 28,52 15,44 8,32 8,24 15,12" stroke="currentColor" stroke-width=".75" opacity=".55"/>
+      <polygon points="28,16 38,28 28,40 18,28" stroke="currentColor" stroke-width="1" opacity=".8"/>
+      <circle cx="28" cy="28" r="2" fill="currentColor"/>
+      <circle cx="28" cy="4" r="1.2" fill="currentColor" opacity=".5"/>
+      <circle cx="28" cy="52" r="1.2" fill="currentColor" opacity=".5"/>
+      <circle cx="8" cy="28" r="1.2" fill="currentColor" opacity=".5"/>
+      <circle cx="48" cy="28" r="1.2" fill="currentColor" opacity=".5"/>
+    </svg>
+    <div class="hd-rule"><div class="hd-gem"></div></div>
+    <h1>股 市 每 日 戰 報</h1>
+    <p>大盤走勢 &middot; 每日個股籌碼分析摘要 &middot; 飆股選股／期貨掃描 &middot; 財經節目日報</p>
+    <div class="hd-rule2"></div>
   </div>
 
   <div class="sec frame">
