@@ -35,6 +35,16 @@ a.na:hover{border-left-color:#b04040;color:#e8c0b0;border-color:#5a2818;backgrou
 .frame::before{content:'';position:absolute;top:-1px;left:-1px;width:16px;height:16px;border-top:2px solid var(--verd);border-left:2px solid var(--verd)}
 .frame::after{content:'';position:absolute;bottom:-1px;right:-1px;width:16px;height:16px;border-bottom:2px solid var(--verd);border-right:2px solid var(--verd)}
 .ft{margin-top:40px;text-align:center;font-size:.7rem;color:var(--text-muted);letter-spacing:.12em;padding-top:16px;border-top:1px solid var(--border)}
+.ticker-wrap{display:flex;align-items:stretch;border:1px solid var(--gold-dim);background:linear-gradient(180deg,#1d1708 0%,#141006 100%);margin-bottom:18px;overflow:hidden;border-radius:2px}
+.ticker-lbl{background:var(--gold);color:#0d0b07;padding:10px 16px;font-size:.68rem;font-weight:700;letter-spacing:.18em;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;border-right:1px solid rgba(192,152,64,.5)}
+.ticker-track{overflow:hidden;flex:1}
+.ticker-scroll{display:flex;animation:tkr 35s linear infinite;white-space:nowrap;will-change:transform}
+.ticker-scroll:hover{animation-play-state:paused}
+.ticker-scroll a{display:inline!important;background:none!important;border:none!important;border-left:none!important;color:var(--gold-hi)!important;font-size:.8rem;letter-spacing:.03em;padding:10px 5px!important;box-shadow:none!important;transition:color .15s!important}
+.ticker-scroll a:hover{color:var(--gold)!important;background:none!important;text-decoration:underline;padding-left:5px!important}
+.ticker-scroll a::after{display:none!important}
+.tkr-sep{color:var(--gold-dim);margin:0 14px;font-size:.65rem;vertical-align:middle}
+@keyframes tkr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @keyframes breathe{0%,100%{box-shadow:0 0 6px rgba(192,152,64,.4);transform:rotate(45deg) scale(1)}50%{box-shadow:0 0 22px rgba(192,152,64,.95);transform:rotate(45deg) scale(1.4)}}
 @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
@@ -80,7 +90,31 @@ a:hover::after{left:150%}
     <p>大盤走勢 &middot; 每日個股籌碼分析摘要 &middot; 飆股選股／期貨掃描 &middot; 財經節目日報</p>
     <div class="hd-rule2"></div>
   </div>
-  
+
+  <div class="ticker-wrap">
+    <span class="ticker-lbl">今 日 新 增</span>
+    <div class="ticker-track">
+      <div class="ticker-scroll">
+        <span>
+          <a href="daily_20260618.html">&#128202; 每日籌碼摘要 2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="punish_scan_20260618.html">&#128200; 飆股（含期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="punish_nofut_20260618.html">&#128202; 飆股（無期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="market_flow_20260618.html">&#128196; 資金流向 2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.html">&#128221; 財經日報 2026-06-19 晚間</a><span class="tkr-sep">&#9670;</span>
+          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.pdf">&#127912; 財經日報 2026-06-19 晚間（PDF）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+        <span aria-hidden="true">
+          <a href="daily_20260618.html">&#128202; 每日籌碼摘要 2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="punish_scan_20260618.html">&#128200; 飆股（含期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="punish_nofut_20260618.html">&#128202; 飆股（無期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="market_flow_20260618.html">&#128196; 資金流向 2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.html">&#128221; 財經日報 2026-06-19 晚間</a><span class="tkr-sep">&#9670;</span>
+          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.pdf">&#127912; 財經日報 2026-06-19 晚間（PDF）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+      </div>
+    </div>
+  </div>
+
   <div class="sec frame">
     <div class="sec-title">每日籌碼摘要</div>
     <ul>
