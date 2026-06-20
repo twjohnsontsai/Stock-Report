@@ -35,7 +35,7 @@ a.na:hover{border-left-color:#b04040;color:#e8c0b0;border-color:#5a2818;backgrou
 .frame::before{content:'';position:absolute;top:-1px;left:-1px;width:16px;height:16px;border-top:2px solid var(--verd);border-left:2px solid var(--verd)}
 .frame::after{content:'';position:absolute;bottom:-1px;right:-1px;width:16px;height:16px;border-bottom:2px solid var(--verd);border-right:2px solid var(--verd)}
 .ft{margin-top:40px;text-align:center;font-size:.7rem;color:var(--text-muted);letter-spacing:.12em;padding-top:16px;border-top:1px solid var(--border)}
-.ticker-outer{position:sticky;top:0;z-index:20;width:100%;border-bottom:1px solid var(--gold-dim)}
+.ticker-outer{position:fixed;bottom:0;left:0;z-index:20;width:100%;border-top:1px solid var(--gold-dim)}
 .ticker-wrap{display:flex;align-items:stretch;background:linear-gradient(180deg,#1a1208 0%,#110d05 100%);overflow:hidden}
 .ticker-lbl{background:var(--gold);color:#0d0b07;padding:10px 20px;font-size:.68rem;font-weight:700;letter-spacing:.2em;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;border-right:2px solid rgba(192,152,64,.6)}
 .ticker-track{overflow:hidden;flex:1}
@@ -73,31 +73,6 @@ a:hover::after{left:150%}
 </head>
 <body>
 <div class="pk" aria-hidden="true"></div>
-<div class="ticker-outer">
-  <div class="ticker-wrap">
-    <span class="ticker-lbl">今 日 新 增</span>
-    <div class="ticker-track">
-      <div class="ticker-scroll">
-        <span>
-          <a href="daily_20260618.html">&#128202; 每日籌碼摘要 2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="punish_scan_20260618.html">&#128200; 飆股（含期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="punish_nofut_20260618.html">&#128202; 飆股（無期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="market_flow_20260618.html">&#128196; 資金流向 2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.html">&#128221; 財經日報 2026-06-19 晚間</a><span class="tkr-sep">&#9670;</span>
-          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.pdf">&#127912; 財經日報 2026-06-19 晚間（PDF）</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        </span>
-        <span aria-hidden="true">
-          <a href="daily_20260618.html">&#128202; 每日籌碼摘要 2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="punish_scan_20260618.html">&#128200; 飆股（含期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="punish_nofut_20260618.html">&#128202; 飆股（無期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="market_flow_20260618.html">&#128196; 資金流向 2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.html">&#128221; 財經日報 2026-06-19 晚間</a><span class="tkr-sep">&#9670;</span>
-          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.pdf">&#127912; 財經日報 2026-06-19 晚間（PDF）</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
 <div class="wrap">
   <div class="hd">
     <svg class="emblem" width="54" height="54" viewBox="0 0 56 56" fill="none" aria-hidden="true">
@@ -169,6 +144,31 @@ a:hover::after{left:150%}
       <span>設計：蔡炯輝 &nbsp;｜&nbsp; Powered by Claude Code</span>
     </span>
   </p>
+</div>
+<div class="ticker-outer">
+  <div class="ticker-wrap">
+    <span class="ticker-lbl">今 日 新 增</span>
+    <div class="ticker-track">
+      <div class="ticker-scroll">
+        <span>
+          <a href="daily_20260618.html">&#128202; 每日籌碼摘要 2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="punish_scan_20260618.html">&#128200; 飆股（含期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="punish_nofut_20260618.html">&#128202; 飆股（無期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="market_flow_20260618.html">&#128196; 資金流向 2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.html">&#128221; 財經日報 2026-06-19 晚間</a><span class="tkr-sep">&#9670;</span>
+          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.pdf">&#127912; 財經日報 2026-06-19 晚間（PDF）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+        <span aria-hidden="true">
+          <a href="daily_20260618.html">&#128202; 每日籌碼摘要 2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="punish_scan_20260618.html">&#128200; 飆股（含期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="punish_nofut_20260618.html">&#128202; 飆股（無期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="market_flow_20260618.html">&#128196; 資金流向 2026-06-18</a><span class="tkr-sep">&#9670;</span>
+          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.html">&#128221; 財經日報 2026-06-19 晚間</a><span class="tkr-sep">&#9670;</span>
+          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.pdf">&#127912; 財經日報 2026-06-19 晚間（PDF）</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
 (function(){
