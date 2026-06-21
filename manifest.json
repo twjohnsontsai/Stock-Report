@@ -1,23 +1,23 @@
 {
-  "name": "投资股海",
-  "short_name": "股海",
-  "description": "每日個股籌碼分析報告",
+  "name": "股市每日戰報",
+  "short_name": "股市戰報",
+  "description": "每日籌碼分析、飆股選股、財經節目日報",
   "start_url": "/Stock-Report/",
   "scope": "/Stock-Report/",
   "display": "standalone",
-  "background_color": "#0d0b07",
-  "theme_color": "#c09840",
+  "background_color": "#0d1117",
+  "theme_color": "#e3b341",
   "orientation": "portrait-primary",
   "lang": "zh-TW",
   "icons": [
     {
-      "src": "/Stock-Report/icon-192.png",
+      "src": "/Stock-Report/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/Stock-Report/icon-512.png",
+      "src": "/Stock-Report/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
