@@ -3,14 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>股市每日戰報</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#e3b341">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="股市戰報">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>投资股海</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -42,17 +35,6 @@ a.na:hover{border-left-color:#b04040;color:#e8c0b0;border-color:#5a2818;backgrou
 .frame::before{content:'';position:absolute;top:-1px;left:-1px;width:16px;height:16px;border-top:2px solid var(--verd);border-left:2px solid var(--verd)}
 .frame::after{content:'';position:absolute;bottom:-1px;right:-1px;width:16px;height:16px;border-bottom:2px solid var(--verd);border-right:2px solid var(--verd)}
 .ft{margin-top:40px;text-align:center;font-size:.7rem;color:var(--text-muted);letter-spacing:.12em;padding-top:16px;border-top:1px solid var(--border)}
-.ticker-outer{position:fixed;bottom:0;left:0;z-index:20;width:100%;border-top:1px solid var(--gold-dim)}
-.ticker-wrap{display:flex;align-items:stretch;background:linear-gradient(180deg,#1a1208 0%,#110d05 100%);overflow:hidden}
-.ticker-lbl{background:var(--gold);color:#0d0b07;padding:10px 20px;font-size:.68rem;font-weight:700;letter-spacing:.2em;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;border-right:2px solid rgba(192,152,64,.6)}
-.ticker-track{overflow:hidden;flex:1}
-.ticker-scroll{display:flex;animation:tkr 35s linear infinite;white-space:nowrap;will-change:transform}
-.ticker-scroll:hover{animation-play-state:paused}
-.ticker-scroll a{display:inline!important;background:none!important;border:none!important;border-left:none!important;color:var(--gold-hi)!important;font-size:.8rem;letter-spacing:.03em;padding:10px 5px!important;box-shadow:none!important;transition:color .15s!important}
-.ticker-scroll a:hover{color:var(--gold)!important;background:none!important;text-decoration:underline;padding-left:5px!important}
-.ticker-scroll a::after{display:none!important}
-.tkr-sep{color:var(--gold-dim);margin:0 14px;font-size:.65rem;vertical-align:middle}
-@keyframes tkr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @keyframes breathe{0%,100%{box-shadow:0 0 6px rgba(192,152,64,.4);transform:rotate(45deg) scale(1)}50%{box-shadow:0 0 22px rgba(192,152,64,.95);transform:rotate(45deg) scale(1.4)}}
 @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
@@ -94,13 +76,13 @@ a:hover::after{left:150%}
       <circle cx="48" cy="28" r="1.2" fill="currentColor" opacity=".5"/>
     </svg>
     <div class="hd-rule"><div class="hd-gem"></div></div>
-    <h1>股 市 每 日 戰 報</h1>
-    <p>大盤走勢 &middot; 每日個股籌碼分析摘要 &middot; 飆股選股／期貨掃描 &middot; 財經節目日報</p>
+    <h1>投 资 股 海</h1>
+    <p>籌碼分析 &middot; 分點進出 &middot; 財經節目</p>
     <div class="hd-rule2"></div>
   </div>
-
+  
   <div class="sec frame">
-    <div class="sec-title">每日籌碼摘要（大盤走勢、個股籌碼分析摘要）</div>
+    <div class="sec-title">每日籌碼摘要</div>
     <ul>
     <li><a href="daily_20260618.html">&#128202; 每日籌碼摘要 2026-06-18</a></li>
     <li><a href="daily_20260617.html">&#128202; 每日籌碼摘要 2026-06-17</a></li>
@@ -110,11 +92,11 @@ a:hover::after{left:150%}
   </div>
 <!-- PICKER_SECTION_START -->
   <div class="sec frame" style="margin-top:20px">
-    <div class="sec-title">飆股選股／期貨掃描（飆股（含期貨）、飆股（無期貨）、資金流向整合總表（ETF＋外資＋投信＋前10成交量））</div>
+    <div class="sec-title">飆股選股 / 期貨掃描</div>
     <ul>
     <li><a href="punish_scan_20260618.html">&#128200; 飆股（含期貨）觀察名單 2026-06-18</a></li>
     <li><a href="punish_nofut_20260618.html">&#128202; 飆股（無期貨）觀察名單 2026-06-18</a></li>
-    <li><a href="market_flow_20260618.html">&#128196; 資金流向整合總表 2026-06-18 &#8212; ETF &#215; 外資 &#215; 投信 &#215; 成交量前10</a></li>
+    <li><a href="market_flow_20260618.html">&#128196; 資金流向整合總表 2026-06-18 &#8212; ETF &#215; 外資 &#215; 投信</a></li>
     <li><a href="market_flow_20260617.html">&#128196; 資金流向整合總表 2026-06-17 &#8212; ETF &#215; 外資 &#215; 投信</a></li>
     <li><a href="market_flow_20260616.html">&#128196; 資金流向整合總表 2026-06-16 &#8212; ETF &#215; 外資 &#215; 投信</a></li>
     <li><a href="market_flow_20260615.html">&#128196; 資金流向整合總表 2026-06-15 &#8212; ETF &#215; 外資 &#215; 投信</a></li>
@@ -124,160 +106,23 @@ a:hover::after{left:150%}
   <div class="sec frame" style="margin-top:20px">
     <div class="sec-title">財經節目日報</div>
     <ul>
+    <li><a href="財經日報_2026-06-22_日間.html" class="na">&#128221; 財經日報 2026-06-22（日間）（報告）</a></li>
+    <li><a href="財經日報_2026-06-22_日間.pdf" class="na">&#127912; 財經日報 2026-06-22（日間）（簡報 PDF）</a></li>
     <li><a href="財經日報_2026-06-19_晚間.html" class="na">&#128221; 財經日報 2026-06-19（晚間）（報告）</a></li>
     <li><a href="財經日報_2026-06-19_晚間.pdf" class="na">&#127912; 財經日報 2026-06-19（晚間）（簡報 PDF）</a></li>
-    <li><a href="財經日報_2026-06-18_晚間.html" class="na">&#128221; 財經日報 2026-06-18（晚間）（報告）</a></li>
-    <li><a href="財經日報_2026-06-18_晚間.pdf" class="na">&#127912; 財經日報 2026-06-18（晚間）（簡報 PDF）</a></li>
-    <li><a href="財經日報_2026-06-18_日間.html" class="na">&#128221; 財經日報 2026-06-18（日間）（報告）</a></li>
-    <li><a href="財經日報_2026-06-18_日間.pdf" class="na">&#127912; 財經日報 2026-06-18（日間）（簡報 PDF）</a></li>
-    <li><a href="財經日報_2026-06-17_晚間.html" class="na">&#128221; 財經日報 2026-06-17（晚間）（報告）</a></li>
-    <li><a href="財經日報_2026-06-17_晚間.pdf" class="na">&#127912; 財經日報 2026-06-17（晚間）（簡報 PDF）</a></li>
-    <li><a href="財經日報_2026-06-17_日間.html" class="na">&#128221; 財經日報 2026-06-17（日間）（報告）</a></li>
     </ul>
   </div>
-  <p class="ft">最後更新 &middot; 2026-06-20</p>
-  <p class="ft" style="margin-top:10px;line-height:1.9">
-    <span style="display:block;margin-bottom:4px">
-      &#128204; 數據來源：
-      <b>TWSE</b>（台灣證券交易所｜股價、法人買賣超T86、借券TWT93U、融資、本益比、處置公告、ISIN）&nbsp;&middot;&nbsp;
-      <b>XQ</b>（元大嘉實｜分點歷史JVO2、收盤歷史）&nbsp;&middot;&nbsp;
-      <b>TAIFEX</b>（台灣期貨交易所｜個股期貨大額交易人、OI）&nbsp;&middot;&nbsp;
-      <b>TPEx</b>（櫃買中心｜上櫃股票成交量）&nbsp;&middot;&nbsp;
-      <b>Google NotebookLM</b>（財經節目摘要分析）
-    </span>
-    <span style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px">
-      <span>&#9888; 相關分析僅供投資參考，下單前請自行斟酌</span>
-      <span>設計：蔡炯輝 &nbsp;｜&nbsp; Powered by Claude Code</span>
-    </span>
+  <p class="ft">最後更新 &middot; 2026-06-22</p>
+  <p class="ft" style="margin-top:10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px">
+    <span>&#9888; 数据来源TWSE，相关分析仅供投资参考，下单前请自行斟酌</span>
+    <span>設計：蔡炯辉 &nbsp;｜&nbsp; Powered by Claude Code</span>
   </p>
-</div>
-<div class="ticker-outer">
-  <div class="ticker-wrap">
-    <span class="ticker-lbl">今 日 新 增</span>
-    <div class="ticker-track">
-      <div class="ticker-scroll">
-        <span>
-          <a href="daily_20260618.html">&#128202; 每日籌碼摘要 2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="punish_scan_20260618.html">&#128200; 飆股（含期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="punish_nofut_20260618.html">&#128202; 飆股（無期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="market_flow_20260618.html">&#128196; 資金流向 2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.html">&#128221; 財經日報 2026-06-19 晚間</a><span class="tkr-sep">&#9670;</span>
-          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.pdf">&#127912; 財經日報 2026-06-19 晚間（PDF）</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        </span>
-        <span aria-hidden="true">
-          <a href="daily_20260618.html">&#128202; 每日籌碼摘要 2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="punish_scan_20260618.html">&#128200; 飆股（含期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="punish_nofut_20260618.html">&#128202; 飆股（無期貨）2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="market_flow_20260618.html">&#128196; 資金流向 2026-06-18</a><span class="tkr-sep">&#9670;</span>
-          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.html">&#128221; 財經日報 2026-06-19 晚間</a><span class="tkr-sep">&#9670;</span>
-          <a href="&#36131;&#32147;&#26085;&#22577;_2026-06-19_&#26202;&#38291;.pdf">&#127912; 財經日報 2026-06-19 晚間（PDF）</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        </span>
-      </div>
-    </div>
-  </div>
 </div>
 <script>
 (function(){
   var pk=document.querySelector('.pk');
   if(pk){for(var i=0;i<14;i++){var s=document.createElement('span');var sz=(1+Math.random()*2).toFixed(1);s.style.cssText='left:'+Math.floor(Math.random()*100)+'%;width:'+sz+'px;height:'+sz+'px;--dur:'+(7+Math.random()*8).toFixed(1)+'s;--delay:'+(Math.random()*10).toFixed(1)+'s;--dx:'+(Math.random()*32-16).toFixed(1)+'px';pk.appendChild(s);}}
   document.querySelectorAll('li').forEach(function(el,i){el.style.animationDelay=(0.28+i*0.09).toFixed(2)+'s'});
-})();
-
-/* ── Service Worker 註冊 ── */
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(function(){});
-}
-
-/* ── PWA 安裝引導彈窗 ── */
-(function(){
-  var STORE_KEY = 'pwa_guide_dismissed';
-  if(localStorage.getItem(STORE_KEY)) return;          // 已永久關閉
-  if(window.matchMedia('(display-mode: standalone)').matches) return; // 已安裝
-
-  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  var isAndroid = /android/i.test(navigator.userAgent);
-  if(!isIOS && !isAndroid) return;                     // 非手機不顯示
-
-  var deferredPrompt = null;
-  window.addEventListener('beforeinstallprompt', function(e){
-    e.preventDefault();
-    deferredPrompt = e;
-  });
-
-  function buildGuide(){
-    var s = document.createElement('style');
-    s.textContent =
-      '#pwa-guide{position:fixed;bottom:0;left:0;right:0;z-index:99999;' +
-      'background:#161b22;border-top:2px solid #e3b341;border-radius:16px 16px 0 0;' +
-      'padding:20px 20px 28px;font-family:"Microsoft JhengHei",Arial,sans-serif;' +
-      'box-shadow:0 -4px 30px rgba(0,0,0,.5);animation:slideUp .35s ease}' +
-      '@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}' +
-      '#pwa-guide h3{color:#e3b341;font-size:1rem;margin:0 0 4px}' +
-      '#pwa-guide .sub{color:#8b949e;font-size:.75rem;margin-bottom:16px}' +
-      '#pwa-guide .steps{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}' +
-      '#pwa-guide .step{display:flex;align-items:center;gap:12px;background:#0d1117;' +
-      'border-radius:8px;padding:10px 14px}' +
-      '#pwa-guide .step-icon{font-size:1.4rem;flex-shrink:0;width:36px;text-align:center}' +
-      '#pwa-guide .step-txt{color:#c9d1d9;font-size:.85rem;line-height:1.4}' +
-      '#pwa-guide .step-txt b{color:#e6edf3}' +
-      '#pwa-guide .btns{display:flex;gap:10px}' +
-      '#pwa-guide .btn-install{flex:1;background:#e3b341;color:#0d1117;border:none;' +
-      'border-radius:8px;padding:11px;font-size:.9rem;font-weight:700;cursor:pointer}' +
-      '#pwa-guide .btn-dismiss{background:none;border:1px solid #30363d;color:#8b949e;' +
-      'border-radius:8px;padding:11px 14px;font-size:.82rem;cursor:pointer}' +
-      '#pwa-guide .btn-never{display:block;text-align:center;color:#555;' +
-      'font-size:.72rem;margin-top:10px;cursor:pointer;text-decoration:underline}';
-    document.head.appendChild(s);
-
-    var g = document.createElement('div');
-    g.id = 'pwa-guide';
-
-    var stepsHTML = '';
-    if(isIOS){
-      stepsHTML =
-        '<div class="step"><div class="step-icon">1⃣</div><div class="step-txt">點擊 Safari 底部的 <b>分享按鈕</b> ⬆</div></div>' +
-        '<div class="step"><div class="step-icon">2⃣</div><div class="step-txt">向下滑動，找到 <b>加入主畫面</b> ＋</div></div>' +
-        '<div class="step"><div class="step-icon">3⃣</div><div class="step-txt">點擊右上角 <b>新增</b>，桌面即出現圖示</div></div>';
-    } else {
-      stepsHTML =
-        '<div class="step"><div class="step-icon">1⃣</div><div class="step-txt">點擊瀏覽器右上角 <b>⋮ 選單</b></div></div>' +
-        '<div class="step"><div class="step-icon">2⃣</div><div class="step-txt">選擇 <b>新增至主畫面</b> 或 <b>安裝應用程式</b></div></div>' +
-        '<div class="step"><div class="step-icon">3⃣</div><div class="step-txt">點擊 <b>安裝 / 新增</b>，桌面即出現圖示</div></div>';
-    }
-
-    var installBtn = deferredPrompt
-      ? '<button class="btn-install" id="pwa-install-btn">立即安裝到桌面</button>'
-      : '<button class="btn-install" id="pwa-install-btn">📌 我知道了</button>';
-
-    g.innerHTML =
-      '<h3>📱 加到手機桌面，一鍵開啟</h3>' +
-      '<div class="sub">像 App 一樣使用，無需下載，離線也能瀏覽</div>' +
-      '<div class="steps">' + stepsHTML + '</div>' +
-      '<div class="btns">' +
-        installBtn +
-        '<button class="btn-dismiss" id="pwa-close-btn">下次再說</button>' +
-      '</div>' +
-      '<span class="btn-never" id="pwa-never-btn">不再顯示</span>';
-
-    document.body.appendChild(g);
-
-    document.getElementById('pwa-install-btn').onclick = function(){
-      if(deferredPrompt){
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(function(){ deferredPrompt = null; });
-      }
-      g.remove();
-      localStorage.setItem(STORE_KEY, '1');
-    };
-    document.getElementById('pwa-close-btn').onclick = function(){ g.remove(); };
-    document.getElementById('pwa-never-btn').onclick = function(){
-      g.remove();
-      localStorage.setItem(STORE_KEY, '1');
-    };
-  }
-
-  // 延遲 3 秒顯示（讓頁面先載完）
-  setTimeout(buildGuide, 3000);
 })();
 </script>
 </body>
