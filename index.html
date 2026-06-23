@@ -69,6 +69,8 @@ a:hover::after{left:150%}
 .ticker:hover{animation-play-state:paused}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .pk span{position:absolute;bottom:-4px;border-radius:50%;background:var(--gold);animation:spark var(--dur,9s) var(--delay,0s) linear infinite;opacity:0}
+.mobile-hint{display:none}
+@media(max-width:768px){.mobile-hint{display:block;margin-top:14px;overflow:hidden;white-space:nowrap;background:rgba(192,152,64,.1);border:1px solid var(--gold-dim);border-radius:4px;padding:8px 0}}
 </style>
 </head>
 <body>
@@ -90,6 +92,11 @@ a:hover::after{left:150%}
     <div class="hd-rule"><div class="hd-gem"></div></div>
     <h1>股 市 每 日 戰 報</h1>
     <p>大盤走勢 &middot; 每日個股籌碼分析摘要 &middot; 飆股選股／期貨掃描 &middot; 財經節目日報</p>
+    <div class="mobile-hint">
+      <span style="display:inline-block;animation:ticker 18s linear infinite;font-size:.78rem;color:var(--gold-hi);letter-spacing:.1em">
+        &nbsp;&nbsp;&nbsp;&#128187; 建議使用電腦瀏覽 &mdash; 報告含大量圖表與數據，手機螢幕較小，閱讀體驗有限 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#128187; 建議使用電腦瀏覽 &mdash; 報告含大量圖表與數據，手機螢幕較小，閱讀體驗有限 &nbsp;&nbsp;&nbsp;
+      </span>
+    </div>
     <div class="hd-rule2"></div>
   </div>
   <div class="sec frame">
