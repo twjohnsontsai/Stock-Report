@@ -160,12 +160,20 @@ if('serviceWorker' in navigator){
 /* ── PWA 安裝引導彈窗 ── */
 (function(){
   var STORE_KEY = 'pwa_guide_dismissed';
-  if(localStorage.getItem(STORE_KEY)) return;          // 已永久關閉
+  if(localStorage.getItem(STORE_KEY)) return;
   if(window.matchMedia('(display-mode: standalone)').matches) return; // 已安裝
 
-  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  var isAndroid = /android/i.test(navigator.userAgent);
-  if(!isIOS && !isAndroid) return;                     // 非手機不顯示
+  var ua = navigator.userAgent;
+  var isIOS     = /iphone|ipad|ipod/i.test(ua);
+  var isAndroid = /android/i.test(ua);
+  var isMac     = /macintosh|mac os x/i.test(ua) && !isIOS;
+  var isWin     = /windows/i.test(ua);
+  var isDesktop = isMac || isWin;
+  // 判斷桌面瀏覽器類型
+  var isSafariMac = isMac && /safari/i.test(ua) && !/chrome|crios|edg/i.test(ua);
+  var isEdge    = /edg\//i.test(ua);
+
+  if(!isIOS && !isAndroid && !isDesktop) return; // 未知環境不顯示
 
   var deferredPrompt = null;
   window.addEventListener('beforeinstallprompt', function(e){
@@ -179,16 +187,18 @@ if('serviceWorker' in navigator){
       '#pwa-guide{position:fixed;bottom:0;left:0;right:0;z-index:99999;' +
       'background:#161b22;border-top:2px solid #e3b341;border-radius:16px 16px 0 0;' +
       'padding:20px 20px 28px;font-family:"Microsoft JhengHei",Arial,sans-serif;' +
-      'box-shadow:0 -4px 30px rgba(0,0,0,.5);animation:slideUp .35s ease}' +
-      '@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}' +
+      'box-shadow:0 -4px 30px rgba(0,0,0,.5);animation:slideUp .35s ease;' +
+      'max-width:560px;margin:0 auto;left:50%;transform:translateX(-50%)}' +
+      '@keyframes slideUp{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}' +
       '#pwa-guide h3{color:#e3b341;font-size:1rem;margin:0 0 4px}' +
       '#pwa-guide .sub{color:#8b949e;font-size:.75rem;margin-bottom:16px}' +
-      '#pwa-guide .steps{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}' +
-      '#pwa-guide .step{display:flex;align-items:center;gap:12px;background:#0d1117;' +
-      'border-radius:8px;padding:10px 14px}' +
-      '#pwa-guide .step-icon{font-size:1.4rem;flex-shrink:0;width:36px;text-align:center}' +
-      '#pwa-guide .step-txt{color:#c9d1d9;font-size:.85rem;line-height:1.4}' +
+      '#pwa-guide .steps{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}' +
+      '#pwa-guide .step{display:flex;align-items:flex-start;gap:12px;background:#0d1117;' +
+      'border-radius:8px;padding:9px 13px}' +
+      '#pwa-guide .step-icon{font-size:1.2rem;flex-shrink:0;width:28px;text-align:center;padding-top:1px}' +
+      '#pwa-guide .step-txt{color:#c9d1d9;font-size:.83rem;line-height:1.5}' +
       '#pwa-guide .step-txt b{color:#e6edf3}' +
+      '#pwa-guide .step-txt small{color:#8b949e;font-size:.75rem;display:block}' +
       '#pwa-guide .btns{display:flex;gap:10px}' +
       '#pwa-guide .btn-install{flex:1;background:#e3b341;color:#0d1117;border:none;' +
       'border-radius:8px;padding:11px;font-size:.9rem;font-weight:700;cursor:pointer}' +
@@ -201,26 +211,59 @@ if('serviceWorker' in navigator){
     var g = document.createElement('div');
     g.id = 'pwa-guide';
 
-    var stepsHTML = '';
+    var title = '', sub = '', stepsHTML = '';
+
     if(isIOS){
+      title = '📱 加到 iPhone 主畫面';
+      sub   = '須使用 Safari 瀏覽器，像 App 一樣開啟';
       stepsHTML =
-        '<div class="step"><div class="step-icon">1⃣</div><div class="step-txt">在 <b>Safari</b>（非 Chrome）底部點擊<b>分享按鈕</b> ⬆</div></div>' +
-        '<div class="step"><div class="step-icon">2⃣</div><div class="step-txt">向下滑動，找到 <b>加入主畫面</b> ＋</div></div>' +
-        '<div class="step"><div class="step-icon">3⃣</div><div class="step-txt">點擊右上角 <b>新增</b>，桌面即出現圖示</div></div>';
-    } else {
+        '<div class="step"><div class="step-icon">1⃣</div><div class="step-txt">在 <b>Safari</b> 底部點擊<b>分享按鈕</b> ⬆<small>⚠️ 必須用 Safari，Chrome / Firefox 不支援</small></div></div>' +
+        '<div class="step"><div class="step-icon">2⃣</div><div class="step-txt">向下滑動選單，點選 <b>加入主畫面</b> ＋</div></div>' +
+        '<div class="step"><div class="step-icon">3⃣</div><div class="step-txt">點右上角 <b>新增</b>，桌面出現「股市戰報」圖示</div></div>';
+    } else if(isAndroid){
+      title = '📱 加到 Android 主畫面';
+      sub   = '建議使用 Chrome 瀏覽器';
+      if(deferredPrompt){
+        stepsHTML =
+          '<div class="step"><div class="step-icon">✅</div><div class="step-txt">點下方「<b>立即安裝</b>」，Chrome 將自動引導完成安裝</div></div>';
+      } else {
+        stepsHTML =
+          '<div class="step"><div class="step-icon">1⃣</div><div class="step-txt">點瀏覽器右上角 <b>⋮ 選單</b></div></div>' +
+          '<div class="step"><div class="step-icon">2⃣</div><div class="step-txt">選擇 <b>新增至主畫面</b> 或 <b>安裝應用程式</b></div></div>' +
+          '<div class="step"><div class="step-icon">3⃣</div><div class="step-txt">點 <b>安裝 / 新增</b>，主畫面出現圖示</div></div>';
+      }
+    } else if(isSafariMac){
+      title = '💻 加入 Mac Dock（Safari）';
+      sub   = '需 macOS Sonoma（14）以上';
       stepsHTML =
-        '<div class="step"><div class="step-icon">1⃣</div><div class="step-txt">點擊瀏覽器右上角 <b>⋮ 選單</b></div></div>' +
-        '<div class="step"><div class="step-icon">2⃣</div><div class="step-txt">選擇 <b>新增至主畫面</b> 或 <b>安裝應用程式</b></div></div>' +
-        '<div class="step"><div class="step-icon">3⃣</div><div class="step-txt">點擊 <b>安裝 / 新增</b>，桌面即出現圖示</div></div>';
+        '<div class="step"><div class="step-icon">1⃣</div><div class="step-txt">點選選單列 <b>檔案（File）</b></div></div>' +
+        '<div class="step"><div class="step-icon">2⃣</div><div class="step-txt">選擇 <b>加入 Dock（Add to Dock）</b></div></div>' +
+        '<div class="step"><div class="step-icon">3⃣</div><div class="step-txt">點 <b>加入</b>，App 出現在 Dock 和 Launchpad</div></div>';
+    } else if(isDesktop){
+      // Windows / macOS + Chrome / Edge
+      var browser = isEdge ? 'Edge' : 'Chrome';
+      var dest    = isWin  ? '開始選單與工作列' : 'Launchpad 與 Dock';
+      title = '💻 安裝為桌面 App（' + browser + '）';
+      sub   = '安裝後可獨立開啟，不需要每次開瀏覽器';
+      if(deferredPrompt){
+        stepsHTML =
+          '<div class="step"><div class="step-icon">✅</div><div class="step-txt">點下方「<b>立即安裝</b>」，瀏覽器將自動完成安裝</div></div>' +
+          '<div class="step"><div class="step-icon">📌</div><div class="step-txt">安裝後 App 出現在 <b>' + dest + '</b></div></div>';
+      } else {
+        stepsHTML =
+          '<div class="step"><div class="step-icon">1⃣</div><div class="step-txt">點網址列右側的 <b>安裝圖示 ⊕</b><small>若沒看到，點右上角 ⋮（三點選單）</small></div></div>' +
+          '<div class="step"><div class="step-icon">2⃣</div><div class="step-txt">選擇 <b>安裝「股市每日戰報」</b></div></div>' +
+          '<div class="step"><div class="step-icon">3⃣</div><div class="step-txt">點 <b>安裝</b>，App 出現在 <b>' + dest + '</b></div></div>';
+      }
     }
 
     var installBtn = deferredPrompt
-      ? '<button class="btn-install" id="pwa-install-btn">立即安裝到桌面</button>'
+      ? '<button class="btn-install" id="pwa-install-btn">⚡ 立即安裝</button>'
       : '<button class="btn-install" id="pwa-install-btn">📌 我知道了</button>';
 
     g.innerHTML =
-      '<h3>📱 加到手機桌面，一鍵開啟</h3>' +
-      '<div class="sub">像 App 一樣使用，無需下載，離線也能瀏覽</div>' +
+      '<h3>' + title + '</h3>' +
+      '<div class="sub">' + sub + '</div>' +
       '<div class="steps">' + stepsHTML + '</div>' +
       '<div class="btns">' +
         installBtn +
