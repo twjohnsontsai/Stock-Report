@@ -48,10 +48,10 @@ h1{color:#e6edf3;font-size:1.1rem;margin-bottom:14px;padding-bottom:8px;border-b
   <div class="big" style="color:#f85149">▲212 <span class="sub">點（+0.46%）</span></div>
   <div class="ohlc">收 46,255　開 46,340　高 46,785　低 46,049　前收 46,044</div>
   <div class="tags"><span class="tag">長上影線（高位賣壓）</span><span class="tag">C/P OI 115% 🟡 中性偏多</span></div>
-  <div class="macro" style="margin-top:4px"><span class="sec-label">現貨</span><span class="mcell">外資 <b style="color:#3fb950">-405.1億</b></span><span class="mcell">投信 <b style="color:#f85149">+174.2億</b></span><span class="mcell">自營商 <b style="color:#3fb950">-70.0億</b></span><span class="mcell">融資 <b style="color:#f85149">+35.4億</b><small style="color:#8b949e">(6110億)</small></span><span class="mcell">融券 <b style="color:#3fb950">-3,033張</b><small style="color:#8b949e">(19萬張)</small></span><span class="mcell">借券 <b style="color:#3fb950">-2.4億</b><small style="color:#8b949e">(181億)</small></span></div>
+  <div class="macro" style="margin-top:4px"><span class="sec-label">現貨</span><span class="mcell">外資 <b style="color:#3fb950">-405.1億</b></span><span class="mcell">投信 <b style="color:#f85149">+174.2億</b></span><span class="mcell">自營商 <b style="color:#3fb950">-70.0億</b></span><span class="mcell">融資 <b style="color:#f85149">+35.4億</b><small style="color:#8b949e">(6110億)</small></span><span class="mcell">融券 <b style="color:#3fb950">-3,033張</b><small style="color:#8b949e">(19萬張)</small></span><span class="mcell">借券 <b style="color:#3fb950">-3.1億</b><small style="color:#8b949e">(178億)</small></span></div>
   
-  <div class="night-row"><a class="mlink" href="https://mis.taifex.com.tw/futures/" target="_blank" style="display:flex;align-items:baseline;gap:10px"><span class="night-label">🌙 台指期夜盤</span><span class="night-price" style="color:#3fb950">45,876</span><span class="night-chg" style="color:#3fb950">-651（-1.40%）</span><span class="night-label" style="margin-left:4px">↗ 即時</span></a></div>
-  <div class="macro"><a class="mcell mlink" href="https://finance.yahoo.com/quote/USDTWD%3DX/" target="_blank">🇺🇸 美元/台幣 <b>31.78</b><small style="color:#f85149"> +0.08</small><small class="rt-badge">即時</small></a><a class="mcell mlink" href="https://finance.yahoo.com/quote/BZ%3DF/" target="_blank">🛢️ 布蘭特 <b>74.8</b> USD<small style="color:#f85149"> +1.04</small><small class="rt-badge">即時</small></a><a class="mcell mlink" href="https://finance.yahoo.com/quote/%5ESOX/" target="_blank">🔬 費半 <b>13,792</b><small style="color:#f85149"> +2.48%</small><small class="rt-badge">↗ 05:00</small></a><span class="mcell">🇯🇵 日經 <b>69,175</b> <small style="color:#3fb950">-0.88%</small></span><span class="mcell">🇰🇷 韓綜 <b>8,471.02</b> <small style="color:#f85149">+3.26%</small></span></div>
+  <div class="night-row"><a class="mlink" href="https://mis.taifex.com.tw/futures/" target="_blank" style="display:flex;align-items:baseline;gap:10px"><span class="night-label">🌙 台指期夜盤</span><span id="txf-live-price" class="night-price" style="color:#3fb950">45,805</span><span id="txf-live-chg" class="night-chg" style="color:#3fb950">-722（-1.55%）</span><small id="txf-live-badge" class="rt-badge" data-gentime="06:55">載入中…</small></a></div>
+  <div class="macro"><a class="mcell mlink" href="https://finance.yahoo.com/quote/USDTWD%3DX/" target="_blank">🇺🇸 美元/台幣 <b>31.83</b><small style="color:#f85149"> +0.02</small><small class="rt-badge">即時</small></a><a class="mcell mlink" href="https://finance.yahoo.com/quote/BZ%3DF/" target="_blank">🛢️ 布蘭特 <b>75.0</b> USD<small style="color:#f85149"> +1.24</small><small class="rt-badge">即時</small></a><a class="mcell mlink" href="https://finance.yahoo.com/quote/%5ESOX/" target="_blank">🔬 費半 <b>13,941</b><small style="color:#f85149"> +3.59%</small><small class="rt-badge">↗ 05:00</small></a><span class="mcell">🇯🇵 日經 <b>69,175</b> <small style="color:#3fb950">-0.88%</small></span><span class="mcell">🇰🇷 韓綜 <b>8,471.02</b> <small style="color:#f85149">+3.26%</small></span></div>
 </div>
 <div class="card stock">
   <div class="sh">
@@ -127,4 +127,45 @@ h1{color:#e6edf3;font-size:1.1rem;margin-bottom:14px;padding-bottom:8px;border-b
   <p class='csig'>⚠️ 借券近5日增加 +15,165</p>
 </div>
 <p class="foot">由 generate_daily_analysis.py 自動生成</p>
+<script>
+(function(){
+  function updTxf(){
+    fetch('https://mis.taifex.com.tw/futures/api/getQuoteList',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({type:'Future',commodity_id:'TXF'})
+    })
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var items=((data.RtData||{}).QuoteList)||[];
+      var best=null,maxV=-1;
+      items.forEach(function(it){
+        var sid=String(it.SymbolID||'');
+        if(sid.indexOf('-M')>-1){
+          var v=parseInt(it.TradingVolume||0);
+          if(v>maxV){maxV=v;best=it;}
+        }
+      });
+      if(!best){items.forEach(function(it){var v=parseInt(it.TradingVolume||0);if(v>maxV){maxV=v;best=it;}});}
+      if(!best)return;
+      var price=parseFloat(best.LastPrice||0);
+      var ref=parseFloat(best.ReferencePrice||best.SettlePrice||0);
+      var diff=price-ref,pct=ref?diff/ref*100:0;
+      var clr=diff>=0?'#f85149':'#3fb950';
+      var pe=document.getElementById('txf-live-price');
+      var ce=document.getElementById('txf-live-chg');
+      var be=document.getElementById('txf-live-badge');
+      if(pe){pe.style.color=clr;pe.textContent=price.toLocaleString('zh-TW',{maximumFractionDigits:0});}
+      if(ce){ce.style.color=clr;var s=diff>=0?'+':'';ce.textContent=s+diff.toFixed(0)+'（'+s+pct.toFixed(2)+'%）';}
+      if(be){be.textContent='即時';be.style.color='#3fb950';}
+    })
+    .catch(function(){
+      var be=document.getElementById('txf-live-badge');
+      if(be){var g=be.getAttribute('data-gentime')||'';be.textContent=g+' 快照';be.style.color='#8b949e';}
+    });
+  }
+  document.addEventListener('DOMContentLoaded',updTxf);
+  setInterval(updTxf,30000);
+})();
+</script>
 </body></html>
