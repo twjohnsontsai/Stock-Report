@@ -50,8 +50,8 @@ h1{color:#e6edf3;font-size:1.1rem;margin-bottom:14px;padding-bottom:8px;border-b
   <div class="tags"><span class="tag">大陽線（買氣充足）</span><span class="tag">C/P OI 142% 🟢 偏多</span></div>
   <div class="macro" style="margin-top:4px"><span class="sec-label">現貨</span><span class="mcell">外資 <b style="color:#f85149">+323.8億</b></span><span class="mcell">投信 <b style="color:#f85149">+156.0億</b></span><span class="mcell">自營商 <b style="color:#f85149">+59.4億</b></span><span class="mcell">融資 <b style="color:#3fb950">-21.5億</b><small style="color:#8b949e">(6095億)</small></span><span class="mcell">融券 <b style="color:#f85149">+1,505張</b><small style="color:#8b949e">(19萬張)</small></span><span class="mcell">借券 <b style="color:#f85149">+1.2億</b><small style="color:#8b949e">(179億)</small></span></div>
   <p class="adv ok">✓ 大盤偏強，觀察個股能否同步表現</p>
-  <div class="night-row"><a class="mlink" href="https://mis.taifex.com.tw/futures/" target="_blank" style="display:flex;align-items:baseline;gap:10px"><span class="night-label">🌙 台指期夜盤</span><span class="night-price" style="color:#3fb950">46,514</span><span class="night-chg" style="color:#3fb950">-707（-1.50%）</span><small class="rt-badge">即時</small></a></div>
-  <div class="macro"><a class="mcell mlink" href="https://finance.yahoo.com/quote/USDTWD%3DX/" target="_blank">🇺🇸 美元/台幣 <b>31.83</b><small style="color:#3fb950"> -0.03</small><small class="rt-badge">即時</small></a><a class="mcell mlink" href="https://finance.yahoo.com/quote/BZ%3DF/" target="_blank">🛢️ 布蘭特 <b>71.2</b> USD<small style="color:#3fb950"> -1.73</small><small class="rt-badge">即時</small></a><a class="mcell mlink" href="https://finance.yahoo.com/quote/%5ESOX/" target="_blank">🔬 費半 <b>13,353</b><small style="color:#3fb950"> -6.27%</small><small class="rt-badge">即時</small></a><a class="mcell mlink" href="https://finance.yahoo.com/quote/%5EN225/" target="_blank">🇯🇵 日經 <b>70,474</b><small style="color:#f85149">+0.59%</small><small class="rt-badge">即時</small></a><a class="mcell mlink" href="https://finance.yahoo.com/quote/%5EKS11/" target="_blank">🇰🇷 韓綜 <b>8,303.41</b><small style="color:#3fb950">-2.04%</small><small class="rt-badge">即時</small></a></div>
+  <div class="night-row"><a class="mlink" href="https://mis.taifex.com.tw/futures/" target="_blank" style="display:flex;align-items:baseline;gap:10px"><span class="night-label">🌙 台指期夜盤</span><span id="txf-live-price" class="night-price" style="color:#3fb950">46,514</span><span id="txf-live-chg" class="night-chg" style="color:#3fb950">-707（-1.50%）</span><small class="rt-badge">即時</small></a></div>
+  <div class="macro"><a class="mcell mlink" href="https://finance.yahoo.com/quote/USDTWD%3DX/" target="_blank">🇺🇸 美元/台幣 <b id="m-usd">31.83</b><small id="m-usd-c" style="color:#3fb950"> -0.03</small><small class="rt-badge">即時</small></a><a class="mcell mlink" href="https://finance.yahoo.com/quote/BZ%3DF/" target="_blank">🛢️ 布蘭特 <b id="m-brent">71.2</b> USD<small id="m-brent-c" style="color:#3fb950"> -1.73</small><small class="rt-badge">即時</small></a><a class="mcell mlink" href="https://finance.yahoo.com/quote/%5ESOX/" target="_blank">🔬 費半 <b id="m-sox">13,353</b><small id="m-sox-c" style="color:#3fb950"> -6.27%</small><small class="rt-badge">即時</small></a><a class="mcell mlink" href="https://finance.yahoo.com/quote/%5EN225/" target="_blank">🇯🇵 日經 <b id="m-nky">70,474</b><small id="m-nky-c" style="color:#f85149">+0.59%</small><small class="rt-badge">即時</small></a><a class="mcell mlink" href="https://finance.yahoo.com/quote/%5EKS11/" target="_blank">🇰🇷 韓綜 <b id="m-ksp">8,303.41</b><small id="m-ksp-c" style="color:#3fb950">-2.04%</small><small class="rt-badge">即時</small></a></div>
 </div>
 <div class="card stock">
   <div class="sh">
@@ -127,4 +127,21 @@ h1{color:#e6edf3;font-size:1.1rem;margin-bottom:14px;padding-bottom:8px;border-b
   <p class='csig'>⚠️ 借券近5日增加 +5,045</p>
 </div>
 <p class="foot">由 generate_daily_analysis.py 自動生成</p>
+<script>
+(async()=>{
+  try{
+    const d=await fetch('/api/macro',{cache:'no-store'}).then(r=>r.json());
+    const $=id=>document.getElementById(id);
+    const clr=v=>v>=0?'#f85149':'#3fb950';
+    const f=(v,n)=>v.toFixed(n);
+    const sgn=v=>(v>=0?'+':'')+f(v,2);
+    if(d.usdtwd){$('m-usd').textContent=f(d.usdtwd.price,2);$('m-usd-c').textContent=' '+sgn(d.usdtwd.chg);$('m-usd-c').style.color=clr(d.usdtwd.chg);}
+    if(d.brent){$('m-brent').textContent=f(d.brent.price,1);$('m-brent-c').textContent=' '+sgn(d.brent.chg);$('m-brent-c').style.color=clr(d.brent.chg);}
+    if(d.sox){$('m-sox').textContent=Math.round(d.sox.price).toLocaleString();$('m-sox-c').textContent=' '+(d.sox.pct>=0?'+':'')+f(d.sox.pct,2)+'%';$('m-sox-c').style.color=clr(d.sox.pct);}
+    if(d.nikkei){$('m-nky').textContent=Math.round(d.nikkei.price).toLocaleString();$('m-nky-c').textContent=(d.nikkei.pct>=0?'+':'')+f(d.nikkei.pct,2)+'%';$('m-nky-c').style.color=clr(d.nikkei.pct);}
+    if(d.kospi){$('m-ksp').textContent=f(d.kospi.price,2);$('m-ksp-c').textContent=(d.kospi.pct>=0?'+':'')+f(d.kospi.pct,2)+'%';$('m-ksp-c').style.color=clr(d.kospi.pct);}
+    if(d.txf){const p=$('txf-live-price'),c=$('txf-live-chg');if(p){p.textContent=Math.round(d.txf.price).toLocaleString();p.style.color=clr(d.txf.chg);}if(c){c.textContent=(d.txf.chg>=0?'+':'')+Math.round(d.txf.chg)+'（'+(d.txf.pct>=0?'+':'')+f(d.txf.pct,2)+'%）';c.style.color=clr(d.txf.chg);}}
+  }catch(e){}
+})();
+</script>
 </body></html>
