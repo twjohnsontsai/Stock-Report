@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>QDF（台勝科）日線  60 根</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+  body { margin:0; background:#0d0f14; color:#ccc; font-family:"Microsoft JhengHei",sans-serif; }
+  h1   { text-align:center; color:#fff; padding:10px 0 0; font-size:17px; margin:0; }
+  .info{ text-align:center; color:#aaa; font-size:12px; padding:3px 0 6px; line-height:1.9; }
+</style>
+</head>
+<body>
+<h1>QDF（台勝科）日線  60 根</h1>
+<div class="info">
+  最新：2026/07/02
+  &nbsp;收 <b style="color:#f66">411.0</b>
+  &nbsp;現股 <b>407.0</b>
+  &nbsp;基差 <b style="color:#f66">-4.0</b>
+  &nbsp;OI <b style="color:#ffb300">1,296</b>
+  &nbsp;|&nbsp; 今日快照 前5大 多457/空806/<b style='color:#f66'>淨-349</b>&nbsp; 前10大 多652/空1,059/<b style='color:#f66'>淨-407</b>
+  <br>MA5 <b style='color:#f9a825'>374.2</b>  MA10 <b style='color:#42a5f5'>377.8</b>  MA20 <b style='color:#ab47bc'>349.6</b>  MA60 <b style='color:#ef5350'>268.2</b>
+  &nbsp;&nbsp;
+  外資OI淨 <b style="color:#f66">-538,742</b>
+  &nbsp;投信 <b>+9,698</b>
+  &nbsp;自營商 <b>-317,246</b>
+  &nbsp;|&nbsp;
+  前十大多 <b style="color:#42a5f5">688</b>
+  /空 <b style="color:#ef5350">1004</b>
+  /淨 <b style="color:#f66">-316</b>
+  &nbsp;特定淨 <b style="color:#f66">-934</b>
+</div>
+<div id="chart" style="width:100%;height:135vh"></div>
+<script>
+const D = {"dates": ["20260408", "20260409", "20260410", "20260413", "20260414", "20260415", "20260416", "20260417", "20260420", "20260421", "20260422", "20260423", "20260424", "20260427", "20260428", "20260429", "20260430", "20260504", "20260505", "20260506", "20260507", "20260508", "20260511", "20260512", "20260513", "20260514", "20260515", "20260518", "20260519", "20260520", "20260521", "20260522", "20260525", "20260526", "20260527", "20260528", "20260529", "20260601", "20260602", "20260603", "20260604", "20260605", "20260608", "20260609", "20260610", "20260611", "20260612", "20260615", "20260616", "20260617", "20260618", "20260622", "20260623", "20260624", "20260625", "20260626", "20260629", "20260630", "20260701", "20260702"], "opens": [134.0, 140.0, 152.5, 175.5, 195.0, 176.5, 198.5, 193.5, 192.5, 192.5, 184.0, 187.0, 177.5, 176.5, 182.0, 178.0, 195.0, 195.0, 208.5, 232.0, 262.0, 255.0, 255.0, 273.0, 257.5, 250.5, 247.0, 216.5, 221.5, 204.5, 228.0, 235.5, 272.0, 285.5, 323.0, 294.0, 316.0, 347.5, 382.0, 321.0, 303.0, 288.0, 265.5, 266.0, 280.5, 278.0, 336.0, 338.0, 379.5, 394.0, 397.0, 388.0, 382.0, 378.5, 380.0, 372.5, 342.0, 350.5, 408.5, 369.5], "highs": [142.0, 151.5, 165.0, 181.5, 195.0, 196.5, 198.5, 194.0, 200.0, 192.5, 192.0, 189.0, 177.5, 185.0, 182.0, 185.5, 201.5, 207.5, 228.0, 250.5, 272.0, 267.0, 275.5, 277.5, 262.0, 261.5, 247.0, 228.5, 221.5, 211.0, 231.5, 254.5, 279.5, 307.0, 324.5, 318.0, 316.0, 347.5, 382.0, 333.0, 313.5, 301.5, 268.5, 292.0, 292.0, 308.0, 336.5, 361.5, 397.5, 425.0, 397.0, 401.0, 390.5, 382.5, 396.5, 385.0, 346.5, 371.5, 408.5, 433.0], "lows": [134.0, 139.0, 152.5, 170.0, 179.0, 176.5, 184.0, 184.5, 184.5, 177.5, 184.0, 171.0, 162.0, 175.0, 178.0, 177.0, 187.0, 191.0, 208.5, 217.5, 240.0, 248.5, 251.0, 261.5, 243.5, 246.0, 225.0, 202.5, 202.5, 203.5, 217.0, 235.5, 263.0, 285.0, 288.0, 280.0, 316.0, 347.5, 313.0, 312.0, 293.5, 265.5, 265.5, 263.5, 269.5, 266.5, 308.0, 333.0, 366.5, 383.5, 376.0, 385.0, 369.0, 360.0, 368.5, 342.0, 322.5, 350.0, 401.5, 369.5], "closes": [141.0, 150.0, 165.0, 181.5, 181.0, 193.0, 193.5, 188.0, 185.0, 184.0, 190.0, 173.0, 173.5, 184.0, 178.0, 184.0, 189.0, 207.5, 228.0, 250.5, 263.5, 254.0, 273.0, 268.5, 253.0, 249.5, 225.0, 224.0, 204.5, 205.0, 231.5, 254.5, 279.5, 307.0, 298.5, 287.5, 316.0, 347.5, 317.0, 321.5, 294.5, 294.5, 265.5, 290.0, 280.0, 308.0, 329.0, 361.5, 397.5, 393.5, 390.5, 385.0, 378.5, 373.0, 380.0, 342.0, 338.0, 371.5, 408.5, 411.0], "volumes": [119.0, 309.0, 166.0, 332.0, 395.0, 402.0, 287.0, 121.0, 307.0, 185.0, 190.0, 290.0, 122.0, 165.0, 79.0, 143.0, 913.0, 462.0, 292.0, 1549.0, 1010.0, 1541.0, 577.0, 300.0, 326.0, 227.0, 340.0, 402.0, 286.0, 147.0, 424.0, 719.0, 422.0, 400.0, 773.0, 1558.0, 45.0, 35.0, 1258.0, 209.0, 203.0, 127.0, 254.0, 416.0, 469.0, 277.0, 1478.0, 402.0, 590.0, 619.0, 1001.0, 454.0, 361.0, 198.0, 323.0, 275.0, 138.0, 122.0, 825.0, 963.0], "oi": [405.0, 296.0, 281.0, 245.0, 115.0, 144.0, 619.0, 586.0, 644.0, 647.0, 668.0, 636.0, 613.0, 616.0, 599.0, 614.0, 649.0, 826.0, 899.0, 811.0, 895.0, 1012.0, 860.0, 717.0, 615.0, 633.0, 570.0, 423.0, 321.0, 211.0, 885.0, 1198.0, 1210.0, 1221.0, 1115.0, 1257.0, 1267.0, 1273.0, 1105.0, 1078.0, 1059.0, 1047.0, 1108.0, 1080.0, 1046.0, 1046.0, 724.0, 659.0, 434.0, 139.0, 1223.0, 1182.0, 1170.0, 1169.0, 1137.0, 1132.0, 1103.0, 1127.0, 1233.0, 1296.0], "oi_chg": [null, -109.0, -15.0, -36.0, -130.0, 29.0, 475.0, -33.0, 58.0, 3.0, 21.0, -32.0, -23.0, 3.0, -17.0, 15.0, 35.0, 177.0, 73.0, -88.0, 84.0, 117.0, -152.0, -143.0, -102.0, 18.0, -63.0, -147.0, -102.0, -110.0, 674.0, 313.0, 12.0, 11.0, -106.0, 142.0, 10.0, 6.0, -168.0, -27.0, -19.0, -12.0, 61.0, -28.0, -34.0, 0.0, -322.0, -65.0, -225.0, -295.0, 1084.0, -41.0, -12.0, -1.0, -32.0, -5.0, -29.0, 24.0, 106.0, 63.0], "oi_colors": ["#888", "#43a047", "#43a047", "#43a047", "#43a047", "#e53935", "#e53935", "#43a047", "#e53935", "#e53935", "#e53935", "#43a047", "#43a047", "#e53935", "#43a047", "#e53935", "#e53935", "#e53935", "#e53935", "#43a047", "#e53935", "#e53935", "#43a047", "#43a047", "#43a047", "#e53935", "#43a047", "#43a047", "#43a047", "#43a047", "#e53935", "#e53935", "#e53935", "#e53935", "#43a047", "#e53935", "#e53935", "#e53935", "#43a047", "#43a047", "#43a047", "#43a047", "#e53935", "#43a047", "#43a047", "#e53935", "#43a047", "#43a047", "#43a047", "#43a047", "#e53935", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#e53935", "#e53935", "#e53935"], "fi_net": [-242185, -253473, -255632, -249743, -241037, -214698, -232842, -262057, -284197, -293353, -304111, -288531, -281693, -296174, -308600, -321719, -327069, -329423, -343592, -350729, -370095, -375973, -391758, -408763, -426113, -435884, -423231, -412612, -405110, -362628, -385455, -413404, -459105, -501811, -516891, -529696, -559138, -574365, -596912, -593320, -601093, -583491, -550725, -574683, -547334, -553306, -555320, -538844, -525488, -435874, -486491, -518636, -521066, -526002, -530872, -506891, -482908, -496074, -518773, -538742], "it_net": [8151, 8773, 9437, 10952, 10972, 3987, 4207, 4297, 12835, 17130, 19812, 20494, 21004, 12086, 13962, 14529, 14499, 14461, 18480, 19185, 21640, 21660, 23649, 24514, 24740, 29120, 41168, 39812, 39812, 15227, 16277, 20558, 23726, 30134, 36505, 42738, 42992, 42962, 40575, 37593, 30427, 30427, 20427, 20427, 20427, 19779, 19929, 19883, 19883, 3613, 4077, 2854, 2870, 7470, 12252, 12252, 12252, 12252, 9698, 9698], "dt_net": [-258006, -273174, -281265, -305201, -309946, -284847, -299359, -304189, -310903, -311554, -319237, -295417, -296534, -301560, -309524, -311048, -307941, -313782, -330209, -336349, -351496, -346078, -348867, -350627, -341038, -345807, -329163, -331328, -317553, -270214, -293721, -311587, -313123, -316082, -313244, -308024, -320536, -326084, -319250, -323682, -315019, -296841, -272855, -255994, -226196, -227255, -238123, -252720, -263111, -283309, -302035, -318396, -315019, -331081, -334760, -294897, -284900, -301738, -303995, -317246], "t10_buy": [519, 386, 335, 327, 309, 243, 259, 240, 269, 252, 254, 215, 233, 237, 244, 263, 258, 476, 501, 486, 516, 590, 561, 468, 426, 416, 434, 430, 417, 419, 492, 732, 737, 750, 712, 822, 827, 850, 762, 741, 705, 703, 740, 730, 753, 743, 637, 645, 657, 530, 597, 608, 639, 645, 628, 622, 630, 625, 652, 688], "t10_sell": [742, 619, 595, 653, 581, 574, 589, 583, 646, 654, 645, 647, 645, 656, 642, 648, 686, 805, 886, 889, 950, 958, 860, 743, 702, 720, 742, 714, 738, 720, 779, 923, 964, 956, 891, 904, 907, 925, 835, 813, 803, 797, 818, 809, 854, 868, 949, 906, 894, 877, 959, 996, 985, 985, 955, 982, 967, 971, 1059, 1004], "t10_net": [-223, -233, -260, -326, -272, -331, -330, -343, -377, -402, -391, -432, -412, -419, -398, -385, -428, -329, -385, -403, -434, -368, -299, -275, -276, -304, -308, -284, -321, -301, -287, -191, -227, -206, -179, -82, -80, -75, -73, -72, -98, -94, -78, -79, -101, -125, -312, -261, -237, -347, -362, -388, -346, -340, -327, -360, -337, -346, -407, -316], "t10_net_clr": ["#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047"], "s10_buy": [168, 154, 144, 98, 152, 96, 36, 36, 36, 49, 20, 65, 51, 75, 83, 115, 34, 36, 56, 157, 166, 290, 254, 144, 147, 137, 136, 122, 141, 73, 101, 122, 136, 161, 103, 65, 68, 90, 83, 84, 88, 90, 118, 91, 88, 48, 108, 81, 142, 29, 55, 29, 29, 54, 58, 70, 73, 73, 83, 70], "s10_sell": [731, 608, 584, 586, 570, 553, 572, 560, 635, 629, 621, 636, 634, 645, 631, 628, 675, 805, 886, 889, 950, 791, 744, 674, 661, 690, 712, 684, 692, 710, 767, 898, 964, 956, 891, 804, 807, 829, 706, 714, 702, 719, 738, 809, 829, 829, 918, 876, 866, 877, 846, 933, 948, 948, 924, 955, 940, 944, 1059, 1004], "s10_net": [-563, -454, -440, -488, -418, -457, -536, -524, -599, -580, -601, -571, -583, -570, -548, -513, -641, -769, -830, -732, -784, -501, -490, -530, -514, -553, -576, -562, -551, -637, -666, -776, -828, -795, -788, -739, -739, -739, -623, -630, -614, -629, -620, -718, -741, -781, -810, -795, -724, -848, -791, -904, -919, -894, -866, -885, -867, -871, -976, -934], "s10_net_clr": ["#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047"], "t10_buy_delta": [null, -133, -51, -8, -18, -66, 16, -19, 29, -17, 2, -39, 18, 4, 7, 19, -5, 218, 25, -15, 30, 74, -29, -93, -42, -10, 18, -4, -13, 2, 73, 240, 5, 13, -38, 110, 5, 23, -88, -21, -36, -2, 37, -10, 23, -10, -106, 8, 12, -127, 67, 11, 31, 6, -17, -6, 8, -5, 27, 36], "t10_sell_delta": [null, -123, -24, 58, -72, -7, 15, -6, 63, 8, -9, 2, -2, 11, -14, 6, 38, 119, 81, 3, 61, 8, -98, -117, -41, 18, 22, -28, 24, -18, 59, 144, 41, -8, -65, 13, 3, 18, -90, -22, -10, -6, 21, -9, 45, 14, 81, -43, -12, -17, 82, 37, -11, 0, -30, 27, -15, 4, 88, -55], "s10_buy_delta": [null, -14, -10, -46, 54, -56, -60, 0, 0, 13, -29, 45, -14, 24, 8, 32, -81, 2, 20, 101, 9, 124, -36, -110, 3, -10, -1, -14, 19, -68, 28, 21, 14, 25, -58, -38, 3, 22, -7, 1, 4, 2, 28, -27, -3, -40, 60, -27, 61, -113, 26, -26, 0, 25, 4, 12, 3, 0, 10, -13], "s10_sell_delta": [null, -123, -24, 2, -16, -17, 19, -12, 75, -6, -8, 15, -2, 11, -14, -3, 47, 130, 81, 3, 61, -159, -47, -70, -13, 29, 22, -28, 8, 18, 57, 131, 66, -8, -65, -87, 3, 22, -123, 8, -12, 17, 19, 71, 20, 0, 89, -42, -10, 11, -31, 87, 15, 0, -24, 31, -15, 4, 115, -55], "oi_delta_clr": ["#888", "#43a047", "#43a047", "#43a047", "#43a047", "#43a047", "#ef5350", "#43a047", "#ef5350", "#43a047", "#ef5350", "#43a047", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#43a047", "#ef5350", "#ef5350", "#43a047", "#ef5350", "#ef5350", "#43a047", "#43a047", "#43a047", "#43a047", "#ef5350", "#43a047", "#43a047", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#43a047", "#ef5350", "#ef5350", "#ef5350", "#43a047", "#43a047", "#43a047", "#43a047", "#ef5350", "#43a047", "#ef5350", "#43a047", "#43a047", "#ef5350", "#ef5350", "#43a047", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#43a047", "#43a047", "#ef5350", "#43a047", "#ef5350", "#ef5350"], "sbl_bal": [6625.8, 6784.8, 6792.8, 6547.8, 6308.8, 6313.8, 5774.8, 5522.8, 5454.8, 5355.8, 5355.8, 4820.8, 4717.8, 4717.8, 4710.8, 4663.8, 4493.8, 4448.8, 4037.8, 4231.8, 4556.8, 4763.8, 4644.8, 4337.8, 4257.8, 4111.8, 3999.8, 3922.8, 4030.8, 4044.8, 4046.8, 3860.8, 3891.8, 3873.8, 4181.8, 4364.8, 4313.8, 4274.8, 4228.8, 4225.8, 4291.8, 4171.8, 4154.8, 4154.8, 4059.8, 4054.8, 4050.8, 4047.8, 3860.8, 3882.8, 3885.8, 3868.8, 3862.8, 3823.8, 3783.8, 3781.8, 3703.8, 3701.8, 3701.8, 3703.8], "sbl_sell": [35.0, 164.0, 40.0, 20.0, 12.0, 89.0, 12.0, 0.0, 1.0, 1.0, 0.0, 10.0, 0.0, 0.0, 10.0, 5.0, 84.0, 34.0, 355.0, 200.0, 375.0, 359.0, 11.0, 0.0, 0.0, 0.0, 0.0, 0.0, 108.0, 14.0, 2.0, 12.0, 31.0, 35.0, 345.0, 221.0, 0.0, 3.0, 0.0, 0.0, 66.0, 11.0, 0.0, 0.0, 0.0, 0.0, 98.0, 13.0, 6.0, 29.0, 33.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0], "sbl_ret": [-12.0, -5.0, -32.0, -265.0, -251.0, -84.0, -551.0, -252.0, -69.0, -100.0, -0.0, -545.0, -103.0, -0.0, -17.0, -52.0, -254.0, -79.0, -766.0, -6.0, -50.0, -152.0, -130.0, -307.0, -80.0, -146.0, -112.0, -77.0, -0.0, -0.0, -0.0, -198.0, -0.0, -53.0, -37.0, -38.0, -51.0, -42.0, -46.0, -3.0, -0.0, -131.0, -17.0, -0.0, -95.0, -5.0, -102.0, -16.0, -193.0, -7.0, -30.0, -17.0, -6.0, -39.0, -40.0, -2.0, -78.0, -2.0, -0.0, -0.0], "basis": [0.0, 0.5, 0.5, 0.5, -2.0, 0.5, 0.5, 0.5, 1.0, -1.5, -3.0, -1.5, -1.0, -2.0, 0.0, -2.5, 0.0, 0.0, 0.0, 0.0, -0.5, 3.5, -5.0, -4.0, -6.5, -3.5, -3.5, -2.5, -2.5, 0.5, -5.5, -6.0, -6.5, -7.0, -8.0, 2.5, 3.0, 3.0, -1.5, -7.0, -3.5, -4.5, -4.5, -5.5, -10.0, -11.0, -2.5, -2.5, -3.0, 2.0, -0.5, -6.5, -5.5, -8.0, -8.0, -6.0, -7.0, -7.5, -8.5, -4.0], "rsi6": [null, null, null, null, null, null, 99.07, 88.19, 82.27, 80.12, 83.27, 54.13, 54.69, 65.35, 56.27, 62.52, 67.2, 78.91, 85.69, 89.95, 91.67, 79.71, 84.55, 79.18, 62.73, 59.38, 41.02, 40.41, 29.95, 30.5, 53.74, 65.69, 74.34, 80.75, 73.9, 65.31, 74.52, 81.16, 62.3, 63.79, 49.66, 49.66, 36.99, 49.94, 45.37, 58.21, 65.51, 73.96, 80.35, 77.8, 75.65, 71.29, 65.92, 61.23, 65.03, 39.69, 37.83, 57.75, 70.34, 71.04], "rsi12": [null, null, null, null, null, null, null, null, null, null, null, null, 68.79, 72.44, 67.51, 69.76, 71.54, 77.02, 81.35, 84.79, 86.37, 79.76, 82.66, 79.71, 70.28, 68.29, 56.16, 55.72, 47.74, 47.95, 57.7, 64.07, 69.52, 74.21, 70.55, 65.96, 71.25, 75.78, 64.96, 65.74, 57.31, 57.31, 49.24, 55.07, 52.39, 58.55, 62.52, 67.74, 72.38, 71.14, 70.16, 68.27, 65.98, 63.99, 65.44, 52.89, 51.75, 59.69, 66.35, 66.76], "ma5": [null, null, null, null, 163.7, 174.1, 182.8, 187.4, 188.1, 188.7, 188.1, 184.0, 181.1, 180.9, 179.7, 178.5, 181.7, 188.5, 197.3, 211.8, 227.7, 240.7, 253.8, 261.9, 262.4, 259.6, 253.8, 244.0, 231.2, 221.6, 218.0, 223.9, 235.0, 255.5, 274.2, 285.4, 297.7, 311.3, 313.3, 317.9, 319.3, 315.0, 298.6, 293.2, 284.9, 287.6, 294.5, 313.7, 335.2, 357.9, 374.4, 385.6, 389.0, 384.1, 381.4, 371.7, 362.3, 360.9, 368.0, 374.2], "ma10": [null, null, null, null, null, null, null, null, null, 176.2, 181.1, 183.4, 184.25, 184.5, 184.2, 183.3, 182.85, 184.8, 189.1, 195.75, 203.1, 211.2, 221.15, 229.6, 237.1, 243.65, 247.25, 248.9, 246.55, 242.0, 238.8, 238.85, 239.5, 243.35, 247.9, 251.7, 260.8, 273.15, 284.4, 296.05, 302.35, 306.35, 304.95, 303.25, 301.4, 303.45, 304.75, 306.15, 314.2, 321.4, 331.0, 340.05, 351.35, 359.65, 369.65, 373.05, 373.95, 374.95, 376.05, 377.8], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 185.97, 192.1, 197.3, 202.7, 207.05, 210.65, 213.47, 215.05, 216.85, 217.82, 218.88, 220.95, 225.03, 230.32, 236.47, 242.5, 247.68, 254.03, 261.02, 265.48, 269.02, 270.57, 272.6, 272.23, 273.3, 274.65, 277.57, 282.77, 289.65, 299.3, 308.73, 316.68, 323.2, 328.15, 331.45, 335.52, 338.25, 339.35, 340.55, 345.12, 349.6], "ma60": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 268.2]};
+const dates = D.dates.map(d => d.slice(4,6)+'/'+d.slice(6));
+const volClr = D.closes.map((c,i) => i===0?'#888': c>=D.closes[i-1]?'#e53935':'#43a047');
+const zero_x = [dates[0], dates[dates.length-1]];
+
+const traces = [
+  // y1 K線+MA
+  {type:'candlestick',x:dates,open:D.opens,high:D.highs,low:D.lows,close:D.closes,
+    name:'K線',increasing:{line:{color:'#e53935'},fillcolor:'#c62828'},
+    decreasing:{line:{color:'#43a047'},fillcolor:'#2e7d32'},xaxis:'x',yaxis:'y1',whiskerwidth:0.3},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma5, name:'MA5', line:{color:'#f9a825',width:1.2},xaxis:'x',yaxis:'y1'},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma10,name:'MA10',line:{color:'#42a5f5',width:1.2},xaxis:'x',yaxis:'y1'},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma20,name:'MA20',line:{color:'#ab47bc',width:1.2},xaxis:'x',yaxis:'y1'},
+  {type:'scatter',mode:'lines',x:dates,y:D.ma60,name:'MA60',line:{color:'#ef5350',width:1.5},xaxis:'x',yaxis:'y1'},
+  // y2 成交量
+  {type:'bar',x:dates,y:D.volumes,name:'成交量',marker:{color:volClr},xaxis:'x',yaxis:'y2'},
+  // y3 未平倉 + OI變化
+  {type:'scatter',mode:'lines',x:dates,y:D.oi,name:'未平倉',line:{color:'#ffb300',width:2},xaxis:'x',yaxis:'y3'},
+  {type:'bar',x:dates,y:D.oi_chg,name:'OI變化',marker:{color:D.oi_colors},xaxis:'x',yaxis:'y3',yaxis2:'y3r',
+    base:0,opacity:0.5},
+  // y4 法人淨OI
+  {type:'scatter',mode:'lines',x:dates,y:D.fi_net,name:'外資淨OI',line:{color:'#ef5350',width:1.5},xaxis:'x',yaxis:'y4'},
+  {type:'scatter',mode:'lines',x:dates,y:D.it_net,name:'投信淨OI',line:{color:'#42a5f5',width:1.2},xaxis:'x',yaxis:'y4'},
+  {type:'scatter',mode:'lines',x:dates,y:D.dt_net,name:'自營商淨OI',line:{color:'#888',width:1,dash:'dot'},xaxis:'x',yaxis:'y4'},
+  {type:'scatter',mode:'lines',x:zero_x,y:[0,0],line:{color:'#444',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y4'},
+  // y5 前十大 + 特定 多/空口
+  {type:'scatter',mode:'lines',x:dates,y:D.t10_buy, name:'前十大多口',line:{color:'#ef5350',width:1.8},xaxis:'x',yaxis:'y5'},
+  {type:'scatter',mode:'lines',x:dates,y:D.t10_sell,name:'前十大空口',line:{color:'#43a047',width:1.8},xaxis:'x',yaxis:'y5'},
+  {type:'scatter',mode:'lines',x:dates,y:D.s10_buy, name:'特定多口',line:{color:'#ef9a9a',width:1.3,dash:'dot'},xaxis:'x',yaxis:'y5'},
+  {type:'scatter',mode:'lines',x:dates,y:D.s10_sell,name:'特定空口',line:{color:'#a5d6a7',width:1.3,dash:'dot'},xaxis:'x',yaxis:'y5'},
+  // y6 前十大 + 特定 每日增減
+  {type:'bar',x:dates,y:D.t10_buy_delta,name:'前十大多增',marker:{color:D.oi_delta_clr},xaxis:'x',yaxis:'y6',opacity:0.85},
+  {type:'bar',x:dates,y:D.t10_sell_delta.map(v=>v!=null?-v:null),name:'前十大空增(反)',
+    marker:{color:'rgba(100,181,246,0.5)'},xaxis:'x',yaxis:'y6',opacity:0.85},
+  {type:'bar',x:dates,y:D.s10_buy_delta,name:'特定多增',marker:{color:'rgba(239,154,154,0.6)'},xaxis:'x',yaxis:'y6',opacity:0.7},
+  {type:'bar',x:dates,y:D.s10_sell_delta.map(v=>v!=null?-v:null),name:'特定空增(反)',
+    marker:{color:'rgba(165,214,167,0.5)'},xaxis:'x',yaxis:'y6',opacity:0.7},
+  {type:'scatter',mode:'lines',x:zero_x,y:[0,0],line:{color:'#444',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y6'},
+  // y7 現貨借券（餘額線 + 每日賣出/還券柱）
+  {type:'scatter',mode:'lines',x:dates,y:D.sbl_bal,name:'借券餘額(張)',
+    line:{color:'#ffb300',width:2},xaxis:'x',yaxis:'y7'},
+  {type:'bar',x:dates,y:D.sbl_sell,name:'借券賣出',
+    marker:{color:'rgba(239,83,80,0.6)'},xaxis:'x',yaxis:'y10'},
+  {type:'bar',x:dates,y:D.sbl_ret,name:'借券還券',
+    marker:{color:'rgba(102,187,106,0.6)'},xaxis:'x',yaxis:'y10'},
+  // y8 基差
+  {type:'scatter',mode:'lines',x:dates,y:D.basis,name:'基差(現-期)',line:{color:'#80cbc4',width:1.5},xaxis:'x',yaxis:'y8'},
+  {type:'scatter',mode:'lines',x:zero_x,y:[0,0],line:{color:'#444',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y8'},
+  // y9 RSI
+  {type:'scatter',mode:'lines',x:dates,y:D.rsi6, name:'RSI 6', line:{color:'#ef6c00',width:1.5},xaxis:'x',yaxis:'y9'},
+  {type:'scatter',mode:'lines',x:dates,y:D.rsi12,name:'RSI 12',line:{color:'#fdd835',width:1.5},xaxis:'x',yaxis:'y9'},
+  {type:'scatter',mode:'lines',x:zero_x,y:[80,80],line:{color:'#e53935',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y9'},
+  {type:'scatter',mode:'lines',x:zero_x,y:[20,20],line:{color:'#43a047',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y9'},
+];
+
+const layout = {
+  paper_bgcolor:'#0d0f14',plot_bgcolor:'#0d0f14',
+  font:{color:'#ccc',size:11},
+  showlegend:false,
+  margin:{l:65,r:15,t:5,b:50},
+  xaxis:{type:'category',rangeslider:{visible:false},tickangle:-45,
+          gridcolor:'#1a2030',color:'#aaa',nticks:20},
+  grid:{rows:9,columns:1,pattern:'independent',roworder:'top to bottom'},
+  yaxis: {domain:[0.875,1.00],gridcolor:'#1a2030',color:'#aaa',title:'價格'},
+  yaxis2:{domain:[0.800,0.870],gridcolor:'#1a2030',color:'#aaa',title:'成交量'},
+  yaxis3:{domain:[0.720,0.795],gridcolor:'#1a2030',color:'#aaa',title:'未平倉'},
+  yaxis4:{domain:[0.630,0.715],gridcolor:'#1a2030',color:'#aaa',title:'法人淨OI',
+           zeroline:true,zerolinecolor:'#333'},
+  yaxis5:{domain:[0.540,0.625],gridcolor:'#1a2030',color:'#aaa',title:'前十大+特定 多/空'},
+  yaxis6:{domain:[0.445,0.535],gridcolor:'#1a2030',color:'#aaa',title:'每日增減',
+           zeroline:true,zerolinecolor:'#333'},
+  yaxis7:{domain:[0.355,0.440],gridcolor:'#1a2030',color:'#ffb300',title:'借券餘額(張)'},
+  yaxis10:{overlaying:'y7',side:'right',color:'#aaa',title:'每日增減(張)',
+            showgrid:false,zeroline:true,zerolinecolor:'#333'},
+  yaxis8:{domain:[0.200,0.350],gridcolor:'#1a2030',color:'#aaa',title:'基差',
+           zeroline:true,zerolinecolor:'#333'},
+  yaxis9:{domain:[0.000,0.195],gridcolor:'#1a2030',color:'#aaa',title:'RSI',range:[0,100]},
+  hovermode:'x unified',
+  hoverlabel:{bgcolor:'rgba(13,15,20,0.55)',bordercolor:'rgba(100,100,120,0.5)',font:{color:'#eee',size:11}},
+};
+
+Plotly.newPlot('chart', traces, layout, {responsive:true,scrollZoom:false});
+
+// 讓滑鼠滾輪正常捲動頁面，不被 Plotly 攔截
+document.getElementById('chart').addEventListener('wheel', function(e) {
+    e.stopImmediatePropagation();
+}, {capture:true, passive:false});
+document.getElementById('broker_chart') && document.getElementById('broker_chart').addEventListener('wheel', function(e) {
+    e.stopImmediatePropagation();
+}, {capture:true, passive:false});
+</script>
+
+<h2 style="text-align:center;color:#ccc;font-size:14px;margin:16px 0 8px">
+  期貨分點買賣淨額（百萬元，累計期間）</h2>
+<div style="display:flex;gap:12px;margin:0 8px 24px">
+  
+<div style="flex:1;min-width:0">
+  <div style="text-align:center;font-size:14px;color:#ef9a9a;font-weight:700;
+              padding:6px 0;background:rgba(255,255,255,0.04);border-radius:4px 4px 0 0">
+    ▲ 淨多方</div>
+  <table style="width:100%;border-collapse:collapse;font-family:'Microsoft JhengHei',sans-serif;color:#ccc">
+    <thead>
+      <tr style="background:#1a2030;color:#888;font-size:12px">
+        <th style="width:28px;text-align:right;padding:5px 5px 5px 0">#</th>
+        <th style="text-align:left;padding:5px 10px">券商</th>
+        <th style="text-align:right;padding:5px 8px 5px 0">淨額(M)</th>
+      </tr>
+    </thead>
+    <tbody><tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">1</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">國泰</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+410.6</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">2</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">凱基</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+279.1</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">3</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">元大</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+179.8</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">4</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">中國信託</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+144.1</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">5</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">玉山</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+100.8</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">6</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">富邦</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+66.8</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">7</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">兆豐</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+65.3</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">8</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">合庫</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+48.9</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">9</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">新光</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+48.2</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">10</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">摩根大通</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+33.3</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">11</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">第一金</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+27.4</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">12</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">統一</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+27.0</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">13</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">群益金鼎</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+24.2</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">14</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">土銀</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+23.2</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">15</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">台灣企銀</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+9.5</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">16</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">口袋證券</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+9.4</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">17</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">台中銀</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+6.0</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">18</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">華南永昌</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+4.4</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">19</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">陽信</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+4.3</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">20</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">香港上海匯豐</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+3.8</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">21</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">致和</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+2.4</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">22</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">(牛牛牛)亞證券</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+2.0</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">23</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">彰銀</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+1.8</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">24</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">大昌</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+1.6</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">25</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">新百王</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+1.2</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">26</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">福勝</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+0.6</td></tr>
+<tr style="background:rgba(229,57,53,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">27</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">寶盛</td><td style="color:#ef9a9a;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">+0.1</td></tr></tbody>
+  </table>
+</div>
+  
+<div style="flex:1;min-width:0">
+  <div style="text-align:center;font-size:14px;color:#a5d6a7;font-weight:700;
+              padding:6px 0;background:rgba(255,255,255,0.04);border-radius:4px 4px 0 0">
+    ▼ 淨空方</div>
+  <table style="width:100%;border-collapse:collapse;font-family:'Microsoft JhengHei',sans-serif;color:#ccc">
+    <thead>
+      <tr style="background:#1a2030;color:#888;font-size:12px">
+        <th style="width:28px;text-align:right;padding:5px 5px 5px 0">#</th>
+        <th style="text-align:left;padding:5px 10px">券商</th>
+        <th style="text-align:right;padding:5px 8px 5px 0">淨額(M)</th>
+      </tr>
+    </thead>
+    <tbody><tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">1</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">美商高盛</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-255.3</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">2</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">新加坡商瑞銀</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-216.5</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">3</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">美林</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-182.0</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">4</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">台新</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-169.4</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">5</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">台灣摩根士丹利</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-140.5</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">6</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">港商麥格理</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-133.3</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">7</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">花旗環球</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-110.3</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">8</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">法銀巴黎</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-100.8</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">9</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">永豐金</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-64.0</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">10</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">宏遠</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-27.2</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">11</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">臺銀</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-23.5</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">12</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">港商野村</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-17.4</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">13</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">國票</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-15.6</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">14</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">永全</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-14.7</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">15</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">高橋</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-9.2</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">16</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">美好</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-8.1</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">17</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">福邦</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-7.1</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">18</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">大和國泰</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-5.5</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">19</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">安泰</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-5.5</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">20</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">康和</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-5.3</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">21</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">京城</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-3.9</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">22</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">亞東</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-2.8</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">23</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">日茂</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-1.4</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">24</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">永興</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-1.2</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">25</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">德信</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-0.8</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">26</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">大展</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-0.5</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">27</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">盈溢</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-0.5</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">28</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">港商法國興業(停)</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-0.5</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">29</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">北城</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-0.4</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">30</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">元大期貨</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-0.4</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">31</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">聯邦商銀</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-0.4</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">32</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">中農</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-0.3</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">33</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">日進</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-0.3</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">34</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">石橋</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-0.2</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">35</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">富隆證券</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-0.1</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">36</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">光和</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-0.1</td></tr>
+<tr style="background:rgba(67,160,71,0.06)"><td style="color:#666;text-align:right;padding:5px 5px 5px 0;font-size:12px">37</td><td style="font-weight:600;padding:5px 10px;white-space:nowrap;font-size:14px">群益期貨</td><td style="color:#a5d6a7;text-align:right;font-weight:700;padding:5px 8px 5px 0;font-size:14px">-0.0</td></tr></tbody>
+  </table>
+</div>
+</div>
+</body>
+</html>
