@@ -16,12 +16,12 @@ body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:#0d0f
 .stat-lbl{font-size:11px;color:#7a9ab8;margin-bottom:3px;font-weight:500}
 .stat-val{font-size:17px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.2}
 .stat-sub{font-size:11px;color:#6a8298;margin-top:3px;line-height:1.4}
-.charts-layout{display:grid;grid-template-columns:1fr;gap:10px;align-items:start}
+.charts-layout{display:grid;grid-template-columns:1fr 220px;gap:10px;align-items:start}
 .charts-col{min-width:0}
-.panel-col{display:none}
+.panel-col{display:block;position:sticky;top:1rem;align-self:start}
 .cw{background:#111820;border:1px solid #1e2635;border-radius:8px;padding:8px 10px 6px;position:relative;margin-bottom:6px}
 .cl{font-size:.72rem;color:#6a8aaa;position:absolute;top:.45rem;left:.9rem;font-weight:600;pointer-events:none}
-#hpanel{position:fixed;background:rgba(13,15,20,0.45);border:1px solid #2a3a50;border-radius:6px;padding:8px 12px;display:none;font-size:.74rem;max-height:calc(100vh - 2rem);overflow-y:auto;z-index:999;pointer-events:none;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.6)}
+#hpanel{background:rgba(13,15,20,0.97);border:1px solid #2a3a50;border-radius:6px;padding:8px 12px;font-size:.74rem;max-height:calc(100vh - 2rem);overflow-y:auto;white-space:normal;word-break:break-word;width:100%;box-shadow:0 4px 16px rgba(0,0,0,.6)}
 .hd{font-weight:600;color:#d8e8f0;font-size:.82rem;margin-bottom:.5rem;padding-bottom:.4rem;border-bottom:1px solid #1e2635}
 .hs{font-size:.68rem;color:#6a8298;text-transform:uppercase;letter-spacing:.06em;margin:6px 0 3px;font-weight:600;border-top:1px solid #182030;padding-top:4px}
 .hr{display:flex;justify-content:space-between;align-items:center;padding:.16rem 0}
@@ -112,8 +112,7 @@ table.dtbl th.g-flow{color:#fff176;border-bottom:2px solid #fff176}
 <div class="cw" style="padding-top:18px"><div class="cl">買賣家數差（家）</div><canvas id="ch12" height="90"></canvas></div>
 <div class="cw" style="padding-top:18px"><div class="cl">5日集中度 ╱ 20日集中度（%）</div><canvas id="ch13" height="130"></canvas></div>
 </div>
-<div class="panel-col"></div>
-<div id="hpanel"><div class="hd">移至圖表查看數值</div></div>
+<div class="panel-col"><div id="hpanel"><div class="hd">移至圖表查看數值</div></div></div>
 </div>
 
 <!-- 集中度說明 -->
@@ -410,22 +409,8 @@ Chart.register({
 });
 
 const ALL=[]; let _idx=-1;
-let _hpX=0,_hpY=0;
-function _posHP(){
-  const hp=document.getElementById('hpanel');
-  const W=window.innerWidth,H=window.innerHeight;
-  const rw=hp.offsetWidth||240,rh=hp.offsetHeight||300;
-  const x=_hpX+18+rw>W?_hpX-rw-8:_hpX+18;
-  const y=_hpY+rh>H?H-rh-8:_hpY+4;
-  hp.style.left=x+'px';hp.style.top=y+'px';
-}
-document.addEventListener('mousemove',e=>{
-  _hpX=e.clientX;_hpY=e.clientY;
-  const hp=document.getElementById('hpanel');
-  if(hp.style.display==='block')_posHP();
-});
 document.querySelector('.charts-col').addEventListener('mouseleave',()=>{
-  document.getElementById('hpanel').style.display='none';
+  document.getElementById('hpanel').innerHTML='<div class="hd">移至圖表查看數值</div>';
   _idx=-1;
   ALL.forEach(ch=>{ch._xhairIdx=null;});
   if(_raf)cancelAnimationFrame(_raf);
@@ -447,7 +432,7 @@ function syncAll(idx){
 
 function updatePanel(idx){
   if(idx<0||idx>=L.length)return;
-  const p=document.getElementById('hpanel');p.style.display='block';_posHP();
+  const p=document.getElementById('hpanel');
   const i=idx;
   function rv(a,d){const v=a[i];return v==null?'—':(d!=null?v.toFixed(d):Math.round(v).toLocaleString());}
   function row(lbl,val,clr){return '<div class="hr"><span class="hl">'+lbl+'</span><span class="hv" style="color:'+(clr||'#c8d8e8')+'">'+val+'</span></div>';}
