@@ -229,6 +229,8 @@ const chartOpts = (el) => LW.createChart(el, {
   rightPriceScale: { borderColor: '#30363d' },
   timeScale: { borderColor: '#30363d', timeVisible: false },
   crosshair: { mode: LW.CrosshairMode.Normal },
+  handleScale: { mouseWheel: false },
+  handleScroll: { mouseWheel: false },
   width:  el.clientWidth,
   height: 300,
 });
