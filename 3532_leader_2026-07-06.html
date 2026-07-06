@@ -86,6 +86,9 @@ h1{font-size:1.3rem;color:#58a6ff;margin-bottom:4px}
     <span id="lb-upper" style="color:#f85149"></span>
     <span id="lb-bma"   style="color:#d29922"></span>
     <span id="lb-lower" style="color:#3fb950"></span>
+    <span class="leg-sep">｜</span>
+    <span style="color:#d29922;font-weight:600">⚡執行層倉位</span>
+    <span style="color:#00e5ff">　🎯戰略層倉位</span>
   </div>
   <div id="chartBoll" class="lw-chart"></div>
 </div>
@@ -102,6 +105,9 @@ h1{font-size:1.3rem;color:#58a6ff;margin-bottom:4px}
     <span id="lm-ma10" style="color:#00bfff"></span>
     <span id="lm-ma20" style="color:#ff79c6"></span>
     <span id="lm-ma60" style="color:#bd93f9"></span>
+    <span class="leg-sep">｜</span>
+    <span style="color:#d29922;font-weight:600">⚡執行層倉位</span>
+    <span style="color:#00e5ff">　🎯戰略層倉位</span>
   </div>
   <div id="chartMA" class="lw-chart"></div>
 </div>
@@ -366,7 +372,6 @@ const cumSeries1 = chart1.addLineSeries({
   color: '#d29922', lineWidth: 2, lineStyle: 0,
   priceScaleId: 'cumLeft',
   lastValueVisible: false, priceLineVisible: false,
-  title: '執行層倉位',
 });
 chart1.priceScale('cumLeft').applyOptions({
   position: 'left',
@@ -382,7 +387,6 @@ const sCumSeries1 = chart1.addLineSeries({
   color: '#00e5ff', lineWidth: 1.5, lineStyle: LW.LineStyle.Dashed,
   priceScaleId: 'cumLeft',
   lastValueVisible: false, priceLineVisible: false,
-  title: '戰略層倉位',
 });
 const sCumTimeData1 = labels.map((_, i) => ({ time: rawOHLC[i]?.time, value: sCumData[i] }))
   .filter(d => d.time != null);
@@ -431,7 +435,6 @@ const cumSeries2 = chart2.addLineSeries({
   color: '#d29922', lineWidth: 2,
   priceScaleId: 'cumLeft2',
   lastValueVisible: false, priceLineVisible: false,
-  title: '執行層倉位',
 });
 chart2.priceScale('cumLeft2').applyOptions({
   position: 'left',
@@ -444,7 +447,6 @@ const sCumSeries2 = chart2.addLineSeries({
   color: '#00e5ff', lineWidth: 1.5, lineStyle: LW.LineStyle.Dashed,
   priceScaleId: 'cumLeft2',
   lastValueVisible: false, priceLineVisible: false,
-  title: '戰略層倉位',
 });
 sCumSeries2.setData(sCumTimeData1);
 
