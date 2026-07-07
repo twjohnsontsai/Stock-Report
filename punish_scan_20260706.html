@@ -346,7 +346,285 @@ document.getElementById('broker_chart') && document.getElementById('broker_chart
   </table>
 </div>
 </div>
-</section>
+<div style="margin-top:20px;border-top:1px solid #21262d;padding-top:12px"><div style="color:#e3b341;font-size:.88rem;font-weight:600;margin-bottom:10px">&#128202; 前十大法人倉位 &amp; 背離訊號線</div>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">2455</span>
+    <span class="sname">全新</span>
+    <span class="contract">[GU]</span>
+    <span class="badge released">已解除 2026-07-03（4天前）</span>
+    <span class="cnt-badge" style="background:#f8514922;color:#f85149;border:1px solid #f8514955">今年處置 <b>5</b> 次</span>
+    
+    
+    <span class="latest">多:1,338/91 &nbsp; 空:3,016/3,016 <span style="color:#6e7681;font-size:.75rem">（前十大/特定）</span></span>
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>通信網路業</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#e3b341">106.62x（偏貴）</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>17.04x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.78%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">21.8%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="prc_GU_2455"></canvas></div>
+  <div class="panel-lbl buy-lbl" style="margin-top:10px">&#9650; 買口（多方未平倉）&nbsp;<span style="color:#3fb950">特定法人</span> &nbsp;<span style="color:#58a6ff;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="buy_GU_2455"></canvas></div>
+  <div class="sig-strip">
+    <span class="sig-lbl">背離 6次<br><span style="color:#3fb950;font-size:.65rem">■漲</span><span style="color:#f85149;font-size:.65rem">■跌</span><span style="color:#e3b341;font-size:.65rem">■待</span></span>
+    <div class="sig-bars"><div class="sig-bar" title="2026/05/13"></div><div class="sig-bar" title="2026/05/14"></div><div class="sig-bar" title="2026/05/15"></div><div class="sig-bar" title="2026/05/18"></div><div class="sig-bar" title="2026/05/19"></div><div class="sig-bar" title="2026/05/20"></div><div class="sig-bar" title="2026/05/21"></div><div class="sig-bar" title="2026/05/22"></div><div class="sig-bar" title="2026/05/25"></div><div class="sig-bar lose" title="2026/05/26 ▼5日後跌"></div><div class="sig-bar" title="2026/05/27"></div><div class="sig-bar" title="2026/05/28"></div><div class="sig-bar" title="2026/05/29"></div><div class="sig-bar" title="2026/06/01"></div><div class="sig-bar lose" title="2026/06/02 ▼5日後跌"></div><div class="sig-bar" title="2026/06/03"></div><div class="sig-bar lose" title="2026/06/04 ▼5日後跌"></div><div class="sig-bar lose" title="2026/06/05 ▼5日後跌"></div><div class="sig-bar" title="2026/06/08"></div><div class="sig-bar" title="2026/06/09"></div><div class="sig-bar" title="2026/06/10"></div><div class="sig-bar" title="2026/06/11"></div><div class="sig-bar win" title="2026/06/12 ▲5日後漲"></div><div class="sig-bar" title="2026/06/15"></div><div class="sig-bar" title="2026/06/16"></div><div class="sig-bar lose" title="2026/06/17 ▼5日後跌"></div><div class="sig-bar" title="2026/06/18"></div><div class="sig-bar" title="2026/06/22"></div><div class="sig-bar" title="2026/06/23"></div><div class="sig-bar" title="2026/06/24"></div><div class="sig-bar" title="2026/06/25"></div><div class="sig-bar" title="2026/06/26"></div><div class="sig-bar" title="2026/06/29"></div><div class="sig-bar" title="2026/06/30"></div><div class="sig-bar" title="2026/07/01"></div><div class="sig-bar" title="2026/07/02"></div><div class="sig-bar" title="2026/07/03"></div><div class="sig-bar" title="2026/07/06"></div></div>
+  </div>
+  <div class="panel-lbl sell-lbl">&#9660; 賣口（空方未平倉）&nbsp;<span style="color:#e3b341">特定法人</span> &nbsp;<span style="color:#f85149;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="sel_GU_2455"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="lend_GU_2455"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 綜合分析報告</div>
+    <div class="analysis-row"><span class="a-label">籌碼結構</span><span>特定法人淨空單 <b>2,925 口</b>，空頭壓力已明顯收斂。</span></div>
+    <div class="analysis-row"><span class="a-label">空口趨勢</span><span>空口近 5 日變化 +265 口，方向不明顯。 從期間高點 3,107 口已回補 91 口（3%）。</span></div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span>借券餘額從峰值 7,580 降至 5,085 張（-33%），現貨空頭同步撤退，兩市訊號一致。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>338.0 元</b>，距期間低點 320.0 元反彈 +5.6%，距期間高點 444.0 元差距 -23.9%。</span></div>
+    <div class="analysis-row"><span class="a-label">背離訊號</span><span>過去 60 日出現 6 次背離訊號，確認 6 次中 <b>1 漲 5 跌</b>（勝率 17%），0 次待確認。最新訊號：❌ 下跌確認。</span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">今年已處置 5 次，主力慣用清洗手法，假突破風險高；空口近 5 日仍在增加</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #f85149;color:#f85149">空頭壓力仍大，進場風險偏高，建議觀望。</div>
+  </div>
+  <script>
+  (function(){
+    var prc_GU_2455_pl = {
+      id: 'dvl_prc_GU_2455',
+      afterDraw: function(chart) {
+        var dIdx = [9, 14, 16, 17, 22, 25];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var prc_GU_2455_ch = new Chart(
+      document.getElementById("prc_GU_2455").getContext("2d"), {
+      plugins: [prc_GU_2455_pl],
+      data:{
+        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
+        datasets:[
+          {type:"bar",label:"成交量",data:[2182, 2849, 2644, 2921, 2381, 27557, 21897, 15989, 21814, 12770, 3209, 2272, 2093, 1671, 1385, 1545, 963, 2141, 1700, 1983, 14717, 13723, 12419, 15919, 17714, 23916, 25326, 2607, 1611, 1802, 1095, 2530, 1920, 2767, 1074, 2414, 1969, 12024],
+           backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",
+           yAxisID:"yv",order:3},
+          {type:"line",label:"收盤價",data:[374.0, 358.5, 358.5, 387.0, 383.0, 400.5, 386.5, 425.0, 444.0, 423.5, 418.5, 391.5, 422.0, 415.5, 399.0, 414.0, 402.0, 399.0, 359.5, 395.0, 355.5, 320.0, 352.0, 369.0, 405.5, 428.0, 416.0, 409.5, 398.0, 397.0, 388.5, 348.0, 336.0, 347.0, 358.5, 348.0, 358.0, 338.0],
+           borderColor:"#e8eaea",borderWidth:1.8,
+           tension:0.3,fill:false,pointRadius:1.5,
+           yAxisID:"yp",order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},
+              grid:{color:"#1c2333"}},
+          yv:{position:"right",
+              ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},
+                callback:function(v){
+                  return v>=1e6?(v/1e6).toFixed(0)+"M":v>=1e3?Math.round(v/1e3)+"K":v;
+                }},
+              grid:{display:false}}
+        }
+      }
+    });
+    var buy_GU_2455_pl = {
+      id: 'dvl_buy_GU_2455',
+      afterDraw: function(chart) {
+        var dIdx = [9, 14, 16, 17, 22, 25];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var buy_GU_2455_ch = new Chart(
+      document.getElementById("buy_GU_2455").getContext("2d"), {
+      plugins: [buy_GU_2455_pl],
+      data:{
+        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
+        datasets:[
+          {type:"line",label:"OI 總量",data:[3016, 3024, 3018, 2862, 2653, 2026, 2618, 2663, 3101, 3341, 3451, 3291, 3217, 3220, 3178, 3180, 3113, 3051, 3106, 3096, 3162, 2720, 2396, 2713, 3015, 3104, 3434, 3473, 3366, 3263, 3241, 3207, 3166, 3323, 3354, 3519, 3615, 3390],
+           borderColor:"rgba(163,113,247,0.55)",borderWidth:1.2,borderDash:[3,3],
+           tension:0.3,fill:false,pointRadius:0,
+           yAxisID:"yr",order:3},
+          {type:"line",label:"前十大多口",data:[1444, 1425, 1430, 1302, 1052, 913, 1025, 1014, 1203, 1394, 1491, 1405, 1341, 1337, 1343, 1320, 1331, 1288, 1318, 1195, 1236, 1138, 917, 1005, 1336, 1606, 1600, 1553, 1547, 1517, 1450, 1446, 1435, 1425, 1457, 1514, 1562, 1338],
+           borderColor:"#58a6ff",borderWidth:1.5,borderDash:[4,4],
+           tension:0.3,fill:false,pointRadius:1.5,order:2},
+          {type:"line",label:"特定法人多口",data:[184, 176, 210, 157, 111, 0, 65, 0, 0, 44, 56, 141, 83, 97, 113, 140, 136, 138, 141, 68, 168, 87, 199, 239, 311, 287, 131, 190, 242, 205, 142, 141, 224, 183, 213, 211, 250, 91],
+           borderColor:"#3fb950",borderWidth:2.5,
+           tension:0.3,fill:false,pointRadius:2,order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yr:{position:"right",
+              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
+                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false},
+              afterFit:function(ax){ax.width=48;}}
+        }
+      }
+    });
+    var sel_GU_2455_pl = {
+      id: 'dvl_sel_GU_2455',
+      afterDraw: function(chart) {
+        var dIdx = [9, 14, 16, 17, 22, 25];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var sel_GU_2455_ch = new Chart(
+      document.getElementById("sel_GU_2455").getContext("2d"), {
+      plugins: [sel_GU_2455_pl],
+      data:{
+        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
+        datasets:[
+          {type:"line",label:"OI 總量",data:[3016, 3024, 3018, 2862, 2653, 2026, 2618, 2663, 3101, 3341, 3451, 3291, 3217, 3220, 3178, 3180, 3113, 3051, 3106, 3096, 3162, 2720, 2396, 2713, 3015, 3104, 3434, 3473, 3366, 3263, 3241, 3207, 3166, 3323, 3354, 3519, 3615, 3390],
+           borderColor:"rgba(163,113,247,0.55)",borderWidth:1.2,borderDash:[3,3],
+           tension:0.3,fill:false,pointRadius:0,
+           yAxisID:"yr",order:3},
+          {type:"line",label:"前十大空口",data:[2613, 2688, 2780, 2655, 2389, 1827, 2441, 2397, 2748, 2707, 2797, 2899, 2897, 2923, 2913, 2940, 2892, 2848, 2877, 2903, 2964, 2488, 2266, 2488, 2702, 2586, 2676, 2726, 2786, 2737, 2725, 2711, 2751, 2870, 2929, 3035, 3107, 3016],
+           borderColor:"#f85149",borderWidth:1.5,borderDash:[4,4],
+           tension:0.3,fill:false,pointRadius:1.5,order:2},
+          {type:"line",label:"特定法人空口",data:[2561, 2688, 2780, 2610, 2389, 1827, 2441, 2397, 2673, 2574, 2732, 2899, 2842, 2923, 2913, 2940, 2892, 2848, 2877, 2903, 2918, 2268, 2157, 2488, 2702, 2511, 2507, 2726, 2786, 2737, 2725, 2711, 2751, 2870, 2929, 3035, 3107, 3016],
+           borderColor:"#e3b341",borderWidth:2.5,
+           tension:0.3,fill:false,pointRadius:2,order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yr:{position:"right",
+              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
+                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false},
+              afterFit:function(ax){ax.width=48;}}
+        }
+      }
+    });
+    var lend_GU_2455_pl = {
+      id: 'dvl_lend_GU_2455',
+      afterDraw: function(chart) {
+        var dIdx = [9, 14, 16, 17, 22, 25];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var lend_GU_2455_ch = new Chart(
+      document.getElementById("lend_GU_2455").getContext("2d"), {
+      plugins: [lend_GU_2455_pl],
+      data:{
+        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
+        datasets:[
+          {type:"bar",label:"借券賣出",data:[10.0, 2.0, 20.0, 28.0, 76.0, 502.0, 1094.0, 221.0, 1630.0, 393.0, 2.0, 14.0, 1.0, 0.0, 6.0, 6.0, 4.0, 2.0, 0.0, 10.0, 382.0, 0.0, 78.0, 346.0, 43.0, 92.0, 239.0, 0.0, 0.0, 0.0, 12.0, 0.0, 0.0, 7.0, 0.0, 0.0, 2.0, 881.0],
+           backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",
+           yAxisID:"yl",order:2},
+          {type:"bar",label:"還券",data:[-33.0, -108.0, -122.0, -0.0, -0.0, -693.0, -1651.0, -343.0, -173.0, -101.0, -469.0, -130.0, -105.0, -543.0, -11.0, -58.0, -309.0, -76.0, -11.0, -8.0, -0.0, -456.0, -14.0, -238.0, -14.0, -225.0, -472.0, -396.0, -140.0, -109.0, -43.0, -72.0, -307.0, -126.0, -184.0, -0.0, -103.0, -3.0],
+           backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",
+           yAxisID:"yl",order:2},
+          {type:"line",label:"借券餘額",data:[6805.0, 6699.0, 6597.0, 6625.0, 6701.0, 6510.0, 5953.0, 5831.0, 7288.0, 7580.0, 7113.0, 6997.0, 6893.0, 6350.0, 6345.0, 6293.0, 5988.0, 5914.0, 5903.0, 5905.0, 6287.0, 5831.0, 5895.0, 6003.0, 6032.0, 5899.0, 5666.0, 5270.0, 5130.0, 5021.0, 4990.0, 4918.0, 4611.0, 4492.0, 4308.0, 4308.0, 4207.0, 5085.0],
+           borderColor:"#c9d1d9",borderWidth:1.5,
+           tension:0.3,fill:false,pointRadius:1,
+           yAxisID:"yr",order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yl:{position:"left",
+              ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},
+                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
+              grid:{color:"#1c2333"}},
+          yr:{position:"right",
+              ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},
+                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div></div></section>
 <section id="QDF" style="border-top:2px solid #1f3a5f;padding-top:12px;margin-bottom:24px">
 <h1>QDF（台勝科）日線  60 根</h1>
 <div class="info">
@@ -559,7 +837,285 @@ document.getElementById('broker_chart') && document.getElementById('broker_chart
   </table>
 </div>
 </div>
-</section>
+<div style="margin-top:20px;border-top:1px solid #21262d;padding-top:12px"><div style="color:#e3b341;font-size:.88rem;font-weight:600;margin-bottom:10px">&#128202; 前十大法人倉位 &amp; 背離訊號線</div>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">3532</span>
+    <span class="sname">台勝科</span>
+    <span class="contract">[QD]</span>
+    <span class="badge released">已解除 2026-07-03（4天前）</span>
+    <span class="cnt-badge" style="background:#e3b34122;color:#e3b341;border:1px solid #e3b34155">今年處置 <b>4</b> 次</span>
+    
+    
+    <span class="latest">多:651/29 &nbsp; 空:1,058/1,033 <span style="color:#6e7681;font-size:.75rem">（前十大/特定）</span></span>
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>半導體業</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#e3b341">513.92x（偏貴）</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>6.49x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.25%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">11.1%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="prc_QD_3532"></canvas></div>
+  <div class="panel-lbl buy-lbl" style="margin-top:10px">&#9650; 買口（多方未平倉）&nbsp;<span style="color:#3fb950">特定法人</span> &nbsp;<span style="color:#58a6ff;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="buy_QD_3532"></canvas></div>
+  <div class="sig-strip">
+    <span class="sig-lbl">背離 10次<br><span style="color:#3fb950;font-size:.65rem">■漲</span><span style="color:#f85149;font-size:.65rem">■跌</span><span style="color:#e3b341;font-size:.65rem">■待</span></span>
+    <div class="sig-bars"><div class="sig-bar" title="2026/05/13"></div><div class="sig-bar" title="2026/05/14"></div><div class="sig-bar" title="2026/05/15"></div><div class="sig-bar" title="2026/05/18"></div><div class="sig-bar" title="2026/05/19"></div><div class="sig-bar win" title="2026/05/20 ▲5日後漲"></div><div class="sig-bar" title="2026/05/21"></div><div class="sig-bar" title="2026/05/22"></div><div class="sig-bar" title="2026/05/25"></div><div class="sig-bar win" title="2026/05/26 ▲5日後漲"></div><div class="sig-bar" title="2026/05/27"></div><div class="sig-bar" title="2026/05/28"></div><div class="sig-bar" title="2026/05/29"></div><div class="sig-bar" title="2026/06/01"></div><div class="sig-bar" title="2026/06/02"></div><div class="sig-bar" title="2026/06/03"></div><div class="sig-bar win" title="2026/06/04 ▲5日後漲"></div><div class="sig-bar" title="2026/06/05"></div><div class="sig-bar" title="2026/06/08"></div><div class="sig-bar" title="2026/06/09"></div><div class="sig-bar" title="2026/06/10"></div><div class="sig-bar" title="2026/06/11"></div><div class="sig-bar" title="2026/06/12"></div><div class="sig-bar win" title="2026/06/15 ▲5日後漲"></div><div class="sig-bar lose" title="2026/06/16 ▼5日後跌"></div><div class="sig-bar" title="2026/06/17"></div><div class="sig-bar lose" title="2026/06/18 ▼5日後跌"></div><div class="sig-bar" title="2026/06/22"></div><div class="sig-bar lose" title="2026/06/23 ▼5日後跌"></div><div class="sig-bar" title="2026/06/24"></div><div class="sig-bar win" title="2026/06/25 ▲5日後漲"></div><div class="sig-bar" title="2026/06/26"></div><div class="sig-bar win" title="2026/06/29 ▲5日後漲"></div><div class="sig-bar" title="2026/06/30"></div><div class="sig-bar" title="2026/07/01"></div><div class="sig-bar pending" title="2026/07/02 (待確認)"></div><div class="sig-bar" title="2026/07/03"></div><div class="sig-bar" title="2026/07/06"></div></div>
+  </div>
+  <div class="panel-lbl sell-lbl">&#9660; 賣口（空方未平倉）&nbsp;<span style="color:#e3b341">特定法人</span> &nbsp;<span style="color:#f85149;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="sel_QD_3532"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="lend_QD_3532"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 綜合分析報告</div>
+    <div class="analysis-row"><span class="a-label">籌碼結構</span><span>特定法人淨空單 <b>1,004 口</b>，空頭壓力已明顯收斂。</span></div>
+    <div class="analysis-row"><span class="a-label">空口趨勢</span><span>空口近 5 日變化 +93 口，方向不明顯。 從期間高點 1,059 口已回補 26 口（2%）。</span></div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span>借券餘額小幅從 4,365 降至 3,693 張，現貨空頭開始鬆動。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>406.0 元</b>，距期間低點 202.0 元反彈 +101.0%，距期間高點 440.0 元差距 -7.7%。 反彈幅度已大，尚未突破前高，需觀察能否放量站上。</span></div>
+    <div class="analysis-row"><span class="a-label">背離訊號</span><span>過去 60 日出現 10 次背離訊號，確認 9 次中 <b>6 漲 3 跌</b>（勝率 67%），1 次待確認。最新訊號：⏳ 待確認。</span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">今年已處置 4 次，主力慣用清洗手法，假突破風險高；借券餘額仍在高位</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #f85149;color:#f85149">空頭壓力仍大，進場風險偏高，建議觀望。</div>
+  </div>
+  <script>
+  (function(){
+    var prc_QD_3532_pl = {
+      id: 'dvl_prc_QD_3532',
+      afterDraw: function(chart) {
+        var dIdx = [5, 9, 16, 23, 24, 26, 28, 30, 32, 35];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var prc_QD_3532_ch = new Chart(
+      document.getElementById("prc_QD_3532").getContext("2d"), {
+      plugins: [prc_QD_3532_pl],
+      data:{
+        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
+        datasets:[
+          {type:"bar",label:"成交量",data:[845, 713, 1187, 1094, 977, 686, 957, 1359, 4498, 3630, 10671, 10929, 1580, 1076, 1533, 898, 844, 669, 376, 719, 909, 1087, 12061, 3465, 2405, 15391, 6976, 952, 693, 642, 615, 787, 501, 335, 1829, 1366, 993, 16088],
+           backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",
+           yAxisID:"yv",order:3},
+          {type:"line",label:"收盤價",data:[246.5, 246.0, 221.5, 221.5, 202.0, 205.5, 226.0, 248.5, 273.0, 300.0, 290.5, 290.0, 319.0, 350.5, 315.5, 314.5, 291.0, 290.0, 261.0, 284.5, 270.0, 297.0, 326.5, 359.0, 394.5, 395.5, 390.0, 378.5, 373.0, 365.0, 372.0, 336.0, 331.0, 364.0, 400.0, 407.0, 440.0, 406.0],
+           borderColor:"#e8eaea",borderWidth:1.8,
+           tension:0.3,fill:false,pointRadius:1.5,
+           yAxisID:"yp",order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},
+              grid:{color:"#1c2333"}},
+          yv:{position:"right",
+              ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},
+                callback:function(v){
+                  return v>=1e6?(v/1e6).toFixed(0)+"M":v>=1e3?Math.round(v/1e3)+"K":v;
+                }},
+              grid:{display:false}}
+        }
+      }
+    });
+    var buy_QD_3532_pl = {
+      id: 'dvl_buy_QD_3532',
+      afterDraw: function(chart) {
+        var dIdx = [5, 9, 16, 23, 24, 26, 28, 30, 32, 35];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var buy_QD_3532_ch = new Chart(
+      document.getElementById("buy_QD_3532").getContext("2d"), {
+      plugins: [buy_QD_3532_pl],
+      data:{
+        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
+        datasets:[
+          {type:"line",label:"OI 總量",data:[836, 877, 922, 937, 988, 813, 895, 1237, 1249, 1262, 1160, 1303, 1314, 1344, 1163, 1134, 1123, 1112, 1181, 1156, 1220, 1234, 1209, 1190, 1178, 1020, 1240, 1205, 1193, 1198, 1170, 1178, 1152, 1176, 1293, 1361, 1395, 1295],
+           borderColor:"rgba(163,113,247,0.55)",borderWidth:1.2,borderDash:[3,3],
+           tension:0.3,fill:false,pointRadius:0,
+           yAxisID:"yr",order:3},
+          {type:"line",label:"前十大多口",data:[426, 416, 434, 430, 417, 419, 492, 732, 737, 750, 712, 822, 827, 850, 762, 741, 705, 703, 740, 730, 753, 743, 637, 645, 657, 530, 597, 608, 639, 645, 628, 622, 630, 625, 652, 688, 696, 651],
+           borderColor:"#58a6ff",borderWidth:1.5,borderDash:[4,4],
+           tension:0.3,fill:false,pointRadius:1.5,order:2},
+          {type:"line",label:"特定法人多口",data:[147, 137, 136, 122, 141, 73, 101, 122, 136, 161, 103, 65, 68, 90, 83, 84, 88, 90, 118, 91, 88, 48, 108, 81, 142, 29, 55, 29, 29, 54, 58, 70, 73, 73, 83, 70, 69, 29],
+           borderColor:"#3fb950",borderWidth:2.5,
+           tension:0.3,fill:false,pointRadius:2,order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yr:{position:"right",
+              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
+                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false},
+              afterFit:function(ax){ax.width=48;}}
+        }
+      }
+    });
+    var sel_QD_3532_pl = {
+      id: 'dvl_sel_QD_3532',
+      afterDraw: function(chart) {
+        var dIdx = [5, 9, 16, 23, 24, 26, 28, 30, 32, 35];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var sel_QD_3532_ch = new Chart(
+      document.getElementById("sel_QD_3532").getContext("2d"), {
+      plugins: [sel_QD_3532_pl],
+      data:{
+        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
+        datasets:[
+          {type:"line",label:"OI 總量",data:[836, 877, 922, 937, 988, 813, 895, 1237, 1249, 1262, 1160, 1303, 1314, 1344, 1163, 1134, 1123, 1112, 1181, 1156, 1220, 1234, 1209, 1190, 1178, 1020, 1240, 1205, 1193, 1198, 1170, 1178, 1152, 1176, 1293, 1361, 1395, 1295],
+           borderColor:"rgba(163,113,247,0.55)",borderWidth:1.2,borderDash:[3,3],
+           tension:0.3,fill:false,pointRadius:0,
+           yAxisID:"yr",order:3},
+          {type:"line",label:"前十大空口",data:[702, 720, 742, 714, 738, 720, 779, 923, 964, 956, 891, 904, 907, 925, 835, 813, 803, 797, 818, 809, 854, 868, 949, 906, 894, 877, 959, 996, 985, 985, 955, 982, 967, 971, 1059, 1004, 1019, 1058],
+           borderColor:"#f85149",borderWidth:1.5,borderDash:[4,4],
+           tension:0.3,fill:false,pointRadius:1.5,order:2},
+          {type:"line",label:"特定法人空口",data:[661, 690, 712, 684, 692, 710, 767, 898, 964, 956, 891, 804, 807, 829, 706, 714, 702, 719, 738, 809, 829, 829, 918, 876, 866, 877, 846, 933, 948, 948, 924, 955, 940, 944, 1059, 1004, 974, 1033],
+           borderColor:"#e3b341",borderWidth:2.5,
+           tension:0.3,fill:false,pointRadius:2,order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yr:{position:"right",
+              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
+                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false},
+              afterFit:function(ax){ax.width=48;}}
+        }
+      }
+    });
+    var lend_QD_3532_pl = {
+      id: 'dvl_lend_QD_3532',
+      afterDraw: function(chart) {
+        var dIdx = [5, 9, 16, 23, 24, 26, 28, 30, 32, 35];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var lend_QD_3532_ch = new Chart(
+      document.getElementById("lend_QD_3532").getContext("2d"), {
+      plugins: [lend_QD_3532_pl],
+      data:{
+        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
+        datasets:[
+          {type:"bar",label:"借券賣出",data:[0.0, 0.0, 0.0, 0.0, 108.0, 14.0, 2.0, 12.0, 31.0, 35.0, 345.0, 221.0, 0.0, 3.0, 0.0, 0.0, 66.0, 11.0, 0.0, 0.0, 0.0, 0.0, 98.0, 13.0, 6.0, 29.0, 33.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 3.0],
+           backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",
+           yAxisID:"yl",order:2},
+          {type:"bar",label:"還券",data:[-80.0, -146.0, -112.0, -77.0, -0.0, -0.0, -0.0, -198.0, -0.0, -53.0, -37.0, -38.0, -51.0, -42.0, -46.0, -3.0, -0.0, -131.0, -17.0, -0.0, -95.0, -5.0, -102.0, -16.0, -193.0, -7.0, -30.0, -17.0, -6.0, -39.0, -40.0, -2.0, -78.0, -2.0, -0.0, -0.0, -4.0, -10.0],
+           backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",
+           yAxisID:"yl",order:2},
+          {type:"line",label:"借券餘額",data:[4257.8, 4111.8, 3999.8, 3922.8, 4030.8, 4044.8, 4046.8, 3860.8, 3891.8, 3873.8, 4181.8, 4364.8, 4313.8, 4274.8, 4228.8, 4225.8, 4291.8, 4171.8, 4154.8, 4154.8, 4059.8, 4054.8, 4050.8, 4047.8, 3860.8, 3882.8, 3885.8, 3868.8, 3862.8, 3823.8, 3783.8, 3781.8, 3703.8, 3701.8, 3701.8, 3703.8, 3699.8, 3692.8],
+           borderColor:"#c9d1d9",borderWidth:1.5,
+           tension:0.3,fill:false,pointRadius:1,
+           yAxisID:"yr",order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yl:{position:"left",
+              ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},
+                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
+              grid:{color:"#1c2333"}},
+          yr:{position:"right",
+              ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},
+                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div></div></section>
 <section id="DIF" style="border-top:2px solid #1f3a5f;padding-top:12px;margin-bottom:24px">
 <h1>DIF（旺宏）日線  60 根</h1>
 <div class="info">
@@ -2643,562 +3199,6 @@ document.getElementById('broker_chart') && document.getElementById('broker_chart
            backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",
            yAxisID:"yl",order:2},
           {type:"line",label:"借券餘額",data:[7557.3, 6817.3, 10228.3, 11997.6, 14253.3, 15163.3, 14403.1, 13915.3, 10620.3, 8782.3, 5754.3, 4214.3, 4414.3, 4267.3, 4345.3, 4212.3, 4349.3, 3639.3, 3436.3, 3521.3, 3805.3, 3836.3, 3836.3, 3581.3, 3866.3, 4132.3, 5062.3, 5034.3, 4547.3, 5476.6, 5650.0, 7525.0, 7613.0, 7752.0, 7723.0, 8334.7, 8814.7, 8955.7],
-           borderColor:"#c9d1d9",borderWidth:1.5,
-           tension:0.3,fill:false,pointRadius:1,
-           yAxisID:"yr",order:1}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          yl:{position:"left",
-              ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},
-                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
-              grid:{color:"#1c2333"}},
-          yr:{position:"right",
-              ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},
-                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
-              grid:{display:false}}
-        }
-      }
-    });
-  })();
-  </script>
-</div>
-<div class="stock-card">
-  <div class="card-hdr">
-    <span class="code">2455</span>
-    <span class="sname">全新</span>
-    <span class="contract">[GU]</span>
-    <span class="badge released">已解除 2026-07-03（4天前）</span>
-    <span class="cnt-badge" style="background:#f8514922;color:#f85149;border:1px solid #f8514955">今年處置 <b>5</b> 次</span>
-    
-    
-    <span class="latest">多:1,338/91 &nbsp; 空:3,016/3,016 <span style="color:#6e7681;font-size:.75rem">（前十大/特定）</span></span>
-  </div>
-  
-  <div class="info-row">
-    <span class="info-item"><span class="info-lbl">板塊</span>通信網路業</span>
-    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#e3b341">106.62x（偏貴）</span></span>
-    <span class="info-item"><span class="info-lbl">股淨比</span>17.04x</span>
-    <span class="info-item"><span class="info-lbl">殖利率</span>0.78%</span>
-    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">21.8%</span></span>
-  </div>
-  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
-  <div class="chart-wrap"><canvas id="prc_GU_2455"></canvas></div>
-  <div class="panel-lbl buy-lbl" style="margin-top:10px">&#9650; 買口（多方未平倉）&nbsp;<span style="color:#3fb950">特定法人</span> &nbsp;<span style="color:#58a6ff;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
-  <div class="chart-wrap"><canvas id="buy_GU_2455"></canvas></div>
-  <div class="sig-strip">
-    <span class="sig-lbl">背離 6次<br><span style="color:#3fb950;font-size:.65rem">■漲</span><span style="color:#f85149;font-size:.65rem">■跌</span><span style="color:#e3b341;font-size:.65rem">■待</span></span>
-    <div class="sig-bars"><div class="sig-bar" title="2026/05/13"></div><div class="sig-bar" title="2026/05/14"></div><div class="sig-bar" title="2026/05/15"></div><div class="sig-bar" title="2026/05/18"></div><div class="sig-bar" title="2026/05/19"></div><div class="sig-bar" title="2026/05/20"></div><div class="sig-bar" title="2026/05/21"></div><div class="sig-bar" title="2026/05/22"></div><div class="sig-bar" title="2026/05/25"></div><div class="sig-bar lose" title="2026/05/26 ▼5日後跌"></div><div class="sig-bar" title="2026/05/27"></div><div class="sig-bar" title="2026/05/28"></div><div class="sig-bar" title="2026/05/29"></div><div class="sig-bar" title="2026/06/01"></div><div class="sig-bar lose" title="2026/06/02 ▼5日後跌"></div><div class="sig-bar" title="2026/06/03"></div><div class="sig-bar lose" title="2026/06/04 ▼5日後跌"></div><div class="sig-bar lose" title="2026/06/05 ▼5日後跌"></div><div class="sig-bar" title="2026/06/08"></div><div class="sig-bar" title="2026/06/09"></div><div class="sig-bar" title="2026/06/10"></div><div class="sig-bar" title="2026/06/11"></div><div class="sig-bar win" title="2026/06/12 ▲5日後漲"></div><div class="sig-bar" title="2026/06/15"></div><div class="sig-bar" title="2026/06/16"></div><div class="sig-bar lose" title="2026/06/17 ▼5日後跌"></div><div class="sig-bar" title="2026/06/18"></div><div class="sig-bar" title="2026/06/22"></div><div class="sig-bar" title="2026/06/23"></div><div class="sig-bar" title="2026/06/24"></div><div class="sig-bar" title="2026/06/25"></div><div class="sig-bar" title="2026/06/26"></div><div class="sig-bar" title="2026/06/29"></div><div class="sig-bar" title="2026/06/30"></div><div class="sig-bar" title="2026/07/01"></div><div class="sig-bar" title="2026/07/02"></div><div class="sig-bar" title="2026/07/03"></div><div class="sig-bar" title="2026/07/06"></div></div>
-  </div>
-  <div class="panel-lbl sell-lbl">&#9660; 賣口（空方未平倉）&nbsp;<span style="color:#e3b341">特定法人</span> &nbsp;<span style="color:#f85149;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
-  <div class="chart-wrap"><canvas id="sel_GU_2455"></canvas></div>
-  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
-  <div class="chart-wrap"><canvas id="lend_GU_2455"></canvas></div>
-  
-  <div class="analysis-box">
-    <div class="analysis-title">&#128202; 綜合分析報告</div>
-    <div class="analysis-row"><span class="a-label">籌碼結構</span><span>特定法人淨空單 <b>2,925 口</b>，空頭壓力已明顯收斂。</span></div>
-    <div class="analysis-row"><span class="a-label">空口趨勢</span><span>空口近 5 日變化 +265 口，方向不明顯。 從期間高點 3,107 口已回補 91 口（3%）。</span></div>
-    <div class="analysis-row"><span class="a-label">借券動向</span><span>借券餘額從峰值 7,580 降至 5,085 張（-33%），現貨空頭同步撤退，兩市訊號一致。</span></div>
-    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>338.0 元</b>，距期間低點 320.0 元反彈 +5.6%，距期間高點 444.0 元差距 -23.9%。</span></div>
-    <div class="analysis-row"><span class="a-label">背離訊號</span><span>過去 60 日出現 6 次背離訊號，確認 6 次中 <b>1 漲 5 跌</b>（勝率 17%），0 次待確認。最新訊號：❌ 下跌確認。</span></div>
-    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">今年已處置 5 次，主力慣用清洗手法，假突破風險高；空口近 5 日仍在增加</span></div>
-    <div class="analysis-summary" style="border-left:3px solid #f85149;color:#f85149">空頭壓力仍大，進場風險偏高，建議觀望。</div>
-  </div>
-  <script>
-  (function(){
-    var prc_GU_2455_pl = {
-      id: 'dvl_prc_GU_2455',
-      afterDraw: function(chart) {
-        var dIdx = [9, 14, 16, 17, 22, 25];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var prc_GU_2455_ch = new Chart(
-      document.getElementById("prc_GU_2455").getContext("2d"), {
-      plugins: [prc_GU_2455_pl],
-      data:{
-        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
-        datasets:[
-          {type:"bar",label:"成交量",data:[2182, 2849, 2644, 2921, 2381, 27557, 21897, 15989, 21814, 12770, 3209, 2272, 2093, 1671, 1385, 1545, 963, 2141, 1700, 1983, 14717, 13723, 12419, 15919, 17714, 23916, 25326, 2607, 1611, 1802, 1095, 2530, 1920, 2767, 1074, 2414, 1969, 12024],
-           backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",
-           yAxisID:"yv",order:3},
-          {type:"line",label:"收盤價",data:[374.0, 358.5, 358.5, 387.0, 383.0, 400.5, 386.5, 425.0, 444.0, 423.5, 418.5, 391.5, 422.0, 415.5, 399.0, 414.0, 402.0, 399.0, 359.5, 395.0, 355.5, 320.0, 352.0, 369.0, 405.5, 428.0, 416.0, 409.5, 398.0, 397.0, 388.5, 348.0, 336.0, 347.0, 358.5, 348.0, 358.0, 338.0],
-           borderColor:"#e8eaea",borderWidth:1.8,
-           tension:0.3,fill:false,pointRadius:1.5,
-           yAxisID:"yp",order:1}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},
-              grid:{color:"#1c2333"}},
-          yv:{position:"right",
-              ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},
-                callback:function(v){
-                  return v>=1e6?(v/1e6).toFixed(0)+"M":v>=1e3?Math.round(v/1e3)+"K":v;
-                }},
-              grid:{display:false}}
-        }
-      }
-    });
-    var buy_GU_2455_pl = {
-      id: 'dvl_buy_GU_2455',
-      afterDraw: function(chart) {
-        var dIdx = [9, 14, 16, 17, 22, 25];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var buy_GU_2455_ch = new Chart(
-      document.getElementById("buy_GU_2455").getContext("2d"), {
-      plugins: [buy_GU_2455_pl],
-      data:{
-        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
-        datasets:[
-          {type:"line",label:"OI 總量",data:[3016, 3024, 3018, 2862, 2653, 2026, 2618, 2663, 3101, 3341, 3451, 3291, 3217, 3220, 3178, 3180, 3113, 3051, 3106, 3096, 3162, 2720, 2396, 2713, 3015, 3104, 3434, 3473, 3366, 3263, 3241, 3207, 3166, 3323, 3354, 3519, 3615, 3390],
-           borderColor:"rgba(163,113,247,0.55)",borderWidth:1.2,borderDash:[3,3],
-           tension:0.3,fill:false,pointRadius:0,
-           yAxisID:"yr",order:3},
-          {type:"line",label:"前十大多口",data:[1444, 1425, 1430, 1302, 1052, 913, 1025, 1014, 1203, 1394, 1491, 1405, 1341, 1337, 1343, 1320, 1331, 1288, 1318, 1195, 1236, 1138, 917, 1005, 1336, 1606, 1600, 1553, 1547, 1517, 1450, 1446, 1435, 1425, 1457, 1514, 1562, 1338],
-           borderColor:"#58a6ff",borderWidth:1.5,borderDash:[4,4],
-           tension:0.3,fill:false,pointRadius:1.5,order:2},
-          {type:"line",label:"特定法人多口",data:[184, 176, 210, 157, 111, 0, 65, 0, 0, 44, 56, 141, 83, 97, 113, 140, 136, 138, 141, 68, 168, 87, 199, 239, 311, 287, 131, 190, 242, 205, 142, 141, 224, 183, 213, 211, 250, 91],
-           borderColor:"#3fb950",borderWidth:2.5,
-           tension:0.3,fill:false,pointRadius:2,order:1}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          y:{ticks:{color:"#6e7681",font:{size:10}},
-             grid:{color:"#1c2333"}},
-          yr:{position:"right",
-              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
-                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
-              grid:{display:false},
-              afterFit:function(ax){ax.width=48;}}
-        }
-      }
-    });
-    var sel_GU_2455_pl = {
-      id: 'dvl_sel_GU_2455',
-      afterDraw: function(chart) {
-        var dIdx = [9, 14, 16, 17, 22, 25];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var sel_GU_2455_ch = new Chart(
-      document.getElementById("sel_GU_2455").getContext("2d"), {
-      plugins: [sel_GU_2455_pl],
-      data:{
-        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
-        datasets:[
-          {type:"line",label:"OI 總量",data:[3016, 3024, 3018, 2862, 2653, 2026, 2618, 2663, 3101, 3341, 3451, 3291, 3217, 3220, 3178, 3180, 3113, 3051, 3106, 3096, 3162, 2720, 2396, 2713, 3015, 3104, 3434, 3473, 3366, 3263, 3241, 3207, 3166, 3323, 3354, 3519, 3615, 3390],
-           borderColor:"rgba(163,113,247,0.55)",borderWidth:1.2,borderDash:[3,3],
-           tension:0.3,fill:false,pointRadius:0,
-           yAxisID:"yr",order:3},
-          {type:"line",label:"前十大空口",data:[2613, 2688, 2780, 2655, 2389, 1827, 2441, 2397, 2748, 2707, 2797, 2899, 2897, 2923, 2913, 2940, 2892, 2848, 2877, 2903, 2964, 2488, 2266, 2488, 2702, 2586, 2676, 2726, 2786, 2737, 2725, 2711, 2751, 2870, 2929, 3035, 3107, 3016],
-           borderColor:"#f85149",borderWidth:1.5,borderDash:[4,4],
-           tension:0.3,fill:false,pointRadius:1.5,order:2},
-          {type:"line",label:"特定法人空口",data:[2561, 2688, 2780, 2610, 2389, 1827, 2441, 2397, 2673, 2574, 2732, 2899, 2842, 2923, 2913, 2940, 2892, 2848, 2877, 2903, 2918, 2268, 2157, 2488, 2702, 2511, 2507, 2726, 2786, 2737, 2725, 2711, 2751, 2870, 2929, 3035, 3107, 3016],
-           borderColor:"#e3b341",borderWidth:2.5,
-           tension:0.3,fill:false,pointRadius:2,order:1}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          y:{ticks:{color:"#6e7681",font:{size:10}},
-             grid:{color:"#1c2333"}},
-          yr:{position:"right",
-              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
-                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
-              grid:{display:false},
-              afterFit:function(ax){ax.width=48;}}
-        }
-      }
-    });
-    var lend_GU_2455_pl = {
-      id: 'dvl_lend_GU_2455',
-      afterDraw: function(chart) {
-        var dIdx = [9, 14, 16, 17, 22, 25];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var lend_GU_2455_ch = new Chart(
-      document.getElementById("lend_GU_2455").getContext("2d"), {
-      plugins: [lend_GU_2455_pl],
-      data:{
-        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
-        datasets:[
-          {type:"bar",label:"借券賣出",data:[10.0, 2.0, 20.0, 28.0, 76.0, 502.0, 1094.0, 221.0, 1630.0, 393.0, 2.0, 14.0, 1.0, 0.0, 6.0, 6.0, 4.0, 2.0, 0.0, 10.0, 382.0, 0.0, 78.0, 346.0, 43.0, 92.0, 239.0, 0.0, 0.0, 0.0, 12.0, 0.0, 0.0, 7.0, 0.0, 0.0, 2.0, 881.0],
-           backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",
-           yAxisID:"yl",order:2},
-          {type:"bar",label:"還券",data:[-33.0, -108.0, -122.0, -0.0, -0.0, -693.0, -1651.0, -343.0, -173.0, -101.0, -469.0, -130.0, -105.0, -543.0, -11.0, -58.0, -309.0, -76.0, -11.0, -8.0, -0.0, -456.0, -14.0, -238.0, -14.0, -225.0, -472.0, -396.0, -140.0, -109.0, -43.0, -72.0, -307.0, -126.0, -184.0, -0.0, -103.0, -3.0],
-           backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",
-           yAxisID:"yl",order:2},
-          {type:"line",label:"借券餘額",data:[6805.0, 6699.0, 6597.0, 6625.0, 6701.0, 6510.0, 5953.0, 5831.0, 7288.0, 7580.0, 7113.0, 6997.0, 6893.0, 6350.0, 6345.0, 6293.0, 5988.0, 5914.0, 5903.0, 5905.0, 6287.0, 5831.0, 5895.0, 6003.0, 6032.0, 5899.0, 5666.0, 5270.0, 5130.0, 5021.0, 4990.0, 4918.0, 4611.0, 4492.0, 4308.0, 4308.0, 4207.0, 5085.0],
-           borderColor:"#c9d1d9",borderWidth:1.5,
-           tension:0.3,fill:false,pointRadius:1,
-           yAxisID:"yr",order:1}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          yl:{position:"left",
-              ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},
-                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
-              grid:{color:"#1c2333"}},
-          yr:{position:"right",
-              ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},
-                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
-              grid:{display:false}}
-        }
-      }
-    });
-  })();
-  </script>
-</div>
-<div class="stock-card">
-  <div class="card-hdr">
-    <span class="code">3532</span>
-    <span class="sname">台勝科</span>
-    <span class="contract">[QD]</span>
-    <span class="badge released">已解除 2026-07-03（4天前）</span>
-    <span class="cnt-badge" style="background:#e3b34122;color:#e3b341;border:1px solid #e3b34155">今年處置 <b>4</b> 次</span>
-    
-    
-    <span class="latest">多:651/29 &nbsp; 空:1,058/1,033 <span style="color:#6e7681;font-size:.75rem">（前十大/特定）</span></span>
-  </div>
-  
-  <div class="info-row">
-    <span class="info-item"><span class="info-lbl">板塊</span>半導體業</span>
-    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#e3b341">513.92x（偏貴）</span></span>
-    <span class="info-item"><span class="info-lbl">股淨比</span>6.49x</span>
-    <span class="info-item"><span class="info-lbl">殖利率</span>0.25%</span>
-    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">11.1%</span></span>
-  </div>
-  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
-  <div class="chart-wrap"><canvas id="prc_QD_3532"></canvas></div>
-  <div class="panel-lbl buy-lbl" style="margin-top:10px">&#9650; 買口（多方未平倉）&nbsp;<span style="color:#3fb950">特定法人</span> &nbsp;<span style="color:#58a6ff;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
-  <div class="chart-wrap"><canvas id="buy_QD_3532"></canvas></div>
-  <div class="sig-strip">
-    <span class="sig-lbl">背離 10次<br><span style="color:#3fb950;font-size:.65rem">■漲</span><span style="color:#f85149;font-size:.65rem">■跌</span><span style="color:#e3b341;font-size:.65rem">■待</span></span>
-    <div class="sig-bars"><div class="sig-bar" title="2026/05/13"></div><div class="sig-bar" title="2026/05/14"></div><div class="sig-bar" title="2026/05/15"></div><div class="sig-bar" title="2026/05/18"></div><div class="sig-bar" title="2026/05/19"></div><div class="sig-bar win" title="2026/05/20 ▲5日後漲"></div><div class="sig-bar" title="2026/05/21"></div><div class="sig-bar" title="2026/05/22"></div><div class="sig-bar" title="2026/05/25"></div><div class="sig-bar win" title="2026/05/26 ▲5日後漲"></div><div class="sig-bar" title="2026/05/27"></div><div class="sig-bar" title="2026/05/28"></div><div class="sig-bar" title="2026/05/29"></div><div class="sig-bar" title="2026/06/01"></div><div class="sig-bar" title="2026/06/02"></div><div class="sig-bar" title="2026/06/03"></div><div class="sig-bar win" title="2026/06/04 ▲5日後漲"></div><div class="sig-bar" title="2026/06/05"></div><div class="sig-bar" title="2026/06/08"></div><div class="sig-bar" title="2026/06/09"></div><div class="sig-bar" title="2026/06/10"></div><div class="sig-bar" title="2026/06/11"></div><div class="sig-bar" title="2026/06/12"></div><div class="sig-bar win" title="2026/06/15 ▲5日後漲"></div><div class="sig-bar lose" title="2026/06/16 ▼5日後跌"></div><div class="sig-bar" title="2026/06/17"></div><div class="sig-bar lose" title="2026/06/18 ▼5日後跌"></div><div class="sig-bar" title="2026/06/22"></div><div class="sig-bar lose" title="2026/06/23 ▼5日後跌"></div><div class="sig-bar" title="2026/06/24"></div><div class="sig-bar win" title="2026/06/25 ▲5日後漲"></div><div class="sig-bar" title="2026/06/26"></div><div class="sig-bar win" title="2026/06/29 ▲5日後漲"></div><div class="sig-bar" title="2026/06/30"></div><div class="sig-bar" title="2026/07/01"></div><div class="sig-bar pending" title="2026/07/02 (待確認)"></div><div class="sig-bar" title="2026/07/03"></div><div class="sig-bar" title="2026/07/06"></div></div>
-  </div>
-  <div class="panel-lbl sell-lbl">&#9660; 賣口（空方未平倉）&nbsp;<span style="color:#e3b341">特定法人</span> &nbsp;<span style="color:#f85149;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
-  <div class="chart-wrap"><canvas id="sel_QD_3532"></canvas></div>
-  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
-  <div class="chart-wrap"><canvas id="lend_QD_3532"></canvas></div>
-  
-  <div class="analysis-box">
-    <div class="analysis-title">&#128202; 綜合分析報告</div>
-    <div class="analysis-row"><span class="a-label">籌碼結構</span><span>特定法人淨空單 <b>1,004 口</b>，空頭壓力已明顯收斂。</span></div>
-    <div class="analysis-row"><span class="a-label">空口趨勢</span><span>空口近 5 日變化 +93 口，方向不明顯。 從期間高點 1,059 口已回補 26 口（2%）。</span></div>
-    <div class="analysis-row"><span class="a-label">借券動向</span><span>借券餘額小幅從 4,365 降至 3,693 張，現貨空頭開始鬆動。</span></div>
-    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>406.0 元</b>，距期間低點 202.0 元反彈 +101.0%，距期間高點 440.0 元差距 -7.7%。 反彈幅度已大，尚未突破前高，需觀察能否放量站上。</span></div>
-    <div class="analysis-row"><span class="a-label">背離訊號</span><span>過去 60 日出現 10 次背離訊號，確認 9 次中 <b>6 漲 3 跌</b>（勝率 67%），1 次待確認。最新訊號：⏳ 待確認。</span></div>
-    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">今年已處置 4 次，主力慣用清洗手法，假突破風險高；借券餘額仍在高位</span></div>
-    <div class="analysis-summary" style="border-left:3px solid #f85149;color:#f85149">空頭壓力仍大，進場風險偏高，建議觀望。</div>
-  </div>
-  <script>
-  (function(){
-    var prc_QD_3532_pl = {
-      id: 'dvl_prc_QD_3532',
-      afterDraw: function(chart) {
-        var dIdx = [5, 9, 16, 23, 24, 26, 28, 30, 32, 35];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var prc_QD_3532_ch = new Chart(
-      document.getElementById("prc_QD_3532").getContext("2d"), {
-      plugins: [prc_QD_3532_pl],
-      data:{
-        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
-        datasets:[
-          {type:"bar",label:"成交量",data:[845, 713, 1187, 1094, 977, 686, 957, 1359, 4498, 3630, 10671, 10929, 1580, 1076, 1533, 898, 844, 669, 376, 719, 909, 1087, 12061, 3465, 2405, 15391, 6976, 952, 693, 642, 615, 787, 501, 335, 1829, 1366, 993, 16088],
-           backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",
-           yAxisID:"yv",order:3},
-          {type:"line",label:"收盤價",data:[246.5, 246.0, 221.5, 221.5, 202.0, 205.5, 226.0, 248.5, 273.0, 300.0, 290.5, 290.0, 319.0, 350.5, 315.5, 314.5, 291.0, 290.0, 261.0, 284.5, 270.0, 297.0, 326.5, 359.0, 394.5, 395.5, 390.0, 378.5, 373.0, 365.0, 372.0, 336.0, 331.0, 364.0, 400.0, 407.0, 440.0, 406.0],
-           borderColor:"#e8eaea",borderWidth:1.8,
-           tension:0.3,fill:false,pointRadius:1.5,
-           yAxisID:"yp",order:1}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},
-              grid:{color:"#1c2333"}},
-          yv:{position:"right",
-              ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},
-                callback:function(v){
-                  return v>=1e6?(v/1e6).toFixed(0)+"M":v>=1e3?Math.round(v/1e3)+"K":v;
-                }},
-              grid:{display:false}}
-        }
-      }
-    });
-    var buy_QD_3532_pl = {
-      id: 'dvl_buy_QD_3532',
-      afterDraw: function(chart) {
-        var dIdx = [5, 9, 16, 23, 24, 26, 28, 30, 32, 35];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var buy_QD_3532_ch = new Chart(
-      document.getElementById("buy_QD_3532").getContext("2d"), {
-      plugins: [buy_QD_3532_pl],
-      data:{
-        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
-        datasets:[
-          {type:"line",label:"OI 總量",data:[836, 877, 922, 937, 988, 813, 895, 1237, 1249, 1262, 1160, 1303, 1314, 1344, 1163, 1134, 1123, 1112, 1181, 1156, 1220, 1234, 1209, 1190, 1178, 1020, 1240, 1205, 1193, 1198, 1170, 1178, 1152, 1176, 1293, 1361, 1395, 1295],
-           borderColor:"rgba(163,113,247,0.55)",borderWidth:1.2,borderDash:[3,3],
-           tension:0.3,fill:false,pointRadius:0,
-           yAxisID:"yr",order:3},
-          {type:"line",label:"前十大多口",data:[426, 416, 434, 430, 417, 419, 492, 732, 737, 750, 712, 822, 827, 850, 762, 741, 705, 703, 740, 730, 753, 743, 637, 645, 657, 530, 597, 608, 639, 645, 628, 622, 630, 625, 652, 688, 696, 651],
-           borderColor:"#58a6ff",borderWidth:1.5,borderDash:[4,4],
-           tension:0.3,fill:false,pointRadius:1.5,order:2},
-          {type:"line",label:"特定法人多口",data:[147, 137, 136, 122, 141, 73, 101, 122, 136, 161, 103, 65, 68, 90, 83, 84, 88, 90, 118, 91, 88, 48, 108, 81, 142, 29, 55, 29, 29, 54, 58, 70, 73, 73, 83, 70, 69, 29],
-           borderColor:"#3fb950",borderWidth:2.5,
-           tension:0.3,fill:false,pointRadius:2,order:1}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          y:{ticks:{color:"#6e7681",font:{size:10}},
-             grid:{color:"#1c2333"}},
-          yr:{position:"right",
-              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
-                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
-              grid:{display:false},
-              afterFit:function(ax){ax.width=48;}}
-        }
-      }
-    });
-    var sel_QD_3532_pl = {
-      id: 'dvl_sel_QD_3532',
-      afterDraw: function(chart) {
-        var dIdx = [5, 9, 16, 23, 24, 26, 28, 30, 32, 35];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var sel_QD_3532_ch = new Chart(
-      document.getElementById("sel_QD_3532").getContext("2d"), {
-      plugins: [sel_QD_3532_pl],
-      data:{
-        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
-        datasets:[
-          {type:"line",label:"OI 總量",data:[836, 877, 922, 937, 988, 813, 895, 1237, 1249, 1262, 1160, 1303, 1314, 1344, 1163, 1134, 1123, 1112, 1181, 1156, 1220, 1234, 1209, 1190, 1178, 1020, 1240, 1205, 1193, 1198, 1170, 1178, 1152, 1176, 1293, 1361, 1395, 1295],
-           borderColor:"rgba(163,113,247,0.55)",borderWidth:1.2,borderDash:[3,3],
-           tension:0.3,fill:false,pointRadius:0,
-           yAxisID:"yr",order:3},
-          {type:"line",label:"前十大空口",data:[702, 720, 742, 714, 738, 720, 779, 923, 964, 956, 891, 904, 907, 925, 835, 813, 803, 797, 818, 809, 854, 868, 949, 906, 894, 877, 959, 996, 985, 985, 955, 982, 967, 971, 1059, 1004, 1019, 1058],
-           borderColor:"#f85149",borderWidth:1.5,borderDash:[4,4],
-           tension:0.3,fill:false,pointRadius:1.5,order:2},
-          {type:"line",label:"特定法人空口",data:[661, 690, 712, 684, 692, 710, 767, 898, 964, 956, 891, 804, 807, 829, 706, 714, 702, 719, 738, 809, 829, 829, 918, 876, 866, 877, 846, 933, 948, 948, 924, 955, 940, 944, 1059, 1004, 974, 1033],
-           borderColor:"#e3b341",borderWidth:2.5,
-           tension:0.3,fill:false,pointRadius:2,order:1}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          y:{ticks:{color:"#6e7681",font:{size:10}},
-             grid:{color:"#1c2333"}},
-          yr:{position:"right",
-              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
-                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
-              grid:{display:false},
-              afterFit:function(ax){ax.width=48;}}
-        }
-      }
-    });
-    var lend_QD_3532_pl = {
-      id: 'dvl_lend_QD_3532',
-      afterDraw: function(chart) {
-        var dIdx = [5, 9, 16, 23, 24, 26, 28, 30, 32, 35];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var lend_QD_3532_ch = new Chart(
-      document.getElementById("lend_QD_3532").getContext("2d"), {
-      plugins: [lend_QD_3532_pl],
-      data:{
-        labels:["05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06"],
-        datasets:[
-          {type:"bar",label:"借券賣出",data:[0.0, 0.0, 0.0, 0.0, 108.0, 14.0, 2.0, 12.0, 31.0, 35.0, 345.0, 221.0, 0.0, 3.0, 0.0, 0.0, 66.0, 11.0, 0.0, 0.0, 0.0, 0.0, 98.0, 13.0, 6.0, 29.0, 33.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 3.0],
-           backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",
-           yAxisID:"yl",order:2},
-          {type:"bar",label:"還券",data:[-80.0, -146.0, -112.0, -77.0, -0.0, -0.0, -0.0, -198.0, -0.0, -53.0, -37.0, -38.0, -51.0, -42.0, -46.0, -3.0, -0.0, -131.0, -17.0, -0.0, -95.0, -5.0, -102.0, -16.0, -193.0, -7.0, -30.0, -17.0, -6.0, -39.0, -40.0, -2.0, -78.0, -2.0, -0.0, -0.0, -4.0, -10.0],
-           backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",
-           yAxisID:"yl",order:2},
-          {type:"line",label:"借券餘額",data:[4257.8, 4111.8, 3999.8, 3922.8, 4030.8, 4044.8, 4046.8, 3860.8, 3891.8, 3873.8, 4181.8, 4364.8, 4313.8, 4274.8, 4228.8, 4225.8, 4291.8, 4171.8, 4154.8, 4154.8, 4059.8, 4054.8, 4050.8, 4047.8, 3860.8, 3882.8, 3885.8, 3868.8, 3862.8, 3823.8, 3783.8, 3781.8, 3703.8, 3701.8, 3701.8, 3703.8, 3699.8, 3692.8],
            borderColor:"#c9d1d9",borderWidth:1.5,
            tension:0.3,fill:false,pointRadius:1,
            yAxisID:"yr",order:1}
