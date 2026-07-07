@@ -1546,8 +1546,13 @@ document.getElementById('broker_chart') && document.getElementById('broker_chart
 <hr style="border:none;border-top:2px solid #21262d;margin:24px 0">
 <h2 style="color:#e3b341">&#128202; 處置股期貨背離掃描</h2>
 <h2>符合背離（已解除處置）<span class="hn">0 檔</span></h2>
+<details style="margin-top:8px">
+<summary style="cursor:pointer;color:#8b949e;font-size:.9rem;padding:6px 0">▶ 展開技術分析圖（0 檔）</summary>
 <div class="no-data">目前無符合條件標的</div>
+</details>
 <h2>符合背離（處置中，即將解除）<span class="hn">2 檔</span></h2>
+<details style="margin-top:8px">
+<summary style="cursor:pointer;color:#8b949e;font-size:.9rem;padding:6px 0">▶ 展開技術分析圖（2 檔）</summary>
 
 <div class="stock-card">
   <div class="card-hdr">
@@ -2105,10 +2110,11 @@ document.getElementById('broker_chart') && document.getElementById('broker_chart
   })();
   </script>
 </div>
+</details>
 <h2>有期貨但不符合背離（7 檔）</h2>
 <table>
   <thead><tr><th>代碼</th><th>名稱</th><th>期貨</th><th>狀態</th><th>解除日</th><th>今年處置</th><th>注意股</th><th>多口 / 空口 最新變化</th></tr></thead>
-  <tbody><tr><td class='code'>3189</td><td>景碩</td><td>IX</td><td style='color:#ffa657'>處置中</td><td>2026-07-16</td><td style='color:#e3b341;text-align:center'>3</td><td style='color:#444'>—</td><td style='color:#8b949e'>多+24 / 空+26</td></tr><tr><td class='code'>2303</td><td>聯電</td><td>CC</td><td style='color:#ffa657'>處置中</td><td>2026-07-15</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#ffa657;font-size:.78rem'>最快 5 日後再次 20分 撮合處置</td><td style='color:#8b949e'>多-1794 / 空+545</td></tr><tr><td class='code'>2481</td><td>強茂</td><td>GY</td><td style='color:#ffa657'>處置中</td><td>2026-07-09</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#ffa657;font-size:.78rem'>最快 2 日後再次 20分 撮合處置</td><td style='color:#8b949e'>多+71 / 空+50</td></tr><tr><td class='code'>1303</td><td>南亞</td><td>CA</td><td style='color:#ffa657'>處置中</td><td>2026-07-07</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#ffa657;font-size:.78rem'>最快 5 日後再次 20分 撮合處置</td><td style='color:#8b949e'>多-617 / 空-394</td></tr><tr><td class='code'>2455</td><td>全新</td><td>GU</td><td style='color:#4caf82'>已解除</td><td>2026-07-03</td><td style='color:#f85149;text-align:center'>5</td><td style='color:#ffa657;font-size:.78rem'>最快 5 日後再次 20分 撮合處置</td><td style='color:#8b949e'>多-224 / 空-91</td></tr><tr><td class='code'>3532</td><td>台勝科</td><td>QD</td><td style='color:#4caf82'>已解除</td><td>2026-07-03</td><td style='color:#e3b341;text-align:center'>4</td><td style='color:#ffa657;font-size:.78rem'>最快 3 日後再次 20分 撮合處置</td><td style='color:#8b949e'>多-45 / 空+39</td></tr><tr><td class='code'>2383</td><td>台光電</td><td>PJ</td><td style='color:#4caf82'>已解除</td><td>2026-07-02</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#444'>—</td><td style='color:#8b949e'>多+21 / 空+39</td></tr></tbody>
+  <tbody><tr><td class='code'>3189</td><td>景碩</td><td>IX</td><td style='color:#ffa657'>處置中</td><td>2026-07-16</td><td style='color:#e3b341;text-align:center'>3</td><td style='color:#444'>—</td><td style='color:#8b949e'>多+24 / 空+26</td></tr><tr><td class='code'>2303</td><td>聯電</td><td>CC</td><td style='color:#ffa657'>處置中</td><td>2026-07-15</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#444'>—</td><td style='color:#8b949e'>多-1794 / 空+545</td></tr><tr><td class='code'>2481</td><td>強茂</td><td>GY</td><td style='color:#ffa657'>處置中</td><td>2026-07-09</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#444'>—</td><td style='color:#8b949e'>多+71 / 空+50</td></tr><tr><td class='code'>1303</td><td>南亞</td><td>CA</td><td style='color:#ffa657'>處置中</td><td>2026-07-07</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#444'>—</td><td style='color:#8b949e'>多-617 / 空-394</td></tr><tr><td class='code'>2455</td><td>全新</td><td>GU</td><td style='color:#4caf82'>已解除</td><td>2026-07-03</td><td style='color:#f85149;text-align:center'>5</td><td style='color:#444'>—</td><td style='color:#8b949e'>多-224 / 空-91</td></tr><tr><td class='code'>3532</td><td>台勝科</td><td>QD</td><td style='color:#4caf82'>已解除</td><td>2026-07-03</td><td style='color:#e3b341;text-align:center'>4</td><td style='color:#444'>—</td><td style='color:#8b949e'>多-45 / 空+39</td></tr><tr><td class='code'>2383</td><td>台光電</td><td>PJ</td><td style='color:#4caf82'>已解除</td><td>2026-07-02</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#444'>—</td><td style='color:#8b949e'>多+21 / 空+39</td></tr></tbody>
 </table>
 <details style="margin-top:12px">
 <summary style="cursor:pointer;color:#8b949e;font-size:.9rem;padding:6px 0">▶ 展開 60 天趨勢圖（含過去背離訊號標記）</summary>
