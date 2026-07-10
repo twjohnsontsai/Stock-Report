@@ -277,10 +277,10 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
           yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},
               grid:{color:"#1c2333"},beginAtZero:false,
               afterDataLimits:function(s){var r=s.max-s.min;if(r>0){s.min=Math.max(0,s.min-r*0.05);s.max+=r*0.05;}}},
-          yv:{position:"right",
+          yv:{position:"right",min:0,max:25684.0,
               ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},
                 callback:function(v){
-                  return v>=1e6?(v/1e6).toFixed(0)+"M":v>=1e3?Math.round(v/1e3)+"K":v;
+                  return v>=6421.0?(v/1e3).toFixed(0)+"K":v;
                 }},
               grid:{display:false}}
         }
@@ -936,10 +936,10 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
           yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},
               grid:{color:"#1c2333"},beginAtZero:false,
               afterDataLimits:function(s){var r=s.max-s.min;if(r>0){s.min=Math.max(0,s.min-r*0.05);s.max+=r*0.05;}}},
-          yv:{position:"right",
+          yv:{position:"right",min:0,max:6952.0,
               ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},
                 callback:function(v){
-                  return v>=1e6?(v/1e6).toFixed(0)+"M":v>=1e3?Math.round(v/1e3)+"K":v;
+                  return v>=1738.0?(v/1e3).toFixed(0)+"K":v;
                 }},
               grid:{display:false}}
         }
@@ -1595,10 +1595,10 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
           yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},
               grid:{color:"#1c2333"},beginAtZero:false,
               afterDataLimits:function(s){var r=s.max-s.min;if(r>0){s.min=Math.max(0,s.min-r*0.05);s.max+=r*0.05;}}},
-          yv:{position:"right",
+          yv:{position:"right",min:0,max:162644.0,
               ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},
                 callback:function(v){
-                  return v>=1e6?(v/1e6).toFixed(0)+"M":v>=1e3?Math.round(v/1e3)+"K":v;
+                  return v>=40661.0?(v/1e3).toFixed(0)+"K":v;
                 }},
               grid:{display:false}}
         }
@@ -2254,10 +2254,10 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
           yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},
               grid:{color:"#1c2333"},beginAtZero:false,
               afterDataLimits:function(s){var r=s.max-s.min;if(r>0){s.min=Math.max(0,s.min-r*0.05);s.max+=r*0.05;}}},
-          yv:{position:"right",
+          yv:{position:"right",min:0,max:653920.0,
               ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},
                 callback:function(v){
-                  return v>=1e6?(v/1e6).toFixed(0)+"M":v>=1e3?Math.round(v/1e3)+"K":v;
+                  return v>=163480.0?(v/1e3).toFixed(0)+"K":v;
                 }},
               grid:{display:false}}
         }
@@ -4789,7 +4789,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       data:{
         labels:["05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09"],
         datasets:[
-          {type:"bar",label:"成交量",data:[3423, 1920, 1950, 2512, 3037, 1801, 2917, 2342, 2289, 3687, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 989, 983, 3177, 3511, 4028, 2642, 1991],
+          {type:"bar",label:"成交量",data:[3423, 1920, 1950, 2512, 3037, 1801, 2917, 2342, 2289, 3687, 2273, 2172, 2199, 1722, 2909, 2667, 2437, 2802, 2793, 4224, 2220, 2171, 2440, 1927, 2030, 2138, 1757, 1253, 1391, 953, 1198, 989, 983, 3177, 3511, 4028, 2642, 1991],
            backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",
            yAxisID:"yv",order:3},
           {type:"line",label:"收盤價",data:[4545.0, 4535.0, 4395.0, 4690.0, 5005.0, 5505.0, 5290.0, 5305.0, 5055.0, 5120.0, 5070.0, 4860.0, 4830.0, 4830.0, 4885.0, 4770.0, 5065.0, 4940.0, 5095.0, 4830.0, 5030.0, 5120.0, 5200.0, 5600.0, 5825.0, 5700.0, 5560.0, 5640.0, 5255.0, 5450.0, 5390.0, 5535.0, 5655.0, 6080.0, 5475.0, 5220.0, 5315.0, 5295.0],
