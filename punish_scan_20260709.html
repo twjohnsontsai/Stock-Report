@@ -167,6 +167,8 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
   <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
   <div class="chart-wrap"><canvas id="lend_GU_2455"></canvas></div>
   
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">未平倉口數 &nbsp;<span style="color:#ffb300">—</span>&nbsp; 每日變化 &nbsp;<span style="color:rgba(229,57,53,0.8)">■增</span><span style="color:rgba(67,160,71,0.8)">■減</span></div>
+  <div class="chart-wrap" style="height:110px"><canvas id="oi_GU_2455"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">法人淨OI &nbsp;<span style="color:#f85149">外資</span> <span style="color:#42a5f5">投信</span> <span style="color:#888">自營</span></div>
   <div class="chart-wrap" style="height:100px"><canvas id="in_GU_2455"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">前十大+特定 日增減&nbsp;<span style="color:rgba(248,81,73,0.7)">多↑</span>/<span style="color:rgba(88,166,255,0.6)">空↓(反)</span>&nbsp;<span style="color:rgba(63,185,80,0.6)">特定多</span>/<span style="color:rgba(163,113,247,0.6)">特定空(反)</span></div>
@@ -205,22 +207,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_prc_GU_2455',
       afterDraw: function(chart) {
         var dIdx = [4, 11, 28, 33, 35, 36, 41, 44, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -232,7 +244,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
         datasets:[
           {type:"bar",label:"成交量",data:[953.0, 1407.0, 1800.0, 2057.0, 1424.0, 1575.0, 2080.0, 2281.0, 2126.0, 2606.0, 1780.0, 3511.0, 6421.0, 4657.0, 2820.0, 1785.0, 1174.0, 1293.0, 1119.0, 859.0, 1029.0, 1030.0, 1628.0, 1855.0, 1391.0, 2617.0, 2145.0, 3210.0, 1979.0, 1921.0, 1772.0, 1008.0, 652.0, 692.0, 747.0, 623.0, 1040.0, 726.0, 1448.0, 2858.0, 3249.0, 2502.0, 3031.0, 2152.0, 1751.0, 4726.0, 2328.0, 1710.0, 1051.0, 566.0, 839.0, 911.0, 1136.0, 996.0, 602.0, 644.0, 1591.0, 2191.0, 1490.0, 723.0],
            backgroundColor:"rgba(88,166,255,0.18)",borderColor:"transparent",
-           yAxisID:"yv",order:5},
+           yAxisID:"yv",order:6},
           {type:"line",label:"MA60",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 368.21],
            borderColor:"rgba(248,81,73,0.7)",borderWidth:1.2,borderDash:[5,3],
            tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:4},
@@ -245,9 +257,14 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
           {type:"line",label:"MA5",data:[null, null, null, null, 310.7, 328.7, 338.8, 345.7, 342.5, 338.6, 328.9, 329.9, 330.9, 345.7, 351.9, 358.1, 356.8, 359.4, 356.4, 361.5, 364.2, 363.8, 365.0, 365.9, 370.6, 376.2, 394.5, 411.0, 421.4, 426.1, 426.6, 425.7, 417.6, 412.0, 411.3, 411.6, 404.9, 392.7, 390.0, 376.1, 360.3, 351.6, 355.1, 359.0, 374.5, 395.7, 409.4, 415.1, 413.4, 406.3, 391.9, 376.2, 368.2, 361.3, 353.6, 355.7, 355.2, 346.8, 341.4, 337.3],
            borderColor:"#e3b341",borderWidth:1.6,
            tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:2},
-          {type:"line",label:"期貨收盤",data:[278.0, 292.0, 314.0, 330.5, 339.0, 368.0, 342.5, 348.5, 314.5, 319.5, 319.5, 347.5, 353.5, 388.5, 350.5, 350.5, 341.0, 366.5, 373.5, 376.0, 364.0, 339.0, 372.5, 378.0, 399.5, 392.0, 430.5, 455.0, 430.0, 423.0, 394.5, 426.0, 414.5, 402.0, 419.5, 396.0, 392.5, 353.5, 388.5, 350.0, 317.0, 349.0, 371.0, 408.0, 427.5, 423.0, 417.5, 399.5, 399.5, 392.0, 351.0, 339.0, 359.5, 365.0, 353.5, 361.5, 336.5, 317.5, 338.0, 333.0],
-           borderColor:"#e8eaea",borderWidth:2,
-           tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+          {type:"bar",label:"影線",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+           backgroundColor:["rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)"],
+           barPercentage:0.12,categoryPercentage:1.0,grouped:false,
+           yAxisID:"yp",order:1},
+          {type:"bar",label:"K線",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+           backgroundColor:["rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)"],
+           barPercentage:0.55,categoryPercentage:1.0,grouped:false,
+           yAxisID:"yp",order:0}
         ]
       },
       options:{
@@ -272,22 +289,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_buy_GU_2455',
       afterDraw: function(chart) {
         var dIdx = [4, 11, 28, 33, 35, 36, 41, 44, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -326,22 +353,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_sel_GU_2455',
       afterDraw: function(chart) {
         var dIdx = [4, 11, 28, 33, 35, 36, 41, 44, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -380,22 +417,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_lend_GU_2455',
       afterDraw: function(chart) {
         var dIdx = [4, 11, 28, 33, 35, 36, 41, 44, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -436,26 +483,99 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       }
     });
   })();
-    var in_GU_2455_pl = {
-      id: 'dvl_in_GU_2455',
+    var oi_GU_2455_pl = {
+      id: 'dvl_oi_GU_2455',
       afterDraw: function(chart) {
         var dIdx = [4, 11, 28, 33, 35, 36, 41, 44, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+    };
+    var oi_GU_2455_ch = new Chart(
+      document.getElementById("oi_GU_2455").getContext("2d"), {
+      plugins: [oi_GU_2455_pl],
+      data:{
+        labels:["04/15", "04/16", "04/17", "04/20", "04/21", "04/22", "04/23", "04/24", "04/27", "04/28", "04/29", "04/30", "05/04", "05/05", "05/06", "05/07", "05/08", "05/11", "05/12", "05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09"],
+        datasets:[
+          {type:"bar",label:"未平倉變化",data:[null, 1869.0, 353.0, 398.0, -100.0, 23.0, 4.0, 152.0, 54.0, 174.0, -26.0, -526.0, 286.0, -167.0, -105.0, 120.0, -118.0, -280.0, -81.0, -204.0, -204.0, -119.0, -641.0, -588.0, -412.0, 2022.0, 51.0, 433.0, 217.0, 99.0, -179.0, -82.0, -11.0, -58.0, -24.0, -68.0, -65.0, 36.0, -12.0, -35.0, -608.0, -439.0, -601.0, -439.0, -421.0, 3019.0, 34.0, -110.0, -104.0, -23.0, -35.0, -58.0, 143.0, 31.0, 156.0, 90.0, -264.0, -570.0, -379.0, -162.0],
+           backgroundColor:["rgba(136,136,136,0.4)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)"],borderColor:"transparent",
+           yAxisID:"yc",order:2},
+          {type:"line",label:"未平倉",data:[703.0, 2572.0, 2925.0, 3323.0, 3223.0, 3246.0, 3250.0, 3402.0, 3456.0, 3630.0, 3604.0, 3078.0, 3364.0, 3197.0, 3092.0, 3212.0, 3094.0, 2814.0, 2733.0, 2529.0, 2325.0, 2206.0, 1565.0, 977.0, 565.0, 2587.0, 2638.0, 3071.0, 3288.0, 3387.0, 3208.0, 3126.0, 3115.0, 3057.0, 3033.0, 2965.0, 2900.0, 2936.0, 2924.0, 2889.0, 2281.0, 1842.0, 1241.0, 802.0, 381.0, 3400.0, 3434.0, 3324.0, 3220.0, 3197.0, 3162.0, 3104.0, 3247.0, 3278.0, 3434.0, 3524.0, 3260.0, 2690.0, 2311.0, 2149.0],
+           borderColor:"#ffb300",borderWidth:1.8,
+           tension:0.3,fill:false,pointRadius:0,
+           yAxisID:"yo",order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yo:{position:"right",ticks:{color:"#ffb300",font:{size:9},
+              callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
+              grid:{color:"#1c2333"},afterFit:function(ax){ax.width=52}},
+          yc:{position:"left",ticks:{color:"rgba(200,200,200,0.4)",font:{size:8},
+              callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false}}
+        }
+      }
+    });
+    var in_GU_2455_pl = {
+      id: 'dvl_in_GU_2455',
+      afterDraw: function(chart) {
+        var dIdx = [4, 11, 28, 33, 35, 36, 41, 44, 57];
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -492,22 +612,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_dl_GU_2455',
       afterDraw: function(chart) {
         var dIdx = [4, 11, 28, 33, 35, 36, 41, 44, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -545,22 +675,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_bs_GU_2455',
       afterDraw: function(chart) {
         var dIdx = [4, 11, 28, 33, 35, 36, 41, 44, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -590,22 +730,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_rs_GU_2455',
       afterDraw: function(chart) {
         var dIdx = [4, 11, 28, 33, 35, 36, 41, 44, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -639,7 +789,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
              grid:{color:"#1c2333"}}
         }
       }
-    });
+    });(function(){var _s=["prc_GU_2455", "buy_GU_2455", "sel_GU_2455", "lend_GU_2455", "oi_GU_2455", "in_GU_2455", "dl_GU_2455", "bs_GU_2455", "rs_GU_2455"],_c={};_s.forEach(function(id){var c=Chart.getChart(document.getElementById(id));if(c)_c[id]=c;});function _x(i){Object.values(_c).forEach(function(c){c._xhairIdx=i;c.update("none");});}_s.forEach(function(id){var el=document.getElementById(id);if(!el)return;el.addEventListener("mousemove",function(e){var c=_c[id];if(!c)return;var p=c.getElementsAtEventForMode(e,"index",{intersect:false},false);if(p.length)_x(p[0].index);});el.addEventListener("mouseleave",function(){Object.values(_c).forEach(function(c){c._xhairIdx=null;c.update("none");});});});})();
   </script>
 </div></details></section>
 <section id="QDF" style="border-top:2px solid #1f3a5f;padding-top:8px;margin-bottom:16px"><details><summary style="cursor:pointer;color:#58a6ff;font-size:.95rem;font-weight:600;padding:8px 0;list-style:none">&#9654; QDF（台勝科）— 展開期貨分析圖</summary>
@@ -675,6 +825,8 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
   <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
   <div class="chart-wrap"><canvas id="lend_QD_3532"></canvas></div>
   
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">未平倉口數 &nbsp;<span style="color:#ffb300">—</span>&nbsp; 每日變化 &nbsp;<span style="color:rgba(229,57,53,0.8)">■增</span><span style="color:rgba(67,160,71,0.8)">■減</span></div>
+  <div class="chart-wrap" style="height:110px"><canvas id="oi_QD_3532"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">法人淨OI &nbsp;<span style="color:#f85149">外資</span> <span style="color:#42a5f5">投信</span> <span style="color:#888">自營</span></div>
   <div class="chart-wrap" style="height:100px"><canvas id="in_QD_3532"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">前十大+特定 日增減&nbsp;<span style="color:rgba(248,81,73,0.7)">多↑</span>/<span style="color:rgba(88,166,255,0.6)">空↓(反)</span>&nbsp;<span style="color:rgba(63,185,80,0.6)">特定多</span>/<span style="color:rgba(163,113,247,0.6)">特定空(反)</span></div>
@@ -713,22 +865,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_prc_QD_3532',
       afterDraw: function(chart) {
         var dIdx = [4, 5, 7, 9, 10, 16, 19, 24, 28, 35, 42, 43, 45, 47, 49, 51, 54, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -740,7 +902,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
         datasets:[
           {type:"bar",label:"成交量",data:[402.0, 287.0, 121.0, 307.0, 185.0, 190.0, 290.0, 122.0, 165.0, 79.0, 143.0, 913.0, 462.0, 292.0, 1549.0, 1010.0, 1541.0, 577.0, 300.0, 326.0, 227.0, 340.0, 402.0, 286.0, 147.0, 424.0, 719.0, 422.0, 400.0, 773.0, 1558.0, 45.0, 35.0, 1258.0, 209.0, 203.0, 127.0, 254.0, 416.0, 469.0, 277.0, 1478.0, 402.0, 590.0, 619.0, 1001.0, 454.0, 361.0, 198.0, 323.0, 275.0, 138.0, 122.0, 825.0, 963.0, 423.0, 1738.0, 907.0, 576.0, 1507.0],
            backgroundColor:"rgba(88,166,255,0.18)",borderColor:"transparent",
-           yAxisID:"yv",order:5},
+           yAxisID:"yv",order:6},
           {type:"line",label:"MA60",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 289.3],
            borderColor:"rgba(248,81,73,0.7)",borderWidth:1.2,borderDash:[5,3],
            tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:4},
@@ -753,9 +915,14 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
           {type:"line",label:"MA5",data:[null, null, null, null, 188.7, 188.1, 184.0, 181.1, 180.9, 179.7, 178.5, 181.7, 188.5, 197.3, 211.8, 227.7, 240.7, 253.8, 261.9, 262.4, 259.6, 253.8, 244.0, 231.2, 221.6, 218.0, 223.9, 235.0, 255.5, 274.2, 285.4, 297.7, 311.3, 313.3, 317.9, 319.3, 315.0, 298.6, 293.2, 284.9, 287.6, 294.5, 313.7, 335.2, 357.9, 374.4, 385.6, 389.0, 384.1, 381.4, 371.7, 362.3, 360.9, 368.0, 374.2, 394.2, 408.6, 412.1, 413.1, 416.9],
            borderColor:"#e3b341",borderWidth:1.6,
            tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:2},
-          {type:"line",label:"期貨收盤",data:[193.0, 193.5, 188.0, 185.0, 184.0, 190.0, 173.0, 173.5, 184.0, 178.0, 184.0, 189.0, 207.5, 228.0, 250.5, 263.5, 254.0, 273.0, 268.5, 253.0, 249.5, 225.0, 224.0, 204.5, 205.0, 231.5, 254.5, 279.5, 307.0, 298.5, 287.5, 316.0, 347.5, 317.0, 321.5, 294.5, 294.5, 265.5, 290.0, 280.0, 308.0, 329.0, 361.5, 397.5, 393.5, 390.5, 385.0, 378.5, 373.0, 380.0, 342.0, 338.0, 371.5, 408.5, 411.0, 442.0, 410.0, 389.0, 413.5, 430.0],
-           borderColor:"#e8eaea",borderWidth:2,
-           tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+          {type:"bar",label:"影線",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+           backgroundColor:["rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)"],
+           barPercentage:0.12,categoryPercentage:1.0,grouped:false,
+           yAxisID:"yp",order:1},
+          {type:"bar",label:"K線",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+           backgroundColor:["rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)"],
+           barPercentage:0.55,categoryPercentage:1.0,grouped:false,
+           yAxisID:"yp",order:0}
         ]
       },
       options:{
@@ -780,22 +947,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_buy_QD_3532',
       afterDraw: function(chart) {
         var dIdx = [4, 5, 7, 9, 10, 16, 19, 24, 28, 35, 42, 43, 45, 47, 49, 51, 54, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -834,22 +1011,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_sel_QD_3532',
       afterDraw: function(chart) {
         var dIdx = [4, 5, 7, 9, 10, 16, 19, 24, 28, 35, 42, 43, 45, 47, 49, 51, 54, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -888,22 +1075,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_lend_QD_3532',
       afterDraw: function(chart) {
         var dIdx = [4, 5, 7, 9, 10, 16, 19, 24, 28, 35, 42, 43, 45, 47, 49, 51, 54, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -944,26 +1141,99 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       }
     });
   })();
-    var in_QD_3532_pl = {
-      id: 'dvl_in_QD_3532',
+    var oi_QD_3532_pl = {
+      id: 'dvl_oi_QD_3532',
       afterDraw: function(chart) {
         var dIdx = [4, 5, 7, 9, 10, 16, 19, 24, 28, 35, 42, 43, 45, 47, 49, 51, 54, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+    };
+    var oi_QD_3532_ch = new Chart(
+      document.getElementById("oi_QD_3532").getContext("2d"), {
+      plugins: [oi_QD_3532_pl],
+      data:{
+        labels:["04/15", "04/16", "04/17", "04/20", "04/21", "04/22", "04/23", "04/24", "04/27", "04/28", "04/29", "04/30", "05/04", "05/05", "05/06", "05/07", "05/08", "05/11", "05/12", "05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09"],
+        datasets:[
+          {type:"bar",label:"未平倉變化",data:[null, 475.0, -33.0, 58.0, 3.0, 21.0, -32.0, -23.0, 3.0, -17.0, 15.0, 35.0, 177.0, 73.0, -88.0, 84.0, 117.0, -152.0, -143.0, -102.0, 18.0, -63.0, -147.0, -102.0, -110.0, 674.0, 313.0, 12.0, 11.0, -106.0, 142.0, 10.0, 6.0, -168.0, -27.0, -19.0, -12.0, 61.0, -28.0, -34.0, 0.0, -322.0, -65.0, -225.0, -295.0, 1084.0, -41.0, -12.0, -1.0, -32.0, -5.0, -29.0, 24.0, 106.0, 63.0, 33.0, -119.0, -152.0, 16.0, -38.0],
+           backgroundColor:["rgba(136,136,136,0.4)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)"],borderColor:"transparent",
+           yAxisID:"yc",order:2},
+          {type:"line",label:"未平倉",data:[144.0, 619.0, 586.0, 644.0, 647.0, 668.0, 636.0, 613.0, 616.0, 599.0, 614.0, 649.0, 826.0, 899.0, 811.0, 895.0, 1012.0, 860.0, 717.0, 615.0, 633.0, 570.0, 423.0, 321.0, 211.0, 885.0, 1198.0, 1210.0, 1221.0, 1115.0, 1257.0, 1267.0, 1273.0, 1105.0, 1078.0, 1059.0, 1047.0, 1108.0, 1080.0, 1046.0, 1046.0, 724.0, 659.0, 434.0, 139.0, 1223.0, 1182.0, 1170.0, 1169.0, 1137.0, 1132.0, 1103.0, 1127.0, 1233.0, 1296.0, 1329.0, 1210.0, 1058.0, 1074.0, 1036.0],
+           borderColor:"#ffb300",borderWidth:1.8,
+           tension:0.3,fill:false,pointRadius:0,
+           yAxisID:"yo",order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yo:{position:"right",ticks:{color:"#ffb300",font:{size:9},
+              callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
+              grid:{color:"#1c2333"},afterFit:function(ax){ax.width=52}},
+          yc:{position:"left",ticks:{color:"rgba(200,200,200,0.4)",font:{size:8},
+              callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false}}
+        }
+      }
+    });
+    var in_QD_3532_pl = {
+      id: 'dvl_in_QD_3532',
+      afterDraw: function(chart) {
+        var dIdx = [4, 5, 7, 9, 10, 16, 19, 24, 28, 35, 42, 43, 45, 47, 49, 51, 54, 57];
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1000,22 +1270,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_dl_QD_3532',
       afterDraw: function(chart) {
         var dIdx = [4, 5, 7, 9, 10, 16, 19, 24, 28, 35, 42, 43, 45, 47, 49, 51, 54, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1053,22 +1333,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_bs_QD_3532',
       afterDraw: function(chart) {
         var dIdx = [4, 5, 7, 9, 10, 16, 19, 24, 28, 35, 42, 43, 45, 47, 49, 51, 54, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1098,22 +1388,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_rs_QD_3532',
       afterDraw: function(chart) {
         var dIdx = [4, 5, 7, 9, 10, 16, 19, 24, 28, 35, 42, 43, 45, 47, 49, 51, 54, 57];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1147,7 +1447,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
              grid:{color:"#1c2333"}}
         }
       }
-    });
+    });(function(){var _s=["prc_QD_3532", "buy_QD_3532", "sel_QD_3532", "lend_QD_3532", "oi_QD_3532", "in_QD_3532", "dl_QD_3532", "bs_QD_3532", "rs_QD_3532"],_c={};_s.forEach(function(id){var c=Chart.getChart(document.getElementById(id));if(c)_c[id]=c;});function _x(i){Object.values(_c).forEach(function(c){c._xhairIdx=i;c.update("none");});}_s.forEach(function(id){var el=document.getElementById(id);if(!el)return;el.addEventListener("mousemove",function(e){var c=_c[id];if(!c)return;var p=c.getElementsAtEventForMode(e,"index",{intersect:false},false);if(p.length)_x(p[0].index);});el.addEventListener("mouseleave",function(){Object.values(_c).forEach(function(c){c._xhairIdx=null;c.update("none");});});});})();
   </script>
 </div></details></section>
 <section id="DIF" style="border-top:2px solid #1f3a5f;padding-top:8px;margin-bottom:16px"><details><summary style="cursor:pointer;color:#58a6ff;font-size:.95rem;font-weight:600;padding:8px 0;list-style:none">&#9654; DIF（旺宏）— 展開期貨分析圖</summary>
@@ -1183,6 +1483,8 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
   <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
   <div class="chart-wrap"><canvas id="lend_DI_2337"></canvas></div>
   
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">未平倉口數 &nbsp;<span style="color:#ffb300">—</span>&nbsp; 每日變化 &nbsp;<span style="color:rgba(229,57,53,0.8)">■增</span><span style="color:rgba(67,160,71,0.8)">■減</span></div>
+  <div class="chart-wrap" style="height:110px"><canvas id="oi_DI_2337"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">法人淨OI &nbsp;<span style="color:#f85149">外資</span> <span style="color:#42a5f5">投信</span> <span style="color:#888">自營</span></div>
   <div class="chart-wrap" style="height:100px"><canvas id="in_DI_2337"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">前十大+特定 日增減&nbsp;<span style="color:rgba(248,81,73,0.7)">多↑</span>/<span style="color:rgba(88,166,255,0.6)">空↓(反)</span>&nbsp;<span style="color:rgba(63,185,80,0.6)">特定多</span>/<span style="color:rgba(163,113,247,0.6)">特定空(反)</span></div>
@@ -1221,22 +1523,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_prc_DI_2337',
       afterDraw: function(chart) {
         var dIdx = [2, 3, 6, 16, 23, 24, 25, 36, 37, 41, 42, 45, 50, 59];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1248,7 +1560,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
         datasets:[
           {type:"bar",label:"成交量",data:[17721.0, 15619.0, 13957.0, 14507.0, 18680.0, 16566.0, 23729.0, 16855.0, 14018.0, 21325.0, 40661.0, 31231.0, 23761.0, 18669.0, 34644.0, 23536.0, 22731.0, 11055.0, 10808.0, 22402.0, 29778.0, 20333.0, 16436.0, 12604.0, 9102.0, 8319.0, 11048.0, 11367.0, 12947.0, 27061.0, 22341.0, 12433.0, 16970.0, 33769.0, 14273.0, 7508.0, 12203.0, 5850.0, 6446.0, 6076.0, 8835.0, 6140.0, 11639.0, 10811.0, 7720.0, 14371.0, 8544.0, 26473.0, 14452.0, 23908.0, 29783.0, 17219.0, 12204.0, 11450.0, 8694.0, 5503.0, 5258.0, 7754.0, 8298.0, 9962.0],
            backgroundColor:"rgba(88,166,255,0.18)",borderColor:"transparent",
-           yAxisID:"yv",order:5},
+           yAxisID:"yv",order:6},
           {type:"line",label:"MA60",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 153.82],
            borderColor:"rgba(248,81,73,0.7)",borderWidth:1.2,borderDash:[5,3],
            tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:4},
@@ -1261,9 +1573,14 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
           {type:"line",label:"MA5",data:[null, null, null, null, 133.6, 132.2, 129.5, 129.9, 135.0, 140.5, 147.3, 152.9, 157.3, 160.6, 163.5, 163.0, 162.8, 164.0, 161.9, 160.3, 161.1, 162.2, 162.2, 160.8, 155.4, 149.8, 148.4, 147.1, 150.9, 154.4, 158.4, 161.8, 165.2, 168.4, 169.4, 168.1, 164.3, 157.7, 150.6, 144.5, 141.2, 140.4, 144.6, 149.0, 154.5, 161.0, 169.8, 172.7, 173.7, 174.1, 171.9, 165.6, 161.8, 156.1, 153.0, 149.6, 147.2, 144.0, 143.1, 142.7],
            borderColor:"#e3b341",borderWidth:1.6,
            tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:2},
-          {type:"line",label:"期貨收盤",data:[142.5, 139.5, 131.5, 121.0, 133.5, 135.5, 126.0, 133.5, 146.5, 161.0, 169.5, 154.0, 155.5, 163.0, 175.5, 167.0, 153.0, 161.5, 152.5, 167.5, 171.0, 158.5, 161.5, 145.5, 140.5, 143.0, 151.5, 155.0, 164.5, 158.0, 163.0, 168.5, 172.0, 180.5, 163.0, 156.5, 149.5, 139.0, 145.0, 132.5, 140.0, 145.5, 160.0, 167.0, 160.0, 172.5, 189.5, 174.5, 172.0, 162.0, 161.5, 158.0, 155.5, 143.5, 146.5, 144.5, 146.0, 139.5, 139.0, 144.5],
-           borderColor:"#e8eaea",borderWidth:2,
-           tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+          {type:"bar",label:"影線",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+           backgroundColor:["rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)"],
+           barPercentage:0.12,categoryPercentage:1.0,grouped:false,
+           yAxisID:"yp",order:1},
+          {type:"bar",label:"K線",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+           backgroundColor:["rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)"],
+           barPercentage:0.55,categoryPercentage:1.0,grouped:false,
+           yAxisID:"yp",order:0}
         ]
       },
       options:{
@@ -1288,22 +1605,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_buy_DI_2337',
       afterDraw: function(chart) {
         var dIdx = [2, 3, 6, 16, 23, 24, 25, 36, 37, 41, 42, 45, 50, 59];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1342,22 +1669,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_sel_DI_2337',
       afterDraw: function(chart) {
         var dIdx = [2, 3, 6, 16, 23, 24, 25, 36, 37, 41, 42, 45, 50, 59];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1396,22 +1733,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_lend_DI_2337',
       afterDraw: function(chart) {
         var dIdx = [2, 3, 6, 16, 23, 24, 25, 36, 37, 41, 42, 45, 50, 59];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1452,26 +1799,99 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       }
     });
   })();
-    var in_DI_2337_pl = {
-      id: 'dvl_in_DI_2337',
+    var oi_DI_2337_pl = {
+      id: 'dvl_oi_DI_2337',
       afterDraw: function(chart) {
         var dIdx = [2, 3, 6, 16, 23, 24, 25, 36, 37, 41, 42, 45, 50, 59];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+    };
+    var oi_DI_2337_ch = new Chart(
+      document.getElementById("oi_DI_2337").getContext("2d"), {
+      plugins: [oi_DI_2337_pl],
+      data:{
+        labels:["04/15", "04/16", "04/17", "04/20", "04/21", "04/22", "04/23", "04/24", "04/27", "04/28", "04/29", "04/30", "05/04", "05/05", "05/06", "05/07", "05/08", "05/11", "05/12", "05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09"],
+        datasets:[
+          {type:"bar",label:"未平倉變化",data:[null, 15389.0, -3457.0, -909.0, 109.0, 116.0, -1690.0, 643.0, 1348.0, 62.0, 1446.0, -3905.0, 233.0, 1218.0, 1072.0, 630.0, -5264.0, -1226.0, -682.0, 1386.0, -1897.0, -2060.0, -2624.0, -3691.0, -3096.0, 14028.0, 1509.0, 400.0, 550.0, -1323.0, 585.0, 113.0, 2354.0, 3463.0, -2755.0, -2037.0, -2531.0, -1687.0, -1121.0, -784.0, 48.0, -1284.0, -2255.0, -3470.0, -2726.0, 11080.0, 1413.0, 546.0, -1337.0, -437.0, -38.0, -2375.0, 719.0, -565.0, -368.0, -396.0, -108.0, -740.0, -629.0, -916.0],
+           backgroundColor:["rgba(136,136,136,0.4)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)"],borderColor:"transparent",
+           yAxisID:"yc",order:2},
+          {type:"line",label:"未平倉",data:[9467.0, 24856.0, 21399.0, 20490.0, 20599.0, 20715.0, 19025.0, 19668.0, 21016.0, 21078.0, 22524.0, 18619.0, 18852.0, 20070.0, 21142.0, 21772.0, 16508.0, 15282.0, 14600.0, 15986.0, 14089.0, 12029.0, 9405.0, 5714.0, 2618.0, 16646.0, 18155.0, 18555.0, 19105.0, 17782.0, 18367.0, 18480.0, 20834.0, 24297.0, 21542.0, 19505.0, 16974.0, 15287.0, 14166.0, 13382.0, 13430.0, 12146.0, 9891.0, 6421.0, 3695.0, 14775.0, 16188.0, 16734.0, 15397.0, 14960.0, 14922.0, 12547.0, 13266.0, 12701.0, 12333.0, 11937.0, 11829.0, 11089.0, 10460.0, 9544.0],
+           borderColor:"#ffb300",borderWidth:1.8,
+           tension:0.3,fill:false,pointRadius:0,
+           yAxisID:"yo",order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yo:{position:"right",ticks:{color:"#ffb300",font:{size:9},
+              callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
+              grid:{color:"#1c2333"},afterFit:function(ax){ax.width=52}},
+          yc:{position:"left",ticks:{color:"rgba(200,200,200,0.4)",font:{size:8},
+              callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false}}
+        }
+      }
+    });
+    var in_DI_2337_pl = {
+      id: 'dvl_in_DI_2337',
+      afterDraw: function(chart) {
+        var dIdx = [2, 3, 6, 16, 23, 24, 25, 36, 37, 41, 42, 45, 50, 59];
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1508,22 +1928,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_dl_DI_2337',
       afterDraw: function(chart) {
         var dIdx = [2, 3, 6, 16, 23, 24, 25, 36, 37, 41, 42, 45, 50, 59];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1561,22 +1991,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_bs_DI_2337',
       afterDraw: function(chart) {
         var dIdx = [2, 3, 6, 16, 23, 24, 25, 36, 37, 41, 42, 45, 50, 59];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1606,22 +2046,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_rs_DI_2337',
       afterDraw: function(chart) {
         var dIdx = [2, 3, 6, 16, 23, 24, 25, 36, 37, 41, 42, 45, 50, 59];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1655,7 +2105,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
              grid:{color:"#1c2333"}}
         }
       }
-    });
+    });(function(){var _s=["prc_DI_2337", "buy_DI_2337", "sel_DI_2337", "lend_DI_2337", "oi_DI_2337", "in_DI_2337", "dl_DI_2337", "bs_DI_2337", "rs_DI_2337"],_c={};_s.forEach(function(id){var c=Chart.getChart(document.getElementById(id));if(c)_c[id]=c;});function _x(i){Object.values(_c).forEach(function(c){c._xhairIdx=i;c.update("none");});}_s.forEach(function(id){var el=document.getElementById(id);if(!el)return;el.addEventListener("mousemove",function(e){var c=_c[id];if(!c)return;var p=c.getElementsAtEventForMode(e,"index",{intersect:false},false);if(p.length)_x(p[0].index);});el.addEventListener("mouseleave",function(){Object.values(_c).forEach(function(c){c._xhairIdx=null;c.update("none");});});});})();
   </script>
 </div></details></section>
 <section id="DQF" style="border-top:2px solid #1f3a5f;padding-top:8px;margin-bottom:16px"><details><summary style="cursor:pointer;color:#58a6ff;font-size:.95rem;font-weight:600;padding:8px 0;list-style:none">&#9654; DQF（群創）— 展開期貨分析圖</summary>
@@ -1691,6 +2141,8 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
   <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
   <div class="chart-wrap"><canvas id="lend_DQ_3481"></canvas></div>
   
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">未平倉口數 &nbsp;<span style="color:#ffb300">—</span>&nbsp; 每日變化 &nbsp;<span style="color:rgba(229,57,53,0.8)">■增</span><span style="color:rgba(67,160,71,0.8)">■減</span></div>
+  <div class="chart-wrap" style="height:110px"><canvas id="oi_DQ_3481"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">法人淨OI &nbsp;<span style="color:#f85149">外資</span> <span style="color:#42a5f5">投信</span> <span style="color:#888">自營</span></div>
   <div class="chart-wrap" style="height:100px"><canvas id="in_DQ_3481"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">前十大+特定 日增減&nbsp;<span style="color:rgba(248,81,73,0.7)">多↑</span>/<span style="color:rgba(88,166,255,0.6)">空↓(反)</span>&nbsp;<span style="color:rgba(63,185,80,0.6)">特定多</span>/<span style="color:rgba(163,113,247,0.6)">特定空(反)</span></div>
@@ -1729,22 +2181,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_prc_DQ_3481',
       afterDraw: function(chart) {
         var dIdx = [3, 7, 8, 13, 21, 32, 34, 39, 44, 47, 50, 58];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1756,7 +2218,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
         datasets:[
           {type:"bar",label:"成交量",data:[11624.0, 32098.0, 18657.0, 11553.0, 10262.0, 11659.0, 25412.0, 12470.0, 13206.0, 6879.0, 4364.0, 4008.0, 8805.0, 19981.0, 48559.0, 59774.0, 62746.0, 25667.0, 50436.0, 127696.0, 68932.0, 106082.0, 91481.0, 60529.0, 16789.0, 52660.0, 32633.0, 17176.0, 160217.0, 163480.0, 134403.0, 62326.0, 35958.0, 107080.0, 93043.0, 33346.0, 42528.0, 3694.0, 54570.0, 39454.0, 61365.0, 31745.0, 25023.0, 31267.0, 18580.0, 98500.0, 83717.0, 85568.0, 139090.0, 66182.0, 80116.0, 60287.0, 60236.0, 61694.0, 51538.0, 22962.0, 63813.0, 87708.0, 49197.0, 49571.0],
            backgroundColor:"rgba(88,166,255,0.18)",borderColor:"transparent",
-           yAxisID:"yv",order:5},
+           yAxisID:"yv",order:6},
           {type:"line",label:"MA60",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 46.04],
            borderColor:"rgba(248,81,73,0.7)",borderWidth:1.2,borderDash:[5,3],
            tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:4},
@@ -1769,9 +2231,14 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
           {type:"line",label:"MA5",data:[null, null, null, null, 26.64, 26.26, 25.54, 25.08, 24.69, 24.29, 23.92, 23.96, 24.3, 24.89, 25.75, 27.02, 28.21, 29.78, 31.52, 33.35, 34.53, 35.76, 37.03, 37.32, 37.09, 38.23, 40.22, 42.51, 44.48, 47.58, 48.59, 49.69, 50.89, 52.8, 54.12, 55.82, 56.2, 54.5, 53.01, 50.18, 48.4, 47.34, 48.06, 48.89, 51.64, 55.44, 59.4, 62.56, 65.8, 68.5, 68.32, 68.18, 68.52, 68.14, 67.3, 67.66, 68.18, 67.02, 66.62, 66.0],
            borderColor:"#e3b341",borderWidth:1.6,
            tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:2},
-          {type:"line",label:"期貨收盤",data:[27.65, 27.35, 25.55, 26.35, 26.3, 25.75, 23.75, 23.25, 24.4, 24.3, 23.9, 23.95, 24.95, 27.35, 28.6, 30.25, 29.9, 32.8, 36.05, 37.75, 36.15, 36.05, 39.15, 37.5, 36.6, 41.85, 46.0, 50.6, 47.35, 52.1, 46.9, 51.5, 56.6, 56.9, 58.7, 55.4, 53.4, 48.1, 49.45, 44.55, 46.5, 48.1, 51.7, 53.6, 58.3, 65.5, 67.9, 67.5, 69.8, 71.8, 64.6, 67.2, 69.2, 67.9, 67.6, 66.4, 69.8, 63.4, 65.9, 64.5],
-           borderColor:"#e8eaea",borderWidth:2,
-           tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+          {type:"bar",label:"影線",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+           backgroundColor:["rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)", "rgba(136,136,136,0.4)"],
+           barPercentage:0.12,categoryPercentage:1.0,grouped:false,
+           yAxisID:"yp",order:1},
+          {type:"bar",label:"K線",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+           backgroundColor:["rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)", "rgba(136,136,136,0.5)"],
+           barPercentage:0.55,categoryPercentage:1.0,grouped:false,
+           yAxisID:"yp",order:0}
         ]
       },
       options:{
@@ -1796,22 +2263,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_buy_DQ_3481',
       afterDraw: function(chart) {
         var dIdx = [3, 7, 8, 13, 21, 32, 34, 39, 44, 47, 50, 58];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1850,22 +2327,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_sel_DQ_3481',
       afterDraw: function(chart) {
         var dIdx = [3, 7, 8, 13, 21, 32, 34, 39, 44, 47, 50, 58];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1904,22 +2391,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_lend_DQ_3481',
       afterDraw: function(chart) {
         var dIdx = [3, 7, 8, 13, 21, 32, 34, 39, 44, 47, 50, 58];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -1960,26 +2457,99 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       }
     });
   })();
-    var in_DQ_3481_pl = {
-      id: 'dvl_in_DQ_3481',
+    var oi_DQ_3481_pl = {
+      id: 'dvl_oi_DQ_3481',
       afterDraw: function(chart) {
         var dIdx = [3, 7, 8, 13, 21, 32, 34, 39, 44, 47, 50, 58];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+    };
+    var oi_DQ_3481_ch = new Chart(
+      document.getElementById("oi_DQ_3481").getContext("2d"), {
+      plugins: [oi_DQ_3481_pl],
+      data:{
+        labels:["04/15", "04/16", "04/17", "04/20", "04/21", "04/22", "04/23", "04/24", "04/27", "04/28", "04/29", "04/30", "05/04", "05/05", "05/06", "05/07", "05/08", "05/11", "05/12", "05/13", "05/14", "05/15", "05/18", "05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09"],
+        datasets:[
+          {type:"bar",label:"未平倉變化",data:[null, 23950.0, -1781.0, -372.0, -165.0, 739.0, -1559.0, -3772.0, -679.0, -602.0, -36.0, -491.0, -1578.0, 550.0, 6302.0, 21795.0, -4505.0, 1930.0, -279.0, 7697.0, -4163.0, -9784.0, -11610.0, -13333.0, -3426.0, 61669.0, 1282.0, 2240.0, -13637.0, 9971.0, -7034.0, -5208.0, -251.0, -5770.0, -1972.0, -1627.0, -7487.0, -1027.0, -2768.0, -3407.0, -1319.0, -2125.0, -9347.0, -11720.0, -4270.0, 40000.0, 5267.0, -5287.0, 4030.0, 1099.0, -9751.0, -3078.0, 1073.0, 2154.0, 723.0, -413.0, 3358.0, -11157.0, -2941.0, -1198.0],
+           backgroundColor:["rgba(136,136,136,0.4)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(229,57,53,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)", "rgba(67,160,71,0.65)"],borderColor:"transparent",
+           yAxisID:"yc",order:2},
+          {type:"line",label:"未平倉",data:[7888.0, 31838.0, 30057.0, 29685.0, 29520.0, 30259.0, 28700.0, 24928.0, 24249.0, 23647.0, 23611.0, 23120.0, 21542.0, 22092.0, 28394.0, 50189.0, 45684.0, 47614.0, 47335.0, 55032.0, 50869.0, 41085.0, 29475.0, 16142.0, 12716.0, 74385.0, 75667.0, 77907.0, 64270.0, 74241.0, 67207.0, 61999.0, 61748.0, 55978.0, 54006.0, 52379.0, 44892.0, 43865.0, 41097.0, 37690.0, 36371.0, 34246.0, 24899.0, 13179.0, 8909.0, 48909.0, 54176.0, 48889.0, 52919.0, 54018.0, 44267.0, 41189.0, 42262.0, 44416.0, 45139.0, 44726.0, 48084.0, 36927.0, 33986.0, 32788.0],
+           borderColor:"#ffb300",borderWidth:1.8,
+           tension:0.3,fill:false,pointRadius:0,
+           yAxisID:"yo",order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yo:{position:"right",ticks:{color:"#ffb300",font:{size:9},
+              callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
+              grid:{color:"#1c2333"},afterFit:function(ax){ax.width=52}},
+          yc:{position:"left",ticks:{color:"rgba(200,200,200,0.4)",font:{size:8},
+              callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false}}
+        }
+      }
+    });
+    var in_DQ_3481_pl = {
+      id: 'dvl_in_DQ_3481',
+      afterDraw: function(chart) {
+        var dIdx = [3, 7, 8, 13, 21, 32, 34, 39, 44, 47, 50, 58];
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2016,22 +2586,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_dl_DQ_3481',
       afterDraw: function(chart) {
         var dIdx = [3, 7, 8, 13, 21, 32, 34, 39, 44, 47, 50, 58];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2069,22 +2649,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_bs_DQ_3481',
       afterDraw: function(chart) {
         var dIdx = [3, 7, 8, 13, 21, 32, 34, 39, 44, 47, 50, 58];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2114,22 +2704,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_rs_DQ_3481',
       afterDraw: function(chart) {
         var dIdx = [3, 7, 8, 13, 21, 32, 34, 39, 44, 47, 50, 58];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2163,7 +2763,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
              grid:{color:"#1c2333"}}
         }
       }
-    });
+    });(function(){var _s=["prc_DQ_3481", "buy_DQ_3481", "sel_DQ_3481", "lend_DQ_3481", "oi_DQ_3481", "in_DQ_3481", "dl_DQ_3481", "bs_DQ_3481", "rs_DQ_3481"],_c={};_s.forEach(function(id){var c=Chart.getChart(document.getElementById(id));if(c)_c[id]=c;});function _x(i){Object.values(_c).forEach(function(c){c._xhairIdx=i;c.update("none");});}_s.forEach(function(id){var el=document.getElementById(id);if(!el)return;el.addEventListener("mousemove",function(e){var c=_c[id];if(!c)return;var p=c.getElementsAtEventForMode(e,"index",{intersect:false},false);if(p.length)_x(p[0].index);});el.addEventListener("mouseleave",function(){Object.values(_c).forEach(function(c){c._xhairIdx=null;c.update("none");});});});})();
   </script>
 </div></details></section>
 
@@ -2183,7 +2783,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
     <span class="code">1718</span>
     <span class="sname">中纖</span>
     <span class="contract">[EY]</span>
-    <span class="badge active">處置中 倒數11天 (2026-07-20)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">20分撮合</span>
+    <span class="badge active">處置中 倒數10天 (2026-07-20)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">20分撮合</span>
     <span class="cnt-badge" style="background:#4caf8222;color:#4caf82;border:1px solid #4caf8255">今年處置 <b>2</b> 次</span>
     <span class="badge s10">特定法人背離</span>
     
@@ -2227,22 +2827,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_prc_EY_1718',
       afterDraw: function(chart) {
         var dIdx = [4, 17, 19, 37];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2283,22 +2893,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_buy_EY_1718',
       afterDraw: function(chart) {
         var dIdx = [4, 17, 19, 37];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2341,22 +2961,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_sel_EY_1718',
       afterDraw: function(chart) {
         var dIdx = [4, 17, 19, 37];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2399,22 +3029,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_lend_EY_1718',
       afterDraw: function(chart) {
         var dIdx = [4, 17, 19, 37];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2454,14 +3094,14 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
         }
       }
     });
-  })();
+  })();(function(){var _s=["prc_EY_1718", "buy_EY_1718", "sel_EY_1718", "lend_EY_1718"],_c={};_s.forEach(function(id){var c=Chart.getChart(document.getElementById(id));if(c)_c[id]=c;});function _x(i){Object.values(_c).forEach(function(c){c._xhairIdx=i;c.update("none");});}_s.forEach(function(id){var el=document.getElementById(id);if(!el)return;el.addEventListener("mousemove",function(e){var c=_c[id];if(!c)return;var p=c.getElementsAtEventForMode(e,"index",{intersect:false},false);if(p.length)_x(p[0].index);});el.addEventListener("mouseleave",function(){Object.values(_c).forEach(function(c){c._xhairIdx=null;c.update("none");});});});})();
   </script>
 </div>
 </details>
 <h2>有期貨但不符合背離（8 檔）</h2>
 <table>
   <thead><tr><th>代碼</th><th>名稱</th><th>期貨</th><th>狀態</th><th>解除日</th><th>今年處置</th><th>注意股</th><th>多口 / 空口 最新變化</th></tr></thead>
-  <tbody><tr><td class='code'>3189</td><td>景碩</td><td>IX</td><td style='color:#ffa657'>處置中</td><td>2026-07-16</td><td style='color:#e3b341;text-align:center'>3</td><td style='color:#444'>—</td><td style='color:#8b949e'>多+59 / 空+22</td></tr><tr><td class='code'>2303</td><td>聯電</td><td>CC</td><td style='color:#ffa657'>處置中</td><td>2026-07-15</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#444'>—</td><td style='color:#8b949e'>多-1701 / 空+478</td></tr><tr><td class='code'>2481</td><td>強茂</td><td>GY</td><td style='color:#ffa657'>處置中</td><td>2026-07-09</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#444'>—</td><td style='color:#8b949e'>多-114 / 空+124</td></tr><tr><td class='code'>1303</td><td>南亞</td><td>CA</td><td style='color:#4caf82'>已解除</td><td>2026-07-07</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#444'>—</td><td style='color:#8b949e'>多-379 / 空-83</td></tr><tr><td class='code'>2492</td><td>華新科</td><td>HB</td><td style='color:#4caf82'>已解除</td><td>2026-07-07</td><td style='color:#f85149;text-align:center'>5</td><td style='color:#ffa657;font-size:.78rem'>最快 3 日後再次 20分 撮合處置</td><td style='color:#8b949e'>多-469 / 空-455</td></tr><tr><td class='code'>2455</td><td>全新</td><td>GU</td><td style='color:#4caf82'>已解除</td><td>2026-07-03</td><td style='color:#f85149;text-align:center'>5</td><td style='color:#ffa657;font-size:.78rem'>最快 5 日後再次 20分 撮合處置</td><td style='color:#8b949e'>多-20 / 空-74</td></tr><tr><td class='code'>3532</td><td>台勝科</td><td>QD</td><td style='color:#4caf82'>已解除</td><td>2026-07-03</td><td style='color:#e3b341;text-align:center'>4</td><td style='color:#444'>—</td><td style='color:#8b949e'>多+220 / 空+324</td></tr><tr><td class='code'>2383</td><td>台光電</td><td>PJ</td><td style='color:#4caf82'>已解除</td><td>2026-07-02</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#444'>—</td><td style='color:#8b949e'>多+7 / 空+3</td></tr></tbody>
+  <tbody><tr><td class='code'>3189</td><td>景碩</td><td>IX</td><td style='color:#ffa657'>處置中</td><td>2026-07-16</td><td style='color:#e3b341;text-align:center'>3</td><td style='color:#444'>—</td><td style='color:#8b949e'>多+59 / 空+22</td></tr><tr><td class='code'>2303</td><td>聯電</td><td>CC</td><td style='color:#ffa657'>處置中</td><td>2026-07-15</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#444'>—</td><td style='color:#8b949e'>多-1701 / 空+478</td></tr><tr><td class='code'>2481</td><td>強茂</td><td>GY</td><td style='color:#4caf82'>已解除</td><td>2026-07-09</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#444'>—</td><td style='color:#8b949e'>多-114 / 空+124</td></tr><tr><td class='code'>1303</td><td>南亞</td><td>CA</td><td style='color:#4caf82'>已解除</td><td>2026-07-07</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#444'>—</td><td style='color:#8b949e'>多-379 / 空-83</td></tr><tr><td class='code'>2492</td><td>華新科</td><td>HB</td><td style='color:#4caf82'>已解除</td><td>2026-07-07</td><td style='color:#f85149;text-align:center'>5</td><td style='color:#ffa657;font-size:.78rem'>最快 3 日後再次 20分 撮合處置</td><td style='color:#8b949e'>多-469 / 空-455</td></tr><tr><td class='code'>2455</td><td>全新</td><td>GU</td><td style='color:#4caf82'>已解除</td><td>2026-07-03</td><td style='color:#f85149;text-align:center'>5</td><td style='color:#ffa657;font-size:.78rem'>最快 5 日後再次 20分 撮合處置</td><td style='color:#8b949e'>多-20 / 空-74</td></tr><tr><td class='code'>3532</td><td>台勝科</td><td>QD</td><td style='color:#4caf82'>已解除</td><td>2026-07-03</td><td style='color:#e3b341;text-align:center'>4</td><td style='color:#444'>—</td><td style='color:#8b949e'>多+220 / 空+324</td></tr><tr><td class='code'>2383</td><td>台光電</td><td>PJ</td><td style='color:#4caf82'>已解除</td><td>2026-07-02</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#444'>—</td><td style='color:#8b949e'>多+7 / 空+3</td></tr></tbody>
 </table>
 <details style="margin-top:12px">
 <summary style="cursor:pointer;color:#8b949e;font-size:.9rem;padding:6px 0">▶ 展開 60 天趨勢圖（含過去背離訊號標記）</summary>
@@ -2471,7 +3111,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
     <span class="code">3189</span>
     <span class="sname">景碩</span>
     <span class="contract">[IX]</span>
-    <span class="badge active">處置中 倒數7天 (2026-07-16)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">20分撮合</span>
+    <span class="badge active">處置中 倒數6天 (2026-07-16)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">20分撮合</span>
     <span class="cnt-badge" style="background:#e3b34122;color:#e3b341;border:1px solid #e3b34155">今年處置 <b>3</b> 次</span>
     
     
@@ -2515,22 +3155,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_prc_IX_3189',
       afterDraw: function(chart) {
         var dIdx = [7, 8, 14, 15, 16, 17, 18, 20, 27, 35];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2571,22 +3221,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_buy_IX_3189',
       afterDraw: function(chart) {
         var dIdx = [7, 8, 14, 15, 16, 17, 18, 20, 27, 35];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2629,22 +3289,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_sel_IX_3189',
       afterDraw: function(chart) {
         var dIdx = [7, 8, 14, 15, 16, 17, 18, 20, 27, 35];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2687,22 +3357,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_lend_IX_3189',
       afterDraw: function(chart) {
         var dIdx = [7, 8, 14, 15, 16, 17, 18, 20, 27, 35];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2742,7 +3422,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
         }
       }
     });
-  })();
+  })();(function(){var _s=["prc_IX_3189", "buy_IX_3189", "sel_IX_3189", "lend_IX_3189"],_c={};_s.forEach(function(id){var c=Chart.getChart(document.getElementById(id));if(c)_c[id]=c;});function _x(i){Object.values(_c).forEach(function(c){c._xhairIdx=i;c.update("none");});}_s.forEach(function(id){var el=document.getElementById(id);if(!el)return;el.addEventListener("mousemove",function(e){var c=_c[id];if(!c)return;var p=c.getElementsAtEventForMode(e,"index",{intersect:false},false);if(p.length)_x(p[0].index);});el.addEventListener("mouseleave",function(){Object.values(_c).forEach(function(c){c._xhairIdx=null;c.update("none");});});});})();
   </script>
 </div>
 <div class="stock-card">
@@ -2750,7 +3430,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
     <span class="code">2303</span>
     <span class="sname">聯電</span>
     <span class="contract">[CC]</span>
-    <span class="badge active">處置中 倒數6天 (2026-07-15)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">5分撮合</span>
+    <span class="badge active">處置中 倒數5天 (2026-07-15)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">5分撮合</span>
     <span class="cnt-badge" style="background:#4caf8222;color:#4caf82;border:1px solid #4caf8255">今年處置 <b>1</b> 次</span>
     
     
@@ -2794,22 +3474,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_prc_CC_2303',
       afterDraw: function(chart) {
         var dIdx = [1, 10, 11, 17, 21, 28, 29, 35, 36];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2850,22 +3540,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_buy_CC_2303',
       afterDraw: function(chart) {
         var dIdx = [1, 10, 11, 17, 21, 28, 29, 35, 36];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2908,22 +3608,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_sel_CC_2303',
       afterDraw: function(chart) {
         var dIdx = [1, 10, 11, 17, 21, 28, 29, 35, 36];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -2966,22 +3676,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_lend_CC_2303',
       afterDraw: function(chart) {
         var dIdx = [1, 10, 11, 17, 21, 28, 29, 35, 36];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3021,7 +3741,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
         }
       }
     });
-  })();
+  })();(function(){var _s=["prc_CC_2303", "buy_CC_2303", "sel_CC_2303", "lend_CC_2303"],_c={};_s.forEach(function(id){var c=Chart.getChart(document.getElementById(id));if(c)_c[id]=c;});function _x(i){Object.values(_c).forEach(function(c){c._xhairIdx=i;c.update("none");});}_s.forEach(function(id){var el=document.getElementById(id);if(!el)return;el.addEventListener("mousemove",function(e){var c=_c[id];if(!c)return;var p=c.getElementsAtEventForMode(e,"index",{intersect:false},false);if(p.length)_x(p[0].index);});el.addEventListener("mouseleave",function(){Object.values(_c).forEach(function(c){c._xhairIdx=null;c.update("none");});});});})();
   </script>
 </div>
 <div class="stock-card">
@@ -3029,7 +3749,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
     <span class="code">2481</span>
     <span class="sname">強茂</span>
     <span class="contract">[GY]</span>
-    <span class="badge active">處置中 倒數0天 (2026-07-09)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">5分撮合</span>
+    <span class="badge released">已解除 2026-07-09（1天前）</span>
     <span class="cnt-badge" style="background:#4caf8222;color:#4caf82;border:1px solid #4caf8255">今年處置 <b>1</b> 次</span>
     
     
@@ -3073,22 +3793,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_prc_GY_2481',
       afterDraw: function(chart) {
         var dIdx = [4, 9, 10, 11, 12, 13, 16, 17, 19, 28, 31];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3129,22 +3859,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_buy_GY_2481',
       afterDraw: function(chart) {
         var dIdx = [4, 9, 10, 11, 12, 13, 16, 17, 19, 28, 31];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3187,22 +3927,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_sel_GY_2481',
       afterDraw: function(chart) {
         var dIdx = [4, 9, 10, 11, 12, 13, 16, 17, 19, 28, 31];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3245,22 +3995,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_lend_GY_2481',
       afterDraw: function(chart) {
         var dIdx = [4, 9, 10, 11, 12, 13, 16, 17, 19, 28, 31];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3300,7 +4060,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
         }
       }
     });
-  })();
+  })();(function(){var _s=["prc_GY_2481", "buy_GY_2481", "sel_GY_2481", "lend_GY_2481"],_c={};_s.forEach(function(id){var c=Chart.getChart(document.getElementById(id));if(c)_c[id]=c;});function _x(i){Object.values(_c).forEach(function(c){c._xhairIdx=i;c.update("none");});}_s.forEach(function(id){var el=document.getElementById(id);if(!el)return;el.addEventListener("mousemove",function(e){var c=_c[id];if(!c)return;var p=c.getElementsAtEventForMode(e,"index",{intersect:false},false);if(p.length)_x(p[0].index);});el.addEventListener("mouseleave",function(){Object.values(_c).forEach(function(c){c._xhairIdx=null;c.update("none");});});});})();
   </script>
 </div>
 <div class="stock-card">
@@ -3308,7 +4068,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
     <span class="code">1303</span>
     <span class="sname">南亞</span>
     <span class="contract">[CA]</span>
-    <span class="badge released">已解除 2026-07-07（2天前）</span>
+    <span class="badge released">已解除 2026-07-07（3天前）</span>
     <span class="cnt-badge" style="background:#4caf8222;color:#4caf82;border:1px solid #4caf8255">今年處置 <b>1</b> 次</span>
     
     
@@ -3352,22 +4112,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_prc_CA_1303',
       afterDraw: function(chart) {
         var dIdx = [3, 5, 14, 15, 20, 21, 25, 28, 35];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3408,22 +4178,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_buy_CA_1303',
       afterDraw: function(chart) {
         var dIdx = [3, 5, 14, 15, 20, 21, 25, 28, 35];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3466,22 +4246,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_sel_CA_1303',
       afterDraw: function(chart) {
         var dIdx = [3, 5, 14, 15, 20, 21, 25, 28, 35];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3524,22 +4314,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_lend_CA_1303',
       afterDraw: function(chart) {
         var dIdx = [3, 5, 14, 15, 20, 21, 25, 28, 35];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3579,7 +4379,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
         }
       }
     });
-  })();
+  })();(function(){var _s=["prc_CA_1303", "buy_CA_1303", "sel_CA_1303", "lend_CA_1303"],_c={};_s.forEach(function(id){var c=Chart.getChart(document.getElementById(id));if(c)_c[id]=c;});function _x(i){Object.values(_c).forEach(function(c){c._xhairIdx=i;c.update("none");});}_s.forEach(function(id){var el=document.getElementById(id);if(!el)return;el.addEventListener("mousemove",function(e){var c=_c[id];if(!c)return;var p=c.getElementsAtEventForMode(e,"index",{intersect:false},false);if(p.length)_x(p[0].index);});el.addEventListener("mouseleave",function(){Object.values(_c).forEach(function(c){c._xhairIdx=null;c.update("none");});});});})();
   </script>
 </div>
 <div class="stock-card">
@@ -3587,7 +4387,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
     <span class="code">2492</span>
     <span class="sname">華新科</span>
     <span class="contract">[HB]</span>
-    <span class="badge released">已解除 2026-07-07（2天前）</span>
+    <span class="badge released">已解除 2026-07-07（3天前）</span>
     <span class="cnt-badge" style="background:#f8514922;color:#f85149;border:1px solid #f8514955">今年處置 <b>5</b> 次</span>
     
     
@@ -3631,22 +4431,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_prc_HB_2492',
       afterDraw: function(chart) {
         var dIdx = [1, 3, 18, 20, 21, 28, 32, 34];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3687,22 +4497,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_buy_HB_2492',
       afterDraw: function(chart) {
         var dIdx = [1, 3, 18, 20, 21, 28, 32, 34];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3745,22 +4565,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_sel_HB_2492',
       afterDraw: function(chart) {
         var dIdx = [1, 3, 18, 20, 21, 28, 32, 34];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3803,22 +4633,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_lend_HB_2492',
       afterDraw: function(chart) {
         var dIdx = [1, 3, 18, 20, 21, 28, 32, 34];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3858,7 +4698,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
         }
       }
     });
-  })();
+  })();(function(){var _s=["prc_HB_2492", "buy_HB_2492", "sel_HB_2492", "lend_HB_2492"],_c={};_s.forEach(function(id){var c=Chart.getChart(document.getElementById(id));if(c)_c[id]=c;});function _x(i){Object.values(_c).forEach(function(c){c._xhairIdx=i;c.update("none");});}_s.forEach(function(id){var el=document.getElementById(id);if(!el)return;el.addEventListener("mousemove",function(e){var c=_c[id];if(!c)return;var p=c.getElementsAtEventForMode(e,"index",{intersect:false},false);if(p.length)_x(p[0].index);});el.addEventListener("mouseleave",function(){Object.values(_c).forEach(function(c){c._xhairIdx=null;c.update("none");});});});})();
   </script>
 </div>
 <div class="stock-card">
@@ -3866,7 +4706,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
     <span class="code">2383</span>
     <span class="sname">台光電</span>
     <span class="contract">[PJ]</span>
-    <span class="badge released">已解除 2026-07-02（7天前）</span>
+    <span class="badge released">已解除 2026-07-02（8天前）</span>
     <span class="cnt-badge" style="background:#4caf8222;color:#4caf82;border:1px solid #4caf8255">今年處置 <b>1</b> 次</span>
     
     
@@ -3910,22 +4750,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_prc_PJ_2383',
       afterDraw: function(chart) {
         var dIdx = [7, 8, 15, 20, 27, 28, 30, 35];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -3966,22 +4816,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_buy_PJ_2383',
       afterDraw: function(chart) {
         var dIdx = [7, 8, 15, 20, 27, 28, 30, 35];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -4024,22 +4884,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_sel_PJ_2383',
       afterDraw: function(chart) {
         var dIdx = [7, 8, 15, 20, 27, 28, 30, 35];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -4082,22 +4952,32 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       id: 'dvl_lend_PJ_2383',
       afterDraw: function(chart) {
         var dIdx = [7, 8, 15, 20, 27, 28, 30, 35];
-        if (!dIdx.length) return;
         var ctx = chart.ctx, ca = chart.chartArea;
         var meta = chart.getDatasetMeta(0);
         if (!meta || !meta.data.length) return;
         ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
+        if (dIdx.length) {
+          ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5,3]);
+          dIdx.forEach(function(i) {
+            if (meta.data[i]) {
+              ctx.beginPath();
+              ctx.moveTo(meta.data[i].x, ca.top);
+              ctx.lineTo(meta.data[i].x, ca.bottom);
+              ctx.stroke();
+            }
+          });
+        }
+        if (chart._xhairIdx != null && meta.data[chart._xhairIdx]) {
+          ctx.strokeStyle = 'rgba(255,220,50,0.75)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3,2]);
+          ctx.beginPath();
+          ctx.moveTo(meta.data[chart._xhairIdx].x, ca.top);
+          ctx.lineTo(meta.data[chart._xhairIdx].x, ca.bottom);
+          ctx.stroke();
+        }
         ctx.restore();
       }
     };
@@ -4137,7 +5017,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
         }
       }
     });
-  })();
+  })();(function(){var _s=["prc_PJ_2383", "buy_PJ_2383", "sel_PJ_2383", "lend_PJ_2383"],_c={};_s.forEach(function(id){var c=Chart.getChart(document.getElementById(id));if(c)_c[id]=c;});function _x(i){Object.values(_c).forEach(function(c){c._xhairIdx=i;c.update("none");});}_s.forEach(function(id){var el=document.getElementById(id);if(!el)return;el.addEventListener("mousemove",function(e){var c=_c[id];if(!c)return;var p=c.getElementsAtEventForMode(e,"index",{intersect:false},false);if(p.length)_x(p[0].index);});el.addEventListener("mouseleave",function(){Object.values(_c).forEach(function(c){c._xhairIdx=null;c.update("none");});});});})();
   </script>
 </div>
 </details>
