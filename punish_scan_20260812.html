@@ -134,7 +134,7 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
 </div>
 </details>
 
-<h2 style="color:#58a6ff;border-bottom:1px solid #1f3a5f;padding-bottom:5px">&#128200; Watchlist 個股期貨追蹤</h2><p style="color:#8b949e;font-size:.82rem;margin:6px 0 16px">快速跳轉：<a href="#GUF" style="color:#58a6ff">GUF 全新</a> &nbsp;·&nbsp; <a href="#QDF" style="color:#58a6ff">QDF 台勝科</a> &nbsp;·&nbsp; <a href="#DIF" style="color:#58a6ff">DIF 旺宏</a> &nbsp;·&nbsp; <a href="#DQF" style="color:#58a6ff">DQF 群創</a> &nbsp;·&nbsp; <a href="#PLF" style="color:#58a6ff">PLF 合晶</a></p><section id="GUF" style="border-top:2px solid #1f3a5f;padding-top:8px;margin-bottom:16px"><details><summary style="cursor:pointer;color:#58a6ff;font-size:.95rem;font-weight:600;padding:8px 0;list-style:none">&#9654; GUF（全新）— 展開期貨分析圖</summary>
+<h2 style="color:#58a6ff;border-bottom:1px solid #1f3a5f;padding-bottom:5px">&#128200; Watchlist 個股期貨追蹤</h2><p style="color:#8b949e;font-size:.82rem;margin:6px 0 16px">快速跳轉：<a href="#GUF" style="color:#58a6ff">GUF 全新</a> &nbsp;·&nbsp; <a href="#QDF" style="color:#58a6ff">QDF 台勝科</a> &nbsp;·&nbsp; <a href="#DIF" style="color:#58a6ff">DIF 旺宏</a> &nbsp;·&nbsp; <a href="#DQF" style="color:#58a6ff">DQF 群創</a> &nbsp;·&nbsp; <a href="#FZF" style="color:#58a6ff">FZF 華邦電</a> &nbsp;·&nbsp; <a href="#HBF" style="color:#58a6ff">HBF 華新科</a> &nbsp;·&nbsp; <a href="#PLF" style="color:#58a6ff">PLF 合晶</a></p><section id="GUF" style="border-top:2px solid #1f3a5f;padding-top:8px;margin-bottom:16px"><details><summary style="cursor:pointer;color:#58a6ff;font-size:.95rem;font-weight:600;padding:8px 0;list-style:none">&#9654; GUF（全新）— 展開期貨分析圖</summary>
 <div class="stock-card">
   <div class="card-hdr">
     <span class="code">2455</span>
@@ -2143,6 +2143,1022 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
            borderColor:"#fdd835",borderWidth:1.4,
            tension:0.3,fill:false,pointRadius:0},
           {type:"line",label:"RSI6",data:[null, null, null, null, null, null, 81.88, 64.34, 70.95, 76.69, 77.01, 79.09, 65.99, 58.9, 43.9, 47.95, 36.48, 42.99, 48.22, 58.5, 63.13, 72.31, 81.0, 83.12, 81.31, 83.76, 85.71, 56.42, 62.04, 66.08, 61.02, 59.75, 54.33, 65.09, 42.48, 50.53, 46.19, 36.5, 29.0, 34.26, 30.23, 21.0, 21.0, 20.52, 31.81, 30.65, 22.42, 20.73, 15.21, 12.81, 11.85, 37.29, 37.57, 51.61, 49.39, 58.45, 47.23, 65.18, 56.37, 56.76],
+           borderColor:"#ef6c00",borderWidth:2,
+           tension:0.3,fill:false,pointRadius:1.5}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{
+          legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}},
+          annotation:{annotations:{
+            h80:{type:"line",yMin:80,yMax:80,borderColor:"rgba(248,81,73,0.4)",borderWidth:1,borderDash:[4,3]},
+            h20:{type:"line",yMin:20,yMax:20,borderColor:"rgba(63,185,80,0.4)",borderWidth:1,borderDash:[4,3]}
+          }}
+        },
+        scales:{
+          x:{ticks:{display:false},grid:{color:"#1c2333"}},
+          y:{min:0,max:100,ticks:{color:"#6e7681",font:{size:9}},
+             grid:{color:"#1c2333"}}
+        }
+      }
+    });
+  </script>
+</div></details></section>
+<section id="FZF" style="border-top:2px solid #1f3a5f;padding-top:8px;margin-bottom:16px"><details><summary style="cursor:pointer;color:#58a6ff;font-size:.95rem;font-weight:600;padding:8px 0;list-style:none">&#9654; FZF（華邦電）— 展開期貨分析圖</summary>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">2344</span>
+    <span class="sname">華邦電</span>
+    <span class="contract">[FZ]</span>
+    <span class="badge" style="background:#1f3a5f33;color:#58a6ff;border:1px solid #1f3a5f66;border-radius:6px;padding:2px 8px">Watchlist</span>
+    <span class="cnt-badge" style="background:#4caf8222;color:#4caf82;border:1px solid #4caf8255">今年處置 <b>0</b> 次</span>
+    
+    
+    <span class="latest">多:12,090/2,397 &nbsp; 空:18,705/18,705 <span style="color:#6e7681;font-size:.75rem">（前十大/特定）</span></span>
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>半導體業</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#c9d1d9">19.51x</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>4.83x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.28%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">12.2%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:8px">K線 + MA（期貨）&nbsp;<span style="color:#e3b341">MA5</span>&nbsp;<span style="color:rgba(88,166,255,0.85)">MA10</span>&nbsp;<span style="color:rgba(163,113,247,0.75)">MA20</span>&nbsp;<span style="color:rgba(248,81,73,0.7)">MA60</span></div>
+  <div class="chart-wrap"><canvas id="prc_FZ_2344"></canvas></div>
+  <div class="panel-lbl buy-lbl" style="margin-top:10px">&#9650; 買口（多方未平倉）&nbsp;<span style="color:#3fb950">特定法人</span> &nbsp;<span style="color:#58a6ff;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="buy_FZ_2344"></canvas></div>
+  <div class="sig-strip">
+    <span class="sig-lbl">背離 14次<br><span style="color:#3fb950;font-size:.65rem">■漲</span><span style="color:#f85149;font-size:.65rem">■跌</span><span style="color:#e3b341;font-size:.65rem">■待</span></span>
+    <div class="sig-bars"><div class="sig-bar" title="2026/05/19"></div><div class="sig-bar" title="2026/05/20"></div><div class="sig-bar" title="2026/05/21"></div><div class="sig-bar" title="2026/05/22"></div><div class="sig-bar" title="2026/05/25"></div><div class="sig-bar" title="2026/05/26"></div><div class="sig-bar" title="2026/05/27"></div><div class="sig-bar" title="2026/05/28"></div><div class="sig-bar" title="2026/05/29"></div><div class="sig-bar" title="2026/06/01"></div><div class="sig-bar" title="2026/06/02"></div><div class="sig-bar" title="2026/06/03"></div><div class="sig-bar" title="2026/06/04"></div><div class="sig-bar win" title="2026/06/05 ▲5日後漲"></div><div class="sig-bar" title="2026/06/08"></div><div class="sig-bar" title="2026/06/09"></div><div class="sig-bar win" title="2026/06/10 ▲5日後漲"></div><div class="sig-bar" title="2026/06/11"></div><div class="sig-bar" title="2026/06/12"></div><div class="sig-bar" title="2026/06/15"></div><div class="sig-bar win" title="2026/06/16 ▲5日後漲"></div><div class="sig-bar" title="2026/06/17"></div><div class="sig-bar" title="2026/06/18"></div><div class="sig-bar" title="2026/06/22"></div><div class="sig-bar lose" title="2026/06/23 ▼5日後跌"></div><div class="sig-bar" title="2026/06/24"></div><div class="sig-bar" title="2026/06/25"></div><div class="sig-bar lose" title="2026/06/26 ▼5日後跌"></div><div class="sig-bar" title="2026/06/29"></div><div class="sig-bar" title="2026/06/30"></div><div class="sig-bar" title="2026/07/01"></div><div class="sig-bar" title="2026/07/02"></div><div class="sig-bar" title="2026/07/03"></div><div class="sig-bar lose" title="2026/07/06 ▼5日後跌"></div><div class="sig-bar win" title="2026/07/07 ▲5日後漲"></div><div class="sig-bar win" title="2026/07/08 ▲5日後漲"></div><div class="sig-bar" title="2026/07/09"></div><div class="sig-bar lose" title="2026/07/13 ▼5日後跌"></div><div class="sig-bar" title="2026/07/14"></div><div class="sig-bar" title="2026/07/15"></div><div class="sig-bar" title="2026/07/16"></div><div class="sig-bar lose" title="2026/07/17 ▼5日後跌"></div><div class="sig-bar" title="2026/07/20"></div><div class="sig-bar" title="2026/07/21"></div><div class="sig-bar lose" title="2026/07/22 ▼5日後跌"></div><div class="sig-bar" title="2026/07/23"></div><div class="sig-bar" title="2026/07/24"></div><div class="sig-bar" title="2026/07/27"></div><div class="sig-bar" title="2026/07/28"></div><div class="sig-bar" title="2026/07/29"></div><div class="sig-bar" title="2026/07/30"></div><div class="sig-bar" title="2026/07/31"></div><div class="sig-bar" title="2026/08/03"></div><div class="sig-bar win" title="2026/08/04 ▲5日後漲"></div><div class="sig-bar win" title="2026/08/05 ▲5日後漲"></div><div class="sig-bar" title="2026/08/06"></div><div class="sig-bar pending" title="2026/08/07 (待確認)"></div><div class="sig-bar" title="2026/08/10"></div><div class="sig-bar" title="2026/08/11"></div><div class="sig-bar" title="2026/08/12"></div></div>
+  </div>
+  <div class="panel-lbl sell-lbl">&#9660; 賣口（空方未平倉）&nbsp;<span style="color:#e3b341">特定法人</span> &nbsp;<span style="color:#f85149;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="sel_FZ_2344"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="lend_FZ_2344"></canvas></div>
+  
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">法人淨OI &nbsp;<span style="color:#f85149">外資</span> <span style="color:#42a5f5">投信</span> <span style="color:#888">自營</span></div>
+  <div class="chart-wrap" style="height:100px"><canvas id="in_FZ_2344"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">前十大+特定 日增減&nbsp;<span style="color:rgba(248,81,73,0.7)">多↑</span>/<span style="color:rgba(88,166,255,0.6)">空↓(反)</span>&nbsp;<span style="color:rgba(63,185,80,0.6)">特定多</span>/<span style="color:rgba(163,113,247,0.6)">特定空(反)</span></div>
+  <div class="chart-wrap" style="height:100px"><canvas id="dl_FZ_2344"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">基差（現-期）&nbsp;<span style="color:#80cbc4">—</span></div>
+  <div class="chart-wrap" style="height:90px"><canvas id="bs_FZ_2344"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">RSI &nbsp;<span style="color:#ef6c00">6</span>&nbsp;<span style="color:#fdd835">12</span></div>
+  <div class="chart-wrap" style="height:90px"><canvas id="rs_FZ_2344"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">&#128202; 期貨分點淨額（60日，百萬元）</div>
+  
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;
+              padding:10px 12px;background:#0d1117;border-radius:6px;border:1px solid #21262d">
+    <div>
+      <div style="color:#e57373;font-size:.78rem;font-weight:600;margin-bottom:8px">&#9650; 多方前十大</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">國泰</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+547M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">元大</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+310M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">凱基</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+212M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">中國信託</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+162M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">玉山</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+153M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">富邦</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+120M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">兆豐</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+112M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">新光</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+74M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">合庫</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+62M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">第一金</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+49M</span></div>
+    </div>
+    <div>
+      <div style="color:#81c784;font-size:.78rem;font-weight:600;margin-bottom:8px">&#9660; 空方前十大</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">美商高盛</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-339M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">台灣摩根士丹利</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-318M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">新加坡商瑞銀</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-262M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">美林</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-222M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">台新</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-165M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">法銀巴黎</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-128M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">摩根大通</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-126M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">花旗環球</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-100M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">港商麥格理</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-94M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">永豐金</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-84M</span></div>
+    </div>
+  </div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 綜合分析報告</div>
+    <div class="analysis-row"><span class="a-label">籌碼結構</span><span>特定法人淨空單 <b>16,308 口</b>，空頭高度集中，主力仍在空方。</span></div>
+    <div class="analysis-row"><span class="a-label">空口趨勢</span><span>空口近 5 日增加 <b>3,964 口</b>，空方仍在加碼，<span style='color:#f85149'>注意下殺風險</span>。 從期間高點 30,204 口已回補 11,499 口（38%）。</span></div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span>借券餘額從峰值 217,094 降至 91,676 張（-58%），現貨空頭同步撤退，兩市訊號一致。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>177.0 元</b>，距期間低點 114.0 元反彈 +55.3%，距期間高點 222.0 元差距 -20.3%。 反彈幅度已大，尚未突破前高，需觀察能否放量站上。</span></div>
+    <div class="analysis-row"><span class="a-label">背離訊號</span><span>過去 60 日出現 14 次背離訊號，確認 13 次中 <b>7 漲 6 跌</b>（勝率 54%），1 次待確認。最新訊號：⏳ 待確認。</span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">特定法人仍持 16,308 口淨空單，具備下壓能力；空口近 5 日仍在增加</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #e3b341;color:#e3b341">空頭出清中，但尚未確立，需等待更多確認再進場。</div>
+  </div>
+  <script>
+  (function(){
+    var prc_FZ_2344_pl = {
+      id: 'dvl_prc_FZ_2344',
+      afterDraw: function(chart) {
+        var dIdx = [13, 16, 20, 24, 27, 33, 34, 35, 37, 41, 44, 53, 54, 56];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var prc_FZ_2344_ch = new Chart(
+      document.getElementById("prc_FZ_2344").getContext("2d"), {
+      plugins: [prc_FZ_2344_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"bar",label:"成交量",data:[23225.0, 21836.0, 19171.0, 11100.0, 28429.0, 24179.0, 43373.0, 32527.0, 21385.0, 26320.0, 39897.0, 44848.0, 32657.0, 15485.0, 18890.0, 25870.0, 30945.0, 35755.0, 22028.0, 29992.0, 48056.0, 11911.0, 39336.0, 34699.0, 28084.0, 22397.0, 27405.0, 35801.0, 24014.0, 23177.0, 26139.0, 13340.0, 12157.0, 19563.0, 22695.0, 13930.0, 21115.0, 21666.0, 19206.0, 11724.0, 22599.0, 13936.0, 16719.0, 12576.0, 12744.0, 19399.0, 12158.0, 14453.0, 4864.0, 6775.0, 25760.0, 910.0, 6804.0, 11323.0, 24580.0, 21303.0, 19747.0, 13753.0, 23000.0, 26360.0],
+           backgroundColor:"rgba(88,166,255,0.18)",borderColor:"transparent",
+           yAxisID:"yv",order:5},
+          {type:"line",label:"MA60",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 168.82],
+           borderColor:"rgba(248,81,73,0.7)",borderWidth:1.2,borderDash:[5,3],
+           tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:4},
+          {type:"line",label:"MA20",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 154.22, 158.12, 162.12, 167.53, 172.5, 176.53, 179.8, 183.05, 185.88, 187.88, 189.62, 189.68, 189.85, 190.18, 191.2, 192.32, 192.88, 194.43, 194.95, 194.57, 194.1, 192.8, 190.78, 187.15, 183.7, 181.7, 179.47, 176.12, 173.97, 171.15, 167.32, 163.82, 161.2, 159.03, 157.78, 157.47, 157.65, 156.93, 157.55, 158.25, 158.12],
+           borderColor:"rgba(163,113,247,0.75)",borderWidth:1.4,
+           tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:3},
+          {type:"line",label:"MA10",data:[null, null, null, null, null, null, null, null, null, 139.0, 146.05, 152.7, 159.35, 163.05, 165.25, 166.75, 165.8, 166.7, 167.75, 169.45, 170.2, 171.55, 175.7, 181.95, 187.8, 192.85, 200.3, 205.05, 208.0, 209.8, 209.15, 208.15, 204.65, 200.45, 196.85, 192.9, 188.55, 184.85, 181.15, 178.4, 176.45, 173.4, 169.65, 166.95, 166.55, 166.05, 163.7, 163.1, 161.15, 156.25, 151.2, 149.0, 148.4, 148.6, 148.4, 149.25, 150.15, 152.0, 155.35, 160.0],
+           borderColor:"rgba(88,166,255,0.85)",borderWidth:1.5,
+           tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:2},
+          {type:"line",label:"MA5",data:[null, null, null, null, 121.2, 126.0, 134.5, 141.1, 148.2, 156.8, 166.1, 170.9, 177.6, 177.9, 173.7, 167.4, 160.7, 155.8, 157.6, 165.2, 173.0, 182.4, 195.6, 206.3, 210.4, 212.7, 218.2, 214.5, 209.7, 209.2, 205.6, 198.1, 194.8, 191.2, 184.5, 180.2, 179.0, 174.9, 171.1, 172.3, 172.7, 167.8, 164.4, 162.8, 160.8, 159.4, 159.6, 161.8, 159.5, 151.7, 143.0, 138.4, 135.0, 137.7, 145.1, 155.5, 161.9, 169.0, 173.0, 174.9],
+           borderColor:"#e3b341",borderWidth:1.6,
+           tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:2},
+          {type:"line",label:"期貨收盤",data:[119.0, 114.5, 115.5, 127.0, 130.0, 143.0, 157.0, 148.5, 162.5, 173.0, 189.5, 181.0, 182.0, 164.0, 152.0, 158.0, 147.5, 157.5, 173.0, 190.0, 197.0, 194.5, 223.5, 226.5, 210.5, 208.5, 222.0, 205.0, 202.5, 208.0, 190.5, 184.5, 188.5, 184.5, 174.5, 169.0, 178.5, 168.0, 165.5, 180.5, 171.0, 154.0, 151.0, 157.5, 170.5, 164.0, 155.0, 162.0, 146.0, 131.5, 120.5, 132.0, 145.0, 159.5, 168.5, 172.5, 164.0, 180.5, 179.5, 178.0],
+           borderColor:"#e8eaea",borderWidth:2,
+           tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},
+              grid:{color:"#1c2333"}},
+          yv:{position:"right",
+              ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},
+                callback:function(v){
+                  return v>=1e6?(v/1e6).toFixed(0)+"M":v>=1e3?Math.round(v/1e3)+"K":v;
+                }},
+              grid:{display:false}}
+        }
+      }
+    });
+    var buy_FZ_2344_pl = {
+      id: 'dvl_buy_FZ_2344',
+      afterDraw: function(chart) {
+        var dIdx = [13, 16, 20, 24, 27, 33, 34, 35, 37, 41, 44, 53, 54, 56];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var buy_FZ_2344_ch = new Chart(
+      document.getElementById("buy_FZ_2344").getContext("2d"), {
+      plugins: [buy_FZ_2344_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"line",label:"前十大多口",data:[24538, 16856, 17411, 17841, 19359, 20691, 21248, 19471, 20199, 19624, 19473, 11266, 15701, 15092, 14948, 13798, 10116, 13392, 15179, 16656, 14288, 15311, 15892, 16805, 16602, 15570, 16175, 14920, 9995, 10398, 7982, 7965, 9894, 10522, 7386, 7418, 8856, 7725, 7253, 7035, 7864, 6467, 6793, 6669, 6750, 6823, 6677, 8243, 10090, 10573, 11381, 11264, 11136, 11426, 8373, 9727, 9339, 11618, 12581, 12090],
+           borderColor:"#58a6ff",borderWidth:1.5,borderDash:[4,4],
+           tension:0.3,fill:false,pointRadius:1.5,order:2},
+          {type:"line",label:"特定法人多口",data:[18110, 6562, 6588, 6943, 8512, 8673, 8401, 7712, 7619, 6827, 6567, 3918, 3835, 4567, 4074, 3226, 4691, 4989, 4531, 5077, 6007, 4096, 3852, 2126, 3016, 2944, 2912, 3466, 2897, 2710, 0, 401, 553, 566, 1112, 989, 302, 321, 1243, 0, 728, 1161, 1977, 1863, 1533, 2006, 1870, 1392, 1390, 1819, 2232, 2115, 1759, 2328, 3237, 2233, 2827, 2728, 2548, 2397],
+           borderColor:"#3fb950",borderWidth:2.5,
+           tension:0.3,fill:false,pointRadius:2,order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yr:{position:"right",
+              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
+                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false},
+              afterFit:function(ax){ax.width=48;}}
+        }
+      }
+    });
+    var sel_FZ_2344_pl = {
+      id: 'dvl_sel_FZ_2344',
+      afterDraw: function(chart) {
+        var dIdx = [13, 16, 20, 24, 27, 33, 34, 35, 37, 41, 44, 53, 54, 56];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var sel_FZ_2344_ch = new Chart(
+      document.getElementById("sel_FZ_2344").getContext("2d"), {
+      plugins: [sel_FZ_2344_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"line",label:"前十大空口",data:[28257, 20487, 21187, 21442, 23852, 27319, 28071, 27034, 30300, 31973, 31989, 25268, 28635, 25743, 24141, 22008, 18989, 22710, 25443, 25944, 25611, 26381, 28715, 30821, 28246, 26463, 28335, 23598, 20175, 21715, 19949, 19182, 21249, 20832, 17410, 17103, 18160, 16673, 16020, 13321, 14613, 13708, 14063, 14964, 14460, 14894, 15071, 15426, 15919, 16444, 16773, 16781, 17240, 17030, 15541, 16888, 16251, 17873, 18611, 18705],
+           borderColor:"#f85149",borderWidth:1.5,borderDash:[4,4],
+           tension:0.3,fill:false,pointRadius:1.5,order:2},
+          {type:"line",label:"特定法人空口",data:[25679, 20487, 21187, 21442, 23852, 26232, 26984, 25947, 29017, 29805, 30204, 23483, 26733, 24096, 22585, 20452, 17487, 21088, 23821, 24264, 23015, 26381, 26652, 28681, 26106, 24513, 25715, 21070, 16695, 19221, 17455, 16818, 18663, 18279, 15417, 16022, 17079, 15662, 16020, 13321, 14613, 13708, 14063, 14964, 14460, 14894, 15071, 15426, 15919, 16444, 16773, 16781, 17240, 17030, 14741, 16078, 15441, 17873, 18611, 18705],
+           borderColor:"#e3b341",borderWidth:2.5,
+           tension:0.3,fill:false,pointRadius:2,order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yr:{position:"right",
+              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
+                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false},
+              afterFit:function(ax){ax.width=48;}}
+        }
+      }
+    });
+    var lend_FZ_2344_pl = {
+      id: 'dvl_lend_FZ_2344',
+      afterDraw: function(chart) {
+        var dIdx = [13, 16, 20, 24, 27, 33, 34, 35, 37, 41, 44, 53, 54, 56];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var lend_FZ_2344_ch = new Chart(
+      document.getElementById("lend_FZ_2344").getContext("2d"), {
+      plugins: [lend_FZ_2344_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"bar",label:"借券賣出",data:[8087.0, 1061.0, 7519.0, 1308.0, 534.0, 2786.0, 7395.0, 5335.0, 3364.0, 6408.0, 1321.0, 4939.0, 2598.0, 2478.0, 0.0, 7149.0, 2809.0, 2762.0, 1945.0, 5913.0, 4091.0, 2340.0, 1583.0, 6321.0, 2038.0, 1387.0, 3802.0, 6176.0, 2659.0, 8960.0, 7892.0, 692.0, 1030.0, 3902.0, 7621.0, 6254.0, 1666.0, 2449.0, 3243.0, 4565.0, 1217.0, 4081.0, 889.0, 6545.0, 3081.0, 5201.0, 9087.0, 5629.0, 5478.0, 0.0, 224.0, 337.0, 1242.0, 1204.0, 1371.0, 891.0, 5095.0, 470.0, 524.0, 7073.0],
+           backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",
+           yAxisID:"yl",order:2},
+          {type:"bar",label:"還券",data:[-484.0, -7384.0, -6715.1, -5072.0, -1880.0, -1482.0, -547.0, -334.0, -3029.0, -5162.9, -443.0, -23191.0, -4288.0, -9485.0, -1912.0, -8244.0, -3741.9, -1877.0, -3273.0, -1020.3, -0.0, -1720.1, -5910.0, -0.0, -9053.0, -675.3, -13335.0, -955.0, -3748.0, -754.6, -670.0, -73.0, -882.0, -2885.0, -1466.0, -800.0, -3048.0, -1116.4, -2704.0, -105.0, -3321.0, -511.0, -915.6, -63.0, -0.0, -11699.2, -13325.0, -1091.0, -11421.0, -4575.0, -2090.0, -29050.0, -4728.9, -20721.0, -11457.0, -9637.0, -12192.0, -7055.9, -20439.0, -9762.0],
+           backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",
+           yAxisID:"yl",order:2},
+          {type:"line",label:"借券餘額",data:[198778.4, 192455.4, 193259.3, 189495.3, 188149.3, 189453.3, 196301.3, 201302.3, 201637.3, 202882.4, 203760.4, 185508.4, 183818.4, 176811.4, 174899.4, 173804.4, 172871.5, 173756.5, 172428.5, 177321.2, 181412.2, 182032.1, 177705.1, 184026.1, 177011.1, 177722.8, 168189.8, 173410.8, 172321.8, 180527.2, 187749.2, 188368.2, 188516.2, 189533.2, 195688.2, 201142.2, 199760.2, 201092.8, 201631.8, 206091.8, 203987.8, 207557.8, 207531.3, 214013.3, 217094.3, 210596.1, 206358.1, 210896.1, 204953.1, 200378.1, 198512.1, 169799.1, 166312.2, 146795.2, 136709.2, 127963.2, 120866.2, 114280.3, 94365.3, 91676.3],
+           borderColor:"#c9d1d9",borderWidth:1.5,
+           tension:0.3,fill:false,pointRadius:1,
+           yAxisID:"yr",order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yl:{position:"left",
+              ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},
+                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
+              grid:{color:"#1c2333"}},
+          yr:{position:"right",
+              ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},
+                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false}}
+        }
+      }
+    });
+  })();
+    var in_FZ_2344_pl = {
+      id: 'dvl_in_FZ_2344',
+      afterDraw: function(chart) {
+        var dIdx = [13, 16, 20, 24, 27, 33, 34, 35, 37, 41, 44, 53, 54, 56];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var in_FZ_2344_ch = new Chart(
+      document.getElementById("in_FZ_2344").getContext("2d"), {
+      plugins: [in_FZ_2344_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"line",label:"自營淨OI",data:[-317553, -270214, -293721, -311587, -313123, -316082, -313244, -308024, -320536, -326084, -319250, -323682, -315019, -296841, -272855, -255994, -226196, -227255, -238123, -252720, -263111, -283309, -302035, -318396, -315019, -331081, -334760, -294897, -284900, -301738, -303995, -317246, -328084, -338377, -298079, -300378, -305732, -294467, -275270, -256762, -280672, -241661, -219886, -225916, -233621, -241112, -238409, -227895, -222349, -199182, -194449, -191266, -197389, -200560, -187859, -201774, -204759, -213819, -216393, -215060],
+           borderColor:"rgba(180,180,180,0.55)",borderWidth:1.2,borderDash:[4,3],
+           tension:0.3,fill:false,pointRadius:0},
+          {type:"line",label:"投信淨OI",data:[39812, 15227, 16277, 20558, 23726, 30134, 36505, 42738, 42992, 42962, 40575, 37593, 30427, 30427, 20427, 20427, 20427, 19779, 19929, 19883, 19883, 3613, 4077, 2854, 2870, 7470, 12252, 12252, 12252, 12252, 9698, 9698, 9698, 9698, 9703, 9708, 9708, 9708, 9588, 9539, 9539, 9539, 7739, 7739, 7739, 7740, 5759, 156, -66, -66, -66, -66, 9, 882, 899, 796, 801, 800, 800, 804],
+           borderColor:"#42a5f5",borderWidth:1.5,
+           tension:0.3,fill:false,pointRadius:0},
+          {type:"line",label:"外資淨OI",data:[-405110, -362628, -385455, -413404, -459105, -501811, -516891, -529696, -559138, -574365, -596912, -593320, -601093, -583491, -550725, -574683, -547334, -553306, -555320, -538844, -525488, -435874, -486491, -518636, -521066, -526002, -530872, -506891, -482908, -496074, -518773, -538742, -551247, -542792, -506069, -507208, -515478, -506831, -473302, -421347, -434577, -406574, -378310, -390185, -407478, -404117, -399872, -381293, -369122, -338214, -337923, -361343, -392957, -398761, -413346, -430957, -427735, -432570, -434186, -432066],
+           borderColor:"#f85149",borderWidth:2,
+           tension:0.3,fill:false,pointRadius:1.5}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:9}},
+             grid:{color:"#1c2333"}}
+        }
+      }
+    });
+    var dl_FZ_2344_pl = {
+      id: 'dvl_dl_FZ_2344',
+      afterDraw: function(chart) {
+        var dIdx = [13, 16, 20, 24, 27, 33, 34, 35, 37, 41, 44, 53, 54, 56];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var dl_FZ_2344_ch = new Chart(
+      document.getElementById("dl_FZ_2344").getContext("2d"), {
+      plugins: [dl_FZ_2344_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"bar",label:"前十大多口增減",data:[null, -7682, 555, 430, 1518, 1332, 557, -1777, 728, -575, -151, -8207, 4435, -609, -144, -1150, -3682, 3276, 1787, 1477, -2368, 1023, 581, 913, -203, -1032, 605, -1255, -4925, 403, -2416, -17, 1929, 628, -3136, 32, 1438, -1131, -472, -218, 829, -1397, 326, -124, 81, 73, -146, 1566, 1847, 483, 808, -117, -128, 290, -3053, 1354, -388, 2279, 963, -491],
+           backgroundColor:"rgba(248,81,73,0.6)",borderColor:"transparent"},
+          {type:"bar",label:"前十大空口增減(反)",data:[null, 7770, -700, -255, -2410, -3467, -752, 1037, -3266, -1673, -16, 6721, -3367, 2892, 1602, 2133, 3019, -3721, -2733, -501, 333, -770, -2334, -2106, 2575, 1783, -1872, 4737, 3423, -1540, 1766, 767, -2067, 417, 3422, 307, -1057, 1487, 653, 2699, -1292, 905, -355, -901, 504, -434, -177, -355, -493, -525, -329, -8, -459, 210, 1489, -1347, 637, -1622, -738, -94],
+           backgroundColor:"rgba(88,166,255,0.55)",borderColor:"transparent"},
+          {type:"line",label:"特定多口增減",data:[null, -11548, 26, 355, 1569, 161, -272, -689, -93, -792, -260, -2649, -83, 732, -493, -848, 1465, 298, -458, 546, 930, -1911, -244, -1726, 890, -72, -32, 554, -569, -187, -2710, 401, 152, 13, 546, -123, -687, 19, 922, -1243, 728, 433, 816, -114, -330, 473, -136, -478, -2, 429, 413, -117, -356, 569, 909, -1004, 594, -99, -180, -151],
+           borderColor:"rgba(63,185,80,0.7)",borderWidth:1.4,borderDash:[4,3],
+           tension:0.3,fill:false,pointRadius:0},
+          {type:"line",label:"特定空口增減(反)",data:[null, 5192, -700, -255, -2410, -2380, -752, 1037, -3070, -788, -399, 6721, -3250, 2637, 1511, 2133, 2965, -3601, -2733, -443, 1249, -3366, -271, -2029, 2575, 1593, -1202, 4645, 4375, -2526, 1766, 637, -1845, 384, 2862, -605, -1057, 1417, -358, 2699, -1292, 905, -355, -901, 504, -434, -177, -355, -493, -525, -329, -8, -459, 210, 2289, -1337, 637, -2432, -738, -94],
+           borderColor:"rgba(163,113,247,0.7)",borderWidth:1.4,borderDash:[4,3],
+           tension:0.3,fill:false,pointRadius:0}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:9}},
+             grid:{color:"#1c2333"}}
+        }
+      }
+    });
+    var bs_FZ_2344_pl = {
+      id: 'dvl_bs_FZ_2344',
+      afterDraw: function(chart) {
+        var dIdx = [13, 16, 20, 24, 27, 33, 34, 35, 37, 41, 44, 53, 54, 56];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var bs_FZ_2344_ch = new Chart(
+      document.getElementById("bs_FZ_2344").getContext("2d"), {
+      plugins: [bs_FZ_2344_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"line",label:"基差(現-期)",data:[-1.5, 1.0, -1.5, -2.0, -1.5, -2.0, -2.0, -4.5, -4.5, -5.0, -5.0, -3.5, -2.5, -2.0, 2.0, -1.5, 1.5, -1.0, -1.0, -1.0, 0.0, 4.5, -5.0, -4.5, 1.0, -3.5, -2.5, 1.5, 0.5, -0.5, -0.5, -1.0, -4.0, -1.5, -0.5, -0.5, -2.0, -1.0, -1.0, 0.0, 1.0, 1.0, 0.0, -2.0, 0.5, -3.0, -0.5, -2.0, -2.0, -1.5, -2.0, -2.0, -2.0, -2.5, 0.5, -1.5, -0.5, -1.0, -1.5, -1.0],
+           borderColor:"#80cbc4",borderWidth:1.8,
+           tension:0.3,fill:false,pointRadius:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#80cbc4",boxWidth:10,font:{size:9}}}},
+        scales:{
+          x:{ticks:{display:false},grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:9}},
+             grid:{color:"#1c2333"}}
+        }
+      }
+    });
+    var rs_FZ_2344_pl = {
+      id: 'dvl_rs_FZ_2344',
+      afterDraw: function(chart) {
+        var dIdx = [13, 16, 20, 24, 27, 33, 34, 35, 37, 41, 44, 53, 54, 56];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var rs_FZ_2344_ch = new Chart(
+      document.getElementById("rs_FZ_2344").getContext("2d"), {
+      plugins: [rs_FZ_2344_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"line",label:"RSI12",data:[null, null, null, null, null, null, null, null, null, null, null, null, 79.72, 67.26, 60.39, 62.48, 56.77, 60.52, 65.57, 70.14, 71.82, 70.28, 76.63, 77.18, 67.88, 66.79, 70.32, 61.36, 60.13, 61.96, 53.44, 50.83, 52.52, 50.62, 46.09, 43.74, 48.67, 44.02, 42.95, 50.76, 46.37, 39.68, 38.61, 42.29, 48.98, 46.07, 42.27, 46.05, 39.59, 34.78, 31.6, 38.06, 44.52, 50.77, 54.26, 55.78, 51.79, 58.13, 57.63, 56.83],
+           borderColor:"#fdd835",borderWidth:1.4,
+           tension:0.3,fill:false,pointRadius:0},
+          {type:"line",label:"RSI6",data:[null, null, null, null, null, null, 90.43, 74.3, 81.0, 84.61, 88.67, 76.24, 76.7, 54.04, 43.71, 49.5, 40.71, 50.72, 62.49, 71.46, 74.48, 71.25, 82.07, 82.87, 64.46, 62.38, 70.17, 53.45, 51.29, 55.98, 40.93, 36.85, 41.51, 38.14, 30.65, 27.14, 41.13, 32.78, 30.98, 50.51, 41.57, 30.12, 28.46, 37.43, 51.9, 45.57, 37.9, 46.33, 33.76, 26.07, 21.59, 35.49, 48.0, 58.71, 64.21, 66.58, 56.96, 67.8, 66.58, 64.49],
+           borderColor:"#ef6c00",borderWidth:2,
+           tension:0.3,fill:false,pointRadius:1.5}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{
+          legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}},
+          annotation:{annotations:{
+            h80:{type:"line",yMin:80,yMax:80,borderColor:"rgba(248,81,73,0.4)",borderWidth:1,borderDash:[4,3]},
+            h20:{type:"line",yMin:20,yMax:20,borderColor:"rgba(63,185,80,0.4)",borderWidth:1,borderDash:[4,3]}
+          }}
+        },
+        scales:{
+          x:{ticks:{display:false},grid:{color:"#1c2333"}},
+          y:{min:0,max:100,ticks:{color:"#6e7681",font:{size:9}},
+             grid:{color:"#1c2333"}}
+        }
+      }
+    });
+  </script>
+</div></details></section>
+<section id="HBF" style="border-top:2px solid #1f3a5f;padding-top:8px;margin-bottom:16px"><details><summary style="cursor:pointer;color:#58a6ff;font-size:.95rem;font-weight:600;padding:8px 0;list-style:none">&#9654; HBF（華新科）— 展開期貨分析圖</summary>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">2492</span>
+    <span class="sname">華新科</span>
+    <span class="contract">[HB]</span>
+    <span class="badge" style="background:#1f3a5f33;color:#58a6ff;border:1px solid #1f3a5f66;border-radius:6px;padding:2px 8px">Watchlist</span>
+    <span class="cnt-badge" style="background:#f8514922;color:#f85149;border:1px solid #f8514955">今年處置 <b>7</b> 次</span>
+    
+    
+    <span class="latest">多:2,700/635 &nbsp; 空:5,433/5,433 <span style="color:#6e7681;font-size:.75rem">（前十大/特定）</span></span>
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>電子零組件業</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#c9d1d9">32.36x</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>2.10x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.87%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">13.4%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:8px">K線 + MA（期貨）&nbsp;<span style="color:#e3b341">MA5</span>&nbsp;<span style="color:rgba(88,166,255,0.85)">MA10</span>&nbsp;<span style="color:rgba(163,113,247,0.75)">MA20</span>&nbsp;<span style="color:rgba(248,81,73,0.7)">MA60</span></div>
+  <div class="chart-wrap"><canvas id="prc_HB_2492"></canvas></div>
+  <div class="panel-lbl buy-lbl" style="margin-top:10px">&#9650; 買口（多方未平倉）&nbsp;<span style="color:#3fb950">特定法人</span> &nbsp;<span style="color:#58a6ff;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="buy_HB_2492"></canvas></div>
+  <div class="sig-strip">
+    <span class="sig-lbl">背離 12次<br><span style="color:#3fb950;font-size:.65rem">■漲</span><span style="color:#f85149;font-size:.65rem">■跌</span><span style="color:#e3b341;font-size:.65rem">■待</span></span>
+    <div class="sig-bars"><div class="sig-bar" title="2026/05/19"></div><div class="sig-bar" title="2026/05/20"></div><div class="sig-bar win" title="2026/05/21 ▲5日後漲"></div><div class="sig-bar" title="2026/05/22"></div><div class="sig-bar" title="2026/05/25"></div><div class="sig-bar" title="2026/05/26"></div><div class="sig-bar" title="2026/05/27"></div><div class="sig-bar" title="2026/05/28"></div><div class="sig-bar" title="2026/05/29"></div><div class="sig-bar" title="2026/06/01"></div><div class="sig-bar" title="2026/06/02"></div><div class="sig-bar" title="2026/06/03"></div><div class="sig-bar" title="2026/06/04"></div><div class="sig-bar" title="2026/06/05"></div><div class="sig-bar" title="2026/06/08"></div><div class="sig-bar" title="2026/06/09"></div><div class="sig-bar" title="2026/06/10"></div><div class="sig-bar win" title="2026/06/11 ▲5日後漲"></div><div class="sig-bar" title="2026/06/12"></div><div class="sig-bar win" title="2026/06/15 ▲5日後漲"></div><div class="sig-bar win" title="2026/06/16 ▲5日後漲"></div><div class="sig-bar" title="2026/06/17"></div><div class="sig-bar" title="2026/06/18"></div><div class="sig-bar" title="2026/06/22"></div><div class="sig-bar" title="2026/06/23"></div><div class="sig-bar" title="2026/06/24"></div><div class="sig-bar" title="2026/06/25"></div><div class="sig-bar win" title="2026/06/26 ▲5日後漲"></div><div class="sig-bar" title="2026/06/29"></div><div class="sig-bar" title="2026/06/30"></div><div class="sig-bar" title="2026/07/01"></div><div class="sig-bar lose" title="2026/07/02 ▼5日後跌"></div><div class="sig-bar" title="2026/07/03"></div><div class="sig-bar lose" title="2026/07/06 ▼5日後跌"></div><div class="sig-bar" title="2026/07/07"></div><div class="sig-bar" title="2026/07/08"></div><div class="sig-bar" title="2026/07/09"></div><div class="sig-bar lose" title="2026/07/13 ▼5日後跌"></div><div class="sig-bar lose" title="2026/07/14 ▼5日後跌"></div><div class="sig-bar lose" title="2026/07/15 ▼5日後跌"></div><div class="sig-bar" title="2026/07/16"></div><div class="sig-bar lose" title="2026/07/17 ▼5日後跌"></div><div class="sig-bar" title="2026/07/20"></div><div class="sig-bar" title="2026/07/21"></div><div class="sig-bar" title="2026/07/22"></div><div class="sig-bar" title="2026/07/23"></div><div class="sig-bar" title="2026/07/24"></div><div class="sig-bar" title="2026/07/27"></div><div class="sig-bar" title="2026/07/28"></div><div class="sig-bar win" title="2026/07/29 ▲5日後漲"></div><div class="sig-bar" title="2026/07/30"></div><div class="sig-bar" title="2026/07/31"></div><div class="sig-bar" title="2026/08/03"></div><div class="sig-bar" title="2026/08/04"></div><div class="sig-bar" title="2026/08/05"></div><div class="sig-bar" title="2026/08/06"></div><div class="sig-bar" title="2026/08/07"></div><div class="sig-bar" title="2026/08/10"></div><div class="sig-bar" title="2026/08/11"></div><div class="sig-bar" title="2026/08/12"></div></div>
+  </div>
+  <div class="panel-lbl sell-lbl">&#9660; 賣口（空方未平倉）&nbsp;<span style="color:#e3b341">特定法人</span> &nbsp;<span style="color:#f85149;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="sel_HB_2492"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="lend_HB_2492"></canvas></div>
+  
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">法人淨OI &nbsp;<span style="color:#f85149">外資</span> <span style="color:#42a5f5">投信</span> <span style="color:#888">自營</span></div>
+  <div class="chart-wrap" style="height:100px"><canvas id="in_HB_2492"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">前十大+特定 日增減&nbsp;<span style="color:rgba(248,81,73,0.7)">多↑</span>/<span style="color:rgba(88,166,255,0.6)">空↓(反)</span>&nbsp;<span style="color:rgba(63,185,80,0.6)">特定多</span>/<span style="color:rgba(163,113,247,0.6)">特定空(反)</span></div>
+  <div class="chart-wrap" style="height:100px"><canvas id="dl_HB_2492"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">基差（現-期）&nbsp;<span style="color:#80cbc4">—</span></div>
+  <div class="chart-wrap" style="height:90px"><canvas id="bs_HB_2492"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">RSI &nbsp;<span style="color:#ef6c00">6</span>&nbsp;<span style="color:#fdd835">12</span></div>
+  <div class="chart-wrap" style="height:90px"><canvas id="rs_HB_2492"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">&#128202; 期貨分點淨額（60日，百萬元）</div>
+  
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;
+              padding:10px 12px;background:#0d1117;border-radius:6px;border:1px solid #21262d">
+    <div>
+      <div style="color:#e57373;font-size:.78rem;font-weight:600;margin-bottom:8px">&#9650; 多方前十大</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">國泰</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+547M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">元大</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+310M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">凱基</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+212M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">中國信託</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+162M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">玉山</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+153M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">富邦</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+120M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">兆豐</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+112M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">新光</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+74M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">合庫</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+62M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">第一金</span><span style="font-size:.8rem;color:#e57373;font-weight:600;margin-left:8px;flex-shrink:0">+49M</span></div>
+    </div>
+    <div>
+      <div style="color:#81c784;font-size:.78rem;font-weight:600;margin-bottom:8px">&#9660; 空方前十大</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">美商高盛</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-339M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">台灣摩根士丹利</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-318M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">新加坡商瑞銀</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-262M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">美林</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-222M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">台新</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-165M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">法銀巴黎</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-128M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">摩根大通</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-126M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">花旗環球</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-100M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">港商麥格理</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-94M</span></div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:.8rem;color:#c9d1d9;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">永豐金</span><span style="font-size:.8rem;color:#81c784;font-weight:600;margin-left:8px;flex-shrink:0">-84M</span></div>
+    </div>
+  </div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 綜合分析報告</div>
+    <div class="analysis-row"><span class="a-label">籌碼結構</span><span>特定法人淨空單 <b>4,798 口</b>，仍偏空方主導。</span></div>
+    <div class="analysis-row"><span class="a-label">空口趨勢</span><span>空口近 5 日變化 -191 口，方向不明顯。 從期間高點 6,612 口已回補 1,179 口（18%）。</span></div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span>借券餘額維持高位（7,553 張），現貨空頭尚未撤退，<span style='color:#f85149'>借券壓力持續</span>。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>288.0 元</b>，距期間低點 198.5 元反彈 +45.1%，距期間高點 617.0 元差距 -53.3%。 反彈幅度已大，尚未突破前高，需觀察能否放量站上。</span></div>
+    <div class="analysis-row"><span class="a-label">背離訊號</span><span>過去 60 日出現 12 次背離訊號，確認 12 次中 <b>6 漲 6 跌</b>（勝率 50%），0 次待確認。最新訊號：✅ 上漲確認。</span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">今年已處置 7 次，主力慣用清洗手法，假突破風險高；借券餘額仍在高位</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #f85149;color:#f85149">空頭壓力仍大，進場風險偏高，建議觀望。</div>
+  </div>
+  <script>
+  (function(){
+    var prc_HB_2492_pl = {
+      id: 'dvl_prc_HB_2492',
+      afterDraw: function(chart) {
+        var dIdx = [2, 17, 19, 20, 27, 31, 33, 37, 38, 39, 41, 49];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var prc_HB_2492_ch = new Chart(
+      document.getElementById("prc_HB_2492").getContext("2d"), {
+      plugins: [prc_HB_2492_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"bar",label:"成交量",data:[2524.0, 2034.0, 1437.0, 2382.0, 1005.0, 5718.0, 3608.0, 5573.0, 3124.0, 1872.0, 4347.0, 2282.0, 1940.0, 3490.0, 3655.0, 3403.0, 9026.0, 8297.0, 6235.0, 3129.0, 4804.0, 2306.0, 9716.0, 2968.0, 9868.0, 3756.0, 2862.0, 2243.0, 2520.0, 1123.0, 2253.0, 1386.0, 1474.0, 1394.0, 1687.0, 8789.0, 4795.0, 5253.0, 6294.0, 1691.0, 3262.0, 796.0, 1286.0, 7657.0, 818.0, 4824.0, 3346.0, 3680.0, 826.0, 2017.0, 3864.0, 1404.0, 1530.0, 6420.0, 5623.0, 5098.0, 2357.0, 4997.0, 9217.0, 9471.0],
+           backgroundColor:"rgba(88,166,255,0.18)",borderColor:"transparent",
+           yAxisID:"yv",order:5},
+          {type:"line",label:"MA60",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 390.23],
+           borderColor:"rgba(248,81,73,0.7)",borderWidth:1.2,borderDash:[5,3],
+           tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:4},
+          {type:"line",label:"MA20",data:[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 373.4, 387.3, 402.05, 417.48, 434.38, 446.93, 459.9, 471.6, 478.75, 484.35, 491.62, 499.48, 505.68, 513.88, 520.77, 526.62, 529.12, 532.62, 532.3, 531.27, 527.58, 520.08, 508.93, 494.27, 476.38, 462.75, 448.23, 431.9, 418.5, 405.07, 387.93, 367.48, 350.62, 334.57, 319.43, 307.23, 296.2, 285.68, 278.6, 274.07, 269.7],
+           borderColor:"rgba(163,113,247,0.75)",borderWidth:1.4,
+           tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:3},
+          {type:"line",label:"MA10",data:[null, null, null, null, null, null, null, null, null, 326.4, 349.65, 368.85, 382.1, 395.2, 401.9, 411.25, 413.75, 416.2, 417.1, 420.4, 424.95, 435.25, 452.85, 473.55, 491.95, 508.55, 529.45, 541.3, 551.6, 562.85, 574.0, 576.1, 574.9, 568.0, 561.3, 549.7, 535.8, 523.3, 510.95, 492.3, 466.15, 441.75, 413.65, 384.75, 364.2, 346.75, 328.0, 313.7, 299.2, 283.55, 268.8, 259.5, 255.5, 254.1, 250.25, 245.65, 243.35, 243.5, 248.95, 255.85],
+           borderColor:"rgba(88,166,255,0.85)",borderWidth:1.5,
+           tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:2},
+          {type:"line",label:"MA5",data:[null, null, null, null, 268.4, 291.4, 316.6, 342.9, 364.9, 384.4, 407.9, 421.1, 421.3, 425.5, 419.4, 414.6, 406.4, 411.1, 408.7, 421.4, 435.3, 464.1, 494.6, 538.4, 562.5, 581.8, 594.8, 588.0, 564.8, 563.2, 566.2, 557.4, 561.8, 571.2, 559.4, 533.2, 514.2, 484.8, 450.7, 425.2, 399.1, 369.3, 342.5, 318.8, 303.2, 294.4, 286.7, 284.9, 279.6, 263.9, 243.2, 232.3, 226.1, 228.6, 236.6, 248.1, 254.4, 260.9, 269.3, 275.1],
+           borderColor:"#e3b341",borderWidth:1.6,
+           tension:0.3,fill:false,pointRadius:0,yAxisID:"yp",order:2},
+          {type:"line",label:"期貨收盤",data:[219.5, 241.0, 266.5, 293.0, 322.0, 334.5, 367.0, 398.0, 403.0, 419.5, 452.0, 433.0, 399.0, 424.0, 389.0, 428.0, 392.0, 422.5, 412.0, 452.5, 497.5, 536.0, 575.0, 631.0, 573.0, 594.0, 601.0, 541.0, 515.0, 565.0, 609.0, 557.0, 563.0, 562.0, 506.0, 478.0, 462.0, 416.0, 391.5, 378.5, 347.5, 313.0, 282.0, 273.0, 300.5, 303.5, 274.5, 273.0, 246.5, 222.0, 200.0, 220.0, 242.0, 259.0, 262.0, 257.5, 251.5, 274.5, 301.0, 291.0],
+           borderColor:"#e8eaea",borderWidth:2,
+           tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},
+              grid:{color:"#1c2333"}},
+          yv:{position:"right",
+              ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},
+                callback:function(v){
+                  return v>=1e6?(v/1e6).toFixed(0)+"M":v>=1e3?Math.round(v/1e3)+"K":v;
+                }},
+              grid:{display:false}}
+        }
+      }
+    });
+    var buy_HB_2492_pl = {
+      id: 'dvl_buy_HB_2492',
+      afterDraw: function(chart) {
+        var dIdx = [2, 17, 19, 20, 27, 31, 33, 37, 38, 39, 41, 49];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var buy_HB_2492_ch = new Chart(
+      document.getElementById("buy_HB_2492").getContext("2d"), {
+      plugins: [buy_HB_2492_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"line",label:"前十大多口",data:[2109, 2117, 2262, 2308, 2380, 2327, 2524, 3171, 3448, 3447, 3584, 3653, 3563, 3509, 3524, 3171, 3209, 3321, 3165, 3188, 3244, 2373, 2859, 2798, 2337, 2105, 2002, 2007, 1995, 1991, 1898, 1899, 1887, 1923, 1693, 1582, 1113, 1226, 1498, 1457, 1685, 1742, 1688, 2412, 2659, 2958, 2938, 3297, 3198, 3317, 3614, 3498, 3603, 3160, 3123, 3829, 4051, 4292, 3785, 2700],
+           borderColor:"#58a6ff",borderWidth:1.5,borderDash:[4,4],
+           tension:0.3,fill:false,pointRadius:1.5,order:2},
+          {type:"line",label:"特定法人多口",data:[500, 0, 0, 0, 0, 187, 439, 1181, 1402, 1402, 1373, 1198, 1198, 1198, 1198, 1198, 1198, 1376, 1198, 1198, 1198, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 0, 162, 632, 636, 951, 941, 788, 1260, 1260, 1628, 1569, 1534, 1490, 1178, 1170, 1039, 1052, 933, 901, 1243, 1283, 1117, 1035, 635],
+           borderColor:"#3fb950",borderWidth:2.5,
+           tension:0.3,fill:false,pointRadius:2,order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yr:{position:"right",
+              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
+                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false},
+              afterFit:function(ax){ax.width=48;}}
+        }
+      }
+    });
+    var sel_HB_2492_pl = {
+      id: 'dvl_sel_HB_2492',
+      afterDraw: function(chart) {
+        var dIdx = [2, 17, 19, 20, 27, 31, 33, 37, 38, 39, 41, 49];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var sel_HB_2492_ch = new Chart(
+      document.getElementById("sel_HB_2492").getContext("2d"), {
+      plugins: [sel_HB_2492_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"line",label:"前十大空口",data:[3568, 3625, 3592, 3624, 3647, 3640, 3782, 4660, 4986, 4931, 5359, 5620, 5573, 5743, 5866, 5833, 5838, 6070, 6156, 5874, 5442, 5006, 5834, 5600, 4697, 4617, 4754, 4636, 4436, 4482, 4320, 4281, 4422, 4406, 4319, 3888, 3433, 2975, 2766, 2783, 2994, 2981, 3119, 4125, 4127, 4667, 4843, 5324, 5300, 5298, 5726, 5855, 6006, 5499, 5624, 6076, 6334, 6612, 6018, 5433],
+           borderColor:"#f85149",borderWidth:1.5,borderDash:[4,4],
+           tension:0.3,fill:false,pointRadius:1.5,order:2},
+          {type:"line",label:"特定法人空口",data:[3310, 3625, 3592, 3624, 3506, 3510, 3782, 4418, 4800, 4675, 5067, 5261, 5214, 5344, 5415, 5431, 5443, 5325, 5411, 5129, 4697, 5006, 5834, 5600, 4544, 4464, 4601, 4483, 4308, 4387, 4320, 4281, 4422, 4406, 4319, 3888, 3433, 2975, 2766, 2703, 2994, 2981, 3119, 3900, 3902, 4667, 4843, 5324, 5300, 5098, 5554, 5683, 6006, 5499, 5624, 6076, 6334, 6612, 6018, 5433],
+           borderColor:"#e3b341",borderWidth:2.5,
+           tension:0.3,fill:false,pointRadius:2,order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yr:{position:"right",
+              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
+                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false},
+              afterFit:function(ax){ax.width=48;}}
+        }
+      }
+    });
+    var lend_HB_2492_pl = {
+      id: 'dvl_lend_HB_2492',
+      afterDraw: function(chart) {
+        var dIdx = [2, 17, 19, 20, 27, 31, 33, 37, 38, 39, 41, 49];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var lend_HB_2492_ch = new Chart(
+      document.getElementById("lend_HB_2492").getContext("2d"), {
+      plugins: [lend_HB_2492_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"bar",label:"借券賣出",data:[0.0, 0.0, 17.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 1.0, 9.0, 13.0, 12.0, 4.0, 0.0, 0.0, 7.0, 289.0, 155.0, 270.0, 16.0, 0.0, 18.0, 24.0, 12.0, 134.0, 8.0, 0.0, 8.0, 0.0, 1.0, 44.0, 31.0, 90.0, 191.0, 2.0, 0.0, 0.0, 45.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 45.0, 149.0, 930.0, 1470.0, 186.0, 481.0, 981.0, 2553.0],
+           backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",
+           yAxisID:"yl",order:2},
+          {type:"bar",label:"還券",data:[-260.0, -94.0, -103.0, -114.0, -17.0, -4.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -105.0, -0.0, -2.0, -1.0, -9.0, -13.0, -0.0, -0.0, -0.0, -8.0, -269.0, -899.0, -149.0, -1.0, -55.0, -0.0, -93.0, -1.0, -140.0, -54.0, -66.0, -9.0, -12.0, -40.0, -77.0, -98.0, -0.0, -12.0, -7.0, -0.0, -0.0, -0.0, -738.0, -187.0, -0.0, -0.0, -0.0, -30.0, -44.0, -0.0, -0.0, -142.0, -51.0, -216.0, -214.0, -0.0, -111.0],
+           backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",
+           yAxisID:"yl",order:2},
+          {type:"line",label:"借券餘額",data:[3537.0, 3443.0, 3357.0, 3244.0, 3227.0, 3223.0, 3223.0, 3223.0, 3223.0, 3223.0, 3223.0, 3223.0, 3223.0, 3120.0, 3121.0, 3128.0, 3140.0, 3143.0, 3134.0, 3134.0, 3134.0, 3141.0, 3422.0, 3308.0, 2679.0, 2546.0, 2545.0, 2508.0, 2532.0, 2451.0, 2584.0, 2452.0, 2398.0, 2340.0, 2331.0, 2320.0, 2324.0, 2278.0, 2270.0, 2461.0, 2451.0, 2444.0, 2444.0, 2489.0, 2489.0, 1751.0, 1564.0, 1564.0, 1564.0, 1564.0, 1535.0, 1492.0, 1537.0, 1686.0, 2474.0, 3893.0, 3863.0, 4130.0, 5111.0, 7553.0],
+           borderColor:"#c9d1d9",borderWidth:1.5,
+           tension:0.3,fill:false,pointRadius:1,
+           yAxisID:"yr",order:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          yl:{position:"left",
+              ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},
+                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
+              grid:{color:"#1c2333"}},
+          yr:{position:"right",
+              ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},
+                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
+              grid:{display:false}}
+        }
+      }
+    });
+  })();
+    var in_HB_2492_pl = {
+      id: 'dvl_in_HB_2492',
+      afterDraw: function(chart) {
+        var dIdx = [2, 17, 19, 20, 27, 31, 33, 37, 38, 39, 41, 49];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var in_HB_2492_ch = new Chart(
+      document.getElementById("in_HB_2492").getContext("2d"), {
+      plugins: [in_HB_2492_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"line",label:"自營淨OI",data:[-317553, -270214, -293721, -311587, -313123, -316082, -313244, -308024, -320536, -326084, -319250, -323682, -315019, -296841, -272855, -255994, -226196, -227255, -238123, -252720, -263111, -283309, -302035, -318396, -315019, -331081, -334760, -294897, -284900, -301738, -303995, -317246, -328084, -338377, -298079, -300378, -305732, -294467, -275270, -256762, -280672, -241661, -219886, -225916, -233621, -241112, -238409, -227895, -222349, -199182, -194449, -191266, -197389, -200560, -187859, -201774, -204759, -213819, -216393, -215060],
+           borderColor:"rgba(180,180,180,0.55)",borderWidth:1.2,borderDash:[4,3],
+           tension:0.3,fill:false,pointRadius:0},
+          {type:"line",label:"投信淨OI",data:[39812, 15227, 16277, 20558, 23726, 30134, 36505, 42738, 42992, 42962, 40575, 37593, 30427, 30427, 20427, 20427, 20427, 19779, 19929, 19883, 19883, 3613, 4077, 2854, 2870, 7470, 12252, 12252, 12252, 12252, 9698, 9698, 9698, 9698, 9703, 9708, 9708, 9708, 9588, 9539, 9539, 9539, 7739, 7739, 7739, 7740, 5759, 156, -66, -66, -66, -66, 9, 882, 899, 796, 801, 800, 800, 804],
+           borderColor:"#42a5f5",borderWidth:1.5,
+           tension:0.3,fill:false,pointRadius:0},
+          {type:"line",label:"外資淨OI",data:[-405110, -362628, -385455, -413404, -459105, -501811, -516891, -529696, -559138, -574365, -596912, -593320, -601093, -583491, -550725, -574683, -547334, -553306, -555320, -538844, -525488, -435874, -486491, -518636, -521066, -526002, -530872, -506891, -482908, -496074, -518773, -538742, -551247, -542792, -506069, -507208, -515478, -506831, -473302, -421347, -434577, -406574, -378310, -390185, -407478, -404117, -399872, -381293, -369122, -338214, -337923, -361343, -392957, -398761, -413346, -430957, -427735, -432570, -434186, -432066],
+           borderColor:"#f85149",borderWidth:2,
+           tension:0.3,fill:false,pointRadius:1.5}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:9}},
+             grid:{color:"#1c2333"}}
+        }
+      }
+    });
+    var dl_HB_2492_pl = {
+      id: 'dvl_dl_HB_2492',
+      afterDraw: function(chart) {
+        var dIdx = [2, 17, 19, 20, 27, 31, 33, 37, 38, 39, 41, 49];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var dl_HB_2492_ch = new Chart(
+      document.getElementById("dl_HB_2492").getContext("2d"), {
+      plugins: [dl_HB_2492_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"bar",label:"前十大多口增減",data:[null, 8, 145, 46, 72, -53, 197, 647, 277, -1, 137, 69, -90, -54, 15, -353, 38, 112, -156, 23, 56, -871, 486, -61, -461, -232, -103, 5, -12, -4, -93, 1, -12, 36, -230, -111, -469, 113, 272, -41, 228, 57, -54, 724, 247, 299, -20, 359, -99, 119, 297, -116, 105, -443, -37, 706, 222, 241, -507, -1085],
+           backgroundColor:"rgba(248,81,73,0.6)",borderColor:"transparent"},
+          {type:"bar",label:"前十大空口增減(反)",data:[null, -57, 33, -32, -23, 7, -142, -878, -326, 55, -428, -261, 47, -170, -123, 33, -5, -232, -86, 282, 432, 436, -828, 234, 903, 80, -137, 118, 200, -46, 162, 39, -141, 16, 87, 431, 455, 458, 209, -17, -211, 13, -138, -1006, -2, -540, -176, -481, 24, 2, -428, -129, -151, 507, -125, -452, -258, -278, 594, 585],
+           backgroundColor:"rgba(88,166,255,0.55)",borderColor:"transparent"},
+          {type:"line",label:"特定多口增減",data:[null, -500, 0, 0, 0, 187, 252, 742, 221, 0, -29, -175, 0, 0, 0, 0, 0, 178, -178, 0, 0, -1198, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, -480, 162, 470, 4, 315, -10, -153, 472, 0, 368, -59, -35, -44, -312, -8, -131, 13, -119, -32, 342, 40, -166, -82, -400],
+           borderColor:"rgba(63,185,80,0.7)",borderWidth:1.4,borderDash:[4,3],
+           tension:0.3,fill:false,pointRadius:0},
+          {type:"line",label:"特定空口增減(反)",data:[null, -315, 33, -32, 118, -4, -272, -636, -382, 125, -392, -194, 47, -130, -71, -16, -12, 118, -86, 282, 432, -309, -828, 234, 1056, 80, -137, 118, 175, -79, 67, 39, -141, 16, 87, 431, 455, 458, 209, 63, -291, 13, -138, -781, -2, -765, -176, -481, 24, 202, -456, -129, -323, 507, -125, -452, -258, -278, 594, 585],
+           borderColor:"rgba(163,113,247,0.7)",borderWidth:1.4,borderDash:[4,3],
+           tension:0.3,fill:false,pointRadius:0}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
+        scales:{
+          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
+             grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:9}},
+             grid:{color:"#1c2333"}}
+        }
+      }
+    });
+    var bs_HB_2492_pl = {
+      id: 'dvl_bs_HB_2492',
+      afterDraw: function(chart) {
+        var dIdx = [2, 17, 19, 20, 27, 31, 33, 37, 38, 39, 41, 49];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var bs_HB_2492_ch = new Chart(
+      document.getElementById("bs_HB_2492").getContext("2d"), {
+      plugins: [bs_HB_2492_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"line",label:"基差(現-期)",data:[0.5, 1.0, -0.5, -0.5, -0.5, -6.0, -6.0, -8.0, -9.0, -3.5, 4.0, -10.0, -7.0, -8.0, 11.0, 12.0, 15.5, -5.0, -3.0, -3.0, -3.5, 6.0, -14.0, -14.0, 4.0, -4.0, -2.0, -1.0, -1.0, 0.0, -6.0, 4.0, 0.0, -5.0, -4.0, -4.0, 3.5, 3.0, -1.5, 0.5, -6.0, -5.5, -5.0, 0.0, -0.5, -3.5, -0.5, -1.0, -1.5, -1.5, -1.5, -2.0, -2.5, 0.5, -2.5, -1.0, -0.5, -1.0, -0.5, -3.0],
+           borderColor:"#80cbc4",borderWidth:1.8,
+           tension:0.3,fill:false,pointRadius:1}
+        ]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#80cbc4",boxWidth:10,font:{size:9}}}},
+        scales:{
+          x:{ticks:{display:false},grid:{color:"#1c2333"}},
+          y:{ticks:{color:"#6e7681",font:{size:9}},
+             grid:{color:"#1c2333"}}
+        }
+      }
+    });
+    var rs_HB_2492_pl = {
+      id: 'dvl_rs_HB_2492',
+      afterDraw: function(chart) {
+        var dIdx = [2, 17, 19, 20, 27, 31, 33, 37, 38, 39, 41, 49];
+        if (!dIdx.length) return;
+        var ctx = chart.ctx, ca = chart.chartArea;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data.length) return;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5,3]);
+        dIdx.forEach(function(i) {
+          if (meta.data[i]) {
+            ctx.beginPath();
+            ctx.moveTo(meta.data[i].x, ca.top);
+            ctx.lineTo(meta.data[i].x, ca.bottom);
+            ctx.stroke();
+          }
+        });
+        ctx.restore();
+      }
+    };
+    var rs_HB_2492_ch = new Chart(
+      document.getElementById("rs_HB_2492").getContext("2d"), {
+      plugins: [rs_HB_2492_pl],
+      data:{
+        labels:["05/19", "05/20", "05/21", "05/22", "05/25", "05/26", "05/27", "05/28", "05/29", "06/01", "06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
+        datasets:[
+          {type:"line",label:"RSI12",data:[null, null, null, null, null, null, null, null, null, null, null, null, 81.44, 83.05, 73.29, 76.63, 68.06, 71.06, 68.64, 72.56, 76.18, 78.78, 81.07, 83.81, 72.04, 73.51, 74.01, 62.97, 58.82, 63.82, 67.6, 59.58, 60.17, 60.01, 51.6, 47.94, 45.91, 40.52, 37.93, 36.58, 33.48, 30.35, 27.81, 27.09, 32.88, 33.5, 30.5, 30.34, 27.65, 25.39, 23.5, 28.75, 34.18, 38.15, 38.86, 38.14, 37.15, 43.33, 49.58, 47.43],
+           borderColor:"#fdd835",borderWidth:1.4,
+           tension:0.3,fill:false,pointRadius:0},
+          {type:"line",label:"RSI6",data:[null, null, null, null, null, null, 100.0, 100.0, 100.0, 100.0, 100.0, 85.89, 65.92, 71.72, 55.77, 65.91, 52.56, 60.66, 56.66, 66.79, 74.68, 79.64, 83.56, 87.66, 66.94, 70.02, 71.09, 51.92, 45.53, 57.57, 65.6, 51.72, 53.09, 52.79, 38.24, 32.82, 29.91, 22.9, 19.92, 18.39, 15.09, 12.17, 10.07, 9.49, 25.08, 26.73, 21.29, 21.02, 16.62, 13.49, 11.21, 25.02, 37.79, 46.27, 47.78, 45.48, 42.23, 56.52, 67.6, 60.61],
            borderColor:"#ef6c00",borderWidth:2,
            tension:0.3,fill:false,pointRadius:1.5}
         ]
@@ -4622,285 +5638,6 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
            backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",
            yAxisID:"yl",order:2},
           {type:"line",label:"借券餘額",data:[2961.4, 2974.4, 3126.4, 3347.4, 3325.4, 3294.4, 3103.4, 3026.4, 2958.9, 2954.9, 2975.9, 2906.9, 2892.9, 2846.9, 2876.9, 2906.2, 2931.2, 2896.6, 2907.6, 2939.6, 2947.6, 2963.6, 3059.6, 3086.0, 3128.7, 3167.7, 2559.7, 2743.8, 2779.8, 2762.8, 2867.8, 3018.8, 3221.8, 3393.8, 3467.8, 3547.8, 3547.8],
-           borderColor:"#c9d1d9",borderWidth:1.5,
-           tension:0.3,fill:false,pointRadius:1,
-           yAxisID:"yr",order:1}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          yl:{position:"left",
-              ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},
-                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
-              grid:{color:"#1c2333"}},
-          yr:{position:"right",
-              ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},
-                callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},
-              grid:{display:false}}
-        }
-      }
-    });
-  })();
-  </script>
-</div>
-<div class="stock-card">
-  <div class="card-hdr">
-    <span class="code">2492</span>
-    <span class="sname">華新科</span>
-    <span class="contract">[HB]</span>
-    <span class="badge released">已解除 2026-08-03（10天前）</span>
-    <span class="cnt-badge" style="background:#f8514922;color:#f85149;border:1px solid #f8514955">今年處置 <b>7</b> 次</span>
-    
-    
-    <span class="latest">多:2,700/635 &nbsp; 空:5,433/5,433 <span style="color:#6e7681;font-size:.75rem">（前十大/特定）</span></span>
-  </div>
-  
-  <div class="info-row">
-    <span class="info-item"><span class="info-lbl">板塊</span>電子零組件業</span>
-    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#c9d1d9">32.36x</span></span>
-    <span class="info-item"><span class="info-lbl">股淨比</span>2.10x</span>
-    <span class="info-item"><span class="info-lbl">殖利率</span>0.87%</span>
-    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">13.4%</span></span>
-  </div>
-  <div class="panel-lbl" style="color:#8b949e;margin-top:8px">&#9650; 股價 / 成交量</div>
-  <div class="chart-wrap"><canvas id="prc_HB_2492"></canvas></div>
-  <div class="panel-lbl buy-lbl" style="margin-top:10px">&#9650; 買口（多方未平倉）&nbsp;<span style="color:#3fb950">特定法人</span> &nbsp;<span style="color:#58a6ff;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
-  <div class="chart-wrap"><canvas id="buy_HB_2492"></canvas></div>
-  <div class="sig-strip">
-    <span class="sig-lbl">背離 8次<br><span style="color:#3fb950;font-size:.65rem">■漲</span><span style="color:#f85149;font-size:.65rem">■跌</span><span style="color:#e3b341;font-size:.65rem">■待</span></span>
-    <div class="sig-bars"><div class="sig-bar" title="2026/06/22"></div><div class="sig-bar" title="2026/06/23"></div><div class="sig-bar" title="2026/06/24"></div><div class="sig-bar" title="2026/06/25"></div><div class="sig-bar win" title="2026/06/26 ▲5日後漲"></div><div class="sig-bar" title="2026/06/29"></div><div class="sig-bar" title="2026/06/30"></div><div class="sig-bar" title="2026/07/01"></div><div class="sig-bar lose" title="2026/07/02 ▼5日後跌"></div><div class="sig-bar" title="2026/07/03"></div><div class="sig-bar lose" title="2026/07/06 ▼5日後跌"></div><div class="sig-bar" title="2026/07/07"></div><div class="sig-bar" title="2026/07/08"></div><div class="sig-bar" title="2026/07/09"></div><div class="sig-bar lose" title="2026/07/13 ▼5日後跌"></div><div class="sig-bar lose" title="2026/07/14 ▼5日後跌"></div><div class="sig-bar lose" title="2026/07/15 ▼5日後跌"></div><div class="sig-bar" title="2026/07/16"></div><div class="sig-bar lose" title="2026/07/17 ▼5日後跌"></div><div class="sig-bar" title="2026/07/20"></div><div class="sig-bar" title="2026/07/21"></div><div class="sig-bar" title="2026/07/22"></div><div class="sig-bar" title="2026/07/23"></div><div class="sig-bar" title="2026/07/24"></div><div class="sig-bar" title="2026/07/27"></div><div class="sig-bar" title="2026/07/28"></div><div class="sig-bar win" title="2026/07/29 ▲5日後漲"></div><div class="sig-bar" title="2026/07/30"></div><div class="sig-bar" title="2026/07/31"></div><div class="sig-bar" title="2026/08/03"></div><div class="sig-bar" title="2026/08/04"></div><div class="sig-bar" title="2026/08/05"></div><div class="sig-bar" title="2026/08/06"></div><div class="sig-bar" title="2026/08/07"></div><div class="sig-bar" title="2026/08/10"></div><div class="sig-bar" title="2026/08/11"></div><div class="sig-bar" title="2026/08/12"></div></div>
-  </div>
-  <div class="panel-lbl sell-lbl">&#9660; 賣口（空方未平倉）&nbsp;<span style="color:#e3b341">特定法人</span> &nbsp;<span style="color:#f85149;opacity:.7">前十大</span> &nbsp;<span style="color:#a371f7;opacity:.7;font-size:.72rem">— OI總量（右軸）</span></div>
-  <div class="chart-wrap"><canvas id="sel_HB_2492"></canvas></div>
-  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
-  <div class="chart-wrap"><canvas id="lend_HB_2492"></canvas></div>
-  
-  
-  <div class="analysis-box">
-    <div class="analysis-title">&#128202; 綜合分析報告</div>
-    <div class="analysis-row"><span class="a-label">籌碼結構</span><span>特定法人淨空單 <b>4,798 口</b>，仍偏空方主導。</span></div>
-    <div class="analysis-row"><span class="a-label">空口趨勢</span><span>空口近 5 日變化 -191 口，方向不明顯。 從期間高點 6,612 口已回補 1,179 口（18%）。</span></div>
-    <div class="analysis-row"><span class="a-label">借券動向</span><span>借券餘額維持高位（7,553 張），現貨空頭尚未撤退，<span style='color:#f85149'>借券壓力持續</span>。</span></div>
-    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>288.0 元</b>，距期間低點 198.5 元反彈 +45.1%，距期間高點 617.0 元差距 -53.3%。 反彈幅度已大，尚未突破前高，需觀察能否放量站上。</span></div>
-    <div class="analysis-row"><span class="a-label">背離訊號</span><span>過去 60 日出現 8 次背離訊號，確認 8 次中 <b>2 漲 6 跌</b>（勝率 25%），0 次待確認。最新訊號：✅ 上漲確認。</span></div>
-    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">今年已處置 7 次，主力慣用清洗手法，假突破風險高；借券餘額仍在高位</span></div>
-    <div class="analysis-summary" style="border-left:3px solid #f85149;color:#f85149">空頭壓力仍大，進場風險偏高，建議觀望。</div>
-  </div>
-  <script>
-  (function(){
-    var prc_HB_2492_pl = {
-      id: 'dvl_prc_HB_2492',
-      afterDraw: function(chart) {
-        var dIdx = [4, 8, 10, 14, 15, 16, 18, 26];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var prc_HB_2492_ch = new Chart(
-      document.getElementById("prc_HB_2492").getContext("2d"), {
-      plugins: [prc_HB_2492_pl],
-      data:{
-        labels:["06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
-        datasets:[
-          {type:"bar",label:"成交量",data:[20258, 39042, 3618, 2300, 3367, 4254, 2030, 4309, 1657, 2138, 1492, 1961, 23886, 13817, 16911, 29328, 23095, 4801, 3561, 1274, 12267, 3034, 5451, 4068, 3254, 1820, 1649, 4859, 1518, 2272, 33258, 43709, 25568, 11332, 27531, 54246, 66915],
-           backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",
-           yAxisID:"yv",order:3},
-          {type:"line",label:"收盤價",data:[617.0, 577.0, 590.0, 599.0, 540.0, 514.0, 565.0, 603.0, 561.0, 563.0, 557.0, 502.0, 474.0, 465.5, 419.0, 390.0, 379.0, 341.5, 307.5, 277.0, 273.0, 300.0, 300.0, 274.0, 272.0, 245.0, 220.5, 198.5, 218.0, 239.5, 259.5, 259.5, 256.5, 251.0, 273.5, 300.5, 288.0],
-           borderColor:"#e8eaea",borderWidth:1.8,
-           tension:0.3,fill:false,pointRadius:1.5,
-           yAxisID:"yp",order:1}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},
-              grid:{color:"#1c2333"}},
-          yv:{position:"right",
-              ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},
-                callback:function(v){
-                  return v>=1e6?(v/1e6).toFixed(0)+"M":v>=1e3?Math.round(v/1e3)+"K":v;
-                }},
-              grid:{display:false}}
-        }
-      }
-    });
-    var buy_HB_2492_pl = {
-      id: 'dvl_buy_HB_2492',
-      afterDraw: function(chart) {
-        var dIdx = [4, 8, 10, 14, 15, 16, 18, 26];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var buy_HB_2492_ch = new Chart(
-      document.getElementById("buy_HB_2492").getContext("2d"), {
-      plugins: [buy_HB_2492_pl],
-      data:{
-        labels:["06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
-        datasets:[
-          {type:"line",label:"OI 總量",data:[7566, 6098, 5683, 5719, 5420, 5209, 5216, 5077, 5005, 5183, 5158, 4988, 4364, 3742, 3558, 3465, 3313, 3965, 4074, 4141, 6078, 6138, 6541, 6560, 7027, 6928, 7014, 7199, 7322, 7539, 6717, 6790, 7432, 7658, 7991, 7284, 6467],
-           borderColor:"rgba(163,113,247,0.55)",borderWidth:1.2,borderDash:[3,3],
-           tension:0.3,fill:false,pointRadius:0,
-           yAxisID:"yr",order:3},
-          {type:"line",label:"前十大多口",data:[2798, 2337, 2105, 2002, 2007, 1995, 1991, 1898, 1899, 1887, 1923, 1693, 1582, 1113, 1226, 1498, 1457, 1685, 1742, 1688, 2412, 2659, 2958, 2938, 3297, 3198, 3317, 3614, 3498, 3603, 3160, 3123, 3829, 4051, 4292, 3785, 2700],
-           borderColor:"#58a6ff",borderWidth:1.5,borderDash:[4,4],
-           tension:0.3,fill:false,pointRadius:1.5,order:2},
-          {type:"line",label:"特定法人多口",data:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 0, 162, 632, 636, 951, 941, 788, 1260, 1260, 1628, 1569, 1534, 1490, 1178, 1170, 1039, 1052, 933, 901, 1243, 1283, 1117, 1035, 635],
-           borderColor:"#3fb950",borderWidth:2.5,
-           tension:0.3,fill:false,pointRadius:2,order:1}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          y:{ticks:{color:"#6e7681",font:{size:10}},
-             grid:{color:"#1c2333"}},
-          yr:{position:"right",
-              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
-                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
-              grid:{display:false},
-              afterFit:function(ax){ax.width=48;}}
-        }
-      }
-    });
-    var sel_HB_2492_pl = {
-      id: 'dvl_sel_HB_2492',
-      afterDraw: function(chart) {
-        var dIdx = [4, 8, 10, 14, 15, 16, 18, 26];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var sel_HB_2492_ch = new Chart(
-      document.getElementById("sel_HB_2492").getContext("2d"), {
-      plugins: [sel_HB_2492_pl],
-      data:{
-        labels:["06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
-        datasets:[
-          {type:"line",label:"OI 總量",data:[7566, 6098, 5683, 5719, 5420, 5209, 5216, 5077, 5005, 5183, 5158, 4988, 4364, 3742, 3558, 3465, 3313, 3965, 4074, 4141, 6078, 6138, 6541, 6560, 7027, 6928, 7014, 7199, 7322, 7539, 6717, 6790, 7432, 7658, 7991, 7284, 6467],
-           borderColor:"rgba(163,113,247,0.55)",borderWidth:1.2,borderDash:[3,3],
-           tension:0.3,fill:false,pointRadius:0,
-           yAxisID:"yr",order:3},
-          {type:"line",label:"前十大空口",data:[5600, 4697, 4617, 4754, 4636, 4436, 4482, 4320, 4281, 4422, 4406, 4319, 3888, 3433, 2975, 2766, 2783, 2994, 2981, 3119, 4125, 4127, 4667, 4843, 5324, 5300, 5298, 5726, 5855, 6006, 5499, 5624, 6076, 6334, 6612, 6018, 5433],
-           borderColor:"#f85149",borderWidth:1.5,borderDash:[4,4],
-           tension:0.3,fill:false,pointRadius:1.5,order:2},
-          {type:"line",label:"特定法人空口",data:[5600, 4544, 4464, 4601, 4483, 4308, 4387, 4320, 4281, 4422, 4406, 4319, 3888, 3433, 2975, 2766, 2703, 2994, 2981, 3119, 3900, 3902, 4667, 4843, 5324, 5300, 5098, 5554, 5683, 6006, 5499, 5624, 6076, 6334, 6612, 6018, 5433],
-           borderColor:"#e3b341",borderWidth:2.5,
-           tension:0.3,fill:false,pointRadius:2,order:1}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:12,font:{size:10}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          y:{ticks:{color:"#6e7681",font:{size:10}},
-             grid:{color:"#1c2333"}},
-          yr:{position:"right",
-              ticks:{color:"rgba(163,113,247,0.45)",font:{size:9},
-                callback:function(v){return v>=1e4?Math.round(v/1e3)+"K":v;}},
-              grid:{display:false},
-              afterFit:function(ax){ax.width=48;}}
-        }
-      }
-    });
-    var lend_HB_2492_pl = {
-      id: 'dvl_lend_HB_2492',
-      afterDraw: function(chart) {
-        var dIdx = [4, 8, 10, 14, 15, 16, 18, 26];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var lend_HB_2492_ch = new Chart(
-      document.getElementById("lend_HB_2492").getContext("2d"), {
-      plugins: [lend_HB_2492_pl],
-      data:{
-        labels:["06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12"],
-        datasets:[
-          {type:"bar",label:"借券賣出",data:[155.0, 270.0, 16.0, 0.0, 18.0, 24.0, 12.0, 134.0, 8.0, 0.0, 8.0, 0.0, 1.0, 44.0, 31.0, 90.0, 191.0, 2.0, 0.0, 0.0, 45.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 45.0, 149.0, 930.0, 1470.0, 186.0, 481.0, 981.0, 2553.0],
-           backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",
-           yAxisID:"yl",order:2},
-          {type:"bar",label:"還券",data:[-269.0, -899.0, -149.0, -1.0, -55.0, -0.0, -93.0, -1.0, -140.0, -54.0, -66.0, -9.0, -12.0, -40.0, -77.0, -98.0, -0.0, -12.0, -7.0, -0.0, -0.0, -0.0, -738.0, -187.0, -0.0, -0.0, -0.0, -30.0, -44.0, -0.0, -0.0, -142.0, -51.0, -216.0, -214.0, -0.0, -111.0],
-           backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",
-           yAxisID:"yl",order:2},
-          {type:"line",label:"借券餘額",data:[3308.0, 2679.0, 2546.0, 2545.0, 2508.0, 2532.0, 2451.0, 2584.0, 2452.0, 2398.0, 2340.0, 2331.0, 2320.0, 2324.0, 2278.0, 2270.0, 2461.0, 2451.0, 2444.0, 2444.0, 2489.0, 2489.0, 1751.0, 1564.0, 1564.0, 1564.0, 1564.0, 1535.0, 1492.0, 1537.0, 1686.0, 2474.0, 3893.0, 3863.0, 4130.0, 5111.0, 7553.0],
            borderColor:"#c9d1d9",borderWidth:1.5,
            tension:0.3,fill:false,pointRadius:1,
            yAxisID:"yr",order:1}
