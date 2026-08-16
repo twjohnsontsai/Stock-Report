@@ -11,7 +11,7 @@
        display:flex;flex-direction:column;height:100vh;overflow:hidden}
   #hdr{flex-shrink:0;background:#11151e;border-bottom:1px solid #1e2635;
         padding:6px 14px;font-size:12px;color:#aaa;line-height:1.9}
-  #main-layout{flex:1;display:flex;min-height:0;overflow:hidden}
+  #main-layout{flex:0 0 62vh;display:flex;min-height:0;overflow:hidden}
   #chart{flex:1;min-width:0;height:100%}
   #panel-col{width:220px;flex-shrink:0;overflow-y:auto;
               background:#0d0f14;border-left:1px solid #1a2030}
@@ -28,7 +28,7 @@
   .lgnd{display:flex;align-items:center;gap:5px;padding:.18rem 0;font-size:.72rem;color:#8892a0}
   .lgnd-clr{width:22px;height:3px;border-radius:2px;flex-shrink:0}
   /* 下方展開區（先行訊號、現貨比較） */
-  #expand{flex:1;overflow-y:auto;background:#0d0f14;padding:0 0 20px}
+  #expand{flex:1;overflow:auto;background:#0d0f14;padding:0 0 20px}
   h2{font-size:13px;color:#aaa;padding:14px 0 4px;margin:0}
   .legend-row{font-size:11px;padding:2px 0 8px;color:#aaa}
 </style>
@@ -227,7 +227,7 @@ updatePanel(dates.length - 1);
 </script>
 <h2 style="padding:10px 14px 4px;margin:0;font-size:13px;color:#aaa">📋 每日指標總表（近期優先）</h2>
 <div style="overflow-x:auto;padding:0 8px 24px">
-<table id="dtbl" style="width:100%;border-collapse:collapse;font-size:11px;min-width:700px">
+<table id="dtbl" style="width:100%;border-collapse:collapse;font-size:11px;min-width:1100px">
 <thead>
 <tr style="background:#1a2030;color:#aaa;position:sticky;top:0;z-index:10">
   <th style="padding:5px 6px;white-space:nowrap">日期</th>
