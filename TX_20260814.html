@@ -64,6 +64,8 @@
       <div class="lgnd"><div class="lgnd-clr" style="background:#66bb6a;opacity:.65"></div>未平倉OI↓（綠）</div>
       <div class="lgnd"><div class="lgnd-clr" style="background:#ffd54f"></div>OI MA5</div>
       <div class="lgnd"><div class="lgnd-clr" style="background:#ff8f00;border:1px dashed #ff8f00"></div>OI MA20</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#ff7043;border:1px dashed #ff7043"></div>外資空方（絕對）</div>
+      <div class="lgnd"><div class="lgnd-clr" style="background:#a5d6a7;border:1px dashed #a5d6a7"></div>外資多方（絕對）</div>
       <div class="lgnd"><div class="lgnd-clr" style="background:#ef5350"></div>外資淨OI</div>
       <div class="lgnd"><div class="lgnd-clr" style="background:#42a5f5"></div>投信淨OI</div>
       <div class="lgnd"><div class="lgnd-clr" style="background:#aaa;border:1px dashed #aaa"></div>自營淨OI</div>
@@ -114,6 +116,11 @@ const traces = [
     line:{color:'#aaa',width:1,dash:'dot'},xaxis:'x',yaxis:'y5'},
   {type:'scatter',mode:'lines',x:[dates[0],dates[dates.length-1]],y:[0,0],
     line:{color:'#444',width:1,dash:'dot'},showlegend:false,xaxis:'x',yaxis:'y5'},
+  // ── Panel 5b: 外資空方/多方原始部位（虛線，判斷真回補）───────────
+  {type:'scatter',mode:'lines',x:dates,y:D.fi_short,name:'外資空方(絕對)',
+    line:{color:'#ff7043',width:1.2,dash:'dash'},opacity:0.75,xaxis:'x',yaxis:'y5'},
+  {type:'scatter',mode:'lines',x:dates,y:D.fi_long,name:'外資多方(絕對)',
+    line:{color:'#a5d6a7',width:1.2,dash:'dash'},opacity:0.75,xaxis:'x',yaxis:'y5'},
   // ── Panel 6: 基差 ─────────────────────────────────────────────
   {type:'scatter',mode:'lines',x:dates,y:D.basis,name:'基差(現-期)',
     line:{color:'#80cbc4',width:2},fill:'tozeroy',fillcolor:'rgba(128,203,196,0.08)',
