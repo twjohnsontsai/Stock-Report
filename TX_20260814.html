@@ -191,8 +191,8 @@ function updatePanel(i) {
     row('未平倉OI', rv(D.oi,0), '#ffb300') +
     row('OI 變化', (D.oi_chg[i]!=null?(D.oi_chg[i]>0?'+':'')+Math.round(D.oi_chg[i]).toLocaleString():'—'), rc(D.oi_chg[i])) +
     sec('法人') +
-    (D.fi_long&&D.fi_long[i]!=null ? row('外資多方', D.fi_long[i].toLocaleString(), '#ef9a9a') : '') +
     (D.fi_short&&D.fi_short[i]!=null ? row('外資空方', D.fi_short[i].toLocaleString(), '#ef9a9a') : '') +
+    (D.fi_long&&D.fi_long[i]!=null ? row('外資多方', D.fi_long[i].toLocaleString(), '#ef9a9a') : '') +
     row('外資淨OI', (D.fi_net[i]!=null?(D.fi_net[i]>0?'+':'')+Math.round(D.fi_net[i]).toLocaleString():'—'), rc(D.fi_net[i])) +
     row('投信淨OI', (D.it_net[i]!=null?(D.it_net[i]>0?'+':'')+Math.round(D.it_net[i]).toLocaleString():'—'), rc(D.it_net[i])) +
     row('自營淨OI', (D.dt_net[i]!=null?(D.dt_net[i]>0?'+':'')+Math.round(D.dt_net[i]).toLocaleString():'—'), rc(D.dt_net[i])) +
@@ -240,8 +240,8 @@ updatePanel(dates.length - 1);
   <th style="padding:5px 6px">未平倉OI</th>
   <th style="padding:5px 6px">OI變化</th>
   <th style="padding:5px 6px">基差</th>
-  <th style="padding:5px 6px;color:#ef9a9a">外資多方</th>
   <th style="padding:5px 6px;color:#ef9a9a">外資空方</th>
+  <th style="padding:5px 6px;color:#ef9a9a">外資多方</th>
   <th style="padding:5px 6px">外資淨OI</th>
   <th style="padding:5px 6px">投信</th>
   <th style="padding:5px 6px">自營</th>
@@ -264,7 +264,7 @@ updatePanel(dates.length - 1);
   const rows = [];
   for(let i=n-1; i>=0; i--){
     const d = D2.dates[i];
-    const dstr = d.slice(0,4)+'/'+d.slice(4,6)+'/'+d.slice(6);
+    const dstr = d.slice(4,6)+'/'+d.slice(6);
     const fi = D2.fi_net[i], it = D2.it_net[i], dt = D2.dt_net[i];
     const fl = D2.fi_long  ? D2.fi_long[i]  : null;
     const fs = D2.fi_short ? D2.fi_short[i] : null;
@@ -291,8 +291,8 @@ updatePanel(dates.length - 1);
       <td style="padding:4px 6px;color:#ffb300">${oi==null?'—':Number(oi).toLocaleString()}</td>
       <td style="padding:4px 6px;color:${clr(oiChg)}">${oiChg==null?'—':(oiChg>0?'+':'')+Number(oiChg).toLocaleString()}</td>
       <td style="padding:4px 6px;color:${basisClr(bas)}">${bas==null?'—':Number(bas).toFixed(1)}</td>
-      <td style="padding:4px 6px;color:#ef9a9a">${fl==null?'—':fl.toLocaleString()}</td>
       <td style="padding:4px 6px;color:#ef9a9a">${fs==null?'—':fs.toLocaleString()}</td>
+      <td style="padding:4px 6px;color:#ef9a9a">${fl==null?'—':fl.toLocaleString()}</td>
       <td style="padding:4px 6px;color:${clr(fi)}">${fi==null?'—':(fi>0?'+':'')+fi.toLocaleString()}</td>
       <td style="padding:4px 6px;color:${clr(it)}">${it==null?'—':(it>0?'+':'')+it.toLocaleString()}</td>
       <td style="padding:4px 6px;color:${clr(dt)}">${dt==null?'—':(dt>0?'+':'')+dt.toLocaleString()}</td>
