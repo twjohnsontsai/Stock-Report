@@ -167,8 +167,6 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
   <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
   <div class="chart-wrap"><canvas id="lend_GU_2455"></canvas></div>
   
-  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">法人淨OI &nbsp;<span style="color:#f85149">外資</span> <span style="color:#42a5f5">投信</span> <span style="color:#888">自營</span></div>
-  <div class="chart-wrap" style="height:100px"><canvas id="in_GU_2455"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">前十大+特定 日增減&nbsp;<span style="color:rgba(248,81,73,0.7)">多↑</span>/<span style="color:rgba(88,166,255,0.6)">空↓(反)</span>&nbsp;<span style="color:rgba(63,185,80,0.6)">特定多</span>/<span style="color:rgba(163,113,247,0.6)">特定空(反)</span></div>
   <div class="chart-wrap" style="height:100px"><canvas id="dl_GU_2455"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">基差（現-期）&nbsp;<span style="color:#80cbc4">—</span></div>
@@ -424,58 +422,6 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       }
     });
   })();
-    var in_GU_2455_pl = {
-      id: 'dvl_in_GU_2455',
-      afterDraw: function(chart) {
-        var dIdx = [2, 3, 8, 11, 24, 27, 28, 31, 32, 37, 38, 40, 56];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var in_GU_2455_ch = new Chart(
-      document.getElementById("in_GU_2455").getContext("2d"), {
-      plugins: [in_GU_2455_pl],
-      data:{
-        labels:["06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12", "08/13", "08/14", "08/17", "08/18", "08/19", "08/20", "08/21", "08/24", "08/25", "08/26"],
-        datasets:[
-          {type:"line",label:"自營淨OI",data:[-319250, -323682, -315019, -296841, -272855, -255994, -226196, -227255, -238123, -252720, -263111, -283309, -302035, -318396, -315019, -331081, -334760, -294897, -284900, -301738, -303995, -317246, -328084, -338377, -298079, -300378, -305732, -294467, -275270, -256762, -280672, -241661, -219886, -225916, -233621, -241112, -238409, -227895, -222349, -199182, -194449, -191266, -197389, -200560, -187859, -201774, -204759, -213819, -216393, -215060, -224651, -223065, -235607, -226223, -170758, -164270, -167761, -168902, -171292, -176337],
-           borderColor:"rgba(180,180,180,0.55)",borderWidth:1.2,borderDash:[4,3],
-           tension:0.3,fill:false,pointRadius:0},
-          {type:"line",label:"投信淨OI",data:[40575, 37593, 30427, 30427, 20427, 20427, 20427, 19779, 19929, 19883, 19883, 3613, 4077, 2854, 2870, 7470, 12252, 12252, 12252, 12252, 9698, 9698, 9698, 9698, 9703, 9708, 9708, 9708, 9588, 9539, 9539, 9539, 7739, 7739, 7739, 7740, 5759, 156, -66, -66, -66, -66, 9, 882, 899, 796, 801, 800, 800, 804, 2202, 2250, 2995, 3005, 2765, 2744, 2767, 2765, 2795, 3063],
-           borderColor:"#42a5f5",borderWidth:1.5,
-           tension:0.3,fill:false,pointRadius:0},
-          {type:"line",label:"外資淨OI",data:[-596912, -593320, -601093, -583491, -550725, -574683, -547334, -553306, -555320, -538844, -525488, -435874, -486491, -518636, -521066, -526002, -530872, -506891, -482908, -496074, -518773, -538742, -551247, -542792, -506069, -507208, -515478, -506831, -473302, -421347, -434577, -406574, -378310, -390185, -407478, -404117, -399872, -381293, -369122, -338214, -337923, -361343, -392957, -398761, -413346, -430957, -427735, -432570, -434186, -432066, -435875, -435053, -413070, -412281, -362266, -383265, -393927, -400710, -398818, -404895],
-           borderColor:"#f85149",borderWidth:2,
-           tension:0.3,fill:false,pointRadius:1.5}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          y:{ticks:{color:"#6e7681",font:{size:9}},
-             grid:{color:"#1c2333"}}
-        }
-      }
-    });
     var dl_GU_2455_pl = {
       id: 'dvl_dl_GU_2455',
       afterDraw: function(chart) {
@@ -663,8 +609,6 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
   <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
   <div class="chart-wrap"><canvas id="lend_FZ_2344"></canvas></div>
   
-  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">法人淨OI &nbsp;<span style="color:#f85149">外資</span> <span style="color:#42a5f5">投信</span> <span style="color:#888">自營</span></div>
-  <div class="chart-wrap" style="height:100px"><canvas id="in_FZ_2344"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">前十大+特定 日增減&nbsp;<span style="color:rgba(248,81,73,0.7)">多↑</span>/<span style="color:rgba(88,166,255,0.6)">空↓(反)</span>&nbsp;<span style="color:rgba(63,185,80,0.6)">特定多</span>/<span style="color:rgba(163,113,247,0.6)">特定空(反)</span></div>
   <div class="chart-wrap" style="height:100px"><canvas id="dl_FZ_2344"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">基差（現-期）&nbsp;<span style="color:#80cbc4">—</span></div>
@@ -920,58 +864,6 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       }
     });
   })();
-    var in_FZ_2344_pl = {
-      id: 'dvl_in_FZ_2344',
-      afterDraw: function(chart) {
-        var dIdx = [3, 6, 10, 14, 17, 23, 24, 25, 27, 31, 34, 43, 44, 46, 51, 52, 53, 59];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var in_FZ_2344_ch = new Chart(
-      document.getElementById("in_FZ_2344").getContext("2d"), {
-      plugins: [in_FZ_2344_pl],
-      data:{
-        labels:["06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12", "08/13", "08/14", "08/17", "08/18", "08/19", "08/20", "08/21", "08/24", "08/25", "08/26"],
-        datasets:[
-          {type:"line",label:"自營淨OI",data:[-319250, -323682, -315019, -296841, -272855, -255994, -226196, -227255, -238123, -252720, -263111, -283309, -302035, -318396, -315019, -331081, -334760, -294897, -284900, -301738, -303995, -317246, -328084, -338377, -298079, -300378, -305732, -294467, -275270, -256762, -280672, -241661, -219886, -225916, -233621, -241112, -238409, -227895, -222349, -199182, -194449, -191266, -197389, -200560, -187859, -201774, -204759, -213819, -216393, -215060, -224651, -223065, -235607, -226223, -170758, -164270, -167761, -168902, -171292, -176337],
-           borderColor:"rgba(180,180,180,0.55)",borderWidth:1.2,borderDash:[4,3],
-           tension:0.3,fill:false,pointRadius:0},
-          {type:"line",label:"投信淨OI",data:[40575, 37593, 30427, 30427, 20427, 20427, 20427, 19779, 19929, 19883, 19883, 3613, 4077, 2854, 2870, 7470, 12252, 12252, 12252, 12252, 9698, 9698, 9698, 9698, 9703, 9708, 9708, 9708, 9588, 9539, 9539, 9539, 7739, 7739, 7739, 7740, 5759, 156, -66, -66, -66, -66, 9, 882, 899, 796, 801, 800, 800, 804, 2202, 2250, 2995, 3005, 2765, 2744, 2767, 2765, 2795, 3063],
-           borderColor:"#42a5f5",borderWidth:1.5,
-           tension:0.3,fill:false,pointRadius:0},
-          {type:"line",label:"外資淨OI",data:[-596912, -593320, -601093, -583491, -550725, -574683, -547334, -553306, -555320, -538844, -525488, -435874, -486491, -518636, -521066, -526002, -530872, -506891, -482908, -496074, -518773, -538742, -551247, -542792, -506069, -507208, -515478, -506831, -473302, -421347, -434577, -406574, -378310, -390185, -407478, -404117, -399872, -381293, -369122, -338214, -337923, -361343, -392957, -398761, -413346, -430957, -427735, -432570, -434186, -432066, -435875, -435053, -413070, -412281, -362266, -383265, -393927, -400710, -398818, -404895],
-           borderColor:"#f85149",borderWidth:2,
-           tension:0.3,fill:false,pointRadius:1.5}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          y:{ticks:{color:"#6e7681",font:{size:9}},
-             grid:{color:"#1c2333"}}
-        }
-      }
-    });
     var dl_FZ_2344_pl = {
       id: 'dvl_dl_FZ_2344',
       afterDraw: function(chart) {
@@ -1159,8 +1051,6 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
   <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
   <div class="chart-wrap"><canvas id="lend_HB_2492"></canvas></div>
   
-  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">法人淨OI &nbsp;<span style="color:#f85149">外資</span> <span style="color:#42a5f5">投信</span> <span style="color:#888">自營</span></div>
-  <div class="chart-wrap" style="height:100px"><canvas id="in_HB_2492"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">前十大+特定 日增減&nbsp;<span style="color:rgba(248,81,73,0.7)">多↑</span>/<span style="color:rgba(88,166,255,0.6)">空↓(反)</span>&nbsp;<span style="color:rgba(63,185,80,0.6)">特定多</span>/<span style="color:rgba(163,113,247,0.6)">特定空(反)</span></div>
   <div class="chart-wrap" style="height:100px"><canvas id="dl_HB_2492"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">基差（現-期）&nbsp;<span style="color:#80cbc4">—</span></div>
@@ -1416,58 +1306,6 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       }
     });
   })();
-    var in_HB_2492_pl = {
-      id: 'dvl_in_HB_2492',
-      afterDraw: function(chart) {
-        var dIdx = [7, 9, 10, 17, 21, 23, 27, 28, 29, 31, 39, 50, 51, 53, 57];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var in_HB_2492_ch = new Chart(
-      document.getElementById("in_HB_2492").getContext("2d"), {
-      plugins: [in_HB_2492_pl],
-      data:{
-        labels:["06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12", "08/13", "08/14", "08/17", "08/18", "08/19", "08/20", "08/21", "08/24", "08/25", "08/26"],
-        datasets:[
-          {type:"line",label:"自營淨OI",data:[-319250, -323682, -315019, -296841, -272855, -255994, -226196, -227255, -238123, -252720, -263111, -283309, -302035, -318396, -315019, -331081, -334760, -294897, -284900, -301738, -303995, -317246, -328084, -338377, -298079, -300378, -305732, -294467, -275270, -256762, -280672, -241661, -219886, -225916, -233621, -241112, -238409, -227895, -222349, -199182, -194449, -191266, -197389, -200560, -187859, -201774, -204759, -213819, -216393, -215060, -224651, -223065, -235607, -226223, -170758, -164270, -167761, -168902, -171292, -176337],
-           borderColor:"rgba(180,180,180,0.55)",borderWidth:1.2,borderDash:[4,3],
-           tension:0.3,fill:false,pointRadius:0},
-          {type:"line",label:"投信淨OI",data:[40575, 37593, 30427, 30427, 20427, 20427, 20427, 19779, 19929, 19883, 19883, 3613, 4077, 2854, 2870, 7470, 12252, 12252, 12252, 12252, 9698, 9698, 9698, 9698, 9703, 9708, 9708, 9708, 9588, 9539, 9539, 9539, 7739, 7739, 7739, 7740, 5759, 156, -66, -66, -66, -66, 9, 882, 899, 796, 801, 800, 800, 804, 2202, 2250, 2995, 3005, 2765, 2744, 2767, 2765, 2795, 3063],
-           borderColor:"#42a5f5",borderWidth:1.5,
-           tension:0.3,fill:false,pointRadius:0},
-          {type:"line",label:"外資淨OI",data:[-596912, -593320, -601093, -583491, -550725, -574683, -547334, -553306, -555320, -538844, -525488, -435874, -486491, -518636, -521066, -526002, -530872, -506891, -482908, -496074, -518773, -538742, -551247, -542792, -506069, -507208, -515478, -506831, -473302, -421347, -434577, -406574, -378310, -390185, -407478, -404117, -399872, -381293, -369122, -338214, -337923, -361343, -392957, -398761, -413346, -430957, -427735, -432570, -434186, -432066, -435875, -435053, -413070, -412281, -362266, -383265, -393927, -400710, -398818, -404895],
-           borderColor:"#f85149",borderWidth:2,
-           tension:0.3,fill:false,pointRadius:1.5}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          y:{ticks:{color:"#6e7681",font:{size:9}},
-             grid:{color:"#1c2333"}}
-        }
-      }
-    });
     var dl_HB_2492_pl = {
       id: 'dvl_dl_HB_2492',
       afterDraw: function(chart) {
@@ -1655,8 +1493,6 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
   <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
   <div class="chart-wrap"><canvas id="lend_KI_8039"></canvas></div>
   
-  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">法人淨OI &nbsp;<span style="color:#f85149">外資</span> <span style="color:#42a5f5">投信</span> <span style="color:#888">自營</span></div>
-  <div class="chart-wrap" style="height:100px"><canvas id="in_KI_8039"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">前十大+特定 日增減&nbsp;<span style="color:rgba(248,81,73,0.7)">多↑</span>/<span style="color:rgba(88,166,255,0.6)">空↓(反)</span>&nbsp;<span style="color:rgba(63,185,80,0.6)">特定多</span>/<span style="color:rgba(163,113,247,0.6)">特定空(反)</span></div>
   <div class="chart-wrap" style="height:100px"><canvas id="dl_KI_8039"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">基差（現-期）&nbsp;<span style="color:#80cbc4">—</span></div>
@@ -1912,58 +1748,6 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       }
     });
   })();
-    var in_KI_8039_pl = {
-      id: 'dvl_in_KI_8039',
-      afterDraw: function(chart) {
-        var dIdx = [4, 5, 6, 17, 20, 24, 36, 42, 58, 59];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var in_KI_8039_ch = new Chart(
-      document.getElementById("in_KI_8039").getContext("2d"), {
-      plugins: [in_KI_8039_pl],
-      data:{
-        labels:["06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12", "08/13", "08/14", "08/17", "08/18", "08/19", "08/20", "08/21", "08/24", "08/25", "08/26"],
-        datasets:[
-          {type:"line",label:"自營淨OI",data:[-319250, -323682, -315019, -296841, -272855, -255994, -226196, -227255, -238123, -252720, -263111, -283309, -302035, -318396, -315019, -331081, -334760, -294897, -284900, -301738, -303995, -317246, -328084, -338377, -298079, -300378, -305732, -294467, -275270, -256762, -280672, -241661, -219886, -225916, -233621, -241112, -238409, -227895, -222349, -199182, -194449, -191266, -197389, -200560, -187859, -201774, -204759, -213819, -216393, -215060, -224651, -223065, -235607, -226223, -170758, -164270, -167761, -168902, -171292, -176337],
-           borderColor:"rgba(180,180,180,0.55)",borderWidth:1.2,borderDash:[4,3],
-           tension:0.3,fill:false,pointRadius:0},
-          {type:"line",label:"投信淨OI",data:[40575, 37593, 30427, 30427, 20427, 20427, 20427, 19779, 19929, 19883, 19883, 3613, 4077, 2854, 2870, 7470, 12252, 12252, 12252, 12252, 9698, 9698, 9698, 9698, 9703, 9708, 9708, 9708, 9588, 9539, 9539, 9539, 7739, 7739, 7739, 7740, 5759, 156, -66, -66, -66, -66, 9, 882, 899, 796, 801, 800, 800, 804, 2202, 2250, 2995, 3005, 2765, 2744, 2767, 2765, 2795, 3063],
-           borderColor:"#42a5f5",borderWidth:1.5,
-           tension:0.3,fill:false,pointRadius:0},
-          {type:"line",label:"外資淨OI",data:[-596912, -593320, -601093, -583491, -550725, -574683, -547334, -553306, -555320, -538844, -525488, -435874, -486491, -518636, -521066, -526002, -530872, -506891, -482908, -496074, -518773, -538742, -551247, -542792, -506069, -507208, -515478, -506831, -473302, -421347, -434577, -406574, -378310, -390185, -407478, -404117, -399872, -381293, -369122, -338214, -337923, -361343, -392957, -398761, -413346, -430957, -427735, -432570, -434186, -432066, -435875, -435053, -413070, -412281, -362266, -383265, -393927, -400710, -398818, -404895],
-           borderColor:"#f85149",borderWidth:2,
-           tension:0.3,fill:false,pointRadius:1.5}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          y:{ticks:{color:"#6e7681",font:{size:9}},
-             grid:{color:"#1c2333"}}
-        }
-      }
-    });
     var dl_KI_8039_pl = {
       id: 'dvl_dl_KI_8039',
       afterDraw: function(chart) {
@@ -2151,8 +1935,6 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
   <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
   <div class="chart-wrap"><canvas id="lend_PL_6182"></canvas></div>
   
-  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">法人淨OI &nbsp;<span style="color:#f85149">外資</span> <span style="color:#42a5f5">投信</span> <span style="color:#888">自營</span></div>
-  <div class="chart-wrap" style="height:100px"><canvas id="in_PL_6182"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">前十大+特定 日增減&nbsp;<span style="color:rgba(248,81,73,0.7)">多↑</span>/<span style="color:rgba(88,166,255,0.6)">空↓(反)</span>&nbsp;<span style="color:rgba(63,185,80,0.6)">特定多</span>/<span style="color:rgba(163,113,247,0.6)">特定空(反)</span></div>
   <div class="chart-wrap" style="height:100px"><canvas id="dl_PL_6182"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">基差（現-期）&nbsp;<span style="color:#80cbc4">—</span></div>
@@ -2408,58 +2190,6 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       }
     });
   })();
-    var in_PL_6182_pl = {
-      id: 'dvl_in_PL_6182',
-      afterDraw: function(chart) {
-        var dIdx = [6, 9, 13, 14, 15, 18, 24, 32, 35, 37, 45, 49, 52, 54, 56, 58];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var in_PL_6182_ch = new Chart(
-      document.getElementById("in_PL_6182").getContext("2d"), {
-      plugins: [in_PL_6182_pl],
-      data:{
-        labels:["06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12", "08/13", "08/14", "08/17", "08/18", "08/19", "08/20", "08/21", "08/24", "08/25", "08/26"],
-        datasets:[
-          {type:"line",label:"自營淨OI",data:[-319250, -323682, -315019, -296841, -272855, -255994, -226196, -227255, -238123, -252720, -263111, -283309, -302035, -318396, -315019, -331081, -334760, -294897, -284900, -301738, -303995, -317246, -328084, -338377, -298079, -300378, -305732, -294467, -275270, -256762, -280672, -241661, -219886, -225916, -233621, -241112, -238409, -227895, -222349, -199182, -194449, -191266, -197389, -200560, -187859, -201774, -204759, -213819, -216393, -215060, -224651, -223065, -235607, -226223, -170758, -164270, -167761, -168902, -171292, -176337],
-           borderColor:"rgba(180,180,180,0.55)",borderWidth:1.2,borderDash:[4,3],
-           tension:0.3,fill:false,pointRadius:0},
-          {type:"line",label:"投信淨OI",data:[40575, 37593, 30427, 30427, 20427, 20427, 20427, 19779, 19929, 19883, 19883, 3613, 4077, 2854, 2870, 7470, 12252, 12252, 12252, 12252, 9698, 9698, 9698, 9698, 9703, 9708, 9708, 9708, 9588, 9539, 9539, 9539, 7739, 7739, 7739, 7740, 5759, 156, -66, -66, -66, -66, 9, 882, 899, 796, 801, 800, 800, 804, 2202, 2250, 2995, 3005, 2765, 2744, 2767, 2765, 2795, 3063],
-           borderColor:"#42a5f5",borderWidth:1.5,
-           tension:0.3,fill:false,pointRadius:0},
-          {type:"line",label:"外資淨OI",data:[-596912, -593320, -601093, -583491, -550725, -574683, -547334, -553306, -555320, -538844, -525488, -435874, -486491, -518636, -521066, -526002, -530872, -506891, -482908, -496074, -518773, -538742, -551247, -542792, -506069, -507208, -515478, -506831, -473302, -421347, -434577, -406574, -378310, -390185, -407478, -404117, -399872, -381293, -369122, -338214, -337923, -361343, -392957, -398761, -413346, -430957, -427735, -432570, -434186, -432066, -435875, -435053, -413070, -412281, -362266, -383265, -393927, -400710, -398818, -404895],
-           borderColor:"#f85149",borderWidth:2,
-           tension:0.3,fill:false,pointRadius:1.5}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          y:{ticks:{color:"#6e7681",font:{size:9}},
-             grid:{color:"#1c2333"}}
-        }
-      }
-    });
     var dl_PL_6182_pl = {
       id: 'dvl_dl_PL_6182',
       afterDraw: function(chart) {
@@ -2647,8 +2377,6 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
   <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
   <div class="chart-wrap"><canvas id="lend_NO_5483"></canvas></div>
   
-  <div class="panel-lbl" style="color:#8b949e;margin-top:6px">法人淨OI &nbsp;<span style="color:#f85149">外資</span> <span style="color:#42a5f5">投信</span> <span style="color:#888">自營</span></div>
-  <div class="chart-wrap" style="height:100px"><canvas id="in_NO_5483"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">前十大+特定 日增減&nbsp;<span style="color:rgba(248,81,73,0.7)">多↑</span>/<span style="color:rgba(88,166,255,0.6)">空↓(反)</span>&nbsp;<span style="color:rgba(63,185,80,0.6)">特定多</span>/<span style="color:rgba(163,113,247,0.6)">特定空(反)</span></div>
   <div class="chart-wrap" style="height:100px"><canvas id="dl_NO_5483"></canvas></div>
   <div class="panel-lbl" style="color:#8b949e;margin-top:6px">基差（現-期）&nbsp;<span style="color:#80cbc4">—</span></div>
@@ -2904,58 +2632,6 @@ details.guide .guide-body{padding:14px 18px 16px;border-top:1px solid #21262d;li
       }
     });
   })();
-    var in_NO_5483_pl = {
-      id: 'dvl_in_NO_5483',
-      afterDraw: function(chart) {
-        var dIdx = [2, 3, 4, 6, 7, 13, 15, 17, 20, 24, 28, 38, 39, 40, 47, 51, 53, 58];
-        if (!dIdx.length) return;
-        var ctx = chart.ctx, ca = chart.chartArea;
-        var meta = chart.getDatasetMeta(0);
-        if (!meta || !meta.data.length) return;
-        ctx.save();
-        ctx.strokeStyle = 'rgba(227,179,65,0.75)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5,3]);
-        dIdx.forEach(function(i) {
-          if (meta.data[i]) {
-            ctx.beginPath();
-            ctx.moveTo(meta.data[i].x, ca.top);
-            ctx.lineTo(meta.data[i].x, ca.bottom);
-            ctx.stroke();
-          }
-        });
-        ctx.restore();
-      }
-    };
-    var in_NO_5483_ch = new Chart(
-      document.getElementById("in_NO_5483").getContext("2d"), {
-      plugins: [in_NO_5483_pl],
-      data:{
-        labels:["06/02", "06/03", "06/04", "06/05", "06/08", "06/09", "06/10", "06/11", "06/12", "06/15", "06/16", "06/17", "06/18", "06/22", "06/23", "06/24", "06/25", "06/26", "06/29", "06/30", "07/01", "07/02", "07/03", "07/06", "07/07", "07/08", "07/09", "07/13", "07/14", "07/15", "07/16", "07/17", "07/20", "07/21", "07/22", "07/23", "07/24", "07/27", "07/28", "07/29", "07/30", "07/31", "08/03", "08/04", "08/05", "08/06", "08/07", "08/10", "08/11", "08/12", "08/13", "08/14", "08/17", "08/18", "08/19", "08/20", "08/21", "08/24", "08/25", "08/26"],
-        datasets:[
-          {type:"line",label:"自營淨OI",data:[-319250, -323682, -315019, -296841, -272855, -255994, -226196, -227255, -238123, -252720, -263111, -283309, -302035, -318396, -315019, -331081, -334760, -294897, -284900, -301738, -303995, -317246, -328084, -338377, -298079, -300378, -305732, -294467, -275270, -256762, -280672, -241661, -219886, -225916, -233621, -241112, -238409, -227895, -222349, -199182, -194449, -191266, -197389, -200560, -187859, -201774, -204759, -213819, -216393, -215060, -224651, -223065, -235607, -226223, -170758, -164270, -167761, -168902, -171292, -176337],
-           borderColor:"rgba(180,180,180,0.55)",borderWidth:1.2,borderDash:[4,3],
-           tension:0.3,fill:false,pointRadius:0},
-          {type:"line",label:"投信淨OI",data:[40575, 37593, 30427, 30427, 20427, 20427, 20427, 19779, 19929, 19883, 19883, 3613, 4077, 2854, 2870, 7470, 12252, 12252, 12252, 12252, 9698, 9698, 9698, 9698, 9703, 9708, 9708, 9708, 9588, 9539, 9539, 9539, 7739, 7739, 7739, 7740, 5759, 156, -66, -66, -66, -66, 9, 882, 899, 796, 801, 800, 800, 804, 2202, 2250, 2995, 3005, 2765, 2744, 2767, 2765, 2795, 3063],
-           borderColor:"#42a5f5",borderWidth:1.5,
-           tension:0.3,fill:false,pointRadius:0},
-          {type:"line",label:"外資淨OI",data:[-596912, -593320, -601093, -583491, -550725, -574683, -547334, -553306, -555320, -538844, -525488, -435874, -486491, -518636, -521066, -526002, -530872, -506891, -482908, -496074, -518773, -538742, -551247, -542792, -506069, -507208, -515478, -506831, -473302, -421347, -434577, -406574, -378310, -390185, -407478, -404117, -399872, -381293, -369122, -338214, -337923, -361343, -392957, -398761, -413346, -430957, -427735, -432570, -434186, -432066, -435875, -435053, -413070, -412281, -362266, -383265, -393927, -400710, -398818, -404895],
-           borderColor:"#f85149",borderWidth:2,
-           tension:0.3,fill:false,pointRadius:1.5}
-        ]
-      },
-      options:{
-        responsive:true,maintainAspectRatio:false,
-        interaction:{mode:"index",intersect:false},
-        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:9}}}},
-        scales:{
-          x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},
-             grid:{color:"#1c2333"}},
-          y:{ticks:{color:"#6e7681",font:{size:9}},
-             grid:{color:"#1c2333"}}
-        }
-      }
-    });
     var dl_NO_5483_pl = {
       id: 'dvl_dl_NO_5483',
       afterDraw: function(chart) {
