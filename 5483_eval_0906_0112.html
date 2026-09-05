@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>5483 中美晶 進場評級</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0d1117;color:#c9d1d9;
+       font-family:'Segoe UI','Microsoft JhengHei',sans-serif;padding:19px;font-size:11px}
+  h2{color:#58a6ff;font-size:17px;margin-bottom:5px}
+  .sub{color:#8b949e;font-size:10px;margin-bottom:19px}
+
+  .top{display:flex;gap:13px;margin-bottom:19px;flex-wrap:wrap;align-items:stretch}
+  .grade-card{background:#161b22;border:2px solid #e53935;border-radius:10px;
+               padding:19px 32px;text-align:center;display:flex;flex-direction:column;justify-content:center}
+  .grade-val{font-size:59px;font-weight:900;line-height:1;color:#e53935}
+  .grade-lbl{font-size:10px;color:#8b949e;margin-top:4px}
+  .score-area{display:flex;gap:9px;flex:1;flex-direction:column;justify-content:center}
+  .score-main{background:#161b22;border:1px solid #e53935;border-radius:10px;
+               padding:13px 21px;text-align:center}
+  .score-val{font-size:35px;font-weight:bold;color:#e53935}
+  .score-desc{font-size:11px;color:#e53935;margin-top:4px}
+  .score-sub{display:flex;gap:9px}
+  .score-sub-card{background:#161b22;border:1px solid #30363d;border-radius:10px;
+                   flex:1;padding:11px 15px;text-align:center}
+  .score-sub-label{font-size:9px;color:#8b949e}
+  .score-sub-val{font-size:21px;font-weight:bold;color:#58a6ff}
+  .score-sub-max{font-size:8px;color:#8b949e}
+  .price-card{background:#161b22;border:1px solid #30363d;border-radius:10px;
+               padding:15px;min-width:160px}
+  .price-card h4{color:#8b949e;font-size:9px;margin-bottom:9px}
+  .price-row{display:flex;justify-content:space-between;font-size:11px;margin:5px 0}
+  .price-row span{color:#8b949e}
+  .price-row b{color:#f0f6ff}
+
+  .warn-box{background:#161b22;border:1px solid #30363d;border-radius:8px;
+             padding:13px 17px;margin-bottom:16px}
+  .warn{color:#f44336;font-size:11px;margin:5px 0}
+  .warn-recovery{color:#ff9800;font-size:11px;margin:5px 0;font-weight:600}
+  .ok{color:#43a047;font-size:16px}
+  .notes{color:#8b949e;font-size:10px;margin-top:7px;font-style:italic}
+
+  .section-title{font-size:11px;font-weight:bold;padding:12px 15px 8px;
+                  border-bottom:1px solid #30363d}
+  .spot-title{color:#58a6ff}
+  .fut-title{color:#f0883e}
+  .wrap{background:#161b22;border:1px solid #30363d;border-radius:8px;
+         overflow:hidden;margin-bottom:15px}
+  table{width:100%;border-collapse:collapse;font-size:11px}
+  th{background:#0d1117;color:#8b949e;padding:9px 15px;
+      border-bottom:2px solid #30363d;text-align:left;font-weight:normal;font-size:15px}
+  td{padding:9px 15px;border-bottom:1px solid #21262d}
+  td.item{color:#f0f6ff;font-weight:500}
+  td.score{color:#ffd700;font-weight:bold;text-align:center;width:51px;font-size:11px}
+  td.note{color:#8b949e;font-size:15px}
+  tr.cat-row td{background:#1c2128;color:#58a6ff;font-size:9px;padding:7px 15px}
+  .fut-section tr.cat-row td{color:#f0883e}
+  .bar{height:8px;background:#238636;border-radius:4px;min-width:2px}
+  .total-row td{background:#0d1117;border-top:2px solid #30363d;
+                 font-weight:bold;font-size:11px}
+</style>
+</head>
+<body>
+<h2>5483 中美晶　個股期進場評級</h2>
+<div class="sub">分析時間：2026-09-06 01:12</div>
+
+<div class="top">
+  <div class="grade-card">
+    <div class="grade-val">A</div>
+    <div class="grade-lbl">評級</div>
+  </div>
+  <div class="score-area">
+    <div class="score-main">
+      <div class="score-val">79 / 100</div>
+      <div class="score-desc">條件優良，可進場</div>
+    </div>
+    <div class="score-sub">
+      <div class="score-sub-card">
+        <div class="score-sub-label">現貨面</div>
+        <div class="score-sub-val">49</div>
+        <div class="score-sub-max">/ 70</div>
+      </div>
+      <div class="score-sub-card">
+        <div class="score-sub-label">個股期面</div>
+        <div class="score-sub-val" style="color:#f0883e">30</div>
+        <div class="score-sub-max">/ 30</div>
+      </div>
+    </div>
+  </div>
+  <div class="price-card"><h4>價位參考</h4><div class="price-row"><span>進場參考</span><b>183.5</b></div><div class="price-row"><span>止損</span><b>169.63</b></div></div>
+</div>
+
+<div class="warn-box" style="border-color:#7b2ff7;margin-bottom:12px">
+  <div style="color:#9c6fef;font-size:9px;font-weight:bold;margin-bottom:5px">
+    ▌ 第零層：主導力量分析
+  </div>
+  <div style="color:#c9d1d9;font-size:8px;white-space:pre-line">主導機構：外資（走勢一致性73%，持股24.51）
+↗ 背離收窄：股價高點(07/15)後外資持股曾下滑11.7%，但近期已從低點回補7.5%（近5日正向3天）—— 主導力量回頭，波段重啟觀察</div>
+  <div style="color:#8b949e;font-size:7px;margin-top:5px;font-style:italic">下跌期間融資仍增加（3次），散戶持續接刀，風險累積；出現3次斷頭賣壓（股價大跌+融資急減），籌碼不穩</div>
+</div>
+<div class="warn-box"><div class="warn-recovery">↗ 外資背離收窄（持股自高點-11.7%，但從低點已回補7.5%，近5日正向3天）—— 主導力量回頭，波段重啟觀察</div></div>
+
+<div class="wrap">
+  <div class="section-title spot-title">📊 第一段：現貨面（49/70 分）</div>
+  <table>
+    <thead><tr><th>評估項目</th><th>分數</th><th>說明</th><th>強度</th></tr></thead>
+    <tbody>
+      <tr class="cat-row"><td colspan="4"><b>A. 借券結構</b>　18/20 分</td></tr><tr><td class="item">借券餘額趨勢</td><td class="score">10</td><td class="note">大量回補（今日-525張）；近3日累計-1587張（日均-529張）；股價↑7.5元時回補894張，空方部分鬆動；高點(07/15=278元)後38日：累計+32307張，日均+850張；跌勢期建倉速度是漲勢期5.5倍，空頭信心極強；反彈+7.5元時回補894張，空方鬆動</td><td><div class="bar" style="width:100px"></div></td></tr><tr><td class="item">借券60日百分位</td><td class="score">7</td><td class="note">60日高位95%（44839張），開始回補—軋空啟動訊號 ★</td><td><div class="bar" style="width:70px"></div></td></tr><tr><td class="item">主要借券方轉向</td><td class="score">1</td><td class="note">借券剛開始回補（高點回補3.6%），空方試探性撤退</td><td><div class="bar" style="width:10px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>B. 籌碼結構</b>　4/18 分</td></tr><tr><td class="item">大戶持股比例</td><td class="score">3</td><td class="note">大戶持股 58.2%（↑0.2%），持股人數156人；⛔ 高點（07/14高點279）後大戶持股大減-3.3%，高點派籌明確；高點（07/14高點279）後大戶人數+8人，新資金持續進入 ✓</td><td><div class="bar" style="width:33px"></div></td></tr><tr><td class="item">成交量分析</td><td class="score">1</td><td class="note">量能正常：今日 10,928張 vs MA5 13,846張（79%）</td><td><div class="bar" style="width:11px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>C. 催化劑</b>　9/12 分</td></tr><tr><td class="item">確定性</td><td class="score">9</td><td class="note">大機率 — 環球晶GDR承銷商（摩根/美林/瑞銀）定價完成，中美晶持股49%，承銷商強制回補空單</td><td><div class="bar" style="width:100px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>D. 法人現貨動向</b>　7/12 分</td></tr><tr><td class="item">外資淨買超</td><td class="score">4</td><td class="note">外資強力淨買 +4021張</td><td><div class="bar" style="width:66px"></div></td></tr><tr><td class="item">投信淨買超</td><td class="score">2</td><td class="note">投信淨買 +82張</td><td><div class="bar" style="width:33px"></div></td></tr><tr><td class="item">自營商淨買超</td><td class="score">1</td><td class="note">自營商中性 -10張</td><td><div class="bar" style="width:16px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>E. 技術面</b>　8/5 分</td></tr><tr><td class="item">KD指標</td><td class="score">3</td><td class="note">中段金叉（K=47 穿越 D=43）</td><td><div class="bar" style="width:100px"></div></td></tr><tr><td class="item">布林位置</td><td class="score">0</td><td class="note">上半段（62%），風險偏高</td><td><div class="bar" style="width:0px"></div></td></tr><tr><td class="item">均線+K線趨勢</td><td class="score">5</td><td class="note">均線糾結（SMA5=180.0 SMA10=181.0 SMA20=180.9），價格在20線上，方向待確認　K線結構：橫盤整理（HH+LL 混合），等待突破方向　MACD翻紅（OSC=+0.61），動能翻多 ✓</td><td><div class="bar" style="width:100px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>F. 融資健康</b>　3/3 分</td></tr><tr><td class="item">融資結構</td><td class="score">3</td><td class="note">使用率11%低　維持率170%健康</td><td><div class="bar" style="width:100px"></div></td></tr><tr><td class="item">融資行為分析</td><td class="score">0</td><td class="note">下跌期間融資仍增加（3次），散戶持續接刀，風險累積；出現3次斷頭賣壓（股價大跌+融資急減），籌碼不穩</td><td><div class="bar" style="width:0px"></div></td></tr>
+      <tr class="total-row">
+        <td>現貨面小計</td>
+        <td style="color:#58a6ff;text-align:center">49</td>
+        <td style="color:#8b949e" colspan="2">滿分 70 分</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="wrap fut-section">
+  <div class="section-title fut-title">📈 第二段：個股期面（30/30 分）</div>
+  <table>
+    <thead><tr><th>評估項目</th><th>分數</th><th>說明</th><th>強度</th></tr></thead>
+    <tbody>
+      <tr class="cat-row"><td colspan="4"><b>G. 大額交易人結構</b>　16/1 分</td></tr><tr><td class="item">主力多空比</td><td class="score">10</td><td class="note">主力輕微回補（較高點+97口）— 與高點持平，避險中</td><td><div class="bar" style="width:100px"></div></td></tr><tr><td class="item">主力vs散戶背離</td><td class="score">6</td><td class="note">主力回補+散戶撤退（較高點-321口）→ 軋空條件形成 ✓</td><td><div class="bar" style="width:100px"></div></td></tr><tr><td class="item">▸ 數據明細</td><td class="score">0</td><td class="note">特定（主力）：多574 / 空3105 / 淨-2531口　非特定（散戶）：多654 / 空0 / 淨+654口　基準（07/14高點279）：淨-2628口 → 現在淨-2531口，變化+97口</td><td><div class="bar" style="width:0px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>H. 量能與未平倉OI</b>　12/10 分</td></tr><tr><td class="item">近月OI趨勢</td><td class="score">8</td><td class="note">OI-85口 × 主力偏空 → 空方開始回補，潛在軋空 ★</td><td><div class="bar" style="width:100px"></div></td></tr><tr><td class="item">期貨成交量</td><td class="score">4</td><td class="note">成交862口 × 漲6.6% → 多方推升放量 ✓</td><td><div class="bar" style="width:80px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>I. RSI（期貨）</b>　2/1 分</td></tr><tr><td class="item">RSI方向與形態</td><td class="score">2</td><td class="note">RSI=56.3↑ 中性向上</td><td><div class="bar" style="width:100px"></div></td></tr>
+      <tr class="total-row">
+        <td>個股期面小計</td>
+        <td style="color:#f0883e;text-align:center">30</td>
+        <td style="color:#8b949e" colspan="2">滿分 30 分</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0d1117;color:#c9d1d9;
+       font-family:'Segoe UI','Microsoft JhengHei',sans-serif;padding:19px;font-size:11px}
+  h2{color:#58a6ff;font-size:17px;margin-bottom:5px}
+  .sub{color:#8b949e;font-size:10px;margin-bottom:19px}
+
+  .top{display:flex;gap:13px;margin-bottom:19px;flex-wrap:wrap;align-items:stretch}
+  .grade-card{background:#161b22;border:2px solid #e53935;border-radius:10px;
+               padding:19px 32px;text-align:center;display:flex;flex-direction:column;justify-content:center}
+  .grade-val{font-size:59px;font-weight:900;line-height:1;color:#e53935}
+  .grade-lbl{font-size:10px;color:#8b949e;margin-top:4px}
+  .score-area{display:flex;gap:9px;flex:1;flex-direction:column;justify-content:center}
+  .score-main{background:#161b22;border:1px solid #e53935;border-radius:10px;
+               padding:13px 21px;text-align:center}
+  .score-val{font-size:35px;font-weight:bold;color:#e53935}
+  .score-desc{font-size:11px;color:#e53935;margin-top:4px}
+  .score-sub{display:flex;gap:9px}
+  .score-sub-card{background:#161b22;border:1px solid #30363d;border-radius:10px;
+                   flex:1;padding:11px 15px;text-align:center}
+  .score-sub-label{font-size:9px;color:#8b949e}
+  .score-sub-val{font-size:21px;font-weight:bold;color:#58a6ff}
+  .score-sub-max{font-size:8px;color:#8b949e}
+  .price-card{background:#161b22;border:1px solid #30363d;border-radius:10px;
+               padding:15px;min-width:160px}
+  .price-card h4{color:#8b949e;font-size:9px;margin-bottom:9px}
+  .price-row{display:flex;justify-content:space-between;font-size:11px;margin:5px 0}
+  .price-row span{color:#8b949e}
+  .price-row b{color:#f0f6ff}
+
+  .warn-box{background:#161b22;border:1px solid #30363d;border-radius:8px;
+             padding:13px 17px;margin-bottom:16px}
+  .warn{color:#f44336;font-size:11px;margin:5px 0}
+  .warn-recovery{color:#ff9800;font-size:11px;margin:5px 0;font-weight:600}
+  .ok{color:#43a047;font-size:16px}
+  .notes{color:#8b949e;font-size:10px;margin-top:7px;font-style:italic}
+
+  .section-title{font-size:11px;font-weight:bold;padding:12px 15px 8px;
+                  border-bottom:1px solid #30363d}
+  .spot-title{color:#58a6ff}
+  .fut-title{color:#f0883e}
+  .wrap{background:#161b22;border:1px solid #30363d;border-radius:8px;
+         overflow:hidden;margin-bottom:15px}
+  table{width:100%;border-collapse:collapse;font-size:11px}
+  th{background:#0d1117;color:#8b949e;padding:9px 15px;
+      border-bottom:2px solid #30363d;text-align:left;font-weight:normal;font-size:15px}
+  td{padding:9px 15px;border-bottom:1px solid #21262d}
+  td.item{color:#f0f6ff;font-weight:500}
+  td.score{color:#ffd700;font-weight:bold;text-align:center;width:51px;font-size:11px}
+  td.note{color:#8b949e;font-size:15px}
+  tr.cat-row td{background:#1c2128;color:#58a6ff;font-size:9px;padding:7px 15px}
+  .fut-section tr.cat-row td{color:#f0883e}
+  .bar{height:8px;background:#238636;border-radius:4px;min-width:2px}
+  .total-row td{background:#0d1117;border-top:2px solid #30363d;
+                 font-weight:bold;font-size:11px}
+</style>
+
+<div class="bwrap">
+  <div class="bwtitle">🔍 分點進出 × 借券對照（近20日）</div>
+  <div class="bleg">⚠ 純賣出≥95%（排除元大/凱基）= 疑似借券賣出方｜🎯 純買入≥95% = 疑似回補</div>
+  
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/10</b>
+    
+    <span class="blend">借券 <b style="color:#3fb950">-32</b>&nbsp;賣449&nbsp;補-481&nbsp;餘28180</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">凱基-台北</td><td class="bn2">2,591</td><td class="bn2">1,148</td><td class="bbu">+1,443</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠花旗環球</td><td class="bn2">6</td><td class="bn2">1,869</td><td class="bse">-1,863</td></tr><tr><td class="bn">新加坡商瑞銀</td><td class="bn2">477</td><td class="bn2">280</td><td class="bbu">+197</td><td class="bdv"></td><td class="bn">元大證券</td><td class="bn2">1,125</td><td class="bn2">1,925</td><td class="bse">-800</td></tr><tr><td class="bn" style="background:#0d2310">🎯台新-安南</td><td class="bn2">128</td><td class="bn2">6</td><td class="bbu">+122</td><td class="bdv"></td><td class="bn">群益金鼎</td><td class="bn2">50</td><td class="bn2">662</td><td class="bse">-612</td></tr><tr><td class="bn">富邦-南屯</td><td class="bn2">140</td><td class="bn2">27</td><td class="bbu">+113</td><td class="bdv"></td><td class="bn">中國信託</td><td class="bn2">58</td><td class="bn2">626</td><td class="bse">-568</td></tr><tr><td class="bn">元大-南屯</td><td class="bn2">118</td><td class="bn2">14</td><td class="bbu">+104</td><td class="bdv"></td><td class="bn">美林</td><td class="bn2">89</td><td class="bn2">640</td><td class="bse">-551</td></tr><tr><td class="bn">台灣摩根士丹利</td><td class="bn2">956</td><td class="bn2">852</td><td class="bbu">+104</td><td class="bdv"></td><td class="bn">美商高盛</td><td class="bn2">192</td><td class="bn2">648</td><td class="bse">-456</td></tr><tr><td class="bn">元大-松江</td><td class="bn2">101</td><td class="bn2">4</td><td class="bbu">+97</td><td class="bdv"></td><td class="bn">凱基-高雄</td><td class="bn2">12</td><td class="bn2">300</td><td class="bse">-288</td></tr><tr><td class="bn">國泰-敦南</td><td class="bn2">481</td><td class="bn2">387</td><td class="bbu">+94</td><td class="bdv"></td><td class="bn">永豐金-竹北</td><td class="bn2">156</td><td class="bn2">314</td><td class="bse">-158</td></tr><tr><td class="bn">富邦-台南</td><td class="bn2">125</td><td class="bn2">36</td><td class="bbu">+90</td><td class="bdv"></td><td class="bn">摩根大通</td><td class="bn2">544</td><td class="bn2">696</td><td class="bse">-152</td></tr><tr><td class="bn">台新</td><td class="bn2">134</td><td class="bn2">62</td><td class="bbu">+72</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠國票-敦北法人</td><td class="bn2">4</td><td class="bn2">78</td><td class="bse">-74</td></tr><tr><td class="bn">永豐金證券</td><td class="bn2">124</td><td class="bn2">53</td><td class="bbu">+72</td><td class="bdv"></td><td class="bn">台新-城東</td><td class="bn2">8</td><td class="bn2">60</td><td class="bse">-52</td></tr><tr><td class="bn">凱基-板橋</td><td class="bn2">74</td><td class="bn2">9</td><td class="bbu">+65</td><td class="bdv"></td><td class="bn">凱基-站前</td><td class="bn2">44</td><td class="bn2">89</td><td class="bse">-45</td></tr><tr><td class="bn">富邦-新店</td><td class="bn2">67</td><td class="bn2">5</td><td class="bbu">+63</td><td class="bdv"></td><td class="bn">元大-中崙</td><td class="bn2">4</td><td class="bn2">44</td><td class="bse">-40</td></tr><tr><td class="bn">元大-北投</td><td class="bn2">50</td><td class="bn2">4</td><td class="bbu">+46</td><td class="bdv"></td><td class="bn">統一-新竹</td><td class="bn2">8</td><td class="bn2">45</td><td class="bse">-37</td></tr><tr><td class="bn">國泰-板橋</td><td class="bn2">122</td><td class="bn2">77</td><td class="bbu">+46</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠香港上海匯豐</td><td class="bn2">0</td><td class="bn2">33</td><td class="bse">-33</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+2,727</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-5,728</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/11</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+175</b>&nbsp;賣355&nbsp;補-180&nbsp;餘28355</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">美商高盛</td><td class="bn2">1,198</td><td class="bn2">693</td><td class="bbu">+505</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠花旗環球</td><td class="bn2">8</td><td class="bn2">1,126</td><td class="bse">-1,118</td></tr><tr><td class="bn">台灣摩根士丹利</td><td class="bn2">791</td><td class="bn2">644</td><td class="bbu">+147</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠新加坡商瑞銀</td><td class="bn2">60</td><td class="bn2">1,175</td><td class="bse">-1,116</td></tr><tr><td class="bn">富邦-台南</td><td class="bn2">147</td><td class="bn2">47</td><td class="bbu">+100</td><td class="bdv"></td><td class="bn">凱基-站前</td><td class="bn2">17</td><td class="bn2">160</td><td class="bse">-144</td></tr><tr><td class="bn">富邦-台北</td><td class="bn2">142</td><td class="bn2">43</td><td class="bbu">+98</td><td class="bdv"></td><td class="bn">富邦-彰化</td><td class="bn2">6</td><td class="bn2">88</td><td class="bse">-82</td></tr><tr><td class="bn">兆豐-忠孝</td><td class="bn2">104</td><td class="bn2">8</td><td class="bbu">+96</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠香港上海匯豐</td><td class="bn2">0</td><td class="bn2">67</td><td class="bse">-67</td></tr><tr><td class="bn">富邦-新店</td><td class="bn2">78</td><td class="bn2">11</td><td class="bbu">+66</td><td class="bdv"></td><td class="bn">兆豐-竹北</td><td class="bn2">47</td><td class="bn2">110</td><td class="bse">-62</td></tr><tr><td class="bn">永豐金-台南</td><td class="bn2">69</td><td class="bn2">16</td><td class="bbu">+53</td><td class="bdv"></td><td class="bn">元大證券</td><td class="bn2">950</td><td class="bn2">995</td><td class="bse">-45</td></tr><tr><td class="bn">永豐金-新莊</td><td class="bn2">69</td><td class="bn2">16</td><td class="bbu">+53</td><td class="bdv"></td><td class="bn">兆豐-新竹</td><td class="bn2">9</td><td class="bn2">40</td><td class="bse">-31</td></tr><tr><td class="bn">國泰-敦南</td><td class="bn2">285</td><td class="bn2">235</td><td class="bbu">+50</td><td class="bdv"></td><td class="bn">元大-土城永寧</td><td class="bn2">20</td><td class="bn2">50</td><td class="bse">-30</td></tr><tr><td class="bn">國泰-館前</td><td class="bn2">70</td><td class="bn2">23</td><td class="bbu">+48</td><td class="bdv"></td><td class="bn">凱基</td><td class="bn2">14</td><td class="bn2">43</td><td class="bse">-29</td></tr><tr><td class="bn">元大-民生三民</td><td class="bn2">86</td><td class="bn2">41</td><td class="bbu">+45</td><td class="bdv"></td><td class="bn">凱基-台北</td><td class="bn2">1,485</td><td class="bn2">1,512</td><td class="bse">-27</td></tr><tr><td class="bn">統一</td><td class="bn2">91</td><td class="bn2">46</td><td class="bbu">+45</td><td class="bdv"></td><td class="bn">富邦-苗栗</td><td class="bn2">3</td><td class="bn2">23</td><td class="bse">-20</td></tr><tr><td class="bn">華南永昌-林口</td><td class="bn2">49</td><td class="bn2">5</td><td class="bbu">+44</td><td class="bdv"></td><td class="bn">台新</td><td class="bn2">79</td><td class="bn2">99</td><td class="bse">-19</td></tr><tr><td class="bn">華南永昌</td><td class="bn2">48</td><td class="bn2">11</td><td class="bbu">+37</td><td class="bdv"></td><td class="bn">富邦-三峽</td><td class="bn2">5</td><td class="bn2">22</td><td class="bse">-17</td></tr><tr><td class="bn">元大-博愛</td><td class="bn2">52</td><td class="bn2">18</td><td class="bbu">+35</td><td class="bdv"></td><td class="bn">統一-屏東</td><td class="bn2">3</td><td class="bn2">20</td><td class="bse">-17</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+1,421</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-2,826</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/12</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+424</b>&nbsp;賣584&nbsp;補-160&nbsp;餘28779</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">元大證券</td><td class="bn2">3,004</td><td class="bn2">1,455</td><td class="bbu">+1,550</td><td class="bdv"></td><td class="bn">新加坡商瑞銀</td><td class="bn2">413</td><td class="bn2">798</td><td class="bse">-385</td></tr><tr><td class="bn">美商高盛</td><td class="bn2">2,769</td><td class="bn2">1,425</td><td class="bbu">+1,344</td><td class="bdv"></td><td class="bn">國泰-敦南</td><td class="bn2">889</td><td class="bn2">1,256</td><td class="bse">-367</td></tr><tr><td class="bn">統一</td><td class="bn2">1,338</td><td class="bn2">121</td><td class="bbu">+1,217</td><td class="bdv"></td><td class="bn">元大-松江</td><td class="bn2">30</td><td class="bn2">228</td><td class="bse">-198</td></tr><tr><td class="bn" style="background:#0d2310">🎯富邦證券</td><td class="bn2">647</td><td class="bn2">22</td><td class="bbu">+625</td><td class="bdv"></td><td class="bn">凱基-高雄</td><td class="bn2">20</td><td class="bn2">218</td><td class="bse">-198</td></tr><tr><td class="bn">摩根大通</td><td class="bn2">1,028</td><td class="bn2">425</td><td class="bbu">+603</td><td class="bdv"></td><td class="bn">富邦-台北</td><td class="bn2">41</td><td class="bn2">178</td><td class="bse">-136</td></tr><tr><td class="bn">台灣摩根士丹利</td><td class="bn2">1,604</td><td class="bn2">1,029</td><td class="bbu">+575</td><td class="bdv"></td><td class="bn">國泰-台中</td><td class="bn2">250</td><td class="bn2">375</td><td class="bse">-126</td></tr><tr><td class="bn">凱基-城中</td><td class="bn2">522</td><td class="bn2">32</td><td class="bbu">+490</td><td class="bdv"></td><td class="bn">玉山-城中</td><td class="bn2">16</td><td class="bn2">126</td><td class="bse">-110</td></tr><tr><td class="bn">凱基-台北</td><td class="bn2">3,561</td><td class="bn2">3,159</td><td class="bbu">+402</td><td class="bdv"></td><td class="bn">新光</td><td class="bn2">241</td><td class="bn2">347</td><td class="bse">-106</td></tr><tr><td class="bn">美林</td><td class="bn2">485</td><td class="bn2">172</td><td class="bbu">+313</td><td class="bdv"></td><td class="bn">國票-九鼎</td><td class="bn2">10</td><td class="bn2">114</td><td class="bse">-104</td></tr><tr><td class="bn">富邦-新竹</td><td class="bn2">380</td><td class="bn2">77</td><td class="bbu">+303</td><td class="bdv"></td><td class="bn">富邦-台南</td><td class="bn2">43</td><td class="bn2">141</td><td class="bse">-99</td></tr><tr><td class="bn" style="background:#0d2310">🎯統一-員林</td><td class="bn2">312</td><td class="bn2">13</td><td class="bbu">+299</td><td class="bdv"></td><td class="bn">元大-台中</td><td class="bn2">36</td><td class="bn2">114</td><td class="bse">-78</td></tr><tr><td class="bn">統一-城中</td><td class="bn2">497</td><td class="bn2">228</td><td class="bbu">+269</td><td class="bdv"></td><td class="bn">台新</td><td class="bn2">170</td><td class="bn2">248</td><td class="bse">-78</td></tr><tr><td class="bn">國票-安和</td><td class="bn2">291</td><td class="bn2">32</td><td class="bbu">+259</td><td class="bdv"></td><td class="bn">華南永昌-南京</td><td class="bn2">16</td><td class="bn2">92</td><td class="bse">-77</td></tr><tr><td class="bn">國票-博愛</td><td class="bn2">291</td><td class="bn2">32</td><td class="bbu">+259</td><td class="bdv"></td><td class="bn">富邦-仁愛</td><td class="bn2">37</td><td class="bn2">113</td><td class="bse">-76</td></tr><tr><td class="bn" style="background:#0d2310">🎯國票-敦北法人</td><td class="bn2">256</td><td class="bn2">5</td><td class="bbu">+251</td><td class="bdv"></td><td class="bn">元大-民生三民</td><td class="bn2">62</td><td class="bn2">137</td><td class="bse">-75</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+8,758</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-2,211</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/13</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+2921</b>&nbsp;賣2999&nbsp;補-78&nbsp;餘31700</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">中國信託</td><td class="bn2">1,802</td><td class="bn2">195</td><td class="bbu">+1,607</td><td class="bdv"></td><td class="bn">台灣摩根士丹利</td><td class="bn2">1,273</td><td class="bn2">3,573</td><td class="bse">-2,300</td></tr><tr><td class="bn">國票-敦北法人</td><td class="bn2">1,491</td><td class="bn2">264</td><td class="bbu">+1,228</td><td class="bdv"></td><td class="bn">新加坡商瑞銀</td><td class="bn2">196</td><td class="bn2">2,376</td><td class="bse">-2,180</td></tr><tr><td class="bn">國泰-敦南</td><td class="bn2">3,871</td><td class="bn2">2,983</td><td class="bbu">+888</td><td class="bdv"></td><td class="bn">凱基-台北</td><td class="bn2">4,683</td><td class="bn2">6,464</td><td class="bse">-1,780</td></tr><tr><td class="bn">新光</td><td class="bn2">791</td><td class="bn2">474</td><td class="bbu">+317</td><td class="bdv"></td><td class="bn">美商高盛</td><td class="bn2">2,633</td><td class="bn2">4,379</td><td class="bse">-1,746</td></tr><tr><td class="bn">永豐金證券</td><td class="bn2">944</td><td class="bn2">630</td><td class="bbu">+314</td><td class="bdv"></td><td class="bn">摩根大通</td><td class="bn2">728</td><td class="bn2">2,081</td><td class="bse">-1,353</td></tr><tr><td class="bn" style="background:#0d2310">🎯花旗環球</td><td class="bn2">316</td><td class="bn2">3</td><td class="bbu">+313</td><td class="bdv"></td><td class="bn">美林</td><td class="bn2">64</td><td class="bn2">1,214</td><td class="bse">-1,150</td></tr><tr><td class="bn">合庫-西台中</td><td class="bn2">343</td><td class="bn2">63</td><td class="bbu">+280</td><td class="bdv"></td><td class="bn">統一</td><td class="bn2">380</td><td class="bn2">1,470</td><td class="bse">-1,090</td></tr><tr><td class="bn">富邦-台北</td><td class="bn2">284</td><td class="bn2">77</td><td class="bbu">+207</td><td class="bdv"></td><td class="bn">元大證券</td><td class="bn2">7,643</td><td class="bn2">8,434</td><td class="bse">-791</td></tr><tr><td class="bn">國泰-板橋</td><td class="bn2">504</td><td class="bn2">339</td><td class="bbu">+165</td><td class="bdv"></td><td class="bn">港商野村</td><td class="bn2">214</td><td class="bn2">978</td><td class="bse">-764</td></tr><tr><td class="bn">台新</td><td class="bn2">579</td><td class="bn2">421</td><td class="bbu">+158</td><td class="bdv"></td><td class="bn">富邦證券</td><td class="bn2">99</td><td class="bn2">687</td><td class="bse">-588</td></tr><tr><td class="bn">國泰證券</td><td class="bn2">150</td><td class="bn2">12</td><td class="bbu">+138</td><td class="bdv"></td><td class="bn">凱基-城中</td><td class="bn2">30</td><td class="bn2">516</td><td class="bse">-486</td></tr><tr><td class="bn">華南永昌-高雄</td><td class="bn2">186</td><td class="bn2">63</td><td class="bbu">+123</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠統一-員林</td><td class="bn2">4</td><td class="bn2">309</td><td class="bse">-305</td></tr><tr><td class="bn">國票-九鼎</td><td class="bn2">172</td><td class="bn2">59</td><td class="bbu">+112</td><td class="bdv"></td><td class="bn">國票-安和</td><td class="bn2">105</td><td class="bn2">374</td><td class="bse">-269</td></tr><tr><td class="bn">元大-松江</td><td class="bn2">214</td><td class="bn2">102</td><td class="bbu">+111</td><td class="bdv"></td><td class="bn">國票-博愛</td><td class="bn2">105</td><td class="bn2">374</td><td class="bse">-269</td></tr><tr><td class="bn">台新-高雄</td><td class="bn2">370</td><td class="bn2">260</td><td class="bbu">+110</td><td class="bdv"></td><td class="bn">統一-城中</td><td class="bn2">256</td><td class="bn2">430</td><td class="bse">-174</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+6,072</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-15,245</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/14</b>
+    
+    <span class="blend">借券 <b style="color:#3fb950">-736</b>&nbsp;賣314&nbsp;補-1050&nbsp;餘30964</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">群益金鼎</td><td class="bn2">1,794</td><td class="bn2">301</td><td class="bbu">+1,493</td><td class="bdv"></td><td class="bn">摩根大通</td><td class="bn2">458</td><td class="bn2">1,129</td><td class="bse">-671</td></tr><tr><td class="bn">美商高盛</td><td class="bn2">1,598</td><td class="bn2">1,269</td><td class="bbu">+329</td><td class="bdv"></td><td class="bn">凱基-台北</td><td class="bn2">2,365</td><td class="bn2">2,652</td><td class="bse">-287</td></tr><tr><td class="bn">港商野村</td><td class="bn2">239</td><td class="bn2">24</td><td class="bbu">+215</td><td class="bdv"></td><td class="bn">華南永昌-高雄</td><td class="bn2">41</td><td class="bn2">208</td><td class="bse">-167</td></tr><tr><td class="bn">美林</td><td class="bn2">317</td><td class="bn2">161</td><td class="bbu">+156</td><td class="bdv"></td><td class="bn">元大-六合</td><td class="bn2">10</td><td class="bn2">173</td><td class="bse">-163</td></tr><tr><td class="bn">富邦-台北</td><td class="bn2">265</td><td class="bn2">110</td><td class="bbu">+155</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠國泰證券</td><td class="bn2">2</td><td class="bn2">129</td><td class="bse">-127</td></tr><tr><td class="bn">凱基-文心</td><td class="bn2">98</td><td class="bn2">5</td><td class="bbu">+93</td><td class="bdv"></td><td class="bn">元大證券</td><td class="bn2">2,079</td><td class="bn2">2,204</td><td class="bse">-125</td></tr><tr><td class="bn">合庫-西台中</td><td class="bn2">107</td><td class="bn2">20</td><td class="bbu">+87</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠宏遠證券</td><td class="bn2">2</td><td class="bn2">125</td><td class="bse">-123</td></tr><tr><td class="bn">宏遠-民生</td><td class="bn2">97</td><td class="bn2">11</td><td class="bbu">+86</td><td class="bdv"></td><td class="bn">台新</td><td class="bn2">162</td><td class="bn2">274</td><td class="bse">-112</td></tr><tr><td class="bn">台新-五權西</td><td class="bn2">162</td><td class="bn2">80</td><td class="bbu">+83</td><td class="bdv"></td><td class="bn">富邦-內湖</td><td class="bn2">54</td><td class="bn2">163</td><td class="bse">-109</td></tr><tr><td class="bn" style="background:#0d2310">🎯永豐金-屏東</td><td class="bn2">74</td><td class="bn2">3</td><td class="bbu">+71</td><td class="bdv"></td><td class="bn">元大-台中</td><td class="bn2">14</td><td class="bn2">96</td><td class="bse">-82</td></tr><tr><td class="bn">玉山-左營</td><td class="bn2">79</td><td class="bn2">28</td><td class="bbu">+50</td><td class="bdv"></td><td class="bn">群益金鼎-潭子</td><td class="bn2">26</td><td class="bn2">102</td><td class="bse">-76</td></tr><tr><td class="bn">元大-松江</td><td class="bn2">68</td><td class="bn2">19</td><td class="bbu">+49</td><td class="bdv"></td><td class="bn">國泰-館前</td><td class="bn2">80</td><td class="bn2">144</td><td class="bse">-65</td></tr><tr><td class="bn">富邦-中壢</td><td class="bn2">96</td><td class="bn2">52</td><td class="bbu">+44</td><td class="bdv"></td><td class="bn">凱基-中山</td><td class="bn2">14</td><td class="bn2">73</td><td class="bse">-59</td></tr><tr><td class="bn">中農</td><td class="bn2">47</td><td class="bn2">5</td><td class="bbu">+42</td><td class="bdv"></td><td class="bn">台灣摩根士丹利</td><td class="bn2">970</td><td class="bn2">1,027</td><td class="bse">-57</td></tr><tr><td class="bn">元大-敦化</td><td class="bn2">54</td><td class="bn2">19</td><td class="bbu">+36</td><td class="bdv"></td><td class="bn">新加坡商瑞銀</td><td class="bn2">265</td><td class="bn2">321</td><td class="bse">-56</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+2,989</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-2,278</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/17</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+623</b>&nbsp;賣987&nbsp;補-364&nbsp;餘31587</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">新加坡商瑞銀</td><td class="bn2">445</td><td class="bn2">179</td><td class="bbu">+266</td><td class="bdv"></td><td class="bn">美商高盛</td><td class="bn2">1,365</td><td class="bn2">2,611</td><td class="bse">-1,246</td></tr><tr><td class="bn">元大證券</td><td class="bn2">2,172</td><td class="bn2">2,028</td><td class="bbu">+144</td><td class="bdv"></td><td class="bn">凱基-台北</td><td class="bn2">1,765</td><td class="bn2">2,315</td><td class="bse">-550</td></tr><tr><td class="bn">港商野村</td><td class="bn2">278</td><td class="bn2">147</td><td class="bbu">+131</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠合庫-西台中</td><td class="bn2">3</td><td class="bn2">294</td><td class="bse">-291</td></tr><tr><td class="bn">富邦證券</td><td class="bn2">156</td><td class="bn2">28</td><td class="bbu">+128</td><td class="bdv"></td><td class="bn">美林</td><td class="bn2">50</td><td class="bn2">268</td><td class="bse">-218</td></tr><tr><td class="bn" style="background:#0d2310">🎯國票-北高雄</td><td class="bn2">107</td><td class="bn2">1</td><td class="bbu">+106</td><td class="bdv"></td><td class="bn">台灣摩根士丹利</td><td class="bn2">331</td><td class="bn2">526</td><td class="bse">-195</td></tr><tr><td class="bn" style="background:#0d2310">🎯國票-和平</td><td class="bn2">107</td><td class="bn2">1</td><td class="bbu">+106</td><td class="bdv"></td><td class="bn">凱基</td><td class="bn2">104</td><td class="bn2">255</td><td class="bse">-151</td></tr><tr><td class="bn">玉山-城中</td><td class="bn2">117</td><td class="bn2">13</td><td class="bbu">+104</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠兆豐證券</td><td class="bn2">1</td><td class="bn2">141</td><td class="bse">-140</td></tr><tr><td class="bn" style="background:#0d2310">🎯第一金-自由</td><td class="bn2">106</td><td class="bn2">3</td><td class="bbu">+103</td><td class="bdv"></td><td class="bn">元大-新竹</td><td class="bn2">12</td><td class="bn2">107</td><td class="bse">-96</td></tr><tr><td class="bn">統一</td><td class="bn2">137</td><td class="bn2">52</td><td class="bbu">+85</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠福邦證券</td><td class="bn2">3</td><td class="bn2">98</td><td class="bse">-95</td></tr><tr><td class="bn">富邦-竹科</td><td class="bn2">90</td><td class="bn2">13</td><td class="bbu">+77</td><td class="bdv"></td><td class="bn">富邦-台北</td><td class="bn2">103</td><td class="bn2">191</td><td class="bse">-88</td></tr><tr><td class="bn">台新</td><td class="bn2">165</td><td class="bn2">109</td><td class="bbu">+56</td><td class="bdv"></td><td class="bn">元大-文心</td><td class="bn2">25</td><td class="bn2">82</td><td class="bse">-57</td></tr><tr><td class="bn">元大-松江</td><td class="bn2">108</td><td class="bn2">56</td><td class="bbu">+52</td><td class="bdv"></td><td class="bn">國泰-敦南</td><td class="bn2">672</td><td class="bn2">728</td><td class="bse">-56</td></tr><tr><td class="bn">元大-清水</td><td class="bn2">109</td><td class="bn2">62</td><td class="bbu">+47</td><td class="bdv"></td><td class="bn">臺銀</td><td class="bn2">23</td><td class="bn2">78</td><td class="bse">-55</td></tr><tr><td class="bn">群益金鼎</td><td class="bn2">114</td><td class="bn2">67</td><td class="bbu">+47</td><td class="bdv"></td><td class="bn">群益金鼎-大甲</td><td class="bn2">25</td><td class="bn2">78</td><td class="bse">-53</td></tr><tr><td class="bn">富邦-員林</td><td class="bn2">54</td><td class="bn2">8</td><td class="bbu">+46</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠香港上海匯豐</td><td class="bn2">0</td><td class="bn2">50</td><td class="bse">-50</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+1,499</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-3,340</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/18</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+552</b>&nbsp;賣706&nbsp;補-154&nbsp;餘32139</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">富邦證券</td><td class="bn2">1,360</td><td class="bn2">126</td><td class="bbu">+1,234</td><td class="bdv"></td><td class="bn">凱基-台北</td><td class="bn2">2,295</td><td class="bn2">3,156</td><td class="bse">-861</td></tr><tr><td class="bn">凱基</td><td class="bn2">404</td><td class="bn2">9</td><td class="bbu">+395</td><td class="bdv"></td><td class="bn">台灣摩根士丹利</td><td class="bn2">328</td><td class="bn2">996</td><td class="bse">-668</td></tr><tr><td class="bn">元大證券</td><td class="bn2">3,802</td><td class="bn2">3,657</td><td class="bbu">+144</td><td class="bdv"></td><td class="bn">美商高盛</td><td class="bn2">669</td><td class="bn2">1,006</td><td class="bse">-337</td></tr><tr><td class="bn">港商野村</td><td class="bn2">282</td><td class="bn2">161</td><td class="bbu">+121</td><td class="bdv"></td><td class="bn">摩根大通</td><td class="bn2">360</td><td class="bn2">527</td><td class="bse">-167</td></tr><tr><td class="bn">凱基-板橋</td><td class="bn2">126</td><td class="bn2">18</td><td class="bbu">+108</td><td class="bdv"></td><td class="bn">台新-五權西</td><td class="bn2">24</td><td class="bn2">155</td><td class="bse">-130</td></tr><tr><td class="bn">新光</td><td class="bn2">321</td><td class="bn2">246</td><td class="bbu">+75</td><td class="bdv"></td><td class="bn">第一金-自由</td><td class="bn2">18</td><td class="bn2">125</td><td class="bse">-107</td></tr><tr><td class="bn">玉山-城中</td><td class="bn2">172</td><td class="bn2">117</td><td class="bbu">+54</td><td class="bdv"></td><td class="bn">美林</td><td class="bn2">108</td><td class="bn2">206</td><td class="bse">-98</td></tr><tr><td class="bn">中國信託</td><td class="bn2">138</td><td class="bn2">84</td><td class="bbu">+53</td><td class="bdv"></td><td class="bn">元大-台中</td><td class="bn2">18</td><td class="bn2">108</td><td class="bse">-90</td></tr><tr><td class="bn">凱基-科園</td><td class="bn2">70</td><td class="bn2">18</td><td class="bbu">+52</td><td class="bdv"></td><td class="bn">凱基-文心</td><td class="bn2">25</td><td class="bn2">110</td><td class="bse">-85</td></tr><tr><td class="bn">元大-龍潭</td><td class="bn2">132</td><td class="bn2">82</td><td class="bbu">+51</td><td class="bdv"></td><td class="bn">合庫-西台中</td><td class="bn2">14</td><td class="bn2">93</td><td class="bse">-79</td></tr><tr><td class="bn" style="background:#0d2310">🎯法銀巴黎</td><td class="bn2">50</td><td class="bn2">0</td><td class="bbu">+50</td><td class="bdv"></td><td class="bn">富邦-七賢</td><td class="bn2">29</td><td class="bn2">84</td><td class="bse">-55</td></tr><tr><td class="bn">富邦-內湖</td><td class="bn2">60</td><td class="bn2">16</td><td class="bbu">+43</td><td class="bdv"></td><td class="bn">華南永昌-南京</td><td class="bn2">28</td><td class="bn2">77</td><td class="bse">-49</td></tr><tr><td class="bn">群益金鼎-板橋</td><td class="bn2">54</td><td class="bn2">12</td><td class="bbu">+42</td><td class="bdv"></td><td class="bn">台新-台中</td><td class="bn2">171</td><td class="bn2">217</td><td class="bse">-46</td></tr><tr><td class="bn">元大-歸仁</td><td class="bn2">62</td><td class="bn2">26</td><td class="bbu">+36</td><td class="bdv"></td><td class="bn">新加坡商瑞銀</td><td class="bn2">347</td><td class="bn2">392</td><td class="bse">-45</td></tr><tr><td class="bn">元大-台南</td><td class="bn2">67</td><td class="bn2">33</td><td class="bbu">+35</td><td class="bdv"></td><td class="bn">元大-大甲</td><td class="bn2">40</td><td class="bn2">83</td><td class="bse">-44</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+2,494</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-2,861</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/19</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+249</b>&nbsp;賣299&nbsp;補-50&nbsp;餘32388</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">富邦證券</td><td class="bn2">1,245</td><td class="bn2">94</td><td class="bbu">+1,151</td><td class="bdv"></td><td class="bn">新加坡商瑞銀</td><td class="bn2">231</td><td class="bn2">2,039</td><td class="bse">-1,807</td></tr><tr><td class="bn">凱基-台北</td><td class="bn2">2,130</td><td class="bn2">1,481</td><td class="bbu">+649</td><td class="bdv"></td><td class="bn">台灣摩根士丹利</td><td class="bn2">291</td><td class="bn2">1,632</td><td class="bse">-1,341</td></tr><tr><td class="bn" style="background:#0d2310">🎯港商野村</td><td class="bn2">370</td><td class="bn2">0</td><td class="bbu">+370</td><td class="bdv"></td><td class="bn">美商高盛</td><td class="bn2">632</td><td class="bn2">1,918</td><td class="bse">-1,286</td></tr><tr><td class="bn">國泰-台中</td><td class="bn2">200</td><td class="bn2">68</td><td class="bbu">+133</td><td class="bdv"></td><td class="bn">凱基</td><td class="bn2">1</td><td class="bn2">340</td><td class="bse">-339</td></tr><tr><td class="bn">國泰-敦南</td><td class="bn2">489</td><td class="bn2">381</td><td class="bbu">+108</td><td class="bdv"></td><td class="bn">摩根大通</td><td class="bn2">66</td><td class="bn2">386</td><td class="bse">-320</td></tr><tr><td class="bn">新光</td><td class="bn2">281</td><td class="bn2">190</td><td class="bbu">+91</td><td class="bdv"></td><td class="bn">永豐金-竹北</td><td class="bn2">60</td><td class="bn2">273</td><td class="bse">-213</td></tr><tr><td class="bn" style="background:#0d2310">🎯群益期貨</td><td class="bn2">68</td><td class="bn2">0</td><td class="bbu">+68</td><td class="bdv"></td><td class="bn">凱基-文心</td><td class="bn2">2</td><td class="bn2">183</td><td class="bse">-181</td></tr><tr><td class="bn">元大證券</td><td class="bn2">1,300</td><td class="bn2">1,243</td><td class="bbu">+58</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠宏遠-民生</td><td class="bn2">1</td><td class="bn2">107</td><td class="bse">-106</td></tr><tr><td class="bn">富邦-新店</td><td class="bn2">84</td><td class="bn2">27</td><td class="bbu">+57</td><td class="bdv"></td><td class="bn">台新</td><td class="bn2">112</td><td class="bn2">193</td><td class="bse">-81</td></tr><tr><td class="bn">玉山-左營</td><td class="bn2">61</td><td class="bn2">5</td><td class="bbu">+56</td><td class="bdv"></td><td class="bn">國票證券</td><td class="bn2">4</td><td class="bn2">77</td><td class="bse">-72</td></tr><tr><td class="bn">群益金鼎-大甲</td><td class="bn2">58</td><td class="bn2">8</td><td class="bbu">+50</td><td class="bdv"></td><td class="bn">元大-南屯</td><td class="bn2">10</td><td class="bn2">65</td><td class="bse">-55</td></tr><tr><td class="bn">群益金鼎-新莊</td><td class="bn2">58</td><td class="bn2">8</td><td class="bbu">+50</td><td class="bdv"></td><td class="bn">群益金鼎</td><td class="bn2">398</td><td class="bn2">440</td><td class="bse">-41</td></tr><tr><td class="bn" style="background:#0d2310">🎯兆豐-永和</td><td class="bn2">51</td><td class="bn2">1</td><td class="bbu">+50</td><td class="bdv"></td><td class="bn">富邦-南屯</td><td class="bn2">38</td><td class="bn2">76</td><td class="bse">-38</td></tr><tr><td class="bn">元大-民生三民</td><td class="bn2">68</td><td class="bn2">26</td><td class="bbu">+42</td><td class="bdv"></td><td class="bn">元大-大雅</td><td class="bn2">14</td><td class="bn2">47</td><td class="bse">-33</td></tr><tr><td class="bn">永豐金-屏東</td><td class="bn2">168</td><td class="bn2">128</td><td class="bbu">+40</td><td class="bdv"></td><td class="bn">元大-仁愛</td><td class="bn2">6</td><td class="bn2">36</td><td class="bse">-30</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+2,974</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-5,943</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/20</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+477</b>&nbsp;賣1020&nbsp;補-543&nbsp;餘32865</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">台灣摩根士丹利</td><td class="bn2">1,943</td><td class="bn2">511</td><td class="bbu">+1,432</td><td class="bdv"></td><td class="bn">美商高盛</td><td class="bn2">560</td><td class="bn2">1,670</td><td class="bse">-1,110</td></tr><tr><td class="bn" style="background:#0d2310">🎯富邦證券</td><td class="bn2">1,072</td><td class="bn2">24</td><td class="bbu">+1,048</td><td class="bdv"></td><td class="bn">摩根大通</td><td class="bn2">140</td><td class="bn2">449</td><td class="bse">-309</td></tr><tr><td class="bn">新加坡商瑞銀</td><td class="bn2">839</td><td class="bn2">417</td><td class="bbu">+422</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠富邦-彰化</td><td class="bn2">3</td><td class="bn2">156</td><td class="bse">-153</td></tr><tr><td class="bn">凱基-台北</td><td class="bn2">1,398</td><td class="bn2">1,083</td><td class="bbu">+315</td><td class="bdv"></td><td class="bn">國泰-敦南</td><td class="bn2">423</td><td class="bn2">524</td><td class="bse">-101</td></tr><tr><td class="bn">兆豐-民生</td><td class="bn2">206</td><td class="bn2">13</td><td class="bbu">+193</td><td class="bdv"></td><td class="bn">富邦-台南</td><td class="bn2">54</td><td class="bn2">153</td><td class="bse">-99</td></tr><tr><td class="bn" style="background:#0d2310">🎯群益金鼎-台北</td><td class="bn2">156</td><td class="bn2">1</td><td class="bbu">+155</td><td class="bdv"></td><td class="bn">美林</td><td class="bn2">49</td><td class="bn2">123</td><td class="bse">-74</td></tr><tr><td class="bn">國泰證券</td><td class="bn2">154</td><td class="bn2">12</td><td class="bbu">+142</td><td class="bdv"></td><td class="bn">統一-城中</td><td class="bn2">92</td><td class="bn2">163</td><td class="bse">-71</td></tr><tr><td class="bn">兆豐-台中</td><td class="bn2">166</td><td class="bn2">25</td><td class="bbu">+141</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠群益期貨</td><td class="bn2">0</td><td class="bn2">68</td><td class="bse">-68</td></tr><tr><td class="bn" style="background:#0d2310">🎯國票-敦北法人</td><td class="bn2">101</td><td class="bn2">3</td><td class="bbu">+98</td><td class="bdv"></td><td class="bn">元大-民生三民</td><td class="bn2">57</td><td class="bn2">123</td><td class="bse">-66</td></tr><tr><td class="bn">合庫-西台中</td><td class="bn2">123</td><td class="bn2">34</td><td class="bbu">+89</td><td class="bdv"></td><td class="bn">富邦-台北</td><td class="bn2">91</td><td class="bn2">154</td><td class="bse">-63</td></tr><tr><td class="bn">台新-安南</td><td class="bn2">87</td><td class="bn2">8</td><td class="bbu">+79</td><td class="bdv"></td><td class="bn">新光</td><td class="bn2">152</td><td class="bn2">213</td><td class="bse">-61</td></tr><tr><td class="bn">富邦-竹科</td><td class="bn2">62</td><td class="bn2">8</td><td class="bbu">+54</td><td class="bdv"></td><td class="bn">玉山-左營</td><td class="bn2">11</td><td class="bn2">62</td><td class="bse">-51</td></tr><tr><td class="bn" style="background:#0d2310">🎯花旗環球</td><td class="bn2">49</td><td class="bn2">1</td><td class="bbu">+48</td><td class="bdv"></td><td class="bn">兆豐-永和</td><td class="bn2">3</td><td class="bn2">52</td><td class="bse">-49</td></tr><tr><td class="bn">富邦-南屯</td><td class="bn2">64</td><td class="bn2">18</td><td class="bbu">+46</td><td class="bdv"></td><td class="bn">群益金鼎-大甲</td><td class="bn2">12</td><td class="bn2">56</td><td class="bse">-44</td></tr><tr><td class="bn">港商野村</td><td class="bn2">79</td><td class="bn2">34</td><td class="bbu">+45</td><td class="bdv"></td><td class="bn">元大-大灣</td><td class="bn2">3</td><td class="bn2">44</td><td class="bse">-41</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+4,307</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-2,360</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/21</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+3142</b>&nbsp;賣3823&nbsp;補-681&nbsp;餘36007</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">國泰-敦南</td><td class="bn2">765</td><td class="bn2">314</td><td class="bbu">+451</td><td class="bdv"></td><td class="bn">美商高盛</td><td class="bn2">422</td><td class="bn2">2,819</td><td class="bse">-2,397</td></tr><tr><td class="bn">凱基-文心</td><td class="bn2">259</td><td class="bn2">5</td><td class="bbu">+254</td><td class="bdv"></td><td class="bn">凱基-台北</td><td class="bn2">732</td><td class="bn2">2,814</td><td class="bse">-2,082</td></tr><tr><td class="bn">富邦-台南</td><td class="bn2">203</td><td class="bn2">24</td><td class="bbu">+180</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠台灣摩根士丹利</td><td class="bn2">85</td><td class="bn2">1,831</td><td class="bse">-1,746</td></tr><tr><td class="bn">新光</td><td class="bn2">337</td><td class="bn2">187</td><td class="bbu">+150</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠摩根大通</td><td class="bn2">1</td><td class="bn2">1,383</td><td class="bse">-1,382</td></tr><tr><td class="bn">玉山-高雄</td><td class="bn2">156</td><td class="bn2">25</td><td class="bbu">+130</td><td class="bdv"></td><td class="bn">新加坡商瑞銀</td><td class="bn2">153</td><td class="bn2">1,530</td><td class="bse">-1,377</td></tr><tr><td class="bn" style="background:#0d2310">🎯兆豐-大同</td><td class="bn2">132</td><td class="bn2">5</td><td class="bbu">+127</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠美林</td><td class="bn2">18</td><td class="bn2">962</td><td class="bse">-944</td></tr><tr><td class="bn" style="background:#0d2310">🎯兆豐-岡山</td><td class="bn2">132</td><td class="bn2">5</td><td class="bbu">+127</td><td class="bdv"></td><td class="bn">元大證券</td><td class="bn2">2,493</td><td class="bn2">3,243</td><td class="bse">-750</td></tr><tr><td class="bn">統一-城中</td><td class="bn2">164</td><td class="bn2">40</td><td class="bbu">+124</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠第一金</td><td class="bn2">5</td><td class="bn2">341</td><td class="bse">-336</td></tr><tr><td class="bn" style="background:#0d2310">🎯兆豐-永和</td><td class="bn2">118</td><td class="bn2">1</td><td class="bbu">+117</td><td class="bdv"></td><td class="bn">群益金鼎</td><td class="bn2">561</td><td class="bn2">855</td><td class="bse">-294</td></tr><tr><td class="bn">元大-中壢</td><td class="bn2">153</td><td class="bn2">38</td><td class="bbu">+115</td><td class="bdv"></td><td class="bn">永豐金證券</td><td class="bn2">139</td><td class="bn2">390</td><td class="bse">-250</td></tr><tr><td class="bn">台新-台中</td><td class="bn2">143</td><td class="bn2">35</td><td class="bbu">+108</td><td class="bdv"></td><td class="bn">統一</td><td class="bn2">171</td><td class="bn2">389</td><td class="bse">-218</td></tr><tr><td class="bn">國票-敦北法人</td><td class="bn2">218</td><td class="bn2">111</td><td class="bbu">+107</td><td class="bdv"></td><td class="bn">兆豐-民生</td><td class="bn2">26</td><td class="bn2">219</td><td class="bse">-193</td></tr><tr><td class="bn">富邦-陽明</td><td class="bn2">116</td><td class="bn2">18</td><td class="bbu">+98</td><td class="bdv"></td><td class="bn">兆豐-台中</td><td class="bn2">9</td><td class="bn2">166</td><td class="bse">-157</td></tr><tr><td class="bn">中國信託</td><td class="bn2">138</td><td class="bn2">42</td><td class="bbu">+96</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠群益金鼎-台北</td><td class="bn2">5</td><td class="bn2">154</td><td class="bse">-149</td></tr><tr><td class="bn">國泰-台中</td><td class="bn2">191</td><td class="bn2">99</td><td class="bbu">+92</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠群益金鼎-延平</td><td class="bn2">5</td><td class="bn2">154</td><td class="bse">-149</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+2,275</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-12,424</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/24</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+1338</b>&nbsp;賣1511&nbsp;補-173&nbsp;餘37345</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">凱基-台北</td><td class="bn2">3,014</td><td class="bn2">2,328</td><td class="bbu">+685</td><td class="bdv"></td><td class="bn">美林</td><td class="bn2">121</td><td class="bn2">524</td><td class="bse">-403</td></tr><tr><td class="bn">台灣摩根士丹利</td><td class="bn2">3,028</td><td class="bn2">2,356</td><td class="bbu">+672</td><td class="bdv"></td><td class="bn">國票-敦北法人</td><td class="bn2">108</td><td class="bn2">311</td><td class="bse">-203</td></tr><tr><td class="bn">群益金鼎-內湖</td><td class="bn2">321</td><td class="bn2">29</td><td class="bbu">+292</td><td class="bdv"></td><td class="bn">新光</td><td class="bn2">289</td><td class="bn2">442</td><td class="bse">-154</td></tr><tr><td class="bn">群益金鼎-東門</td><td class="bn2">321</td><td class="bn2">29</td><td class="bbu">+292</td><td class="bdv"></td><td class="bn">元大證券</td><td class="bn2">2,580</td><td class="bn2">2,719</td><td class="bse">-139</td></tr><tr><td class="bn">永豐金證券</td><td class="bn2">492</td><td class="bn2">200</td><td class="bbu">+292</td><td class="bdv"></td><td class="bn">元大-中壢</td><td class="bn2">43</td><td class="bn2">142</td><td class="bse">-99</td></tr><tr><td class="bn">凱基-中壢</td><td class="bn2">298</td><td class="bn2">25</td><td class="bbu">+273</td><td class="bdv"></td><td class="bn">國泰-敦南</td><td class="bn2">1,302</td><td class="bn2">1,393</td><td class="bse">-90</td></tr><tr><td class="bn">元大-斗六</td><td class="bn2">140</td><td class="bn2">23</td><td class="bbu">+117</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠法銀巴黎</td><td class="bn2">0</td><td class="bn2">81</td><td class="bse">-81</td></tr><tr><td class="bn">美商高盛</td><td class="bn2">954</td><td class="bn2">868</td><td class="bbu">+86</td><td class="bdv"></td><td class="bn">統一-城中</td><td class="bn2">105</td><td class="bn2">185</td><td class="bse">-80</td></tr><tr><td class="bn">台新</td><td class="bn2">334</td><td class="bn2">251</td><td class="bbu">+83</td><td class="bdv"></td><td class="bn">摩根大通</td><td class="bn2">106</td><td class="bn2">174</td><td class="bse">-68</td></tr><tr><td class="bn">港商野村</td><td class="bn2">365</td><td class="bn2">283</td><td class="bbu">+82</td><td class="bdv"></td><td class="bn">元大-鳳中</td><td class="bn2">70</td><td class="bn2">135</td><td class="bse">-65</td></tr><tr><td class="bn">新加坡商瑞銀</td><td class="bn2">456</td><td class="bn2">380</td><td class="bbu">+76</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠兆豐-大同</td><td class="bn2">1</td><td class="bn2">65</td><td class="bse">-64</td></tr><tr><td class="bn">花旗環球</td><td class="bn2">70</td><td class="bn2">10</td><td class="bbu">+60</td><td class="bdv"></td><td class="bn">玉山-城中</td><td class="bn2">33</td><td class="bn2">95</td><td class="bse">-62</td></tr><tr><td class="bn">元大-北三重</td><td class="bn2">81</td><td class="bn2">28</td><td class="bbu">+53</td><td class="bdv"></td><td class="bn">中國信託-中壢</td><td class="bn2">18</td><td class="bn2">80</td><td class="bse">-62</td></tr><tr><td class="bn">富邦-中壢</td><td class="bn2">148</td><td class="bn2">97</td><td class="bbu">+52</td><td class="bdv"></td><td class="bn">元大-員林</td><td class="bn2">49</td><td class="bn2">104</td><td class="bse">-56</td></tr><tr><td class="bn">元大-大灣</td><td class="bn2">69</td><td class="bn2">19</td><td class="bbu">+50</td><td class="bdv"></td><td class="bn">台新-台中</td><td class="bn2">99</td><td class="bn2">147</td><td class="bse">-48</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+3,165</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-1,674</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/25</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+1220</b>&nbsp;賣1344&nbsp;補-124&nbsp;餘38565</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">富邦證券</td><td class="bn2">1,448</td><td class="bn2">100</td><td class="bbu">+1,348</td><td class="bdv"></td><td class="bn">美商高盛</td><td class="bn2">175</td><td class="bn2">1,066</td><td class="bse">-891</td></tr><tr><td class="bn">台灣摩根士丹利</td><td class="bn2">1,653</td><td class="bn2">920</td><td class="bbu">+733</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠永豐金-豐原</td><td class="bn2">2</td><td class="bn2">271</td><td class="bse">-269</td></tr><tr><td class="bn">港商野村</td><td class="bn2">327</td><td class="bn2">52</td><td class="bbu">+275</td><td class="bdv"></td><td class="bn">新加坡商瑞銀</td><td class="bn2">389</td><td class="bn2">612</td><td class="bse">-223</td></tr><tr><td class="bn">凱基-台北</td><td class="bn2">1,141</td><td class="bn2">999</td><td class="bbu">+142</td><td class="bdv"></td><td class="bn">摩根大通</td><td class="bn2">63</td><td class="bn2">195</td><td class="bse">-132</td></tr><tr><td class="bn">元大證券</td><td class="bn2">965</td><td class="bn2">862</td><td class="bbu">+104</td><td class="bdv"></td><td class="bn">美林</td><td class="bn2">71</td><td class="bn2">185</td><td class="bse">-114</td></tr><tr><td class="bn">中國信託</td><td class="bn2">99</td><td class="bn2">27</td><td class="bbu">+72</td><td class="bdv"></td><td class="bn">元大-斗六</td><td class="bn2">4</td><td class="bn2">114</td><td class="bse">-110</td></tr><tr><td class="bn">國票-九鼎</td><td class="bn2">81</td><td class="bn2">31</td><td class="bbu">+50</td><td class="bdv"></td><td class="bn">凱基-文心</td><td class="bn2">11</td><td class="bn2">111</td><td class="bse">-100</td></tr><tr><td class="bn">台新</td><td class="bn2">118</td><td class="bn2">79</td><td class="bbu">+39</td><td class="bdv"></td><td class="bn">富邦-台南</td><td class="bn2">20</td><td class="bn2">105</td><td class="bse">-85</td></tr><tr><td class="bn">群益金鼎-大甲</td><td class="bn2">66</td><td class="bn2">30</td><td class="bbu">+36</td><td class="bdv"></td><td class="bn">統一</td><td class="bn2">45</td><td class="bn2">126</td><td class="bse">-81</td></tr><tr><td class="bn">凱基</td><td class="bn2">35</td><td class="bn2">9</td><td class="bbu">+26</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠國票-敦北法人</td><td class="bn2">4</td><td class="bn2">80</td><td class="bse">-76</td></tr><tr><td class="bn">國泰-板橋</td><td class="bn2">65</td><td class="bn2">43</td><td class="bbu">+22</td><td class="bdv"></td><td class="bn">永豐金證券</td><td class="bn2">79</td><td class="bn2">143</td><td class="bse">-64</td></tr><tr><td class="bn" style="background:#0d2310">🎯群益金鼎-松山</td><td class="bn2">22</td><td class="bn2">0</td><td class="bbu">+22</td><td class="bdv"></td><td class="bn">新光-桃園</td><td class="bn2">39</td><td class="bn2">87</td><td class="bse">-48</td></tr><tr><td class="bn">永豐金-桃園</td><td class="bn2">31</td><td class="bn2">11</td><td class="bbu">+20</td><td class="bdv"></td><td class="bn">宏遠-高雄</td><td class="bn2">18</td><td class="bn2">66</td><td class="bse">-48</td></tr><tr><td class="bn">第一金-華江</td><td class="bn2">40</td><td class="bn2">21</td><td class="bbu">+19</td><td class="bdv"></td><td class="bn">元大-花蓮</td><td class="bn2">3</td><td class="bn2">48</td><td class="bse">-45</td></tr><tr><td class="bn" style="background:#0d2310">🎯群益金鼎-萬華</td><td class="bn2">18</td><td class="bn2">0</td><td class="bbu">+18</td><td class="bdv"></td><td class="bn">國泰-敦南</td><td class="bn2">473</td><td class="bn2">507</td><td class="bse">-33</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+2,926</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-2,320</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/26</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+1170</b>&nbsp;賣1844&nbsp;補-674&nbsp;餘39735</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn" style="background:#0d2310">🎯國泰證券</td><td class="bn2">1,664</td><td class="bn2">54</td><td class="bbu">+1,610</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠美林</td><td class="bn2">27</td><td class="bn2">1,388</td><td class="bse">-1,361</td></tr><tr><td class="bn">港商野村</td><td class="bn2">386</td><td class="bn2">224</td><td class="bbu">+162</td><td class="bdv"></td><td class="bn">美商高盛</td><td class="bn2">192</td><td class="bn2">1,096</td><td class="bse">-904</td></tr><tr><td class="bn">國泰-敦南</td><td class="bn2">310</td><td class="bn2">197</td><td class="bbu">+113</td><td class="bdv"></td><td class="bn">凱基-台北</td><td class="bn2">951</td><td class="bn2">1,631</td><td class="bse">-680</td></tr><tr><td class="bn" style="background:#0d2310">🎯富邦-岡山</td><td class="bn2">102</td><td class="bn2">0</td><td class="bbu">+102</td><td class="bdv"></td><td class="bn">台灣摩根士丹利</td><td class="bn2">470</td><td class="bn2">991</td><td class="bse">-521</td></tr><tr><td class="bn">永豐金-板新</td><td class="bn2">74</td><td class="bn2">17</td><td class="bbu">+57</td><td class="bdv"></td><td class="bn">新加坡商瑞銀</td><td class="bn2">124</td><td class="bn2">482</td><td class="bse">-358</td></tr><tr><td class="bn">永豐金-嘉義</td><td class="bn2">74</td><td class="bn2">17</td><td class="bbu">+57</td><td class="bdv"></td><td class="bn">元大證券</td><td class="bn2">765</td><td class="bn2">1,119</td><td class="bse">-354</td></tr><tr><td class="bn">新光</td><td class="bn2">131</td><td class="bn2">80</td><td class="bbu">+50</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠富邦-三峽</td><td class="bn2">1</td><td class="bn2">139</td><td class="bse">-138</td></tr><tr><td class="bn" style="background:#0d2310">🎯玉山-城中</td><td class="bn2">48</td><td class="bn2">2</td><td class="bbu">+46</td><td class="bdv"></td><td class="bn">凱基-文心</td><td class="bn2">6</td><td class="bn2">138</td><td class="bse">-132</td></tr><tr><td class="bn">統一-城中</td><td class="bn2">85</td><td class="bn2">40</td><td class="bbu">+45</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠摩根大通</td><td class="bn2">1</td><td class="bn2">124</td><td class="bse">-123</td></tr><tr><td class="bn">國泰-台中</td><td class="bn2">81</td><td class="bn2">41</td><td class="bbu">+40</td><td class="bdv"></td><td class="bn">永豐金證券</td><td class="bn2">153</td><td class="bn2">225</td><td class="bse">-72</td></tr><tr><td class="bn">中國信託-高雄</td><td class="bn2">50</td><td class="bn2">10</td><td class="bbu">+40</td><td class="bdv"></td><td class="bn">國票-敦北法人</td><td class="bn2">5</td><td class="bn2">74</td><td class="bse">-69</td></tr><tr><td class="bn">凱基-站前</td><td class="bn2">55</td><td class="bn2">18</td><td class="bbu">+37</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠永豐金-虎尾</td><td class="bn2">2</td><td class="bn2">68</td><td class="bse">-65</td></tr><tr><td class="bn">國泰-桃園</td><td class="bn2">95</td><td class="bn2">58</td><td class="bbu">+36</td><td class="bdv"></td><td class="bn">統一</td><td class="bn2">73</td><td class="bn2">137</td><td class="bse">-64</td></tr><tr><td class="bn" style="background:#0d2310">🎯兆豐-中壢</td><td class="bn2">36</td><td class="bn2">1</td><td class="bbu">+35</td><td class="bdv"></td><td class="bn">華南永昌</td><td class="bn2">22</td><td class="bn2">79</td><td class="bse">-57</td></tr><tr><td class="bn" style="background:#0d2310">🎯兆豐-板橋</td><td class="bn2">36</td><td class="bn2">1</td><td class="bbu">+35</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠大和國泰</td><td class="bn2">0</td><td class="bn2">50</td><td class="bse">-50</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+2,465</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-4,948</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/27</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+555</b>&nbsp;賣708&nbsp;補-153&nbsp;餘40290</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">凱基-台北</td><td class="bn2">1,339</td><td class="bn2">608</td><td class="bbu">+731</td><td class="bdv"></td><td class="bn">國泰-敦南</td><td class="bn2">264</td><td class="bn2">495</td><td class="bse">-232</td></tr><tr><td class="bn">元大證券</td><td class="bn2">1,054</td><td class="bn2">505</td><td class="bbu">+549</td><td class="bdv"></td><td class="bn">元大-豐原</td><td class="bn2">8</td><td class="bn2">219</td><td class="bse">-210</td></tr><tr><td class="bn">港商野村</td><td class="bn2">452</td><td class="bn2">70</td><td class="bbu">+382</td><td class="bdv"></td><td class="bn">美商高盛</td><td class="bn2">497</td><td class="bn2">680</td><td class="bse">-183</td></tr><tr><td class="bn">美林</td><td class="bn2">515</td><td class="bn2">147</td><td class="bbu">+368</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠富邦-岡山</td><td class="bn2">3</td><td class="bn2">100</td><td class="bse">-97</td></tr><tr><td class="bn">台灣摩根士丹利</td><td class="bn2">1,055</td><td class="bn2">712</td><td class="bbu">+343</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠富邦-台南</td><td class="bn2">4</td><td class="bn2">92</td><td class="bse">-88</td></tr><tr><td class="bn">新加坡商瑞銀</td><td class="bn2">685</td><td class="bn2">464</td><td class="bbu">+221</td><td class="bdv"></td><td class="bn">國泰-台中</td><td class="bn2">54</td><td class="bn2">121</td><td class="bse">-67</td></tr><tr><td class="bn" style="background:#0d2310">🎯港商麥格理</td><td class="bn2">181</td><td class="bn2">0</td><td class="bbu">+181</td><td class="bdv"></td><td class="bn">玉山-城中</td><td class="bn2">8</td><td class="bn2">65</td><td class="bse">-57</td></tr><tr><td class="bn">摩根大通</td><td class="bn2">185</td><td class="bn2">75</td><td class="bbu">+110</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠永豐金-內湖</td><td class="bn2">2</td><td class="bn2">46</td><td class="bse">-44</td></tr><tr><td class="bn">永豐金-屏東</td><td class="bn2">115</td><td class="bn2">22</td><td class="bbu">+93</td><td class="bdv"></td><td class="bn">群益金鼎-大甲</td><td class="bn2">22</td><td class="bn2">66</td><td class="bse">-44</td></tr><tr><td class="bn">第一金-忠孝</td><td class="bn2">61</td><td class="bn2">5</td><td class="bbu">+56</td><td class="bdv"></td><td class="bn">群益金鼎-新莊</td><td class="bn2">22</td><td class="bn2">66</td><td class="bse">-44</td></tr><tr><td class="bn">元大-彰化民生</td><td class="bn2">57</td><td class="bn2">6</td><td class="bbu">+50</td><td class="bdv"></td><td class="bn">統一</td><td class="bn2">36</td><td class="bn2">78</td><td class="bse">-42</td></tr><tr><td class="bn">元大-樹林</td><td class="bn2">57</td><td class="bn2">6</td><td class="bbu">+50</td><td class="bdv"></td><td class="bn">富邦證券</td><td class="bn2">12</td><td class="bn2">47</td><td class="bse">-34</td></tr><tr><td class="bn" style="background:#0d2310">🎯康和</td><td class="bn2">30</td><td class="bn2">0</td><td class="bbu">+30</td><td class="bdv"></td><td class="bn">統一-城中</td><td class="bn2">6</td><td class="bn2">39</td><td class="bse">-33</td></tr><tr><td class="bn">國票-九鼎</td><td class="bn2">34</td><td class="bn2">8</td><td class="bbu">+26</td><td class="bdv"></td><td class="bn">凱基-站前</td><td class="bn2">21</td><td class="bn2">54</td><td class="bse">-33</td></tr><tr><td class="bn">花旗環球</td><td class="bn2">35</td><td class="bn2">12</td><td class="bbu">+23</td><td class="bdv"></td><td class="bn">華南永昌-苗栗</td><td class="bn2">2</td><td class="bn2">32</td><td class="bse">-30</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+3,213</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-1,238</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/28</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+928</b>&nbsp;賣1006&nbsp;補-78&nbsp;餘41218</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">新光</td><td class="bn2">389</td><td class="bn2">130</td><td class="bbu">+259</td><td class="bdv"></td><td class="bn">新加坡商瑞銀</td><td class="bn2">259</td><td class="bn2">981</td><td class="bse">-722</td></tr><tr><td class="bn">台灣摩根士丹利</td><td class="bn2">705</td><td class="bn2">478</td><td class="bbu">+227</td><td class="bdv"></td><td class="bn">美商高盛</td><td class="bn2">366</td><td class="bn2">780</td><td class="bse">-414</td></tr><tr><td class="bn" style="background:#0d2310">🎯港商麥格理</td><td class="bn2">174</td><td class="bn2">0</td><td class="bbu">+174</td><td class="bdv"></td><td class="bn">摩根大通</td><td class="bn2">56</td><td class="bn2">364</td><td class="bse">-308</td></tr><tr><td class="bn">富邦-新店</td><td class="bn2">133</td><td class="bn2">14</td><td class="bbu">+119</td><td class="bdv"></td><td class="bn">元大證券</td><td class="bn2">2,516</td><td class="bn2">2,654</td><td class="bse">-138</td></tr><tr><td class="bn">元大-松江</td><td class="bn2">113</td><td class="bn2">11</td><td class="bbu">+102</td><td class="bdv"></td><td class="bn">美林</td><td class="bn2">114</td><td class="bn2">225</td><td class="bse">-111</td></tr><tr><td class="bn" style="background:#0d2310">🎯國票-敦北法人</td><td class="bn2">98</td><td class="bn2">4</td><td class="bbu">+94</td><td class="bdv"></td><td class="bn">凱基-台北</td><td class="bn2">936</td><td class="bn2">995</td><td class="bse">-59</td></tr><tr><td class="bn">國泰-敦南</td><td class="bn2">600</td><td class="bn2">540</td><td class="bbu">+60</td><td class="bdv"></td><td class="bn">富邦-中壢</td><td class="bn2">83</td><td class="bn2">131</td><td class="bse">-49</td></tr><tr><td class="bn">港商野村</td><td class="bn2">64</td><td class="bn2">4</td><td class="bbu">+60</td><td class="bdv"></td><td class="bn">永豐金-新莊</td><td class="bn2">14</td><td class="bn2">59</td><td class="bse">-45</td></tr><tr><td class="bn">元大-豐原</td><td class="bn2">78</td><td class="bn2">19</td><td class="bbu">+59</td><td class="bdv"></td><td class="bn">永豐金-忠孝</td><td class="bn2">17</td><td class="bn2">60</td><td class="bse">-43</td></tr><tr><td class="bn" style="background:#0d2310">🎯永豐金-潮州</td><td class="bn2">61</td><td class="bn2">3</td><td class="bbu">+58</td><td class="bdv"></td><td class="bn">元大-北三重</td><td class="bn2">34</td><td class="bn2">75</td><td class="bse">-41</td></tr><tr><td class="bn">元大-北屯</td><td class="bn2">73</td><td class="bn2">16</td><td class="bbu">+57</td><td class="bdv"></td><td class="bn">永豐金證券</td><td class="bn2">152</td><td class="bn2">189</td><td class="bse">-37</td></tr><tr><td class="bn">元大-左營</td><td class="bn2">73</td><td class="bn2">16</td><td class="bbu">+57</td><td class="bdv"></td><td class="bn">凱基-竹科</td><td class="bn2">6</td><td class="bn2">41</td><td class="bse">-35</td></tr><tr><td class="bn">華南永昌-敦南</td><td class="bn2">72</td><td class="bn2">16</td><td class="bbu">+56</td><td class="bdv"></td><td class="bn">第一金-頭份</td><td class="bn2">6</td><td class="bn2">37</td><td class="bse">-31</td></tr><tr><td class="bn">元大-中崙</td><td class="bn2">47</td><td class="bn2">2</td><td class="bbu">+45</td><td class="bdv"></td><td class="bn">臺銀-臺中</td><td class="bn2">39</td><td class="bn2">70</td><td class="bse">-31</td></tr><tr><td class="bn">富邦-南屯</td><td class="bn2">49</td><td class="bn2">6</td><td class="bbu">+43</td><td class="bdv"></td><td class="bn">富邦-員林</td><td class="bn2">4</td><td class="bn2">30</td><td class="bse">-25</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+1,470</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-2,089</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">08/31</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+4351</b>&nbsp;賣4542&nbsp;補-191&nbsp;餘45569</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">元大-斗六</td><td class="bn2">610</td><td class="bn2">5</td><td class="bbu">+604</td><td class="bdv"></td><td class="bn">台灣摩根士丹利</td><td class="bn2">417</td><td class="bn2">2,040</td><td class="bse">-1,623</td></tr><tr><td class="bn">永豐金證券</td><td class="bn2">484</td><td class="bn2">72</td><td class="bbu">+412</td><td class="bdv"></td><td class="bn">美商高盛</td><td class="bn2">163</td><td class="bn2">1,069</td><td class="bse">-906</td></tr><tr><td class="bn" style="background:#0d2310">🎯台灣企銀</td><td class="bn2">209</td><td class="bn2">4</td><td class="bbu">+205</td><td class="bdv"></td><td class="bn">新加坡商瑞銀</td><td class="bn2">82</td><td class="bn2">930</td><td class="bse">-848</td></tr><tr><td class="bn" style="background:#0d2310">🎯統一-敦南</td><td class="bn2">134</td><td class="bn2">0</td><td class="bbu">+134</td><td class="bdv"></td><td class="bn">元大證券</td><td class="bn2">1,016</td><td class="bn2">1,796</td><td class="bse">-781</td></tr><tr><td class="bn">港商麥格理</td><td class="bn2">186</td><td class="bn2">61</td><td class="bbu">+125</td><td class="bdv"></td><td class="bn">美林</td><td class="bn2">44</td><td class="bn2">634</td><td class="bse">-590</td></tr><tr><td class="bn" style="background:#0d2310">🎯第一金-自由</td><td class="bn2">120</td><td class="bn2">5</td><td class="bbu">+115</td><td class="bdv"></td><td class="bn">摩根大通</td><td class="bn2">302</td><td class="bn2">632</td><td class="bse">-330</td></tr><tr><td class="bn" style="background:#0d2310">🎯玉山證券</td><td class="bn2">119</td><td class="bn2">5</td><td class="bbu">+114</td><td class="bdv"></td><td class="bn">港商野村</td><td class="bn2">54</td><td class="bn2">354</td><td class="bse">-300</td></tr><tr><td class="bn">國泰-敦南</td><td class="bn2">371</td><td class="bn2">272</td><td class="bbu">+100</td><td class="bdv"></td><td class="bn">凱基</td><td class="bn2">1</td><td class="bn2">200</td><td class="bse">-199</td></tr><tr><td class="bn">富邦-台南</td><td class="bn2">144</td><td class="bn2">46</td><td class="bbu">+98</td><td class="bdv"></td><td class="bn">凱基-台北</td><td class="bn2">964</td><td class="bn2">1,137</td><td class="bse">-173</td></tr><tr><td class="bn">玉山-城中</td><td class="bn2">92</td><td class="bn2">8</td><td class="bbu">+84</td><td class="bdv"></td><td class="bn">群益金鼎</td><td class="bn2">269</td><td class="bn2">378</td><td class="bse">-109</td></tr><tr><td class="bn">國泰-台中</td><td class="bn2">102</td><td class="bn2">31</td><td class="bbu">+70</td><td class="bdv"></td><td class="bn">元大-崇德</td><td class="bn2">7</td><td class="bn2">110</td><td class="bse">-104</td></tr><tr><td class="bn">新光</td><td class="bn2">130</td><td class="bn2">64</td><td class="bbu">+66</td><td class="bdv"></td><td class="bn">國泰證券</td><td class="bn2">13</td><td class="bn2">69</td><td class="bse">-56</td></tr><tr><td class="bn">元大-北港</td><td class="bn2">82</td><td class="bn2">18</td><td class="bbu">+63</td><td class="bdv"></td><td class="bn">兆豐證券</td><td class="bn2">7</td><td class="bn2">54</td><td class="bse">-47</td></tr><tr><td class="bn" style="background:#0d2310">🎯土銀</td><td class="bn2">54</td><td class="bn2">1</td><td class="bbu">+53</td><td class="bdv"></td><td class="bn">統一</td><td class="bn2">43</td><td class="bn2">86</td><td class="bse">-43</td></tr><tr><td class="bn">富邦-新竹</td><td class="bn2">100</td><td class="bn2">50</td><td class="bbu">+50</td><td class="bdv"></td><td class="bn">元大-彰化民生</td><td class="bn2">19</td><td class="bn2">58</td><td class="bse">-40</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+2,293</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-6,148</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">09/01</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+857</b>&nbsp;賣1322&nbsp;補-465&nbsp;餘46426</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">元大證券</td><td class="bn2">2,167</td><td class="bn2">704</td><td class="bbu">+1,463</td><td class="bdv"></td><td class="bn">台灣摩根士丹利</td><td class="bn2">876</td><td class="bn2">1,454</td><td class="bse">-578</td></tr><tr><td class="bn">新加坡商瑞銀</td><td class="bn2">1,711</td><td class="bn2">412</td><td class="bbu">+1,299</td><td class="bdv"></td><td class="bn">凱基</td><td class="bn2">19</td><td class="bn2">176</td><td class="bse">-157</td></tr><tr><td class="bn">美商高盛</td><td class="bn2">1,269</td><td class="bn2">257</td><td class="bbu">+1,013</td><td class="bdv"></td><td class="bn">新光</td><td class="bn2">125</td><td class="bn2">261</td><td class="bse">-136</td></tr><tr><td class="bn">凱基-台北</td><td class="bn2">1,379</td><td class="bn2">712</td><td class="bbu">+668</td><td class="bdv"></td><td class="bn">國泰-敦南</td><td class="bn2">282</td><td class="bn2">414</td><td class="bse">-132</td></tr><tr><td class="bn">美林</td><td class="bn2">349</td><td class="bn2">41</td><td class="bbu">+308</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠兆豐-大同</td><td class="bn2">1</td><td class="bn2">125</td><td class="bse">-124</td></tr><tr><td class="bn" style="background:#0d2310">🎯港商麥格理</td><td class="bn2">179</td><td class="bn2">0</td><td class="bbu">+179</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠國票-敦北法人</td><td class="bn2">4</td><td class="bn2">102</td><td class="bse">-98</td></tr><tr><td class="bn">港商野村</td><td class="bn2">165</td><td class="bn2">22</td><td class="bbu">+143</td><td class="bdv"></td><td class="bn">富邦-台南</td><td class="bn2">14</td><td class="bn2">111</td><td class="bse">-97</td></tr><tr><td class="bn">合庫-西台中</td><td class="bn2">105</td><td class="bn2">7</td><td class="bbu">+98</td><td class="bdv"></td><td class="bn">兆豐證券</td><td class="bn2">12</td><td class="bn2">102</td><td class="bse">-90</td></tr><tr><td class="bn">群益金鼎</td><td class="bn2">144</td><td class="bn2">66</td><td class="bbu">+78</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠台新-城中</td><td class="bn2">3</td><td class="bn2">63</td><td class="bse">-60</td></tr><tr><td class="bn">國票-九鼎</td><td class="bn2">79</td><td class="bn2">39</td><td class="bbu">+40</td><td class="bdv"></td><td class="bn">統一-城中</td><td class="bn2">9</td><td class="bn2">68</td><td class="bse">-59</td></tr><tr><td class="bn" style="background:#0d2310">🎯群益金鼎-館前</td><td class="bn2">36</td><td class="bn2">1</td><td class="bbu">+35</td><td class="bdv"></td><td class="bn">群益金鼎-大甲</td><td class="bn2">6</td><td class="bn2">61</td><td class="bse">-55</td></tr><tr><td class="bn">統一</td><td class="bn2">56</td><td class="bn2">26</td><td class="bbu">+30</td><td class="bdv"></td><td class="bn">永豐金-忠孝</td><td class="bn2">4</td><td class="bn2">56</td><td class="bse">-52</td></tr><tr><td class="bn">台新-松德</td><td class="bn2">49</td><td class="bn2">20</td><td class="bbu">+29</td><td class="bdv"></td><td class="bn">元大-鳳中</td><td class="bn2">12</td><td class="bn2">61</td><td class="bse">-48</td></tr><tr><td class="bn">兆豐-松德</td><td class="bn2">39</td><td class="bn2">11</td><td class="bbu">+28</td><td class="bdv"></td><td class="bn">永豐金-敦北</td><td class="bn2">7</td><td class="bn2">55</td><td class="bse">-48</td></tr><tr><td class="bn">聯邦-雙和</td><td class="bn2">31</td><td class="bn2">3</td><td class="bbu">+28</td><td class="bdv"></td><td class="bn">花旗環球</td><td class="bn2">18</td><td class="bn2">66</td><td class="bse">-48</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+5,439</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-1,782</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">09/02</b>
+    
+    <span class="blend">借券 <b style="color:#f85149">+103</b>&nbsp;賣479&nbsp;補-376&nbsp;餘46529</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">凱基-台北</td><td class="bn2">1,164</td><td class="bn2">430</td><td class="bbu">+734</td><td class="bdv"></td><td class="bn">美商高盛</td><td class="bn2">125</td><td class="bn2">1,507</td><td class="bse">-1,382</td></tr><tr><td class="bn">永豐金證券</td><td class="bn2">327</td><td class="bn2">50</td><td class="bbu">+277</td><td class="bdv"></td><td class="bn">台灣摩根士丹利</td><td class="bn2">55</td><td class="bn2">921</td><td class="bse">-866</td></tr><tr><td class="bn">美林</td><td class="bn2">270</td><td class="bn2">181</td><td class="bbu">+89</td><td class="bdv"></td><td class="bn">元大證券</td><td class="bn2">458</td><td class="bn2">783</td><td class="bse">-325</td></tr><tr><td class="bn">國泰-敦南</td><td class="bn2">199</td><td class="bn2">120</td><td class="bbu">+78</td><td class="bdv"></td><td class="bn">新加坡商瑞銀</td><td class="bn2">313</td><td class="bn2">468</td><td class="bse">-155</td></tr><tr><td class="bn" style="background:#0d2310">🎯聯邦-三重</td><td class="bn2">52</td><td class="bn2">1</td><td class="bbu">+51</td><td class="bdv"></td><td class="bn">摩根大通</td><td class="bn2">57</td><td class="bn2">137</td><td class="bse">-80</td></tr><tr><td class="bn">群益金鼎-大甲</td><td class="bn2">50</td><td class="bn2">8</td><td class="bbu">+42</td><td class="bdv"></td><td class="bn">元大-豐原</td><td class="bn2">10</td><td class="bn2">75</td><td class="bse">-64</td></tr><tr><td class="bn">富邦-台北</td><td class="bn2">88</td><td class="bn2">47</td><td class="bbu">+41</td><td class="bdv"></td><td class="bn">元大-敦化</td><td class="bn2">6</td><td class="bn2">68</td><td class="bse">-62</td></tr><tr><td class="bn">新光-桃園</td><td class="bn2">39</td><td class="bn2">3</td><td class="bbu">+36</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠香港上海匯豐</td><td class="bn2">0</td><td class="bn2">57</td><td class="bse">-57</td></tr><tr><td class="bn">元大-大天母</td><td class="bn2">32</td><td class="bn2">0</td><td class="bbu">+32</td><td class="bdv"></td><td class="bn">凱基-中壢</td><td class="bn2">3</td><td class="bn2">59</td><td class="bse">-56</td></tr><tr><td class="bn">凱基-中港</td><td class="bn2">32</td><td class="bn2">2</td><td class="bbu">+30</td><td class="bdv"></td><td class="bn">富邦-南京</td><td class="bn2">10</td><td class="bn2">62</td><td class="bse">-52</td></tr><tr><td class="bn">富邦-台南</td><td class="bn2">32</td><td class="bn2">2</td><td class="bbu">+30</td><td class="bdv"></td><td class="bn">元大-中崙</td><td class="bn2">2</td><td class="bn2">41</td><td class="bse">-39</td></tr><tr><td class="bn">元大-大甲</td><td class="bn2">39</td><td class="bn2">9</td><td class="bbu">+29</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠台新-松德</td><td class="bn2">1</td><td class="bn2">30</td><td class="bse">-29</td></tr><tr><td class="bn">新光</td><td class="bn2">82</td><td class="bn2">54</td><td class="bbu">+28</td><td class="bdv"></td><td class="bn">美好-蘆洲</td><td class="bn2">5</td><td class="bn2">32</td><td class="bse">-27</td></tr><tr><td class="bn">統一-城中</td><td class="bn2">50</td><td class="bn2">24</td><td class="bbu">+26</td><td class="bdv"></td><td class="bn">港商麥格理</td><td class="bn2">9</td><td class="bn2">29</td><td class="bse">-20</td></tr><tr><td class="bn">統一-嘉義</td><td class="bn2">44</td><td class="bn2">18</td><td class="bbu">+26</td><td class="bdv"></td><td class="bn">華南永昌</td><td class="bn2">9</td><td class="bn2">28</td><td class="bse">-20</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+1,550</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-3,233</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">09/03</b>
+    
+    <span class="blend">借券 <b style="color:#3fb950">-1165</b>&nbsp;賣454&nbsp;補-1619&nbsp;餘45364</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">台灣摩根士丹利</td><td class="bn2">1,581</td><td class="bn2">392</td><td class="bbu">+1,189</td><td class="bdv"></td><td class="bn">元大證券</td><td class="bn2">2,152</td><td class="bn2">2,454</td><td class="bse">-302</td></tr><tr><td class="bn">美商高盛</td><td class="bn2">963</td><td class="bn2">363</td><td class="bbu">+600</td><td class="bdv"></td><td class="bn">新光</td><td class="bn2">125</td><td class="bn2">365</td><td class="bse">-240</td></tr><tr><td class="bn">美林</td><td class="bn2">606</td><td class="bn2">109</td><td class="bbu">+497</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠國泰證券</td><td class="bn2">0</td><td class="bn2">199</td><td class="bse">-199</td></tr><tr><td class="bn">港商麥格理</td><td class="bn2">717</td><td class="bn2">253</td><td class="bbu">+464</td><td class="bdv"></td><td class="bn">摩根大通</td><td class="bn2">327</td><td class="bn2">521</td><td class="bse">-194</td></tr><tr><td class="bn">凱基-台北</td><td class="bn2">1,415</td><td class="bn2">1,144</td><td class="bbu">+271</td><td class="bdv"></td><td class="bn">永豐金證券</td><td class="bn2">71</td><td class="bn2">241</td><td class="bse">-170</td></tr><tr><td class="bn">港商野村</td><td class="bn2">210</td><td class="bn2">30</td><td class="bbu">+180</td><td class="bdv"></td><td class="bn">國票-九鼎</td><td class="bn2">10</td><td class="bn2">122</td><td class="bse">-112</td></tr><tr><td class="bn">凱基-高雄</td><td class="bn2">82</td><td class="bn2">4</td><td class="bbu">+78</td><td class="bdv"></td><td class="bn">富邦-台北</td><td class="bn2">56</td><td class="bn2">136</td><td class="bse">-80</td></tr><tr><td class="bn">兆豐-大同</td><td class="bn2">62</td><td class="bn2">4</td><td class="bbu">+58</td><td class="bdv"></td><td class="bn">國泰-敦南</td><td class="bn2">415</td><td class="bn2">494</td><td class="bse">-79</td></tr><tr><td class="bn">兆豐-岡山</td><td class="bn2">62</td><td class="bn2">4</td><td class="bbu">+58</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠兆豐證券</td><td class="bn2">3</td><td class="bn2">70</td><td class="bse">-67</td></tr><tr><td class="bn">中國信託-忠孝</td><td class="bn2">103</td><td class="bn2">49</td><td class="bbu">+54</td><td class="bdv"></td><td class="bn">元大-豐原</td><td class="bn2">7</td><td class="bn2">65</td><td class="bse">-58</td></tr><tr><td class="bn">玉山-城中</td><td class="bn2">112</td><td class="bn2">64</td><td class="bbu">+49</td><td class="bdv"></td><td class="bn">富邦-竹科</td><td class="bn2">11</td><td class="bn2">65</td><td class="bse">-54</td></tr><tr><td class="bn">富邦-台南</td><td class="bn2">69</td><td class="bn2">25</td><td class="bbu">+44</td><td class="bdv"></td><td class="bn">國泰-板橋</td><td class="bn2">34</td><td class="bn2">84</td><td class="bse">-50</td></tr><tr><td class="bn" style="background:#0d2310">🎯花旗環球</td><td class="bn2">43</td><td class="bn2">1</td><td class="bbu">+42</td><td class="bdv"></td><td class="bn">土銀</td><td class="bn2">8</td><td class="bn2">54</td><td class="bse">-46</td></tr><tr><td class="bn">新加坡商瑞銀</td><td class="bn2">702</td><td class="bn2">661</td><td class="bbu">+41</td><td class="bdv"></td><td class="bn">國票-台中</td><td class="bn2">49</td><td class="bn2">95</td><td class="bse">-46</td></tr><tr><td class="bn">永豐金-羅東</td><td class="bn2">65</td><td class="bn2">32</td><td class="bbu">+33</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠聯邦-雙和</td><td class="bn2">1</td><td class="bn2">46</td><td class="bse">-45</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+3,657</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-1,742</td></tr></tbody>
+  </table>
+</div>
+<div class="bday">
+  <div class="bday-hd">
+    <b class="bdd">09/04</b>
+    
+    <span class="blend">借券 <b style="color:#3fb950">-525</b>&nbsp;賣369&nbsp;補-894&nbsp;餘44839</span>
+    <span class="bvol">成交0張</span>
+  </div>
+  <table class="btbl">
+    <thead><tr>
+      <th class="bn">買超券商</th><th>買進</th><th>賣出</th><th>買超</th>
+      <th class="bdv"></th>
+      <th class="bn">賣超券商</th><th>買進</th><th>賣出</th><th>賣超</th>
+    </tr></thead>
+    <tbody><tr><td class="bn">凱基-台北</td><td class="bn2">1,527</td><td class="bn2">610</td><td class="bbu">+917</td><td class="bdv"></td><td class="bn">國泰-敦南</td><td class="bn2">197</td><td class="bn2">380</td><td class="bse">-183</td></tr><tr><td class="bn">元大證券</td><td class="bn2">1,731</td><td class="bn2">840</td><td class="bbu">+891</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠群益金鼎-東湖</td><td class="bn2">0</td><td class="bn2">156</td><td class="bse">-156</td></tr><tr><td class="bn">台灣摩根士丹利</td><td class="bn2">870</td><td class="bn2">103</td><td class="bbu">+767</td><td class="bdv"></td><td class="bn">花旗環球</td><td class="bn2">65</td><td class="bn2">188</td><td class="bse">-123</td></tr><tr><td class="bn" style="background:#0d2310">🎯美林</td><td class="bn2">519</td><td class="bn2">15</td><td class="bbu">+504</td><td class="bdv"></td><td class="bn">富邦-台南</td><td class="bn2">15</td><td class="bn2">101</td><td class="bse">-86</td></tr><tr><td class="bn">美商高盛</td><td class="bn2">812</td><td class="bn2">359</td><td class="bbu">+453</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠國票-敦北法人</td><td class="bn2">1</td><td class="bn2">82</td><td class="bse">-81</td></tr><tr><td class="bn">新加坡商瑞銀</td><td class="bn2">536</td><td class="bn2">135</td><td class="bbu">+401</td><td class="bdv"></td><td class="bn">中國信託</td><td class="bn2">14</td><td class="bn2">92</td><td class="bse">-78</td></tr><tr><td class="bn" style="background:#0d2310">🎯兆豐-三民</td><td class="bn2">211</td><td class="bn2">6</td><td class="bbu">+205</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠土銀-新竹</td><td class="bn2">0</td><td class="bn2">74</td><td class="bse">-74</td></tr><tr><td class="bn">國票-九鼎</td><td class="bn2">64</td><td class="bn2">5</td><td class="bbu">+59</td><td class="bdv"></td><td class="bn">玉山-城中</td><td class="bn2">20</td><td class="bn2">93</td><td class="bse">-73</td></tr><tr><td class="bn" style="background:#0d2310">🎯聯邦-雙和</td><td class="bn2">32</td><td class="bn2">1</td><td class="bbu">+31</td><td class="bdv"></td><td class="bn">玉山證券</td><td class="bn2">12</td><td class="bn2">82</td><td class="bse">-70</td></tr><tr><td class="bn">群益金鼎</td><td class="bn2">294</td><td class="bn2">265</td><td class="bbu">+29</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠群益金鼎-大甲</td><td class="bn2">0</td><td class="bn2">60</td><td class="bse">-60</td></tr><tr><td class="bn">康和-板橋</td><td class="bn2">20</td><td class="bn2">3</td><td class="bbu">+17</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠群益金鼎-新莊</td><td class="bn2">0</td><td class="bn2">60</td><td class="bse">-60</td></tr><tr><td class="bn">元大-內湖民權</td><td class="bn2">21</td><td class="bn2">5</td><td class="bbu">+16</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠兆豐-大同</td><td class="bn2">1</td><td class="bn2">61</td><td class="bse">-60</td></tr><tr><td class="bn">國票-內壢</td><td class="bn2">25</td><td class="bn2">9</td><td class="bbu">+16</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠兆豐-岡山</td><td class="bn2">1</td><td class="bn2">61</td><td class="bse">-60</td></tr><tr><td class="bn">國票證券</td><td class="bn2">20</td><td class="bn2">4</td><td class="bbu">+15</td><td class="bdv"></td><td class="bn" style="background:#2e0d0d">⚠合庫-新竹</td><td class="bn2">1</td><td class="bn2">55</td><td class="bse">-54</td></tr><tr><td class="bn">統一</td><td class="bn2">34</td><td class="bn2">18</td><td class="bbu">+15</td><td class="bdv"></td><td class="bn">富邦-竹科</td><td class="bn2">8</td><td class="bn2">58</td><td class="bse">-50</td></tr><tr class="btt"><td>合計</td><td></td><td></td><td class="bbu">+4,336</td><td class="bdv"></td><td>合計</td><td></td><td></td><td class="bse">-1,269</td></tr></tbody>
+  </table>
+</div>
+</div>
+
+</body></html>
