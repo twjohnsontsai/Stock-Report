@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>2492 華新科 進場評級</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0d1117;color:#c9d1d9;
+       font-family:'Segoe UI','Microsoft JhengHei',sans-serif;padding:19px;font-size:11px}
+  h2{color:#58a6ff;font-size:17px;margin-bottom:5px}
+  .sub{color:#8b949e;font-size:10px;margin-bottom:19px}
+
+  .top{display:flex;gap:13px;margin-bottom:19px;flex-wrap:wrap;align-items:stretch}
+  .grade-card{background:#161b22;border:2px solid #fbc02d;border-radius:10px;
+               padding:19px 32px;text-align:center;display:flex;flex-direction:column;justify-content:center}
+  .grade-val{font-size:59px;font-weight:900;line-height:1;color:#fbc02d}
+  .grade-lbl{font-size:10px;color:#8b949e;margin-top:4px}
+  .score-area{display:flex;gap:9px;flex:1;flex-direction:column;justify-content:center}
+  .score-main{background:#161b22;border:1px solid #fbc02d;border-radius:10px;
+               padding:13px 21px;text-align:center}
+  .score-val{font-size:35px;font-weight:bold;color:#fbc02d}
+  .score-desc{font-size:11px;color:#fbc02d;margin-top:4px}
+  .score-sub{display:flex;gap:9px}
+  .score-sub-card{background:#161b22;border:1px solid #30363d;border-radius:10px;
+                   flex:1;padding:11px 15px;text-align:center}
+  .score-sub-label{font-size:9px;color:#8b949e}
+  .score-sub-val{font-size:21px;font-weight:bold;color:#58a6ff}
+  .score-sub-max{font-size:8px;color:#8b949e}
+  .price-card{background:#161b22;border:1px solid #30363d;border-radius:10px;
+               padding:15px;min-width:160px}
+  .price-card h4{color:#8b949e;font-size:9px;margin-bottom:9px}
+  .price-row{display:flex;justify-content:space-between;font-size:11px;margin:5px 0}
+  .price-row span{color:#8b949e}
+  .price-row b{color:#f0f6ff}
+
+  .warn-box{background:#161b22;border:1px solid #30363d;border-radius:8px;
+             padding:13px 17px;margin-bottom:16px}
+  .warn{color:#f44336;font-size:11px;margin:5px 0}
+  .warn-recovery{color:#ff9800;font-size:11px;margin:5px 0;font-weight:600}
+  .ok{color:#43a047;font-size:11px}
+  .notes{color:#8b949e;font-size:10px;margin-top:7px;font-style:italic}
+
+  .section-title{font-size:11px;font-weight:bold;padding:12px 15px 8px;
+                  border-bottom:1px solid #30363d}
+  .spot-title{color:#58a6ff}
+  .fut-title{color:#f0883e}
+  .fund-title{color:#56d364}
+  .wrap{background:#161b22;border:1px solid #30363d;border-radius:8px;
+         overflow:hidden;margin-bottom:15px}
+  table{width:100%;border-collapse:collapse;font-size:11px}
+  th{background:#0d1117;color:#8b949e;padding:9px 15px;
+      border-bottom:2px solid #30363d;text-align:left;font-weight:normal;font-size:10px}
+  td{padding:9px 15px;border-bottom:1px solid #21262d}
+  td.item{color:#f0f6ff;font-weight:500}
+  td.score{color:#ffd700;font-weight:bold;text-align:center;width:51px;font-size:11px}
+  td.note{color:#8b949e;font-size:10px}
+  tr.cat-row td{background:#1c2128;color:#58a6ff;font-size:9px;padding:7px 15px}
+  .fut-section tr.cat-row td{color:#f0883e}
+  .fund-section tr.cat-row td{color:#56d364}
+  .bar{height:8px;background:#238636;border-radius:4px;min-width:2px}
+  tr.detail-row td{background:#161b22;font-size:9px;color:#6e7681}
+  tr.detail-row td.item{color:#8b949e;font-weight:400}
+  tr.detail-row td.score{color:#6e7681}
+  .total-row td{background:#0d1117;border-top:2px solid #30363d;
+                 font-weight:bold;font-size:11px}
+</style>
+</head>
+<body>
+<h2>2492 華新科　個股期進場評級</h2>
+<div class="sub">分析時間：2026-09-10 07:25</div>
+
+<div class="top">
+  <div class="grade-card">
+    <div class="grade-val">C</div>
+    <div class="grade-lbl">評級</div>
+  </div>
+  <div class="score-area">
+    <div class="score-main">
+      <div class="score-val">59 / 115</div>
+      <div class="score-desc">條件不足，觀望</div>
+    </div>
+    <div class="score-sub">
+      <div class="score-sub-card">
+        <div class="score-sub-label">現貨面</div>
+        <div class="score-sub-val">47</div>
+        <div class="score-sub-max">/ 70</div>
+      </div>
+      <div class="score-sub-card">
+        <div class="score-sub-label">個股期面</div>
+        <div class="score-sub-val" style="color:#f0883e">4</div>
+        <div class="score-sub-max">/ 30</div>
+      </div>
+      <div class="score-sub-card">
+        <div class="score-sub-label">基本面</div>
+        <div class="score-sub-val" style="color:#56d364">8</div>
+        <div class="score-sub-max">/ 15</div>
+      </div>
+    </div>
+  </div>
+  <div class="price-card"><h4>價位參考</h4><div class="price-row"><span>進場參考</span><b>323.0</b></div><div class="price-row"><span>止損</span><b>289.0</b></div></div>
+</div>
+
+<div class="warn-box" style="border-color:#7b2ff7;margin-bottom:12px">
+  <div style="color:#9c6fef;font-size:9px;font-weight:bold;margin-bottom:5px">
+    ▌ 第零層：主導力量分析
+  </div>
+  <div style="color:#c9d1d9;font-size:8px;white-space:pre-line">主導機構：自營商（走勢一致性72%，持股18268.00）
+↗ 背離收窄：股價高點(06/22)後自營商持股曾下滑21.7%，但近期已從低點回補7.6%（近5日正向3天）—— 主導力量回頭，波段重啟觀察</div>
+  <div style="color:#8b949e;font-size:7px;margin-top:5px;font-style:italic">下跌期間融資仍增加（4次），散戶持續接刀，風險累積；出現1次斷頭賣壓（股價大跌+融資急減），籌碼不穩</div>
+</div>
+<div class="warn-box"><div class="warn-recovery">↗ 自營商背離收窄（持股自高點-21.7%，但從低點已回補7.6%，近5日正向3天）—— 主導力量回頭，波段重啟觀察</div></div>
+
+<div class="wrap">
+  <div class="section-title spot-title">📊 第一段：現貨面（47/70 分）</div>
+  <table>
+    <thead><tr><th>評估項目</th><th>分數</th><th>說明</th><th>強度</th></tr></thead>
+    <tbody>
+      <tr class="cat-row"><td colspan="4"><b>A. 借券結構</b>　18/20 分</td></tr><tr><td class="item">借券餘額趨勢</td><td class="score">10</td><td class="note">大量回補（今日-1193張）；近3日累計-2106張（日均-702張）</td><td><div class="bar" style="width:100px"></div></td></tr><tr><td class="item">借券60日百分位</td><td class="score">5</td><td class="note">60日中高位73%（15573張），回補中；高點（09/01借券峰20803）後已回補5230張，空頭在高點前就有，現在撤退中</td><td><div class="bar" style="width:50px"></div></td></tr><tr><td class="item">主要借券方轉向</td><td class="score">3</td><td class="note">主要借券方已轉買超 ✓</td><td><div class="bar" style="width:30px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>B. 籌碼結構</b>　12/18 分</td></tr><tr><td class="item">大戶持股比例</td><td class="score">11</td><td class="note">大戶持股 62.6%（↑0.6%），持股人數64人；高點（09/01借券峰20803）後大戶持股微增+0.6%，持股穩定；高點（09/01借券峰20803）後大戶人數+1人，持股穩定</td><td><div class="bar" style="width:100px"></div></td></tr><tr><td class="item">成交量分析</td><td class="score">1</td><td class="note">量能正常：今日 26,074張 vs MA5 29,714張（88%）</td><td><div class="bar" style="width:11px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>C. 催化劑</b>　5/12 分</td></tr><tr><td class="item">確定性</td><td class="score">5</td><td class="note">有依據 — MLCC需求回升，當日+8.2%放量突破月線區</td><td><div class="bar" style="width:83px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>D. 法人現貨動向</b>　2/12 分</td></tr><tr><td class="item">外資淨買超</td><td class="score">0</td><td class="note">外資明顯淨賣 -3252張</td><td><div class="bar" style="width:0px"></div></td></tr><tr><td class="item">投信淨買超</td><td class="score">0</td><td class="note">投信淨賣 -20張</td><td><div class="bar" style="width:0px"></div></td></tr><tr><td class="item">自營商淨買超</td><td class="score">2</td><td class="note">自營商大量淨買 +673張（注意：可能含避險）</td><td><div class="bar" style="width:33px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>E. 技術面</b>　5/5 分</td></tr><tr><td class="item">KD指標</td><td class="score">1</td><td class="note">高位偏強（K=79↑）注意過熱</td><td><div class="bar" style="width:40px"></div></td></tr><tr><td class="item">布林位置</td><td class="score">0</td><td class="note">上半段（85%），風險偏高</td><td><div class="bar" style="width:0px"></div></td></tr><tr><td class="item">均線+K線趨勢</td><td class="score">7</td><td class="note">短中期多頭排列，但價格仍在SMA60=362.0下方（壓力區）　K線結構：高點高低點（HH+HL），上升趨勢 ✓　MACD翻紅（OSC=+7.07），動能翻多 ✓</td><td><div class="bar" style="width:100px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>F. 融資健康</b>　2/3 分</td></tr><tr><td class="item">融資結構</td><td class="score">2</td><td class="note">使用率14%低　維持率155%尚可　高點（09/01借券峰20803）後融資基本持平（-168張）</td><td><div class="bar" style="width:100px"></div></td></tr><tr><td class="item">融資行為分析</td><td class="score">0</td><td class="note">下跌期間融資仍增加（4次），散戶持續接刀，風險累積；出現1次斷頭賣壓（股價大跌+融資急減），籌碼不穩</td><td><div class="bar" style="width:0px"></div></td></tr>
+      <tr class="total-row">
+        <td>現貨面小計</td>
+        <td style="color:#58a6ff;text-align:center">47</td>
+        <td style="color:#8b949e" colspan="2">滿分 70 分</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="wrap fut-section">
+  <div class="section-title fut-title">📈 第二段：個股期面（4/30 分）</div>
+  <table>
+    <thead><tr><th>評估項目</th><th>分數</th><th>說明</th><th>強度</th></tr></thead>
+    <tbody>
+      <tr class="cat-row"><td colspan="4"><b>G. 大額交易人結構</b>　0/15 分</td></tr><tr><td class="item">主力多空比</td><td class="score">0</td><td class="note">主力大幅加空（較高點-894口）— 強烈看空訊號</td><td><div class="bar" style="width:0px"></div></td></tr><tr><td class="item">主力vs散戶背離</td><td class="score">0</td><td class="note">主力加空+散戶進多 → 主力壓制散戶 ✗</td><td><div class="bar" style="width:0px"></div></td></tr><tr class="detail-row"><td class="item">▸ 數據明細</td><td class="score">–</td><td class="note" colspan="2">特定（主力）：多535(↑+402) / 空4782(↑+1296) / 淨-4247口　非特定（散戶）：多2766(↑+1522) / 空147(↑+120) / 淨+2619口　基準（09/01借券峰20803）：淨-3353口 → 現在淨-4247口，變化-894口　⚠ 主力空頭急增+1296口，加碼做空</td></tr><tr class="cat-row"><td colspan="4"><b>H. 量能與未平倉OI</b>　4/10 分</td></tr><tr><td class="item">近月OI趨勢</td><td class="score">0</td><td class="note">OI+1012口 × 主力偏空 → 空方在加碼，非多方建倉 ✗</td><td><div class="bar" style="width:0px"></div></td></tr><tr><td class="item">期貨成交量</td><td class="score">4</td><td class="note">成交5160口 × 漲1.6% → 多方推升放量 ✓</td><td><div class="bar" style="width:80px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>I. RSI（期貨）</b>　0/5 分</td></tr><tr><td class="item">RSI方向與形態</td><td class="score">0</td><td class="note">RSI=59.7↓ 中性回落</td><td><div class="bar" style="width:0px"></div></td></tr>
+      <tr class="total-row">
+        <td>個股期面小計</td>
+        <td style="color:#f0883e;text-align:center">4</td>
+        <td style="color:#8b949e" colspan="2">滿分 30 分</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="wrap fund-section">
+  <div class="section-title fund-title">💹 第三段：基本面（8/15 分）</div>
+  <div style="color:#8b949e;font-size:8px;padding:0 10px 6px">
+    PE / EPS / 毛利率 — 自動從 mops_data.json 讀取（Yahoo Finance），可手動填入覆蓋
+  </div>
+  <table>
+    <thead><tr><th>評估項目</th><th>分數</th><th>說明</th><th>強度</th></tr></thead>
+    <tbody>
+      <tr class="cat-row"><td colspan="4"><b>J. 本益比評估</b>　2/5 分</td></tr><tr><td class="item">本益比</td><td class="score">2</td><td class="note">PE 35.9——稍貴，需強基本面支撐</td><td><div class="bar" style="width:80px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>K. 獲利能力</b>　4/5 分</td></tr><tr><td class="item">EPS 成長性</td><td class="score">4</td><td class="note">月營收 YoY +45.5%——業績高增長</td><td><div class="bar" style="width:100px"></div></td></tr><tr class="cat-row"><td colspan="4"><b>L. 毛利率</b>　2/5 分</td></tr><tr><td class="item">毛利率</td><td class="score">2</td><td class="note">毛利率 20.3%——普通</td><td><div class="bar" style="width:80px"></div></td></tr>
+      <tr class="total-row">
+        <td>基本面小計</td>
+        <td style="color:#56d364;text-align:center">8</td>
+        <td style="color:#8b949e" colspan="2">滿分 15 分</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+</body></html>
