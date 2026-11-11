@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>2455 領軍主力分析</title>
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1117;color:#e6edf3;font-family:'Segoe UI',monospace;padding:16px}
+h1{font-size:1.3rem;color:#58a6ff;margin-bottom:4px}
+.subtitle{font-size:.85rem;color:#8b949e;margin-bottom:14px}
+.leader-box{background:#161b22;border:1px solid #30363d;border-radius:8px;
+             padding:12px 16px;margin-bottom:14px;display:flex;gap:28px;flex-wrap:wrap}
+.leader-item{display:flex;flex-direction:column;gap:2px}
+.leader-label{font-size:.72rem;color:#8b949e;text-transform:uppercase;letter-spacing:.05em}
+.leader-value{font-size:1.05rem;font-weight:600}
+.green{color:#3fb950}.red{color:#f85149}.blue{color:#58a6ff}.yellow{color:#d29922}
+.chart-wrap{background:#161b22;border:1px solid #30363d;border-radius:8px;
+             padding:10px 12px;margin-bottom:10px}
+.chart-legend{display:flex;align-items:center;flex-wrap:wrap;gap:6px;
+               font-size:.78rem;padding:0 2px 6px;min-height:22px}
+.leg-title{color:#8b949e}
+.leg-sep{color:#30363d}
+.leg-date{color:#8b949e;font-weight:600}
+.leg-ohlc{color:#e6edf3}
+.lw-chart{width:100%;height:420px}
+.signal-table{width:100%;border-collapse:collapse;font-size:.82rem}
+.signal-table th{background:#21262d;color:#8b949e;padding:6px 10px;text-align:left}
+.signal-table td{padding:5px 10px;border-top:1px solid #21262d}
+.signal-table tr:hover{background:#1c2128}
+.sig-buy3{color:#3fb950;font-weight:bold}.sig-buy2{color:#56d364}
+.sig-sell3{color:#f85149;font-weight:bold}.sig-sell2{color:#ff7b72}
+.sig-edge{color:#d29922}
+#dualTable td, #dualTable th {white-space:nowrap}
+.tag{display:inline-block;border-radius:3px;padding:1px 6px;font-size:.75rem;font-weight:600}
+.sig-box{background:#161b22;border-radius:6px;padding:10px 14px;margin:4px 0;
+          display:flex;align-items:center;gap:10px;font-size:.83rem}
+.sig-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.sig-green{background:#3fb950}.sig-yellow{background:#d29922}.sig-red{background:#f85149}.sig-grey{background:#484f58}
+.disp-period{background:#1c1a0d;border:1px solid #4a3f00;border-radius:6px;
+              padding:8px 12px;margin-bottom:8px}
+.disp-label{font-size:.75rem;color:#d29922;font-weight:600;margin-bottom:4px}
+.mini-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:4px}
+.mini-table th{background:#21262d;color:#8b949e;padding:4px 8px;text-align:left}
+.mini-table td{padding:4px 8px;border-top:1px solid #21262d}
+.collab-badge{display:inline-block;background:#1a2634;border:1px solid #1f6feb;
+               border-radius:4px;padding:2px 7px;margin:3px;font-size:.78rem;color:#58a6ff}
+</style>
+</head>
+<body>
+<h1>2455 全新 — 領軍主力分析</h1>
+<div class="subtitle">布林通道 20日×2.0σ　｜　均線 MA5/10/20/60　｜　06/17~06/18</div>
+
+<div class="leader-box">
+  <div class="leader-item">
+    <span class="leader-label">領軍分點</span>
+    <span class="leader-value blue">凱基-台北</span>
+  </div>
+  <div class="leader-item">
+    <span class="leader-label">低點總買超</span>
+    <span class="leader-value green">+0 張</span>
+  </div>
+  <div class="leader-item">
+    <span class="leader-label">高點總賣超</span>
+    <span class="leader-value red">-308 張</span>
+  </div>
+  <div class="leader-item">
+    <span class="leader-label">累計持倉（最新）</span>
+    <span class="leader-value red">-632 張</span>
+  </div>
+  <div class="leader-item">
+    <span class="leader-label">其他候選</span>
+    <span class="leader-value" style="font-size:.82rem;color:#8b949e">—</span>
+  </div>
+</div>
+
+<!-- 圖1: K線 + 布林通道 -->
+<div class="chart-wrap">
+  <div id="legendBoll" class="chart-legend">
+    <span class="leg-title">📈 K線 × 布林通道（20日±2.0σ）</span>
+    <span class="leg-sep">｜</span>
+    <span id="lb-date" class="leg-date"></span>
+    <span id="lb-ohlc" class="leg-ohlc"></span>
+    <span class="leg-sep">｜</span>
+    <span id="lb-upper" style="color:#f85149"></span>
+    <span id="lb-bma"   style="color:#d29922"></span>
+    <span id="lb-lower" style="color:#3fb950"></span>
+    <span class="leg-sep">｜</span>
+    <span style="color:#d29922;font-weight:600">⚡執行層倉位</span>
+    <span style="color:#00e5ff">　🎯戰略層倉位</span>
+  </div>
+  <div id="chartBoll" class="lw-chart"></div>
+</div>
+
+<!-- 圖2: K線 + 均線 -->
+<div class="chart-wrap">
+  <div id="legendMA" class="chart-legend">
+    <span class="leg-title">📊 K線 × 均線</span>
+    <span class="leg-sep">｜</span>
+    <span id="lm-date" class="leg-date"></span>
+    <span id="lm-ohlc" class="leg-ohlc"></span>
+    <span class="leg-sep">｜</span>
+    <span id="lm-ma5"  style="color:#ff9900"></span>
+    <span id="lm-ma10" style="color:#00bfff"></span>
+    <span id="lm-ma20" style="color:#ff79c6"></span>
+    <span id="lm-ma60" style="color:#bd93f9"></span>
+    <span class="leg-sep">｜</span>
+    <span style="color:#d29922;font-weight:600">⚡執行層倉位</span>
+    <span style="color:#00e5ff">　🎯戰略層倉位</span>
+  </div>
+  <div id="chartMA" class="lw-chart"></div>
+</div>
+
+<!-- 圖3: 執行層主力倉位 -->
+<div class="chart-wrap">
+  <div class="chart-title">⚡ 執行層：凱基-台北 K線 × 累計倉位（黃）× 每日淨買（柱）</div>
+  <div id="chartBroker" class="lw-chart"></div>
+</div>
+
+<!-- 圖4: 戰略層主力倉位 -->
+<div class="chart-wrap">
+  <div class="chart-title">🎯 戰略層：台灣摩根士丹利 K線 × 累計倉位（青）× 每日淨買（柱）</div>
+  <div id="chartStrategic" class="lw-chart"></div>
+</div>
+
+<!-- 現在的訊號狀態 -->
+<div class="chart-wrap">
+  <div class="chart-title">🚦 現在的訊號狀態與操作方向</div>
+  
+<div style="font-size:.9rem;font-weight:700;color:#d29922;margin-bottom:10px">🟡 訊號形成中 — 等待第二個條件確認</div>
+<div class="sig-box"><span class="sig-dot sig-red"></span> ① 執行層強力建倉（淨買>200且買賣比>1.5）：<strong style="color:#f85149">❌ 執行層今日淨買 +16（觀望）</strong></div>
+<div class="sig-box"><span class="sig-dot sig-green"></span> ② 戰略層回到買超：<strong style="color:#3fb950">✅ 戰略層今日淨買 +140（積極買入）</strong></div>
+<div class="sig-box"><span class="sig-dot sig-grey"></span> ③ 雙向同買確認：<strong style="color:#484f58">❌ 尚未同向</strong></div>
+<div class="sig-box"><span class="sig-dot sig-green"></span> ⚠ 執行層連續賣出天數：<strong>0 天</strong></div>
+<div class="sig-box"><span class="sig-dot sig-red"></span> ⚠ 戰略層近10日累計：<strong style="color:#f85149">-1913 張（>-1500，注意退場）</strong></div>
+
+</div>
+
+<!-- 雙主力行為對照表 -->
+<div class="chart-wrap">
+  <div class="chart-title">📊 雙主力每日行為對照（⚡凱基-台北 × 🎯台灣摩根士丹利）</div>
+  <div style="overflow-x:auto">
+  <table class="signal-table" id="dualTable">
+    <thead><tr>
+      <th>日期</th><th>收盤</th>
+      <th>⚡買</th><th>⚡賣</th><th>⚡淨</th><th>型態</th>
+      <th>🎯買</th><th>🎯賣</th><th>🎯淨</th><th>型態</th>
+      <th>組合訊號</th>
+    </tr></thead>
+    <tbody><tr><td>2026-08-13</td><td>384</td><td>60</td><td>172</td><td style="color:#ff7b72">-112</td><td><span class="tag" style="background:#ff7b7222;color:#ff7b72">小幅出貨</span></td><td>469</td><td>43</td><td style="color:#3fb950">+426</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td><span style="color:#58a6ff">↕凱賣摩買</span></td></tr>
+<tr><td>2026-08-14</td><td>380</td><td>153</td><td>1</td><td style="color:#56d364">+152</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td>281</td><td>25</td><td style="color:#56d364">+256</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td><span style="color:#3fb950">⚡同向買</span></td></tr>
+<tr><td>2026-08-17</td><td>417</td><td>464</td><td>413</td><td style="color:#d29922">+51</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>504</td><td>157</td><td style="color:#3fb950">+347</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td></td></tr>
+<tr><td>2026-08-18</td><td>418</td><td>2112</td><td>3848</td><td style="color:#d29922">-1736</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>999</td><td>1220</td><td style="color:#d29922">-221</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td><span style="color:#f85149">雙向賣出</span></td></tr>
+<tr><td>2026-08-19</td><td>396</td><td>856</td><td>950</td><td style="color:#d29922">-94</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>1008</td><td>603</td><td style="color:#56d364">+405</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td></td></tr>
+<tr><td>2026-08-20</td><td>412</td><td>639</td><td>1062</td><td style="color:#d29922">-423</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>1827</td><td>995</td><td style="color:#56d364">+832</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td><span style="color:#58a6ff">↕凱賣摩買</span></td></tr>
+<tr><td>2026-08-21</td><td>406</td><td>1071</td><td>1057</td><td style="color:#d29922">+14</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>351</td><td>969</td><td style="color:#d29922">-618</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td><span style="color:#d29922">↕凱買摩賣</span></td></tr>
+<tr><td>2026-08-24</td><td>382</td><td>237</td><td>5</td><td style="color:#56d364">+232</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td>160</td><td>414</td><td style="color:#f85149">-254</td><td><span class="tag" style="background:#f8514922;color:#f85149">主動出貨</span></td><td><span style="color:#d29922">↕凱買摩賣</span></td></tr>
+<tr><td>2026-08-25</td><td>420</td><td>197</td><td>3</td><td style="color:#56d364">+194</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td>369</td><td>145</td><td style="color:#56d364">+224</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td><span style="color:#3fb950">⚡同向買</span></td></tr>
+<tr><td>2026-08-26</td><td>428</td><td>165</td><td>42</td><td style="color:#56d364">+124</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td>487</td><td>134</td><td style="color:#3fb950">+353</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td><span style="color:#3fb950">⚡同向買</span></td></tr>
+<tr><td>2026-08-27</td><td>433</td><td>122</td><td>23</td><td style="color:#8b949e">+99</td><td><span class="tag" style="background:#8b949e22;color:#8b949e">輕微買入</span></td><td>863</td><td>223</td><td style="color:#3fb950">+640</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td></td></tr>
+<tr><td>2026-08-28</td><td>434</td><td>115</td><td>21</td><td style="color:#8b949e">+94</td><td><span class="tag" style="background:#8b949e22;color:#8b949e">輕微買入</span></td><td>394</td><td>78</td><td style="color:#3fb950">+316</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td></td></tr>
+<tr><td>2026-08-31</td><td>477</td><td>2684</td><td>1998</td><td style="color:#8b949e">+686</td><td><span class="tag" style="background:#8b949e22;color:#8b949e">輕微買入</span></td><td>875</td><td>279</td><td style="color:#3fb950">+596</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td><span style="color:#3fb950">⚡同向買</span></td></tr>
+<tr><td>2026-09-01</td><td>524</td><td>1260</td><td>1695</td><td style="color:#d29922">-435</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>667</td><td>961</td><td style="color:#d29922">-294</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td><span style="color:#f85149">雙向賣出</span></td></tr>
+<tr><td>2026-09-02</td><td>542</td><td>2277</td><td>2399</td><td style="color:#d29922">-122</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>1590</td><td>853</td><td style="color:#56d364">+737</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td><span style="color:#58a6ff">↕凱賣摩買</span></td></tr>
+<tr><td>2026-09-03</td><td>525</td><td>1343</td><td>1191</td><td style="color:#d29922">+152</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>1066</td><td>733</td><td style="color:#8b949e">+333</td><td><span class="tag" style="background:#8b949e22;color:#8b949e">輕微買入</span></td><td><span style="color:#3fb950">⚡同向買</span></td></tr>
+<tr><td>2026-09-04</td><td>528</td><td>1653</td><td>1833</td><td style="color:#d29922">-180</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>2040</td><td>906</td><td style="color:#3fb950">+1134</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td><span style="color:#58a6ff">↕凱賣摩買</span></td></tr>
+<tr><td>2026-09-07</td><td>500</td><td>77</td><td>150</td><td style="color:#ff7b72">-73</td><td><span class="tag" style="background:#ff7b7222;color:#ff7b72">小幅出貨</span></td><td>426</td><td>240</td><td style="color:#56d364">+187</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td></td></tr>
+<tr><td>2026-09-08</td><td>515</td><td>242</td><td>2</td><td style="color:#56d364">+240</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td>1223</td><td>439</td><td style="color:#3fb950">+784</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td><span style="color:#3fb950">⚡同向買</span></td></tr>
+<tr><td>2026-09-09</td><td>533</td><td>267</td><td>4</td><td style="color:#56d364">+263</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td>655</td><td>73</td><td style="color:#3fb950">+582</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td><span style="color:#3fb950">⚡同向買</span></td></tr>
+<tr><td>2026-09-10</td><td>532</td><td>31</td><td>67</td><td style="color:#484f58">-36</td><td><span class="tag" style="background:#484f5822;color:#484f58">觀望</span></td><td>277</td><td>86</td><td style="color:#56d364">+191</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td></td></tr>
+<tr><td>2026-09-11</td><td>515</td><td>40</td><td>23</td><td style="color:#484f58">+17</td><td><span class="tag" style="background:#484f5822;color:#484f58">觀望</span></td><td>496</td><td>23</td><td style="color:#3fb950">+473</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td></td></tr>
+<tr><td>2026-09-14</td><td>535</td><td>148</td><td>12</td><td style="color:#56d364">+136</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td>356</td><td>197</td><td style="color:#56d364">+159</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td><span style="color:#3fb950">⚡同向買</span></td></tr>
+<tr><td>2026-09-15</td><td>520</td><td>157</td><td>35</td><td style="color:#56d364">+122</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td>84</td><td>263</td><td style="color:#ff7b72">-179</td><td><span class="tag" style="background:#ff7b7222;color:#ff7b72">小幅出貨</span></td><td><span style="color:#d29922">↕凱買摩賣</span></td></tr>
+<tr><td>2026-09-16</td><td>515</td><td>1157</td><td>1264</td><td style="color:#d29922">-107</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>875</td><td>574</td><td style="color:#56d364">+301</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td><span style="color:#58a6ff">↕凱賣摩買</span></td></tr>
+<tr><td>2026-09-17</td><td>534</td><td>2111</td><td>1949</td><td style="color:#d29922">+161</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>430</td><td>1146</td><td style="color:#d29922">-716</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td><span style="color:#d29922">↕凱買摩賣</span></td></tr>
+<tr><td>2026-09-18</td><td>556</td><td>1342</td><td>1223</td><td style="color:#d29922">+119</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>464</td><td>824</td><td style="color:#d29922">-360</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td><span style="color:#d29922">↕凱買摩賣</span></td></tr>
+<tr><td>2026-09-21</td><td>572</td><td>1064</td><td>1311</td><td style="color:#d29922">-247</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>1166</td><td>659</td><td style="color:#56d364">+507</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td><span style="color:#58a6ff">↕凱賣摩買</span></td></tr>
+<tr><td>2026-09-22</td><td>547</td><td>856</td><td>1036</td><td style="color:#d29922">-180</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>788</td><td>1882</td><td style="color:#d29922">-1094</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td></td></tr>
+<tr><td>2026-09-23</td><td>552</td><td>20</td><td>34</td><td style="color:#484f58">-14</td><td><span class="tag" style="background:#484f5822;color:#484f58">觀望</span></td><td>327</td><td>206</td><td style="color:#56d364">+121</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td></td></tr>
+<tr><td>2026-09-24</td><td>554</td><td>76</td><td>2</td><td style="color:#8b949e">+74</td><td><span class="tag" style="background:#8b949e22;color:#8b949e">輕微買入</span></td><td>220</td><td>116</td><td style="color:#56d364">+104</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td></td></tr>
+<tr><td>2026-09-29</td><td>543</td><td>23</td><td>21</td><td style="color:#484f58">+2</td><td><span class="tag" style="background:#484f5822;color:#484f58">觀望</span></td><td>106</td><td>84</td><td style="color:#484f58">+22</td><td><span class="tag" style="background:#484f5822;color:#484f58">觀望</span></td><td></td></tr>
+<tr><td>2026-09-30</td><td>552</td><td>120</td><td>0</td><td style="color:#56d364">+120</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td>178</td><td>208</td><td style="color:#484f58">-30</td><td><span class="tag" style="background:#484f5822;color:#484f58">觀望</span></td><td></td></tr>
+<tr><td>2026-10-01</td><td>546</td><td>50</td><td>3</td><td style="color:#484f58">+47</td><td><span class="tag" style="background:#484f5822;color:#484f58">觀望</span></td><td>212</td><td>77</td><td style="color:#56d364">+135</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td></td></tr>
+<tr><td>2026-10-02</td><td>580</td><td>84</td><td>11</td><td style="color:#8b949e">+73</td><td><span class="tag" style="background:#8b949e22;color:#8b949e">輕微買入</span></td><td>619</td><td>131</td><td style="color:#3fb950">+488</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td></td></tr>
+<tr><td>2026-10-05</td><td>606</td><td>44</td><td>17</td><td style="color:#484f58">+27</td><td><span class="tag" style="background:#484f5822;color:#484f58">觀望</span></td><td>139</td><td>121</td><td style="color:#484f58">+18</td><td><span class="tag" style="background:#484f5822;color:#484f58">觀望</span></td><td></td></tr>
+<tr><td>2026-10-06</td><td>567</td><td>729</td><td>1082</td><td style="color:#d29922">-353</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>131</td><td>800</td><td style="color:#f85149">-669</td><td><span class="tag" style="background:#f8514922;color:#f85149">主動出貨</span></td><td><span style="color:#f85149">雙向賣出</span></td></tr>
+<tr><td>2026-10-07</td><td>559</td><td>842</td><td>590</td><td style="color:#8b949e">+252</td><td><span class="tag" style="background:#8b949e22;color:#8b949e">輕微買入</span></td><td>580</td><td>1523</td><td style="color:#d29922">-943</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td><span style="color:#d29922">↕凱買摩賣</span></td></tr>
+<tr><td>2026-10-08</td><td>558</td><td>291</td><td>377</td><td style="color:#ff7b72">-86</td><td><span class="tag" style="background:#ff7b7222;color:#ff7b72">小幅出貨</span></td><td>723</td><td>132</td><td style="color:#3fb950">+591</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td></td></tr>
+<tr><td>2026-10-12</td><td>564</td><td>304</td><td>376</td><td style="color:#d29922">-72</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>574</td><td>195</td><td style="color:#3fb950">+379</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td></td></tr>
+<tr><td>2026-10-13</td><td>508</td><td>662</td><td>379</td><td style="color:#56d364">+283</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td>789</td><td>242</td><td style="color:#3fb950">+547</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td><span style="color:#3fb950">⚡同向買</span></td></tr>
+<tr><td>2026-10-14</td><td>523</td><td>497</td><td>500</td><td style="color:#d29922">-3</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>725</td><td>483</td><td style="color:#56d364">+242</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td></td></tr>
+<tr><td>2026-10-15</td><td>484</td><td>526</td><td>890</td><td style="color:#d29922">-364</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>802</td><td>706</td><td style="color:#d29922">+96</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td><span style="color:#58a6ff">↕凱賣摩買</span></td></tr>
+<tr><td>2026-10-16</td><td>493</td><td>482</td><td>272</td><td style="color:#56d364">+210</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td>314</td><td>342</td><td style="color:#d29922">-28</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td></td></tr>
+<tr><td>2026-10-19</td><td>492</td><td>434</td><td>318</td><td style="color:#8b949e">+116</td><td><span class="tag" style="background:#8b949e22;color:#8b949e">輕微買入</span></td><td>432</td><td>337</td><td style="color:#d29922">+95</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td></td></tr>
+<tr><td>2026-10-20</td><td>486</td><td>654</td><td>614</td><td style="color:#d29922">+40</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>387</td><td>414</td><td style="color:#d29922">-27</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td></td></tr>
+<tr><td>2026-10-21</td><td>490</td><td>439</td><td>363</td><td style="color:#d29922">+76</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>396</td><td>754</td><td style="color:#d29922">-358</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td><span style="color:#d29922">↕凱買摩賣</span></td></tr>
+<tr><td>2026-10-22</td><td>467</td><td>501</td><td>401</td><td style="color:#d29922">+100</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>694</td><td>99</td><td style="color:#3fb950">+595</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td></td></tr>
+<tr><td>2026-10-27</td><td>466</td><td>579</td><td>388</td><td style="color:#8b949e">+190</td><td><span class="tag" style="background:#8b949e22;color:#8b949e">輕微買入</span></td><td>203</td><td>391</td><td style="color:#ff7b72">-188</td><td><span class="tag" style="background:#ff7b7222;color:#ff7b72">小幅出貨</span></td><td><span style="color:#d29922">↕凱買摩賣</span></td></tr>
+<tr><td>2026-10-28</td><td>512</td><td>241</td><td>487</td><td style="color:#f85149">-246</td><td><span class="tag" style="background:#f8514922;color:#f85149">主動出貨</span></td><td>350</td><td>1659</td><td style="color:#d29922">-1309</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td><span style="color:#f85149">雙向賣出</span></td></tr>
+<tr><td>2026-10-29</td><td>484</td><td>986</td><td>1228</td><td style="color:#d29922">-242</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>282</td><td>1725</td><td style="color:#f85149">-1443</td><td><span class="tag" style="background:#f8514922;color:#f85149">主動出貨</span></td><td><span style="color:#f85149">雙向賣出</span></td></tr>
+<tr><td>2026-10-30</td><td>447</td><td>646</td><td>641</td><td style="color:#d29922">+5</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>614</td><td>500</td><td style="color:#d29922">+114</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td></td></tr>
+<tr><td>2026-11-02</td><td>450</td><td>445</td><td>612</td><td style="color:#d29922">-167</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>488</td><td>532</td><td style="color:#d29922">-44</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td></td></tr>
+<tr><td>2026-11-03</td><td>405</td><td>546</td><td>484</td><td style="color:#d29922">+62</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>238</td><td>391</td><td style="color:#ff7b72">-153</td><td><span class="tag" style="background:#ff7b7222;color:#ff7b72">小幅出貨</span></td><td><span style="color:#d29922">↕凱買摩賣</span></td></tr>
+<tr><td>2026-11-04</td><td>384</td><td>804</td><td>721</td><td style="color:#d29922">+82</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>1273</td><td>601</td><td style="color:#3fb950">+672</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td></td></tr>
+<tr><td>2026-11-05</td><td>346</td><td>784</td><td>817</td><td style="color:#d29922">-33</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>954</td><td>670</td><td style="color:#8b949e">+284</td><td><span class="tag" style="background:#8b949e22;color:#8b949e">輕微買入</span></td><td></td></tr>
+<tr><td>2026-11-06</td><td>319</td><td>1382</td><td>474</td><td style="color:#3fb950">+907</td><td><span class="tag" style="background:#3fb95022;color:#3fb950">強力建倉</span></td><td>696</td><td>844</td><td style="color:#d29922">-148</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td><span style="color:#56d364">⚡強建倉</span></td></tr>
+<tr><td>2026-11-09</td><td>342</td><td>577</td><td>992</td><td style="color:#d29922">-416</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>267</td><td>906</td><td style="color:#f85149">-639</td><td><span class="tag" style="background:#f8514922;color:#f85149">主動出貨</span></td><td><span style="color:#f85149">雙向賣出</span></td></tr>
+<tr><td>2026-11-10</td><td>370</td><td>506</td><td>940</td><td style="color:#d29922">-434</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td>321</td><td>1017</td><td style="color:#d29922">-696</td><td><span class="tag" style="background:#d2992222;color:#d29922">邊拉邊出</span></td><td><span style="color:#f85149">雙向賣出</span></td></tr>
+<tr><td>2026-11-11</td><td>384</td><td>177</td><td>161</td><td style="color:#484f58">+16</td><td><span class="tag" style="background:#484f5822;color:#484f58">觀望</span></td><td>253</td><td>113</td><td style="color:#56d364">+140</td><td><span class="tag" style="background:#56d36422;color:#56d364">積極買入</span></td><td></td></tr></tbody>
+  </table>
+  </div>
+</div>
+
+<!-- 強力建倉後行情追蹤 -->
+<div class="chart-wrap">
+  <div class="chart-title">🎯 強力建倉後行情追蹤（⚡執行層觸發，N日後漲跌）</div>
+  <table class="signal-table"><thead><tr><th>建倉日</th><th>當日收盤</th><th>執行層淨買</th><th>+3日</th><th>+5日</th><th>+10日</th></tr></thead><tbody><tr><td>2026-02-26</td><td>218</td><td>+1388</td><td style="color:#8b949e">226（+4.1%）</td><td style="color:#8b949e">217（-0.2%）</td><td style="color:#3fb950">238（+9.2%）</td></tr><tr><td>2026-04-07</td><td>284</td><td>+874</td><td style="color:#3fb950">299（+5.1%）</td><td style="color:#8b949e">280（-1.4%）</td><td style="color:#3fb950">340（+19.5%）</td></tr><tr><td>2026-04-15</td><td>275</td><td>+456</td><td style="color:#3fb950">333（+21.1%）</td><td style="color:#3fb950">364（+32.5%）</td><td style="color:#3fb950">316（+14.9%）</td></tr><tr><td>2026-04-16</td><td>290</td><td>+444</td><td style="color:#3fb950">340（+17.2%）</td><td style="color:#3fb950">346（+19.3%）</td><td style="color:#3fb950">348（+19.8%）</td></tr><tr><td>2026-05-22</td><td>425</td><td>+1187</td><td style="color:#8b949e">418（-1.5%）</td><td style="color:#8b949e">422（-0.7%）</td><td style="color:#f85149">399（-6.1%）</td></tr><tr><td>2026-06-12</td><td>352</td><td>+1068</td><td style="color:#3fb950">428（+21.6%）</td><td style="color:#3fb950">410（+16.3%）</td><td style="color:#8b949e">348（-1.1%）</td></tr><tr><td>2026-06-16</td><td>406</td><td>+1980</td><td style="color:#8b949e">410（+1.0%）</td><td style="color:#8b949e">397（-2.1%）</td><td style="color:#f85149">338（-16.6%）</td></tr><tr><td>2026-07-17</td><td>282</td><td>+415</td><td style="color:#3fb950">324（+15.1%）</td><td style="color:#3fb950">333（+18.1%）</td><td style="color:#8b949e">292（+3.5%）</td></tr><tr><td>2026-07-22</td><td>324</td><td>+404</td><td style="color:#8b949e">326（+0.6%）</td><td style="color:#f85149">272（-16.0%）</td><td style="color:#3fb950">388（+19.6%）</td></tr><tr><td>2026-08-05</td><td>388</td><td>+1388</td><td style="color:#8b949e">384（-0.9%）</td><td style="color:#8b949e">384（-0.9%）</td><td style="color:#8b949e">396（+2.2%）</td></tr><tr><td>2026-11-06</td><td>319</td><td>+907</td><td style="color:#3fb950">384（+20.5%）</td><td style="color:#484f58">—</td><td style="color:#484f58">—</td></tr></tbody></table>
+</div>
+
+<!-- 跨波段雙主力驗證表 -->
+<div class="chart-wrap">
+  <div class="chart-title">🔍 雙主力跨波段驗證：低點買入 / 高點賣出</div>
+  <table class="signal-table"><thead><tr><th>檢查點</th><th>日期</th><th>⚡凱基-台北 淨買</th><th>執行層判斷</th><th>🎯台灣摩根士丹利 淨買</th><th>戰略層判斷</th></tr></thead><tbody><tr><td>W1低點</td><td style="color:#8b949e">04/27~04/29</td><td>+392</td><td style="color:#3fb950">✅ 買</td><td>-1924</td><td style="color:#f85149">❌ 賣</td></tr><tr><td>W1高點</td><td style="color:#8b949e">05/22~05/25</td><td>+735</td><td style="color:#f85149">❌ 買</td><td>-544</td><td style="color:#3fb950">✅ 賣</td></tr><tr><td>W2低點</td><td style="color:#8b949e">06/10~06/11</td><td>+280</td><td style="color:#3fb950">✅ 買</td><td>-995</td><td style="color:#f85149">❌ 賣</td></tr><tr><td>W2高點</td><td style="color:#8b949e">06/17~06/18</td><td>-1025</td><td style="color:#3fb950">✅ 賣</td><td>+1419</td><td style="color:#f85149">❌ 買</td></tr></tbody></table><p style="font-size:.75rem;color:#8b949e;margin-top:6px">低點應買(✅)、高點應賣(✅) → 兩者都達標代表雙重驗證成立。</p>
+</div>
+
+<!-- 漲停日主力 -->
+<div class="chart-wrap">
+  <div class="chart-title">🔴 處置期漲停日主力（20分集合競價下掛漲停 = 最直接暴露）</div>
+  <p style="font-size:.8rem;color:#8b949e;margin-bottom:8px">處置期共 3 個漲停日。20分鐘集合競價下掛漲停者 = 最有把握的主力。</p><table class="mini-table" style="margin-bottom:12px"><thead><tr><th>漲停日常客</th><th>出現次數</th><th>累計淨買</th><th>累計買進</th></tr></thead><tbody><tr><td style="color:#f85149;font-weight:700">台灣摩根士丹利</td><td>3 次</td><td>+2293</td><td>2400</td></tr><tr><td style="color:#f85149;font-weight:700">統一</td><td>3 次</td><td>+797</td><td>1312</td></tr><tr><td style="color:#f85149;font-weight:700">美商高盛</td><td>2 次</td><td>+1084</td><td>1269</td></tr></tbody></table><div class="disp-period"><div class="disp-label">🔴 2026-03-02 漲停 239.0 （+9.9%）　</div><table class="mini-table"><thead><tr><th>分點</th><th>買進</th><th>賣出</th><th>淨買</th></tr></thead><tbody><tr><td style="color:#f85149;font-weight:700">台灣摩根士丹利</td><td style="color:#f85149;font-weight:700">1911</td><td style="color:#f85149;font-weight:700">1</td><td style="color:#f85149;font-weight:700">+1910</td></tr><tr><td>美商高盛</td><td>914</td><td>71</td><td>+843</td></tr><tr><td>港商野村</td><td>747</td><td>0</td><td>+747</td></tr><tr><td>統一</td><td>886</td><td>430</td><td>+456</td></tr><tr><td>元大-民生三民</td><td>301</td><td>2</td><td>+299</td></tr><tr><td>美林</td><td>256</td><td>2</td><td>+254</td></tr></tbody></table></div>
+<div class="disp-period"><div class="disp-label">🔴 2026-03-11 漲停 221.5 （+9.9%）　</div><table class="mini-table"><thead><tr><th>分點</th><th>買進</th><th>賣出</th><th>淨買</th></tr></thead><tbody><tr><td>凱基-城中</td><td>262</td><td>0</td><td>+262</td></tr><tr><td>統一</td><td>262</td><td>63</td><td>+199</td></tr><tr><td style="color:#f85149;font-weight:700">台灣摩根士丹利</td><td style="color:#f85149;font-weight:700">217</td><td style="color:#f85149;font-weight:700">84</td><td style="color:#f85149;font-weight:700">+133</td></tr><tr><td>美林</td><td>156</td><td>24</td><td>+132</td></tr><tr><td>元大-信義</td><td>126</td><td>3</td><td>+123</td></tr><tr><td>摩根大通</td><td>252</td><td>141</td><td>+111</td></tr></tbody></table></div>
+<div class="disp-period"><div class="disp-label">🔴 2026-06-09 漲停 395.0 （+9.9%）　</div><table class="mini-table"><thead><tr><th>分點</th><th>買進</th><th>賣出</th><th>淨買</th></tr></thead><tbody><tr><td style="color:#f85149;font-weight:700">台灣摩根士丹利</td><td style="color:#f85149;font-weight:700">272</td><td style="color:#f85149;font-weight:700">22</td><td style="color:#f85149;font-weight:700">+250</td></tr><tr><td>美商高盛</td><td>355</td><td>114</td><td>+241</td></tr><tr><td>統一</td><td>164</td><td>22</td><td>+142</td></tr><tr><td>港商野村</td><td>97</td><td>0</td><td>+97</td></tr><tr><td>新加坡商瑞銀</td><td>63</td><td>5</td><td>+58</td></tr><tr><td>凱基-台北</td><td>89</td><td>35</td><td>+54</td></tr></tbody></table></div>
+</div>
+
+<!-- 處置期間分析 -->
+<div class="chart-wrap">
+  <div class="chart-title">🚨 處置期間（20分集合競價）持續買入主力</div>
+  <div class="disp-period"><div class="disp-label">🚨 2026-03-02 ～ 2026-03-13　第一次處置　（共10個交易日）</div><table class="mini-table"><thead><tr><th>分點</th><th>淨買(張)</th><th>買天/總天</th></tr></thead><tbody><tr style="color:#3fb950;font-weight:600"><td>台灣摩根士丹利</td><td>+3416</td><td>7/10 (70%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>港商野村</td><td>+1226</td><td>7/10 (70%)</td></tr><tr><td>新加坡商瑞銀</td><td>+984</td><td>3/10 (30%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>美林</td><td>+905</td><td>8/10 (80%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>花旗環球</td><td>+773</td><td>10/10 (100%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>摩根大通</td><td>+247</td><td>6/10 (60%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>元大-民生三民</td><td>+245</td><td>5/10 (50%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>凱基-城中</td><td>+222</td><td>5/10 (50%)</td></tr></tbody></table></div>
+<div class="disp-period"><div class="disp-label">🚨 2026-04-13 ～ 2026-04-24　第二次處置　（共10個交易日）</div><table class="mini-table"><thead><tr><th>分點</th><th>淨買(張)</th><th>買天/總天</th></tr></thead><tbody><tr style="color:#3fb950;font-weight:600"><td>凱基-台北</td><td>+1310</td><td>6/10 (60%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>永豐金證券</td><td>+1261</td><td>8/10 (80%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>美商高盛</td><td>+943</td><td>7/10 (70%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>台灣摩根士丹利</td><td>+917</td><td>6/10 (60%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>新加坡商瑞銀</td><td>+680</td><td>6/10 (60%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>富邦證券</td><td>+503</td><td>6/10 (60%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>摩根大通</td><td>+312</td><td>7/10 (70%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>美林</td><td>+306</td><td>7/10 (70%)</td></tr></tbody></table></div>
+<div class="disp-period"><div class="disp-label">🚨 2026-05-06 ～ 2026-05-19　第二次處置　（共10個交易日）</div><table class="mini-table"><thead><tr><th>分點</th><th>淨買(張)</th><th>買天/總天</th></tr></thead><tbody><tr style="color:#3fb950;font-weight:600"><td>新加坡商瑞銀</td><td>+3497</td><td>7/10 (70%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>美商高盛</td><td>+2248</td><td>8/10 (80%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>花旗環球</td><td>+1658</td><td>5/10 (50%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>摩根大通</td><td>+1473</td><td>9/10 (90%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>台灣摩根士丹利</td><td>+826</td><td>6/10 (60%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>元大-崇德</td><td>+300</td><td>6/10 (60%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>永豐金證券</td><td>+184</td><td>6/10 (60%)</td></tr><tr><td>大和國泰</td><td>+181</td><td>2/10 (20%)</td></tr></tbody></table></div>
+<div class="disp-period"><div class="disp-label">🚨 2026-05-27 ～ 2026-06-09　第二次處置　（共10個交易日）</div><table class="mini-table"><thead><tr><th>分點</th><th>淨買(張)</th><th>買天/總天</th></tr></thead><tbody><tr style="color:#3fb950;font-weight:600"><td>台灣摩根士丹利</td><td>+2491</td><td>9/10 (90%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>摩根大通</td><td>+643</td><td>7/10 (70%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>新加坡商瑞銀</td><td>+445</td><td>7/10 (70%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>永豐金證券</td><td>+353</td><td>6/10 (60%)</td></tr><tr><td>台灣摩根</td><td>+254</td><td>1/10 (10%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>凱基-台北</td><td>+246</td><td>7/10 (70%)</td></tr><tr style="color:#3fb950;font-weight:600"><td>元大-中山北路</td><td>+223</td><td>8/10 (80%)</td></tr><tr><td>港商野村</td><td>+161</td><td>2/10 (20%)</td></tr></tbody></table></div>
+</div>
+
+<!-- 協作分點 -->
+<div class="chart-wrap">
+  <div class="chart-title">🤝 協作分點（與領軍同向買入比例 ≥40%）</div>
+  <p style="font-size:.78rem;color:#8b949e;margin-bottom:6px">領軍（凱基-台北）買入時同向買入的分點，比例越高越可能是同組操作。</p><table class="mini-table"><thead><tr><th>分點</th><th>累計淨買(張)</th><th>同向天數/領軍買天</th></tr></thead><tbody><tr><td>台灣摩根士丹利</td><td style="color:#3fb950">+5836</td><td>74/105 (70%)</td></tr><tr><td>花旗環球</td><td style="color:#3fb950">+4185</td><td>69/105 (66%)</td></tr><tr><td>美林</td><td style="color:#3fb950">+8045</td><td>67/105 (64%)</td></tr><tr><td>美商高盛</td><td style="color:#3fb950">+5457</td><td>67/105 (64%)</td></tr><tr><td>新加坡商瑞銀</td><td style="color:#3fb950">+3935</td><td>59/105 (56%)</td></tr><tr><td>元大-崇德</td><td style="color:#3fb950">+599</td><td>56/105 (53%)</td></tr><tr><td>富邦-台南</td><td style="color:#3fb950">+147</td><td>56/105 (53%)</td></tr><tr><td>元大-蘆洲中正</td><td style="color:#3fb950">+101</td><td>53/105 (50%)</td></tr><tr><td>元大-中山北路</td><td style="color:#3fb950">+320</td><td>51/105 (49%)</td></tr><tr><td>永豐金-大園</td><td style="color:#3fb950">+138</td><td>51/105 (49%)</td></tr></tbody></table>
+</div>
+
+<!-- 訊號明細表 -->
+<div class="chart-wrap">
+  <div class="chart-title">📋 訊號明細（3 個訊號）</div>
+  <table class="signal-table">
+    <thead><tr>
+      <th>日期</th><th>收盤</th><th>布林位置</th>
+      <th>淨買(張)</th><th>累計倉位</th><th>訊號</th>
+    </tr></thead>
+    <tbody><tr><td>2026-08-13</td><td>384.0</td><td>△近上軌</td><td>-112</td><td>-112</td><td class="sig-sell2">▼▼ 賣 近上軌+主力賣</td></tr>
+<tr><td>2026-08-18</td><td>417.5</td><td>△近上軌</td><td>-1736</td><td>-1644</td><td class="sig-sell2">▼▼ 賣 近上軌+主力賣</td></tr>
+<tr><td>2026-08-19</td><td>396.5</td><td>中間(74%)</td><td>-94</td><td>-1738</td><td class="sig-edge">◆ 邊拉邊出 爆量低淨買≈0</td></tr>
+<tr><td>2026-08-21</td><td>406.0</td><td>中間(74%)</td><td>+14</td><td>-2147</td><td class="sig-edge">◆ 邊拉邊出 爆量低淨買≈0</td></tr>
+<tr><td>2026-09-01</td><td>524.0</td><td>▲上穿上軌</td><td>-435</td><td>-1153</td><td class="sig-sell3">▼▼▼ 強賣 上穿上軌+主力大賣</td></tr>
+<tr><td>2026-09-02</td><td>542.0</td><td>▲上穿上軌</td><td>-122</td><td>-1275</td><td class="sig-sell3">▼▼▼ 強賣 上穿上軌+主力大賣</td></tr>
+<tr><td>2026-09-03</td><td>525.0</td><td>△近上軌</td><td>+152</td><td>-1123</td><td class="sig-edge">◆ 邊拉邊出 爆量低淨買≈0</td></tr>
+<tr><td>2026-09-04</td><td>528.0</td><td>△近上軌</td><td>-180</td><td>-1302</td><td class="sig-sell2">▼▼ 賣 近上軌+主力賣</td></tr>
+<tr><td>2026-09-16</td><td>515.0</td><td>中間(65%)</td><td>-107</td><td>-740</td><td class="sig-edge">◆ 邊拉邊出 爆量低淨買≈0</td></tr>
+<tr><td>2026-09-17</td><td>534.0</td><td>中間(71%)</td><td>+161</td><td>-579</td><td class="sig-edge">◆ 邊拉邊出 爆量低淨買≈0</td></tr>
+<tr><td>2026-09-18</td><td>556.0</td><td>中間(79%)</td><td>+119</td><td>-460</td><td class="sig-edge">◆ 邊拉邊出 爆量低淨買≈0</td></tr>
+<tr><td>2026-09-21</td><td>572.0</td><td>△近上軌</td><td>-247</td><td>-708</td><td class="sig-sell2">▼▼ 賣 近上軌+主力賣</td></tr>
+<tr><td>2026-10-13</td><td>508.0</td><td>▽近下軌</td><td>+283</td><td>-534</td><td class="sig-buy2">★★ 買 近下軌+主力買</td></tr>
+<tr><td>2026-10-16</td><td>493.0</td><td>▽近下軌</td><td>+210</td><td>-690</td><td class="sig-buy2">★★ 買 近下軌+主力買</td></tr>
+<tr><td>2026-10-19</td><td>491.5</td><td>▽近下軌</td><td>+116</td><td>-574</td><td class="sig-buy2">★★ 買 近下軌+主力買</td></tr>
+<tr><td>2026-10-20</td><td>485.5</td><td>▽近下軌</td><td>+40</td><td>-534</td><td class="sig-edge">◆ 邊拉邊出 爆量低淨買≈0</td></tr>
+<tr><td>2026-10-21</td><td>490.5</td><td>▽近下軌</td><td>+76</td><td>-458</td><td class="sig-buy2">★★ 買 近下軌+主力買</td></tr>
+<tr><td>2026-10-22</td><td>467.0</td><td>▽近下軌</td><td>+100</td><td>-358</td><td class="sig-buy2">★★ 買 近下軌+主力買</td></tr>
+<tr><td>2026-10-27</td><td>466.0</td><td>▽近下軌</td><td>+190</td><td>-168</td><td class="sig-buy2">★★ 買 近下軌+主力買</td></tr>
+<tr><td>2026-10-30</td><td>447.0</td><td>▽近下軌</td><td>+5</td><td>-650</td><td class="sig-edge">◆ 邊拉邊出 爆量低淨買≈0</td></tr>
+<tr><td>2026-11-03</td><td>405.0</td><td>▽近下軌</td><td>+62</td><td>-755</td><td class="sig-buy2">★★ 買 近下軌+主力買</td></tr>
+<tr><td>2026-11-04</td><td>384.0</td><td>▼下穿下軌</td><td>+82</td><td>-672</td><td class="sig-buy2">★★ 買 近下軌+主力買</td></tr>
+<tr><td>2026-11-05</td><td>346.0</td><td>▼下穿下軌</td><td>-33</td><td>-705</td><td class="sig-edge">◆ 邊拉邊出 爆量低淨買≈0</td></tr>
+<tr><td>2026-11-06</td><td>319.0</td><td>▼下穿下軌</td><td>+907</td><td>+202</td><td class="sig-buy3">★★★ 強買 下穿下軌+主力大買</td></tr></tbody>
+  </table>
+</div>
+
+<script>
+// ── 原始資料 ───────────────────────────────────────────────────────
+const rawOHLC = [{"time": "2026-08-13", "open": 398.0, "high": 398.0, "low": 380.0, "close": 384.0}, {"time": "2026-08-14", "open": 385.0, "high": 385.0, "low": 376.0, "close": 379.5}, {"time": "2026-08-17", "open": 409.5, "high": 417.0, "low": 405.0, "close": 417.0}, {"time": "2026-08-18", "open": 435.0, "high": 437.5, "low": 409.5, "close": 417.5}, {"time": "2026-08-19", "open": 385.5, "high": 415.0, "low": 385.0, "close": 396.5}, {"time": "2026-08-20", "open": 411.5, "high": 416.0, "low": 392.5, "close": 412.0}, {"time": "2026-08-21", "open": 404.0, "high": 411.0, "low": 393.5, "close": 406.0}, {"time": "2026-08-24", "open": 401.5, "high": 405.5, "low": 381.5, "close": 381.5}, {"time": "2026-08-25", "open": 381.5, "high": 419.5, "low": 374.5, "close": 419.5}, {"time": "2026-08-26", "open": 419.0, "high": 430.0, "low": 415.0, "close": 428.0}, {"time": "2026-08-27", "open": 429.0, "high": 450.0, "low": 426.5, "close": 433.0}, {"time": "2026-08-28", "open": 438.0, "high": 442.0, "low": 431.5, "close": 434.0}, {"time": "2026-08-31", "open": 428.0, "high": 477.0, "low": 428.0, "close": 477.0}, {"time": "2026-09-01", "open": 490.0, "high": 524.0, "low": 474.0, "close": 524.0}, {"time": "2026-09-02", "open": 515.0, "high": 552.0, "low": 509.0, "close": 542.0}, {"time": "2026-09-03", "open": 541.0, "high": 555.0, "low": 520.0, "close": 525.0}, {"time": "2026-09-04", "open": 548.0, "high": 548.0, "low": 492.5, "close": 528.0}, {"time": "2026-09-07", "open": 525.0, "high": 525.0, "low": 491.0, "close": 500.0}, {"time": "2026-09-08", "open": 528.0, "high": 535.0, "low": 506.0, "close": 515.0}, {"time": "2026-09-09", "open": 536.0, "high": 552.0, "low": 523.0, "close": 533.0}, {"time": "2026-09-10", "open": 533.0, "high": 545.0, "low": 527.0, "close": 532.0}, {"time": "2026-09-11", "open": 514.0, "high": 527.0, "low": 499.5, "close": 515.0}, {"time": "2026-09-14", "open": 497.0, "high": 535.0, "low": 493.0, "close": 535.0}, {"time": "2026-09-15", "open": 528.0, "high": 536.0, "low": 506.0, "close": 520.0}, {"time": "2026-09-16", "open": 515.0, "high": 534.0, "low": 506.0, "close": 515.0}, {"time": "2026-09-17", "open": 535.0, "high": 566.0, "low": 515.0, "close": 534.0}, {"time": "2026-09-18", "open": 545.0, "high": 563.0, "low": 520.0, "close": 556.0}, {"time": "2026-09-21", "open": 571.0, "high": 590.0, "low": 545.0, "close": 572.0}, {"time": "2026-09-22", "open": 570.0, "high": 570.0, "low": 537.0, "close": 547.0}, {"time": "2026-09-23", "open": 541.0, "high": 552.0, "low": 535.0, "close": 552.0}, {"time": "2026-09-24", "open": 547.0, "high": 555.0, "low": 542.0, "close": 554.0}, {"time": "2026-09-29", "open": 543.0, "high": 550.0, "low": 540.0, "close": 543.0}, {"time": "2026-09-30", "open": 544.0, "high": 555.0, "low": 544.0, "close": 552.0}, {"time": "2026-10-01", "open": 552.0, "high": 552.0, "low": 530.0, "close": 546.0}, {"time": "2026-10-02", "open": 559.0, "high": 580.0, "low": 551.0, "close": 580.0}, {"time": "2026-10-05", "open": 590.0, "high": 607.0, "low": 575.0, "close": 606.0}, {"time": "2026-10-06", "open": 596.0, "high": 613.0, "low": 560.0, "close": 567.0}, {"time": "2026-10-07", "open": 562.0, "high": 575.0, "low": 547.0, "close": 559.0}, {"time": "2026-10-08", "open": 555.0, "high": 571.0, "low": 546.0, "close": 558.0}, {"time": "2026-10-12", "open": 551.0, "high": 571.0, "low": 543.0, "close": 564.0}, {"time": "2026-10-13", "open": 540.0, "high": 543.0, "low": 508.0, "close": 508.0}, {"time": "2026-10-14", "open": 508.0, "high": 530.0, "low": 498.5, "close": 523.0}, {"time": "2026-10-15", "open": 481.0, "high": 509.0, "low": 480.0, "close": 483.5}, {"time": "2026-10-16", "open": 492.0, "high": 508.0, "low": 487.0, "close": 493.0}, {"time": "2026-10-19", "open": 460.0, "high": 495.0, "low": 459.0, "close": 491.5}, {"time": "2026-10-20", "open": 495.0, "high": 510.0, "low": 481.5, "close": 485.5}, {"time": "2026-10-21", "open": 500.0, "high": 506.0, "low": 486.0, "close": 490.5}, {"time": "2026-10-22", "open": 498.0, "high": 499.0, "low": 464.0, "close": 467.0}, {"time": "2026-10-27", "open": 481.5, "high": 487.5, "low": 458.0, "close": 466.0}, {"time": "2026-10-28", "open": 489.0, "high": 512.0, "low": 484.0, "close": 512.0}, {"time": "2026-10-29", "open": 536.0, "high": 536.0, "low": 484.0, "close": 484.0}, {"time": "2026-10-30", "open": 459.0, "high": 462.0, "low": 436.0, "close": 447.0}, {"time": "2026-11-02", "open": 430.5, "high": 455.5, "low": 427.0, "close": 449.5}, {"time": "2026-11-03", "open": 433.0, "high": 434.0, "low": 405.0, "close": 405.0}, {"time": "2026-11-04", "open": 400.0, "high": 402.5, "low": 364.5, "close": 384.0}, {"time": "2026-11-05", "open": 373.5, "high": 375.5, "low": 346.0, "close": 346.0}, {"time": "2026-11-06", "open": 311.5, "high": 327.5, "low": 311.5, "close": 319.0}, {"time": "2026-11-09", "open": 324.0, "high": 348.0, "low": 320.5, "close": 341.5}, {"time": "2026-11-10", "open": 358.0, "high": 375.5, "low": 356.0, "close": 369.5}, {"time": "2026-11-11", "open": 365.0, "high": 385.0, "low": 360.0, "close": 384.5}];
+const bollData  = [{"time": "2026-08-13", "upper": 415.53, "ma": 331.7, "lower": 247.87}, {"time": "2026-08-14", "upper": 419.57, "ma": 336.57, "lower": 253.58}, {"time": "2026-08-17", "upper": 428.99, "ma": 343.57, "lower": 258.16}, {"time": "2026-08-18", "upper": 437.97, "ma": 349.7, "lower": 261.43}, {"time": "2026-08-19", "upper": 443.11, "ma": 353.3, "lower": 263.49}, {"time": "2026-08-20", "upper": 450.08, "ma": 356.65, "lower": 263.22}, {"time": "2026-08-21", "upper": 455.52, "ma": 360.3, "lower": 265.08}, {"time": "2026-08-24", "upper": 457.34, "ma": 363.05, "lower": 268.76}, {"time": "2026-08-25", "upper": 461.88, "ma": 368.9, "lower": 275.92}, {"time": "2026-08-26", "upper": 461.35, "ma": 376.68, "lower": 292.0}, {"time": "2026-08-27", "upper": 455.33, "ma": 385.05, "lower": 314.77}, {"time": "2026-08-28", "upper": 450.54, "ma": 392.15, "lower": 333.76}, {"time": "2026-08-31", "upper": 459.97, "ma": 399.95, "lower": 339.93}, {"time": "2026-09-01", "upper": 486.41, "ma": 408.5, "lower": 330.59}, {"time": "2026-09-02", "upper": 513.59, "ma": 416.2, "lower": 318.81}, {"time": "2026-09-03", "upper": 530.24, "ma": 423.85, "lower": 317.46}, {"time": "2026-09-04", "upper": 544.15, "ma": 432.05, "lower": 319.95}, {"time": "2026-09-07", "upper": 551.5, "ma": 437.82, "lower": 324.15}, {"time": "2026-09-08", "upper": 558.8, "ma": 445.2, "lower": 331.6}, {"time": "2026-09-09", "upper": 568.9, "ma": 452.62, "lower": 336.35}, {"time": "2026-09-10", "upper": 576.75, "ma": 460.02, "lower": 343.3}, {"time": "2026-09-11", "upper": 579.5, "ma": 466.8, "lower": 354.1}, {"time": "2026-09-14", "upper": 586.77, "ma": 472.7, "lower": 358.63}, {"time": "2026-09-15", "upper": 590.66, "ma": 477.82, "lower": 364.99}, {"time": "2026-09-16", "upper": 590.91, "ma": 483.75, "lower": 376.59}, {"time": "2026-09-17", "upper": 593.65, "ma": 489.85, "lower": 386.05}, {"time": "2026-09-18", "upper": 597.24, "ma": 497.35, "lower": 397.46}, {"time": "2026-09-21", "upper": 596.0, "ma": 506.88, "lower": 417.75}, {"time": "2026-09-22", "upper": 593.9, "ma": 513.25, "lower": 432.6}, {"time": "2026-09-23", "upper": 591.06, "ma": 519.45, "lower": 447.84}, {"time": "2026-09-24", "upper": 585.93, "ma": 525.5, "lower": 465.07}, {"time": "2026-09-29", "upper": 573.71, "ma": 530.95, "lower": 488.19}, {"time": "2026-09-30", "upper": 570.06, "ma": 534.7, "lower": 499.34}, {"time": "2026-10-01", "upper": 571.12, "ma": 535.8, "lower": 500.48}, {"time": "2026-10-02", "upper": 578.15, "ma": 537.7, "lower": 497.25}, {"time": "2026-10-05", "upper": 591.9, "ma": 541.75, "lower": 491.6}, {"time": "2026-10-06", "upper": 594.62, "ma": 543.7, "lower": 492.78}, {"time": "2026-10-07", "upper": 593.6, "ma": 546.65, "lower": 499.7}, {"time": "2026-10-08", "upper": 593.53, "ma": 548.8, "lower": 504.07}, {"time": "2026-10-12", "upper": 594.92, "ma": 550.35, "lower": 505.78}, {"time": "2026-10-13", "upper": 596.98, "ma": 549.15, "lower": 501.32}, {"time": "2026-10-14", "upper": 596.29, "ma": 549.55, "lower": 502.81}, {"time": "2026-10-15", "upper": 602.03, "ma": 546.98, "lower": 491.92}, {"time": "2026-10-16", "upper": 604.65, "ma": 545.62, "lower": 486.6}, {"time": "2026-10-19", "upper": 606.88, "ma": 544.45, "lower": 482.02}, {"time": "2026-10-20", "upper": 609.71, "ma": 542.02, "lower": 474.34}, {"time": "2026-10-21", "upper": 609.84, "ma": 538.75, "lower": 467.66}, {"time": "2026-10-22", "upper": 609.58, "ma": 533.5, "lower": 457.42}, {"time": "2026-10-27", "upper": 610.94, "ma": 529.45, "lower": 447.96}, {"time": "2026-10-28", "upper": 608.57, "ma": 527.45, "lower": 446.33}, {"time": "2026-10-29", "upper": 606.28, "ma": 523.95, "lower": 441.62}, {"time": "2026-10-30", "upper": 607.76, "ma": 519.15, "lower": 430.54}, {"time": "2026-11-02", "upper": 606.41, "ma": 514.02, "lower": 421.64}, {"time": "2026-11-03", "upper": 609.99, "ma": 506.98, "lower": 403.96}, {"time": "2026-11-04", "upper": 607.94, "ma": 497.18, "lower": 386.41}, {"time": "2026-11-05", "upper": 601.97, "ma": 484.18, "lower": 366.38}, {"time": "2026-11-06", "upper": 604.17, "ma": 471.77, "lower": 339.38}, {"time": "2026-11-09", "upper": 598.74, "ma": 460.9, "lower": 323.06}, {"time": "2026-11-10", "upper": 587.12, "ma": 451.48, "lower": 315.83}, {"time": "2026-11-11", "upper": 570.33, "ma": 442.5, "lower": 314.67}];    // [{time,upper,ma,lower}]
+const volData   = [{"time": "2026-08-13", "value": 3731.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-08-14", "value": 2661.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-08-17", "value": 13651.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-08-18", "value": 35433.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-08-19", "value": 15313.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-08-20", "value": 16531.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-08-21", "value": 14167.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-08-24", "value": 3077.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-08-25", "value": 4280.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-08-26", "value": 3496.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-08-27", "value": 4767.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-08-28", "value": 2121.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-08-31", "value": 32356.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-09-01", "value": 28052.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-09-02", "value": 34014.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-09-03", "value": 21442.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-09-04", "value": 24126.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-09-07", "value": 3476.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-09-08", "value": 4653.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-09-09", "value": 2499.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-09-10", "value": 1564.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-09-11", "value": 1842.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-09-14", "value": 1720.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-09-15", "value": 1672.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-09-16", "value": 19718.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-09-17", "value": 28619.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-09-18", "value": 20027.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-09-21", "value": 15659.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-09-22", "value": 18755.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-09-23", "value": 3311.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-09-24", "value": 1641.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-09-29", "value": 1025.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-09-30", "value": 1395.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-10-01", "value": 2011.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-10-02", "value": 4300.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-10-05", "value": 2369.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-10-06", "value": 16089.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-10-07", "value": 15372.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-10-08", "value": 6225.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-10-12", "value": 6985.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-10-13", "value": 11062.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-10-14", "value": 6992.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-10-15", "value": 7209.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-10-16", "value": 5787.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-10-19", "value": 5026.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-10-20", "value": 6765.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-10-21", "value": 5839.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-10-22", "value": 4356.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-10-27", "value": 5079.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-10-28", "value": 9704.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-10-29", "value": 16970.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-10-30", "value": 7010.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-11-02", "value": 6425.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-11-03", "value": 6914.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-11-04", "value": 11923.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-11-05", "value": 7838.0, "color": "rgba(248,81,73,0.5)"}, {"time": "2026-11-06", "value": 8612.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-11-09", "value": 6736.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-11-10", "value": 10951.0, "color": "rgba(63,185,80,0.5)"}, {"time": "2026-11-11", "value": 2791.0, "color": "rgba(63,185,80,0.5)"}];
+const ma5Data   = [{"time": "2026-08-13", "value": 376.9}, {"time": "2026-08-14", "value": 380.0}, {"time": "2026-08-17", "value": 386.5}, {"time": "2026-08-18", "value": 396.5}, {"time": "2026-08-19", "value": 398.9}, {"time": "2026-08-20", "value": 404.5}, {"time": "2026-08-21", "value": 409.8}, {"time": "2026-08-24", "value": 402.7}, {"time": "2026-08-25", "value": 403.1}, {"time": "2026-08-26", "value": 409.4}, {"time": "2026-08-27", "value": 413.6}, {"time": "2026-08-28", "value": 419.2}, {"time": "2026-08-31", "value": 438.3}, {"time": "2026-09-01", "value": 459.2}, {"time": "2026-09-02", "value": 482.0}, {"time": "2026-09-03", "value": 500.4}, {"time": "2026-09-04", "value": 519.2}, {"time": "2026-09-07", "value": 523.8}, {"time": "2026-09-08", "value": 522.0}, {"time": "2026-09-09", "value": 520.2}, {"time": "2026-09-10", "value": 521.6}, {"time": "2026-09-11", "value": 519.0}, {"time": "2026-09-14", "value": 526.0}, {"time": "2026-09-15", "value": 527.0}, {"time": "2026-09-16", "value": 523.4}, {"time": "2026-09-17", "value": 523.8}, {"time": "2026-09-18", "value": 532.0}, {"time": "2026-09-21", "value": 539.4}, {"time": "2026-09-22", "value": 544.8}, {"time": "2026-09-23", "value": 552.2}, {"time": "2026-09-24", "value": 556.2}, {"time": "2026-09-29", "value": 553.6}, {"time": "2026-09-30", "value": 549.6}, {"time": "2026-10-01", "value": 549.4}, {"time": "2026-10-02", "value": 555.0}, {"time": "2026-10-05", "value": 565.4}, {"time": "2026-10-06", "value": 570.2}, {"time": "2026-10-07", "value": 571.6}, {"time": "2026-10-08", "value": 574.0}, {"time": "2026-10-12", "value": 570.8}, {"time": "2026-10-13", "value": 551.2}, {"time": "2026-10-14", "value": 542.4}, {"time": "2026-10-15", "value": 527.3}, {"time": "2026-10-16", "value": 514.3}, {"time": "2026-10-19", "value": 499.8}, {"time": "2026-10-20", "value": 495.3}, {"time": "2026-10-21", "value": 488.8}, {"time": "2026-10-22", "value": 485.5}, {"time": "2026-10-27", "value": 480.1}, {"time": "2026-10-28", "value": 484.2}, {"time": "2026-10-29", "value": 483.9}, {"time": "2026-10-30", "value": 475.2}, {"time": "2026-11-02", "value": 471.7}, {"time": "2026-11-03", "value": 459.5}, {"time": "2026-11-04", "value": 433.9}, {"time": "2026-11-05", "value": 406.3}, {"time": "2026-11-06", "value": 380.7}, {"time": "2026-11-09", "value": 359.1}, {"time": "2026-11-10", "value": 352.0}, {"time": "2026-11-11", "value": 352.1}];
+const ma10Data  = [{"time": "2026-08-13", "value": 361.05}, {"time": "2026-08-14", "value": 369.8}, {"time": "2026-08-17", "value": 379.4}, {"time": "2026-08-18", "value": 385.85}, {"time": "2026-08-19", "value": 386.7}, {"time": "2026-08-20", "value": 390.7}, {"time": "2026-08-21", "value": 394.9}, {"time": "2026-08-24", "value": 394.6}, {"time": "2026-08-25", "value": 399.8}, {"time": "2026-08-26", "value": 404.15}, {"time": "2026-08-27", "value": 409.05}, {"time": "2026-08-28", "value": 414.5}, {"time": "2026-08-31", "value": 420.5}, {"time": "2026-09-01", "value": 431.15}, {"time": "2026-09-02", "value": 445.7}, {"time": "2026-09-03", "value": 457.0}, {"time": "2026-09-04", "value": 469.2}, {"time": "2026-09-07", "value": 481.05}, {"time": "2026-09-08", "value": 490.6}, {"time": "2026-09-09", "value": 501.1}, {"time": "2026-09-10", "value": 511.0}, {"time": "2026-09-11", "value": 519.1}, {"time": "2026-09-14", "value": 524.9}, {"time": "2026-09-15", "value": 524.5}, {"time": "2026-09-16", "value": 521.8}, {"time": "2026-09-17", "value": 522.7}, {"time": "2026-09-18", "value": 525.5}, {"time": "2026-09-21", "value": 532.7}, {"time": "2026-09-22", "value": 535.9}, {"time": "2026-09-23", "value": 537.8}, {"time": "2026-09-24", "value": 540.0}, {"time": "2026-09-29", "value": 542.8}, {"time": "2026-09-30", "value": 544.5}, {"time": "2026-10-01", "value": 547.1}, {"time": "2026-10-02", "value": 553.6}, {"time": "2026-10-05", "value": 560.8}, {"time": "2026-10-06", "value": 561.9}, {"time": "2026-10-07", "value": 560.6}, {"time": "2026-10-08", "value": 561.7}, {"time": "2026-10-12", "value": 562.9}, {"time": "2026-10-13", "value": 558.3}, {"time": "2026-10-14", "value": 556.3}, {"time": "2026-10-15", "value": 549.45}, {"time": "2026-10-16", "value": 544.15}, {"time": "2026-10-19", "value": 535.3}, {"time": "2026-10-20", "value": 523.25}, {"time": "2026-10-21", "value": 515.6}, {"time": "2026-10-22", "value": 506.4}, {"time": "2026-10-27", "value": 497.2}, {"time": "2026-10-28", "value": 492.0}, {"time": "2026-10-29", "value": 489.6}, {"time": "2026-10-30", "value": 482.0}, {"time": "2026-11-02", "value": 478.6}, {"time": "2026-11-03", "value": 469.8}, {"time": "2026-11-04", "value": 459.05}, {"time": "2026-11-05", "value": 445.1}, {"time": "2026-11-06", "value": 427.95}, {"time": "2026-11-09", "value": 415.4}, {"time": "2026-11-10", "value": 405.75}, {"time": "2026-11-11", "value": 393.0}];
+const ma20Data  = [{"time": "2026-08-13", "value": 331.7}, {"time": "2026-08-14", "value": 336.57}, {"time": "2026-08-17", "value": 343.57}, {"time": "2026-08-18", "value": 349.7}, {"time": "2026-08-19", "value": 353.3}, {"time": "2026-08-20", "value": 356.65}, {"time": "2026-08-21", "value": 360.3}, {"time": "2026-08-24", "value": 363.05}, {"time": "2026-08-25", "value": 368.9}, {"time": "2026-08-26", "value": 376.68}, {"time": "2026-08-27", "value": 385.05}, {"time": "2026-08-28", "value": 392.15}, {"time": "2026-08-31", "value": 399.95}, {"time": "2026-09-01", "value": 408.5}, {"time": "2026-09-02", "value": 416.2}, {"time": "2026-09-03", "value": 423.85}, {"time": "2026-09-04", "value": 432.05}, {"time": "2026-09-07", "value": 437.82}, {"time": "2026-09-08", "value": 445.2}, {"time": "2026-09-09", "value": 452.62}, {"time": "2026-09-10", "value": 460.02}, {"time": "2026-09-11", "value": 466.8}, {"time": "2026-09-14", "value": 472.7}, {"time": "2026-09-15", "value": 477.82}, {"time": "2026-09-16", "value": 483.75}, {"time": "2026-09-17", "value": 489.85}, {"time": "2026-09-18", "value": 497.35}, {"time": "2026-09-21", "value": 506.88}, {"time": "2026-09-22", "value": 513.25}, {"time": "2026-09-23", "value": 519.45}, {"time": "2026-09-24", "value": 525.5}, {"time": "2026-09-29", "value": 530.95}, {"time": "2026-09-30", "value": 534.7}, {"time": "2026-10-01", "value": 535.8}, {"time": "2026-10-02", "value": 537.7}, {"time": "2026-10-05", "value": 541.75}, {"time": "2026-10-06", "value": 543.7}, {"time": "2026-10-07", "value": 546.65}, {"time": "2026-10-08", "value": 548.8}, {"time": "2026-10-12", "value": 550.35}, {"time": "2026-10-13", "value": 549.15}, {"time": "2026-10-14", "value": 549.55}, {"time": "2026-10-15", "value": 546.98}, {"time": "2026-10-16", "value": 545.62}, {"time": "2026-10-19", "value": 544.45}, {"time": "2026-10-20", "value": 542.02}, {"time": "2026-10-21", "value": 538.75}, {"time": "2026-10-22", "value": 533.5}, {"time": "2026-10-27", "value": 529.45}, {"time": "2026-10-28", "value": 527.45}, {"time": "2026-10-29", "value": 523.95}, {"time": "2026-10-30", "value": 519.15}, {"time": "2026-11-02", "value": 514.02}, {"time": "2026-11-03", "value": 506.98}, {"time": "2026-11-04", "value": 497.18}, {"time": "2026-11-05", "value": 484.18}, {"time": "2026-11-06", "value": 471.77}, {"time": "2026-11-09", "value": 460.9}, {"time": "2026-11-10", "value": 451.48}, {"time": "2026-11-11", "value": 442.5}];
+const ma60Data  = [{"time": "2026-08-13", "value": 360.97}, {"time": "2026-08-14", "value": 360.62}, {"time": "2026-08-17", "value": 361.12}, {"time": "2026-08-18", "value": 361.0}, {"time": "2026-08-19", "value": 360.21}, {"time": "2026-08-20", "value": 360.02}, {"time": "2026-08-21", "value": 359.81}, {"time": "2026-08-24", "value": 359.64}, {"time": "2026-08-25", "value": 359.6}, {"time": "2026-08-26", "value": 359.81}, {"time": "2026-08-27", "value": 360.38}, {"time": "2026-08-28", "value": 360.71}, {"time": "2026-08-31", "value": 361.96}, {"time": "2026-09-01", "value": 364.04}, {"time": "2026-09-02", "value": 367.08}, {"time": "2026-09-03", "value": 369.25}, {"time": "2026-09-04", "value": 372.12}, {"time": "2026-09-07", "value": 375.12}, {"time": "2026-09-08", "value": 377.84}, {"time": "2026-09-09", "value": 380.57}, {"time": "2026-09-10", "value": 382.68}, {"time": "2026-09-11", "value": 384.13}, {"time": "2026-09-14", "value": 386.12}, {"time": "2026-09-15", "value": 387.96}, {"time": "2026-09-16", "value": 389.91}, {"time": "2026-09-17", "value": 392.19}, {"time": "2026-09-18", "value": 394.98}, {"time": "2026-09-21", "value": 398.72}, {"time": "2026-09-22", "value": 402.23}, {"time": "2026-09-23", "value": 405.65}, {"time": "2026-09-24", "value": 408.91}, {"time": "2026-09-29", "value": 412.16}, {"time": "2026-09-30", "value": 415.39}, {"time": "2026-10-01", "value": 418.86}, {"time": "2026-10-02", "value": 423.22}, {"time": "2026-10-05", "value": 427.73}, {"time": "2026-10-06", "value": 431.68}, {"time": "2026-10-07", "value": 435.51}, {"time": "2026-10-08", "value": 439.57}, {"time": "2026-10-12", "value": 443.71}, {"time": "2026-10-13", "value": 446.96}, {"time": "2026-10-14", "value": 450.98}, {"time": "2026-10-15", "value": 454.42}, {"time": "2026-10-16", "value": 457.72}, {"time": "2026-10-19", "value": 460.5}, {"time": "2026-10-20", "value": 462.84}, {"time": "2026-10-21", "value": 465.47}, {"time": "2026-10-22", "value": 467.81}, {"time": "2026-10-27", "value": 470.53}, {"time": "2026-10-28", "value": 474.52}, {"time": "2026-10-29", "value": 478.17}, {"time": "2026-10-30", "value": 480.75}, {"time": "2026-11-02", "value": 482.89}, {"time": "2026-11-03", "value": 483.76}, {"time": "2026-11-04", "value": 483.69}, {"time": "2026-11-05", "value": 483.26}, {"time": "2026-11-06", "value": 482.51}, {"time": "2026-11-09", "value": 481.79}, {"time": "2026-11-10", "value": 481.82}, {"time": "2026-11-11", "value": 481.82}];
+const markers   = [{"time": "2026-09-01", "pos": "aboveBar", "color": "#f85149", "shape": "arrowDown", "text": ""}, {"time": "2026-09-02", "pos": "aboveBar", "color": "#f85149", "shape": "arrowDown", "text": ""}, {"time": "2026-11-06", "pos": "belowBar", "color": "#3fb950", "shape": "arrowUp", "text": ""}]; // [{time,pos,color,shape,text}]
+const netData   = [-111.7, 152.2, 51.2, -1735.8, -94.3, -423.2, 14.4, 232.2, 193.8, 123.8, 98.8, 94.0, 686.2, -434.7, -122.0, 152.5, -179.7, -73.0, 239.9, 262.6, -36.0, 17.3, 136.0, 122.3, -107.1, 161.3, 118.8, -247.4, -179.6, -14.0, 74.3, 2.0, 120.4, 46.8, 72.7, 27.4, -353.2, 252.1, -86.0, -71.9, 282.9, -2.9, -364.1, 210.2, 116.2, 40.0, 76.1, 99.9, 190.5, -245.7, -241.7, 5.1, -167.0, 62.4, 82.4, -32.9, 907.4, -415.5, -434.4, 16.1];
+const cumData   = [-111.7, 40.5, 91.7, -1644.1, -1738.4, -2161.6, -2147.2, -1915.0, -1721.2, -1597.4, -1498.6, -1404.6, -718.4, -1153.1, -1275.1, -1122.6, -1302.3, -1375.3, -1135.4, -872.8, -908.8, -891.5, -755.5, -633.2, -740.3, -579.0, -460.2, -707.6, -887.2, -901.2, -826.9, -824.9, -704.5, -657.7, -585.0, -557.6, -910.8, -658.7, -744.7, -816.6, -533.7, -536.6, -900.7, -690.5, -574.3, -534.3, -458.2, -358.3, -167.8, -413.5, -655.2, -650.1, -817.1, -754.7, -672.3, -705.2, 202.2, -213.3, -647.7, -631.6];
+const sNetData  = [426.0, 256.0, 346.9, -221.0, 405.0, 832.0, -618.0, -254.0, 223.8, 352.7, 640.0, 315.7, 596.3, -294.2, 737.0, 333.0, 1134.4, 186.7, 784.0, 582.0, 190.9, 473.0, 159.0, -179.1, 301.0, -716.0, -360.0, 507.0, -1094.0, 121.0, 104.0, 22.0, -29.8, 135.1, 488.0, 17.6, -668.8, -942.7, 591.0, 379.0, 547.0, 242.0, 96.0, -28.0, 95.0, -27.0, -358.0, 595.0, -188.0, -1309.0, -1443.0, 114.0, -44.0, -153.0, 672.0, 284.0, -148.0, -638.9, -696.0, 139.8];
+const sCumData  = [426.0, 682.0, 1028.9, 807.9, 1212.9, 2044.9, 1426.9, 1172.9, 1396.7, 1749.4, 2389.4, 2705.1, 3301.4, 3007.2, 3744.2, 4077.2, 5211.6, 5398.3, 6182.3, 6764.3, 6955.2, 7428.2, 7587.2, 7408.1, 7709.1, 6993.1, 6633.1, 7140.1, 6046.1, 6167.1, 6271.1, 6293.1, 6263.3, 6398.4, 6886.4, 6904.0, 6235.2, 5292.5, 5883.5, 6262.5, 6809.5, 7051.5, 7147.5, 7119.5, 7214.5, 7187.5, 6829.5, 7424.5, 7236.5, 5927.5, 4484.5, 4598.5, 4554.5, 4401.5, 5073.5, 5357.5, 5209.5, 4570.6, 3874.6, 4014.4];
+const labels    = ["08/13", "08/14", "08/17", "08/18", "08/19", "08/20", "08/21", "08/24", "08/25", "08/26", "08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11"];
+
+// ── 共用圖表設定 ──────────────────────────────────────────────────
+const LW = LightweightCharts;
+const chartOpts = (el) => LW.createChart(el, {
+  layout: { background: {color:'#161b22'}, textColor: '#8b949e' },
+  grid:   { vertLines: {color:'#21262d'}, horzLines: {color:'#21262d'} },
+  rightPriceScale: { borderColor: '#30363d' },
+  timeScale: { borderColor: '#30363d', timeVisible: false },
+  crosshair: { mode: LW.CrosshairMode.Normal },
+  handleScale: { mouseWheel: false },
+  handleScroll: { mouseWheel: false },
+  width:  el.clientWidth,
+  height: 300,
+});
+
+// ── 共用：格式化數值 ──────────────────────────────────────────────
+const fmt = v => (v == null ? '—' : (+v).toFixed(2));
+const ohlcMap = {};
+rawOHLC.forEach(d => ohlcMap[d.time] = d);
+const bollMap = {};
+bollData.forEach(d => bollMap[d.time] = d);
+const maMap = {};
+[ma5Data, ma10Data, ma20Data, ma60Data].forEach(arr =>
+  arr.forEach(d => {
+    if (!maMap[d.time]) maMap[d.time] = {};
+  })
+);
+ma5Data.forEach(d  => { if (!maMap[d.time]) maMap[d.time]={}; maMap[d.time].ma5  = d.value; });
+ma10Data.forEach(d => { if (!maMap[d.time]) maMap[d.time]={}; maMap[d.time].ma10 = d.value; });
+ma20Data.forEach(d => { if (!maMap[d.time]) maMap[d.time]={}; maMap[d.time].ma20 = d.value; });
+ma60Data.forEach(d => { if (!maMap[d.time]) maMap[d.time]={}; maMap[d.time].ma60 = d.value; });
+
+function updateLegendBoll(time) {
+  const o = ohlcMap[time] || ohlcMap[rawOHLC[rawOHLC.length-1].time];
+  const b = bollMap[time] || bollMap[Object.keys(bollMap).at(-1)];
+  const t = time || rawOHLC[rawOHLC.length-1].time;
+  document.getElementById('lb-date').textContent  = t;
+  document.getElementById('lb-ohlc').textContent  =
+    `O:${o.open} H:${o.high} L:${o.low} C:${o.close}`;
+  if (b) {
+    document.getElementById('lb-upper').textContent = `上軌:${fmt(b.upper)}`;
+    document.getElementById('lb-bma').textContent   = `MA20:${fmt(b.ma)}`;
+    document.getElementById('lb-lower').textContent = `下軌:${fmt(b.lower)}`;
+  }
+}
+function updateLegendMA(time) {
+  const o = ohlcMap[time] || ohlcMap[rawOHLC[rawOHLC.length-1].time];
+  const m = maMap[time]   || maMap[Object.keys(maMap).at(-1)] || {};
+  const t = time || rawOHLC[rawOHLC.length-1].time;
+  document.getElementById('lm-date').textContent  = t;
+  document.getElementById('lm-ohlc').textContent  =
+    `O:${o.open} H:${o.high} L:${o.low} C:${o.close}`;
+  document.getElementById('lm-ma5').textContent  = m.ma5  ? `MA5:${fmt(m.ma5)}`  : '';
+  document.getElementById('lm-ma10').textContent = m.ma10 ? `MA10:${fmt(m.ma10)}` : '';
+  document.getElementById('lm-ma20').textContent = m.ma20 ? `MA20:${fmt(m.ma20)}` : '';
+  document.getElementById('lm-ma60').textContent = m.ma60 ? `MA60:${fmt(m.ma60)}` : '';
+}
+// 初始化顯示最新日期
+updateLegendBoll(null);
+updateLegendMA(null);
+
+// ── 圖1: K線 + 布林通道 + 執行層倉位曲線 ────────────────────────
+const chart1  = chartOpts(document.getElementById('chartBoll'));
+const candle1 = chart1.addCandlestickSeries({
+  upColor: '#3fb950', downColor: '#f85149',
+  borderUpColor: '#3fb950', borderDownColor: '#f85149',
+  wickUpColor: '#3fb950', wickDownColor: '#f85149',
+  lastValueVisible: false, priceLineVisible: false,
+});
+candle1.setData(rawOHLC);
+
+const upperS = chart1.addLineSeries({
+  color:'rgba(248,81,73,0.7)', lineWidth:1,
+  lastValueVisible: false, priceLineVisible: false,
+});
+const bollMS = chart1.addLineSeries({
+  color:'rgba(210,153,34,0.6)', lineWidth:1, lineStyle:LW.LineStyle.Dashed,
+  lastValueVisible: false, priceLineVisible: false,
+});
+const lowerS = chart1.addLineSeries({
+  color:'rgba(63,185,80,0.7)', lineWidth:1,
+  lastValueVisible: false, priceLineVisible: false,
+});
+upperS.setData(bollData.map(d=>({time:d.time, value:d.upper})));
+bollMS.setData(bollData.map(d=>({time:d.time, value:d.ma})));
+lowerS.setData(bollData.map(d=>({time:d.time, value:d.lower})));
+
+candle1.setMarkers(markers.map(m=>({
+  time: m.time, position: m.pos, color: m.color, shape: m.shape, text: m.text, size: 1,
+})));
+
+// 執行層累積倉位疊加在布林圖（左軸獨立）
+const cumSeries1 = chart1.addLineSeries({
+  color: '#d29922', lineWidth: 2, lineStyle: 0,
+  priceScaleId: 'cumLeft',
+  lastValueVisible: false, priceLineVisible: false,
+});
+chart1.priceScale('cumLeft').applyOptions({
+  position: 'left',
+  scaleMargins: { top: 0.6, bottom: 0.1 },
+  borderColor: '#30363d',
+});
+const cumTimeData1 = labels.map((_, i) => ({ time: rawOHLC[i]?.time, value: cumData[i] }))
+  .filter(d => d.time != null);
+cumSeries1.setData(cumTimeData1);
+
+// 戰略層累積倉位疊加在布林圖（左軸同一軸）
+const sCumSeries1 = chart1.addLineSeries({
+  color: '#00e5ff', lineWidth: 1.5, lineStyle: LW.LineStyle.Dashed,
+  priceScaleId: 'cumLeft',
+  lastValueVisible: false, priceLineVisible: false,
+});
+const sCumTimeData1 = labels.map((_, i) => ({ time: rawOHLC[i]?.time, value: sCumData[i] }))
+  .filter(d => d.time != null);
+sCumSeries1.setData(sCumTimeData1);
+
+// 量能面板（圖1）
+const vol1 = chart1.addHistogramSeries({
+  priceFormat: { type: 'volume' },
+  priceScaleId: 'vol1',
+  lastValueVisible: false, priceLineVisible: false,
+});
+chart1.priceScale('vol1').applyOptions({
+  scaleMargins: { top: 0.82, bottom: 0 },
+});
+vol1.setData(volData);
+
+chart1.timeScale().fitContent();
+
+// ── 圖2: K線 + 均線 ──────────────────────────────────────────────
+const chart2  = chartOpts(document.getElementById('chartMA'));
+const candle2 = chart2.addCandlestickSeries({
+  upColor: '#3fb950', downColor: '#f85149',
+  borderUpColor: '#3fb950', borderDownColor: '#f85149',
+  wickUpColor: '#3fb950', wickDownColor: '#f85149',
+  lastValueVisible: false, priceLineVisible: false,
+});
+candle2.setData(rawOHLC);
+
+const maColors = { 5:'#ff9900', 10:'#00bfff', 20:'#ff79c6', 60:'#bd93f9' };
+[
+  [ma5Data, 5], [ma10Data, 10], [ma20Data, 20], [ma60Data, 60],
+].forEach(([data, n]) => {
+  if (!data.length) return;
+  chart2.addLineSeries({
+    color: maColors[n], lineWidth: 1.5,
+    lastValueVisible: false, priceLineVisible: false,
+  }).setData(data);
+});
+// 執行層倉位疊加在均線圖（左軸）
+const cumSeries2 = chart2.addLineSeries({
+  color: '#d29922', lineWidth: 2,
+  priceScaleId: 'cumLeft2',
+  lastValueVisible: false, priceLineVisible: false,
+});
+chart2.priceScale('cumLeft2').applyOptions({
+  position: 'left',
+  scaleMargins: { top: 0.6, bottom: 0.1 },
+  borderColor: '#30363d',
+});
+cumSeries2.setData(cumTimeData1);
+
+const sCumSeries2 = chart2.addLineSeries({
+  color: '#00e5ff', lineWidth: 1.5, lineStyle: LW.LineStyle.Dashed,
+  priceScaleId: 'cumLeft2',
+  lastValueVisible: false, priceLineVisible: false,
+});
+sCumSeries2.setData(sCumTimeData1);
+
+// 量能面板（圖2）
+const vol2 = chart2.addHistogramSeries({
+  priceFormat: { type: 'volume' },
+  priceScaleId: 'vol2',
+  lastValueVisible: false, priceLineVisible: false,
+});
+chart2.priceScale('vol2').applyOptions({
+  scaleMargins: { top: 0.75, bottom: 0 },
+});
+vol2.setData(volData);
+
+chart2.timeScale().fitContent();
+
+// ── 每日淨買時間序列（LightweightCharts 格式）────────────────────
+const netTimeData = rawOHLC.map((d, i) => ({
+  time: d.time, value: netData[i] ?? 0,
+  color: (netData[i] ?? 0) >= 0 ? 'rgba(63,185,80,0.7)' : 'rgba(248,81,73,0.7)',
+}));
+const sNetTimeData = rawOHLC.map((d, i) => ({
+  time: d.time, value: sNetData[i] ?? 0,
+  color: (sNetData[i] ?? 0) >= 0 ? 'rgba(0,229,255,0.55)' : 'rgba(248,81,73,0.55)',
+}));
+
+// ── 圖3: 執行層（LightweightCharts K線）─────────────────────────
+const chart3 = chartOpts(document.getElementById('chartBroker'));
+const candle3 = chart3.addCandlestickSeries({
+  upColor: '#3fb950', downColor: '#f85149',
+  borderUpColor: '#3fb950', borderDownColor: '#f85149',
+  wickUpColor: '#3fb950', wickDownColor: '#f85149',
+  lastValueVisible: false, priceLineVisible: false,
+});
+candle3.setData(rawOHLC);
+const net3 = chart3.addHistogramSeries({
+  priceScaleId: 'net3', lastValueVisible: false, priceLineVisible: false,
+});
+chart3.priceScale('net3').applyOptions({ scaleMargins: { top: 0.82, bottom: 0 } });
+net3.setData(netTimeData);
+chart3.timeScale().fitContent();
+
+// ── 圖4: 戰略層（LightweightCharts K線）─────────────────────────
+const chart4 = chartOpts(document.getElementById('chartStrategic'));
+const candle4 = chart4.addCandlestickSeries({
+  upColor: '#3fb950', downColor: '#f85149',
+  borderUpColor: '#3fb950', borderDownColor: '#f85149',
+  wickUpColor: '#3fb950', wickDownColor: '#f85149',
+  lastValueVisible: false, priceLineVisible: false,
+});
+candle4.setData(rawOHLC);
+const sNet4 = chart4.addHistogramSeries({
+  priceScaleId: 'sNet4', lastValueVisible: false, priceLineVisible: false,
+});
+chart4.priceScale('sNet4').applyOptions({ scaleMargins: { top: 0.82, bottom: 0 } });
+sNet4.setData(sNetTimeData);
+chart4.timeScale().fitContent();
+
+// ── 同步全部4圖橫軸與十字線 ──────────────────────────────────────
+const allCharts  = [chart1, chart2, chart3, chart4];
+const allCandles = [candle1, candle2, candle3, candle4];
+let _syncing = false;
+allCharts.forEach((src, si) => {
+  src.timeScale().subscribeVisibleLogicalRangeChange(r => {
+    if (_syncing || r === null) return;
+    _syncing = true;
+    allCharts.forEach((dst, di) => { if (di !== si) dst.timeScale().setVisibleLogicalRange(r); });
+    _syncing = false;
+  });
+  src.subscribeCrosshairMove(param => {
+    const t = param.time;
+    if (si === 0 && t) updateLegendBoll(t);
+    if (si === 1 && t) updateLegendMA(t);
+    allCharts.forEach((dst, di) => {
+      if (di === si) return;
+      if (!t || param.point === undefined || param.point.x < 0) { dst.clearCrosshairPosition(); return; }
+      const d = ohlcMap[t];
+      dst.setCrosshairPosition(d?.close ?? 0, t, allCandles[di]);
+    });
+  });
+});
+
+// 視窗 resize 時更新 lightweight-charts 寬度
+window.addEventListener('resize', () => {
+  chart1.applyOptions({ width: document.getElementById('chartBoll').clientWidth });
+  chart2.applyOptions({ width: document.getElementById('chartMA').clientWidth });
+  chart3.applyOptions({ width: document.getElementById('chartBroker').clientWidth });
+  chart4.applyOptions({ width: document.getElementById('chartStrategic').clientWidth });
+});
+</script>
+</body>
+</html>
