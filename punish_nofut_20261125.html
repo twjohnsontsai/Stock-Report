@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>處置股（無期貨）借券分析 2026-11-25</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#0d1117;color:#c9d1d9;padding:20px 24px;font-size:.9rem}
+h1{color:#58a6ff;font-size:1.2rem;margin-bottom:4px}
+.meta{color:#8b949e;font-size:.82rem;margin-bottom:18px}
+h2{color:#e3b341;font-size:.95rem;margin:20px 0 10px;border-bottom:1px solid #21262d;padding-bottom:5px}
+.hn{display:inline-block;background:#1f3a1f;color:#4caf82;padding:1px 9px;border-radius:5px;font-weight:700;font-size:.82rem;margin-left:7px}
+.stock-card{background:#0a0f1a;border:1px solid #21262d;border-radius:10px;padding:16px 18px;margin-bottom:14px}
+.card-hdr{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.code{font-size:1.05rem;font-weight:700;color:#f0f6fc}
+.sname{font-weight:600}
+.cnt-badge{padding:3px 10px;border-radius:8px;font-size:.8rem;white-space:nowrap}
+.badge{padding:2px 8px;border-radius:10px;font-size:.74rem;font-weight:600}
+.badge.released{background:#1f3a1f;color:#4caf82}
+.badge.active{background:#3a1f00;color:#ffa657}
+.panel-lbl{font-size:.78rem;font-weight:600;padding:4px 0 2px;margin-top:8px}
+.chart-wrap{position:relative;height:210px}
+.no-data{color:#8b949e;padding:10px;text-align:center}
+.info-row{display:flex;flex-wrap:wrap;gap:14px;margin:6px 0 12px;padding:8px 12px;background:#0d1117;border-radius:6px;font-size:.82rem}
+.info-item{display:flex;align-items:center;gap:5px;color:#c9d1d9}
+.info-lbl{color:#6e7681;font-size:.76rem;white-space:nowrap}
+.analysis-box{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:13px 16px;margin-top:14px;font-size:.82rem}
+.analysis-title{color:#8b949e;font-size:.78rem;letter-spacing:.06em;margin-bottom:9px;font-weight:600}
+.analysis-row{display:grid;grid-template-columns:5.5rem 1fr;gap:8px;margin-bottom:6px;line-height:1.5;color:#c9d1d9}
+.a-label{color:#6e7681;font-size:.78rem;padding-top:1px;white-space:nowrap}
+.analysis-summary{margin-top:11px;padding:8px 12px;background:#161b22;border-radius:5px;font-weight:600;font-size:.85rem}
+.tbl-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:6px}
+table{width:100%;min-width:640px;border-collapse:collapse;font-size:.84rem;table-layout:fixed}
+th{background:#161b22;color:#8b949e;padding:7px 10px;border:1px solid #21262d}
+td{padding:7px 10px;border:1px solid #21262d;word-break:break-word}
+td.code{font-weight:600;color:#f0f6fc}
+col.c1{width:6%}col.c2{width:13%}col.c3{width:8%}col.c4{width:7%}
+col.c5{width:10%}col.c6{width:8%}col.c7{width:8%}col.c8{width:auto}
+a.nav-link{display:inline-block;margin-bottom:14px;color:#58a6ff;text-decoration:none;font-size:.85rem;margin-right:16px}
+.footer{color:#444;font-size:.74rem;margin-top:26px;border-top:1px solid #21262d;padding-top:8px}
+@media (max-width:480px){
+  body{padding:14px 12px;font-size:.85rem}
+  h1{font-size:1.05rem}
+  table{min-width:560px;font-size:.78rem}
+  th,td{padding:6px 7px}
+  .stock-card{padding:12px 10px}
+  .analysis-row{grid-template-columns:4.2rem 1fr}
+}
+</style>
+</head>
+<body>
+<a class="nav-link" href="index.html">&#8592; 返回首頁</a>
+<a class="nav-link" href="punish_scan_20261125.html">&#8652; 含期貨版</a>
+<h1>處置股（無個股期貨）借券分析</h1>
+<div class="meta">掃描日期：2026-11-25 &nbsp;|&nbsp; 共 12 檔 &nbsp;|&nbsp; 圖表：最近 60 個交易日</div>
+<h2 style="color:#ffa657;font-size:.95rem;margin:20px 0 8px;border-bottom:1px solid #21262d;padding-bottom:5px">處置中 <span class="hn" style="background:#3a1f00;color:#ffa657">10 檔</span></h2>
+<div class="tbl-wrap"><table>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"><col class="c6"><col class="c7"><col class="c8"></colgroup>
+<thead><tr><th>代碼</th><th>名稱</th><th>撮合</th><th>狀態</th><th>解除日</th><th>今年處置</th><th>注意股</th><th>借券餘額</th></tr></thead>
+<tbody><tr><td class='code'>7610</td><td>聯友金屬-創</td><td style="color:#ffa657;font-weight:600">2分鐘撮合</td><td style='color:#ffa657'>處置中</td><td>2026-11-26</td><td style='color:#f85149;text-align:center'>11</td><td>—</td><td style='color:#8b949e'>428 張</td></tr><tr><td class='code'>2305</td><td>全友</td><td style="color:#ffa657;font-weight:600">2分鐘撮合</td><td style='color:#ffa657'>處置中</td><td>2026-11-27</td><td style='color:#e3b341;text-align:center'>3</td><td>—</td><td style='color:#8b949e'>1,963 張</td></tr><tr><td class='code'>4526</td><td>東台</td><td style="color:#ffa657;font-weight:600">2分鐘撮合</td><td style='color:#ffa657'>處置中</td><td>2026-11-30</td><td style='color:#8b949e;text-align:center'>2</td><td style='color:#ffa657;font-size:.78rem'>最快 3 日後再次撮合處置</td><td style='color:#8b949e'>7,204 張</td></tr><tr><td class='code'>4927</td><td>泰鼎-KY</td><td style="color:#ffa657;font-weight:600">2分鐘撮合</td><td style='color:#ffa657'>處置中</td><td>2026-11-30</td><td style='color:#8b949e;text-align:center'>2</td><td style='color:#ffa657;font-size:.78rem'>最快 5 日後再次撮合處置</td><td style='color:#8b949e'>9,464 張</td></tr><tr><td class='code'>6451</td><td>訊芯-KY</td><td style="color:#ffa657;font-weight:600">2分鐘撮合</td><td style='color:#ffa657'>處置中</td><td>2026-11-30</td><td style='color:#f85149;text-align:center'>5</td><td style='color:#ffa657;font-size:.78rem'>最快 5 日後再次撮合處置</td><td style='color:#8b949e'>4,588 張</td></tr><tr><td class='code'>6715</td><td>嘉基</td><td style="color:#ffa657;font-weight:600">2分鐘撮合</td><td style='color:#ffa657'>處置中</td><td>2026-11-30</td><td style='color:#f85149;text-align:center'>5</td><td style='color:#ffa657;font-size:.78rem'>最快 3 日後再次撮合處置</td><td style='color:#8b949e'>1,228 張</td></tr><tr><td class='code'>8021</td><td>尖點</td><td style="color:#ffa657;font-weight:600">2分鐘撮合</td><td style='color:#ffa657'>處置中</td><td>2026-11-30</td><td style='color:#f85149;text-align:center'>11</td><td style='color:#ffa657;font-size:.78rem'>最快 3 日後再次撮合處置</td><td style='color:#8b949e'>5,523 張</td></tr><tr><td class='code'>8996</td><td>高力</td><td style="color:#ffa657;font-weight:600">2分鐘撮合</td><td style='color:#ffa657'>處置中</td><td>2026-11-30</td><td style='color:#f85149;text-align:center'>7</td><td style='color:#ffa657;font-size:.78rem'>最快 3 日後再次撮合處置</td><td style='color:#8b949e'>8,655 張</td></tr><tr><td class='code'>6456</td><td>GIS-KY</td><td style="color:#ffa657;font-weight:600">2分鐘撮合</td><td style='color:#ffa657'>處置中</td><td>2026-12-01</td><td style='color:#8b949e;text-align:center'>2</td><td style='color:#ffa657;font-size:.78rem'>最快 2 日後再次撮合處置</td><td style='color:#8b949e'>14,789 張</td></tr><tr><td class='code'>3593</td><td>力銘</td><td style="color:#ffa657;font-weight:600">四十五分鐘撮合</td><td style='color:#ffa657'>處置中</td><td>2026-12-02</td><td style='color:#8b949e;text-align:center'>2</td><td>—</td><td style='color:#8b949e'>0 張</td></tr></tbody></table></div>
+<details style="margin-top:8px"><summary style="cursor:pointer;color:#8b949e;font-size:.9rem;padding:4px 0">&#9654; 展開借券圖表 ─ 處置中</summary>
+
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">7610</span>
+    <span class="sname">聯友金屬-創</span>
+    <span style="color:#6e7681;font-size:.78rem">[無期貨]</span>
+    <span class="badge active">處置中 倒數0天 (2026-11-26)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">2分鐘撮合</span>
+    <span class="cnt-badge" style="background:#f8514922;color:#f85149;border:1px solid #f8514955">今年處置 <b>11</b> 次</span>
+    
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>綠能環保</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#c9d1d9">14.76x</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>8.66x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.32%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">0%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="nf_prc_7610"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="nf_lend_7610"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 借券分析報告（無期貨）</div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span style="color:#e3b341">借券餘額從 537 小幅降至 428 張，空頭開始鬆動。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>782.0 元</b>，距期間低點 725.0 元反彈 +7.9%，距期間高點 2065.0 元差距 -62.1%。</span></div>
+    <div class="analysis-row"><span class="a-label">融資利用率</span><span><span style="color:#4caf82;font-weight:600">0%</span></span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">今年已處置 11 次，主力慣用清洗手法</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #e3b341;color:#e3b341">借券有所回收但未確立，需持續觀察。</div>
+  </div>
+  <script>
+  (function(){
+    var nf_prc_7610_ch = new Chart(document.getElementById("nf_prc_7610").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"成交量",data:[0, 0, 0, 609, 446, 1152, 395, 327, 2424, 1223, 1027, 587, 972, 878, 1215, 866, 2608, 696, 605, 508, 540, 565, 764, 526, 663, 1256, 550, 991, 865, 711, 900, 437, 1048, 640, 555, 410, 275, 469, 479, 322, 275, 411, 368, 647, 854, 744, 784, 418, 766, 716, 1005, 1229, 1352, 945, 1115, 945, 324, 725, 41, 377],backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",yAxisID:"yv",order:3},
+        {type:"line",label:"收盤價",data:[1595.0, 1495.0, 1505.0, 1605.0, 1520.0, 1655.0, 1820.0, 2000.0, 2065.0, 2030.0, 2035.0, 1975.0, 1780.0, 1655.0, 1730.0, 1770.0, 1945.0, 1890.0, 1905.0, 1825.0, 1830.0, 1730.0, 1735.0, 1780.0, 1725.0, 1800.0, 1790.0, 1805.0, 1700.0, 1635.0, 1545.0, 1585.0, 1455.0, 1430.0, 1405.0, 1410.0, 1415.0, 1335.0, 1340.0, 1400.0, 1330.0, 1290.0, 1305.0, 1180.0, 1240.0, 1155.0, 1150.0, 1235.0, 1245.0, 1330.0, 1210.0, 1090.0, 981.0, 919.0, 894.0, 805.0, 725.0, 789.0, 867.0, 782.0],borderColor:"#e8eaea",borderWidth:1.8,tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},grid:{color:"#1c2333"}},
+          yv:{position:"right",ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+    var nf_lend_7610_ch = new Chart(document.getElementById("nf_lend_7610").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"借券賣出",data:[8.0, 0.0, 9.0, 20.0, 0.0, 11.0, 0.0, 0.0, 32.0, 13.0, 1.0, 0.0, 0.0, 0.0, 200.0, 74.0, 92.0, 8.0, 10.0, 7.0, 12.0, 0.0, 35.0, 17.0, 5.0, 43.0, 35.0, 15.0, 8.0, 0.0, 0.0, 48.0, 0.0, 27.0, 8.0, 24.0, 41.0, 9.0, 1.0, 9.0, 0.0, 0.0, 5.0, 0.0, 32.0, 19.0, 18.0, 17.0, 18.0, 18.0, 3.0, 19.0, 0.0, 0.0, 4.0, 0.0, 0.0, 0.0, 0.0, 0.0],backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"bar",label:"還券",data:[-13.0, -0.0, -0.0, -15.0, -8.0, -3.0, -8.0, -7.0, -7.0, -4.0, -3.0, -0.0, -20.0, -33.0, -0.0, -1.0, -0.0, -0.0, -34.0, -19.0, -4.0, -92.0, -1.0, -0.0, -12.0, -2.0, -13.0, -22.0, -0.0, -8.0, -6.0, -1.0, -11.0, -0.0, -0.0, -11.0, -22.0, -14.0, -3.0, -20.0, -5.0, -14.0, -0.0, -26.0, -15.0, -19.0, -71.0, -0.0, -2.0, -0.0, -0.0, -0.0, -0.0, -9.0, -3.0, -40.0, -35.0, -3.0, -0.0, -2.0],backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"line",label:"借券餘額",data:[109.0, 109.0, 118.0, 123.0, 115.0, 123.0, 115.0, 108.0, 133.0, 142.0, 140.0, 140.0, 120.0, 87.0, 287.0, 360.0, 452.0, 460.0, 436.0, 424.0, 432.0, 340.0, 374.0, 391.0, 384.0, 425.0, 447.0, 440.0, 448.0, 440.0, 434.0, 481.0, 470.0, 497.0, 505.0, 518.0, 537.0, 532.0, 530.0, 519.0, 514.0, 500.0, 505.0, 479.0, 496.0, 496.0, 443.0, 460.0, 476.0, 494.0, 497.0, 516.0, 516.0, 507.0, 508.0, 468.0, 433.0, 430.0, 430.0, 428.0],borderColor:"#c9d1d9",borderWidth:1.5,tension:0.3,fill:false,pointRadius:1,yAxisID:"yr",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yl:{position:"left",ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{color:"#1c2333"}},
+          yr:{position:"right",ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">2305</span>
+    <span class="sname">全友</span>
+    <span style="color:#6e7681;font-size:.78rem">[無期貨]</span>
+    <span class="badge active">處置中 倒數1天 (2026-11-27)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">2分鐘撮合</span>
+    <span class="cnt-badge" style="background:#e3b34122;color:#e3b341;border:1px solid #e3b34155">今年處置 <b>3</b> 次</span>
+    
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>電腦及週邊設備業</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#c9d1d9">28.83x</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>2.39x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.00%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">6.2%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="nf_prc_2305"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="nf_lend_2305"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 借券分析報告（無期貨）</div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span style="color:#3fb950">借券餘額從峰值 3,348 降至 1,963 張（-41%），空頭持續撤退。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>29.7 元</b>，距期間低點 26.85 元反彈 +10.6%，距期間高點 71.1 元差距 -58.2%。</span></div>
+    <div class="analysis-row"><span class="a-label">融資利用率</span><span><span style="color:#4caf82;font-weight:600">6.2%</span></span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">暫無明顯風險訊號。</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #3fb950;color:#3fb950">借券持續回收，空頭壓力減輕，技術面偏多。</div>
+  </div>
+  <script>
+  (function(){
+    var nf_prc_2305_ch = new Chart(document.getElementById("nf_prc_2305").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"成交量",data:[0, 0, 0, 4589, 3858, 4355, 12795, 12488, 21635, 12306, 17665, 57982, 33465, 93620, 25857, 7012, 13495, 9399, 6816, 6665, 4243, 5849, 6402, 9397, 20455, 12758, 29051, 12962, 10587, 20616, 62313, 29887, 14487, 13851, 14677, 6677, 6704, 7333, 6222, 5595, 4228, 3735, 3631, 3981, 6750, 5051, 4861, 3921, 4582, 10304, 6478, 4950, 5065, 4383, 4471, 4289, 4120, 1767, 314, 1219],backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",yAxisID:"yv",order:3},
+        {type:"line",label:"收盤價",data:[29.45, 29.0, 30.05, 29.55, 30.05, 30.1, 30.85, 33.4, 33.2, 35.0, 38.5, 41.05, 45.15, 44.95, 49.4, 54.3, 58.7, 58.8, 60.0, 63.6, 62.9, 69.1, 68.7, 61.9, 60.2, 57.8, 58.3, 58.9, 64.7, 71.1, 66.1, 63.6, 57.8, 56.6, 55.6, 54.7, 56.3, 53.2, 50.5, 54.0, 51.0, 49.4, 50.3, 46.8, 48.8, 43.95, 42.25, 44.85, 46.35, 42.5, 40.2, 41.4, 37.3, 34.2, 32.9, 29.65, 26.85, 29.5, 32.45, 29.7],borderColor:"#e8eaea",borderWidth:1.8,tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},grid:{color:"#1c2333"}},
+          yv:{position:"right",ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+    var nf_lend_2305_ch = new Chart(document.getElementById("nf_lend_2305").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"借券賣出",data:[20.0, 24.0, 0.0, 2.0, 3.0, 10.0, 86.0, 66.0, 152.0, 57.0, 45.0, 105.0, 0.0, 28.0, 34.0, 9.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 112.0, 0.0, 0.0, 0.0, 0.0, 0.0, 124.0, 33.0, 19.0, 3.0, 29.0, 31.0, 0.0, 1.0, 37.0, 5.0, 2.0, 9.0, 0.0, 1.0, 4.0, 14.0, 431.0, 0.0, 3.0, 2.0, 8.0, 22.0, 84.0, 16.0, 0.0, 2.0, 15.0, 0.0, 0.0, 0.0, 0.0],backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"bar",label:"還券",data:[-4.0, -0.0, -0.0, -0.0, -2.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -11.0, -0.0, -15.0, -0.0, -20.0, -137.0, -5.0, -142.0, -0.0, -24.0, -0.0, -195.0, -1.0, -26.0, -102.0, -11.0, -21.0, -2.0, -167.0, -884.0, -0.0, -129.0, -7.0, -0.0, -65.0, -55.0, -88.0, -0.0, -0.0, -38.0, -0.0, -0.0, -2.0, -0.0, -1.0, -0.0, -107.0, -97.0, -22.0, -11.0, -6.0, -0.0, -0.0, -0.0, -2.0, -3.0, -22.0, -9.0, -0.0],backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"line",label:"借券餘額",data:[2764.0, 2788.0, 2788.0, 2790.0, 2791.0, 2801.0, 2887.0, 2953.0, 3105.0, 3162.0, 3207.0, 3301.0, 3301.0, 3314.0, 3348.0, 3337.0, 3200.0, 3195.0, 3053.0, 3053.0, 3029.0, 3029.0, 2834.0, 2945.0, 2919.0, 2817.0, 2806.0, 2785.0, 2783.0, 2740.0, 1889.0, 1908.0, 1782.0, 1804.0, 1835.0, 1770.0, 1716.0, 1665.0, 1670.0, 1672.0, 1643.0, 1643.0, 1644.0, 1646.0, 1660.0, 2090.0, 2090.0, 1986.0, 1891.0, 1877.0, 1888.0, 1966.0, 1982.0, 1982.0, 1984.0, 1997.0, 1994.0, 1972.0, 1963.0, 1963.0],borderColor:"#c9d1d9",borderWidth:1.5,tension:0.3,fill:false,pointRadius:1,yAxisID:"yr",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yl:{position:"left",ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{color:"#1c2333"}},
+          yr:{position:"right",ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">4526</span>
+    <span class="sname">東台</span>
+    <span style="color:#6e7681;font-size:.78rem">[無期貨]</span>
+    <span class="badge active">處置中 倒數4天 (2026-11-30)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">2分鐘撮合</span>
+    <span class="cnt-badge" style="background:#4caf8222;color:#4caf82;border:1px solid #4caf8255">今年處置 <b>2</b> 次</span>
+    
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>電機機械</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#8b949e">—</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>1.69x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>3.00%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">7.9%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="nf_prc_4526"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="nf_lend_4526"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 借券分析報告（無期貨）</div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span style="color:#3fb950">借券餘額從峰值 12,719 降至 7,204 張（-43%），空頭持續撤退。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>33.35 元</b>，距期間低點 29.8 元反彈 +11.9%，距期間高點 60.3 元差距 -44.7%。</span></div>
+    <div class="analysis-row"><span class="a-label">融資利用率</span><span><span style="color:#4caf82;font-weight:600">7.9%</span></span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">暫無明顯風險訊號。</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #3fb950;color:#3fb950">借券持續回收，空頭壓力減輕，技術面偏多。</div>
+  </div>
+  <script>
+  (function(){
+    var nf_prc_4526_ch = new Chart(document.getElementById("nf_prc_4526").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"成交量",data:[0, 0, 0, 1477, 1831, 11493, 7752, 5081, 7125, 2132, 1272, 1592, 820, 882, 911, 1805, 1449, 2738, 1609, 828, 751, 1230, 6948, 8738, 1944, 2005, 3360, 1089, 998, 866, 3008, 2128, 1713, 4144, 12049, 6848, 10869, 56896, 52466, 74182, 109028, 14661, 13841, 13013, 11605, 9515, 9987, 6887, 20082, 56461, 58192, 44181, 29951, 13657, 18223, 8254, 1607, 12294, 1302, 1661],backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",yAxisID:"yv",order:3},
+        {type:"line",label:"收盤價",data:[30.3, 30.3, 30.5, 30.55, 31.25, 31.4, 32.0, 32.35, 32.15, 31.85, 31.4, 30.3, 30.1, 29.8, 30.65, 31.15, 31.25, 32.6, 31.95, 31.2, 31.75, 32.15, 34.05, 34.4, 34.3, 33.5, 33.75, 33.45, 33.0, 32.6, 33.05, 34.0, 32.9, 34.1, 35.65, 34.6, 38.05, 41.05, 45.15, 49.65, 52.8, 56.0, 55.5, 54.9, 60.3, 54.5, 49.35, 54.2, 59.6, 57.4, 57.0, 57.4, 51.7, 46.55, 43.7, 39.35, 35.45, 33.7, 37.05, 33.35],borderColor:"#e8eaea",borderWidth:1.8,tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},grid:{color:"#1c2333"}},
+          yv:{position:"right",ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+    var nf_lend_4526_ch = new Chart(document.getElementById("nf_lend_4526").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"借券賣出",data:[77.0, 106.0, 56.0, 120.0, 123.0, 409.0, 512.0, 578.0, 613.0, 376.0, 358.0, 237.0, 122.0, 189.0, 35.0, 410.0, 154.0, 86.0, 79.0, 121.0, 66.0, 78.0, 144.0, 441.0, 39.0, 97.0, 278.0, 78.0, 45.0, 45.0, 126.0, 60.0, 169.0, 280.0, 445.0, 686.0, 42.0, 194.0, 107.0, 172.0, 114.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 57.0, 461.0, 517.0, 173.0, 604.0, 0.0, 14.0, 17.0, 0.0, 0.0, 0.0, 0.0],backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"bar",label:"還券",data:[-0.0, -29.0, -38.0, -54.0, -14.0, -14.0, -0.0, -83.0, -29.0, -0.0, -7.0, -115.0, -46.0, -19.0, -33.0, -138.0, -58.0, -146.0, -16.0, -84.0, -80.0, -17.0, -440.0, -723.0, -229.0, -76.0, -115.0, -99.0, -0.0, -245.0, -255.0, -206.0, -301.0, -900.0, -277.0, -95.0, -207.0, -243.0, -86.0, -1982.0, -1087.0, -0.0, -1528.0, -276.0, -68.0, -15.0, -0.0, -1.0, -0.0, -245.0, -145.0, -41.0, -51.0, -140.0, -105.0, -450.0, -58.0, -0.0, -231.0, -0.0],backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"line",label:"借券餘額",data:[8911.0, 8988.0, 9006.0, 9072.0, 9181.0, 9576.0, 10088.0, 10583.0, 11167.0, 11543.0, 11894.0, 12016.0, 12092.0, 12262.0, 12264.0, 12536.0, 12632.0, 12572.0, 12635.0, 12672.0, 12658.0, 12719.0, 12423.0, 12141.0, 11951.0, 11972.0, 12135.0, 12114.0, 12159.0, 11959.0, 11830.0, 11684.0, 11552.0, 10932.0, 11100.0, 11691.0, 11526.0, 11477.0, 11498.0, 9688.0, 8715.0, 8715.0, 7187.0, 6911.0, 6843.0, 6828.0, 6828.0, 6827.0, 6884.0, 7100.0, 7472.0, 7604.0, 8157.0, 8017.0, 7926.0, 7493.0, 7435.0, 7435.0, 7204.0, 7204.0],borderColor:"#c9d1d9",borderWidth:1.5,tension:0.3,fill:false,pointRadius:1,yAxisID:"yr",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yl:{position:"left",ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{color:"#1c2333"}},
+          yr:{position:"right",ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">4927</span>
+    <span class="sname">泰鼎-KY</span>
+    <span style="color:#6e7681;font-size:.78rem">[無期貨]</span>
+    <span class="badge active">處置中 倒數4天 (2026-11-30)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">2分鐘撮合</span>
+    <span class="cnt-badge" style="background:#4caf8222;color:#4caf82;border:1px solid #4caf8255">今年處置 <b>2</b> 次</span>
+    
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>電子零組件業</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#8b949e">—</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>2.55x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.00%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#e3b341;font-weight:600">40.2%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="nf_prc_4927"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="nf_lend_4927"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 借券分析報告（無期貨）</div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span style="color:#3fb950">借券餘額從峰值 23,536 降至 9,464 張（-60%），空頭持續撤退。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>38.5 元</b>，距期間低點 36.95 元反彈 +4.2%，距期間高點 59.6 元差距 -35.4%。</span></div>
+    <div class="analysis-row"><span class="a-label">融資利用率</span><span><span style="color:#e3b341;font-weight:600">40.2%</span></span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">暫無明顯風險訊號。</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #e3b341;color:#e3b341">借券有所回收但未確立，需持續觀察。</div>
+  </div>
+  <script>
+  (function(){
+    var nf_prc_4927_ch = new Chart(document.getElementById("nf_prc_4927").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"成交量",data:[0, 0, 0, 4442, 6930, 4106, 2401, 6268, 7483, 4060, 2441, 1805, 1794, 1538, 2927, 6486, 4819, 4271, 3713, 4126, 3046, 1936, 3204, 1834, 17406, 8516, 28658, 27695, 13275, 25005, 11610, 16803, 13303, 10105, 19370, 24481, 16147, 8711, 7710, 9845, 13130, 8802, 6142, 6775, 9612, 8991, 11031, 6500, 14524, 31590, 52197, 25615, 16061, 15727, 19521, 10633, 4870, 15867, 692, 3230],backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",yAxisID:"yv",order:3},
+        {type:"line",label:"收盤價",data:[40.45, 43.0, 40.35, 41.75, 42.3, 40.55, 41.9, 43.0, 43.05, 42.55, 42.75, 41.3, 41.15, 40.05, 42.6, 43.4, 44.25, 42.05, 43.5, 43.75, 43.7, 43.75, 44.5, 43.8, 48.15, 52.9, 52.3, 54.5, 54.2, 57.9, 57.0, 59.6, 56.0, 56.0, 58.9, 56.5, 56.3, 53.4, 51.2, 56.3, 54.0, 50.1, 51.3, 48.15, 50.3, 45.75, 44.85, 49.3, 54.1, 59.5, 58.3, 57.4, 51.7, 46.55, 45.6, 41.05, 36.95, 37.05, 40.75, 38.5],borderColor:"#e8eaea",borderWidth:1.8,tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},grid:{color:"#1c2333"}},
+          yv:{position:"right",ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+    var nf_lend_4927_ch = new Chart(document.getElementById("nf_lend_4927").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"借券賣出",data:[535.0, 302.0, 548.0, 188.0, 499.0, 666.0, 132.0, 605.0, 106.0, 483.0, 89.0, 125.0, 168.0, 259.0, 35.0, 221.0, 347.0, 1119.0, 118.0, 204.0, 110.0, 175.0, 72.0, 270.0, 217.0, 5.0, 277.0, 147.0, 125.0, 383.0, 326.0, 179.0, 197.0, 103.0, 99.0, 1175.0, 749.0, 462.0, 960.0, 295.0, 356.0, 614.0, 274.0, 417.0, 567.0, 939.0, 414.0, 233.0, 273.0, 146.0, 100.0, 109.0, 117.0, 0.0, 49.0, 487.0, 0.0, 155.0, 0.0, 0.0],backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"bar",label:"還券",data:[-444.0, -187.0, -1153.0, -576.0, -317.0, -65.0, -564.0, -176.0, -151.0, -253.0, -93.0, -262.0, -20.0, -368.0, -187.0, -217.0, -141.0, -128.0, -189.0, -73.0, -789.0, -317.0, -604.0, -17.0, -532.0, -188.0, -1163.0, -977.0, -481.0, -372.0, -634.0, -647.0, -333.0, -1194.0, -735.0, -1550.0, -600.0, -131.0, -349.0, -807.0, -666.0, -887.0, -0.0, -416.0, -925.0, -170.0, -473.0, -515.0, -85.0, -11.0, -16.0, -586.0, -1876.0, -967.0, -114.0, -774.0, -1587.0, -68.0, -963.0, -2129.0],backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"line",label:"借券餘額",data:[22441.8, 22556.8, 21951.8, 21563.8, 21745.8, 22346.8, 21914.8, 22343.8, 22298.8, 22528.8, 22524.8, 22387.8, 22535.8, 22426.8, 22274.8, 22278.8, 22484.8, 23475.8, 23404.8, 23535.8, 22856.8, 22714.8, 22182.8, 22435.8, 22120.8, 21937.8, 21051.8, 20221.8, 19865.8, 19876.8, 19568.8, 19100.8, 18964.8, 17873.8, 17237.8, 16862.8, 17011.8, 17342.8, 17953.8, 17441.8, 17131.8, 16858.8, 17132.8, 17133.8, 16775.8, 17544.8, 17485.8, 17203.8, 17391.8, 17526.8, 17610.8, 17133.8, 15374.8, 14407.8, 14342.8, 14055.8, 12468.8, 12555.8, 11592.8, 9463.8],borderColor:"#c9d1d9",borderWidth:1.5,tension:0.3,fill:false,pointRadius:1,yAxisID:"yr",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yl:{position:"left",ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{color:"#1c2333"}},
+          yr:{position:"right",ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">6451</span>
+    <span class="sname">訊芯-KY</span>
+    <span style="color:#6e7681;font-size:.78rem">[無期貨]</span>
+    <span class="badge active">處置中 倒數4天 (2026-11-30)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">2分鐘撮合</span>
+    <span class="cnt-badge" style="background:#f8514922;color:#f85149;border:1px solid #f8514955">今年處置 <b>5</b> 次</span>
+    
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>半導體業</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#e3b341">942.50x（偏貴）</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>2.30x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.12%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">13.1%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="nf_prc_6451"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="nf_lend_6451"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 借券分析報告（無期貨）</div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span style="color:#e3b341">借券餘額從 5,795 小幅降至 4,588 張，空頭開始鬆動。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>188.5 元</b>，距期間低點 184.5 元反彈 +2.2%，距期間高點 500.0 元差距 -62.3%。</span></div>
+    <div class="analysis-row"><span class="a-label">融資利用率</span><span><span style="color:#4caf82;font-weight:600">13.1%</span></span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">今年已處置 5 次，主力慣用清洗手法</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #e3b341;color:#e3b341">借券有所回收但未確立，需持續觀察。</div>
+  </div>
+  <script>
+  (function(){
+    var nf_prc_6451_ch = new Chart(document.getElementById("nf_prc_6451").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"成交量",data:[0, 0, 0, 5338, 10313, 13899, 5030, 5514, 2689, 3734, 2689, 1880, 2234, 2301, 3127, 4393, 4028, 1711, 2126, 1320, 992, 822, 1219, 858, 2590, 2568, 1505, 2029, 1251, 1016, 3354, 1516, 1894, 1082, 1231, 953, 849, 1164, 945, 618, 1148, 1445, 1164, 1740, 3165, 2317, 2426, 1900, 1912, 1123, 1680, 1210, 1376, 1787, 2168, 1083, 487, 2533, 210, 533],backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",yAxisID:"yv",order:3},
+        {type:"line",label:"收盤價",data:[452.0, 453.5, 456.0, 455.0, 500.0, 450.0, 449.0, 448.5, 435.0, 427.0, 425.0, 409.5, 417.5, 394.0, 421.0, 419.0, 443.5, 434.0, 425.0, 416.0, 412.0, 416.5, 420.5, 413.0, 429.0, 432.0, 420.0, 426.5, 420.5, 414.0, 379.0, 389.5, 360.5, 364.0, 366.0, 352.5, 373.5, 351.0, 348.0, 368.0, 360.0, 329.0, 326.0, 293.5, 298.5, 269.0, 243.0, 267.0, 288.0, 290.5, 276.0, 285.0, 256.5, 231.0, 231.5, 208.5, 188.0, 184.5, 202.5, 188.5],borderColor:"#e8eaea",borderWidth:1.8,tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},grid:{color:"#1c2333"}},
+          yv:{position:"right",ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+    var nf_lend_6451_ch = new Chart(document.getElementById("nf_lend_6451").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"借券賣出",data:[59.0, 68.0, 55.0, 122.0, 191.0, 870.0, 243.0, 226.0, 201.0, 238.0, 123.0, 122.0, 18.0, 60.0, 36.0, 51.0, 208.0, 36.0, 143.0, 29.0, 40.0, 41.0, 34.0, 64.0, 57.0, 56.0, 58.0, 89.0, 41.0, 166.0, 334.0, 121.0, 117.0, 97.0, 42.0, 62.0, 61.0, 29.0, 61.0, 25.0, 114.0, 35.0, 117.0, 9.0, 46.0, 15.0, 0.0, 18.0, 37.0, 21.0, 3.0, 1.0, 20.0, 0.0, 15.0, 31.0, 0.0, 11.0, 7.0, 0.0],backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"bar",label:"還券",data:[-85.0, -192.0, -80.0, -6.0, -50.0, -44.0, -4.0, -40.0, -55.0, -90.0, -60.0, -3.0, -16.0, -16.0, -96.0, -0.0, -89.0, -6.0, -0.0, -3.0, -74.0, -0.0, -21.0, -16.0, -2.0, -18.0, -28.0, -23.0, -1.0, -275.0, -5.0, -112.0, -27.0, -47.0, -12.0, -40.0, -50.0, -20.0, -235.0, -0.0, -90.0, -175.0, -79.0, -154.0, -136.0, -45.0, -131.0, -10.0, -21.0, -216.0, -30.0, -86.0, -118.0, -175.0, -0.0, -1.0, -24.0, -25.0, -17.0, -25.0],backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"line",label:"借券餘額",data:[2867.0, 2743.0, 2718.0, 2834.0, 2975.0, 3801.0, 4040.0, 4226.0, 4372.0, 4520.0, 4583.0, 4702.0, 4704.0, 4748.0, 4688.0, 4739.0, 4858.0, 4888.0, 5031.0, 5057.0, 5023.0, 5064.0, 5077.0, 5125.0, 5180.0, 5218.0, 5248.0, 5314.0, 5354.0, 5245.0, 5574.0, 5583.0, 5673.0, 5723.0, 5753.0, 5775.0, 5786.0, 5795.0, 5621.0, 5646.0, 5670.0, 5530.0, 5568.0, 5423.0, 5333.0, 5303.0, 5172.0, 5180.0, 5196.0, 5001.0, 4974.0, 4889.0, 4791.0, 4616.0, 4631.0, 4661.0, 4637.0, 4623.0, 4613.0, 4588.0],borderColor:"#c9d1d9",borderWidth:1.5,tension:0.3,fill:false,pointRadius:1,yAxisID:"yr",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yl:{position:"left",ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{color:"#1c2333"}},
+          yr:{position:"right",ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">6715</span>
+    <span class="sname">嘉基</span>
+    <span style="color:#6e7681;font-size:.78rem">[無期貨]</span>
+    <span class="badge active">處置中 倒數4天 (2026-11-30)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">2分鐘撮合</span>
+    <span class="cnt-badge" style="background:#f8514922;color:#f85149;border:1px solid #f8514955">今年處置 <b>5</b> 次</span>
+    
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>電子零組件業</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#e3b341">172.01x（偏貴）</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>3.63x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.71%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">23.5%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="nf_prc_6715"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="nf_lend_6715"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 借券分析報告（無期貨）</div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span style="color:#e3b341">借券餘額從 1,279 小幅降至 1,228 張，空頭開始鬆動。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>273.5 元</b>，距期間低點 273.5 元反彈 +0.0%，距期間高點 557.0 元差距 -50.9%。</span></div>
+    <div class="analysis-row"><span class="a-label">融資利用率</span><span><span style="color:#4caf82;font-weight:600">23.5%</span></span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">今年已處置 5 次，主力慣用清洗手法；借券餘額仍在高位</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #e3b341;color:#e3b341">借券有所回收但未確立，需持續觀察。</div>
+  </div>
+  <script>
+  (function(){
+    var nf_prc_6715_ch = new Chart(document.getElementById("nf_prc_6715").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"成交量",data:[0, 0, 0, 1023, 1857, 1556, 1156, 1454, 717, 1703, 840, 984, 937, 2625, 3523, 5910, 4535, 5331, 3208, 1172, 560, 346, 686, 536, 1913, 2676, 2251, 2985, 1307, 2181, 3157, 2590, 3465, 4142, 2359, 1159, 925, 1904, 1457, 738, 1514, 1458, 1930, 1173, 1184, 1862, 1306, 1095, 1561, 1516, 2977, 2395, 1334, 1532, 1745, 870, 725, 1027, 55, 176],backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",yAxisID:"yv",order:3},
+        {type:"line",label:"收盤價",data:[351.5, 353.5, 318.5, 335.5, 341.5, 307.5, 320.0, 339.0, 325.0, 354.5, 336.5, 321.5, 346.0, 357.5, 393.0, 394.0, 433.0, 451.5, 451.5, 459.5, 468.5, 452.0, 442.0, 453.0, 449.0, 480.5, 482.5, 485.0, 464.0, 501.0, 507.0, 557.0, 533.0, 500.0, 480.5, 464.5, 480.0, 480.5, 437.0, 480.5, 482.5, 462.0, 430.0, 387.0, 395.0, 369.5, 341.0, 375.0, 412.5, 453.5, 458.5, 443.5, 400.5, 360.5, 333.0, 300.0, 285.0, 274.0, 301.0, 273.5],borderColor:"#e8eaea",borderWidth:1.8,tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},grid:{color:"#1c2333"}},
+          yv:{position:"right",ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+    var nf_lend_6715_ch = new Chart(document.getElementById("nf_lend_6715").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"借券賣出",data:[32.0, 58.0, 14.0, 3.0, 64.0, 87.0, 68.0, 42.0, 27.0, 23.0, 62.0, 71.0, 18.0, 26.0, 18.0, 40.0, 57.0, 0.0, 10.0, 0.0, 0.0, 0.0, 1.0, 0.0, 62.0, 36.0, 48.0, 24.0, 38.0, 22.0, 13.0, 41.0, 15.0, 13.0, 8.0, 45.0, 15.0, 3.0, 11.0, 3.0, 7.0, 5.0, 6.0, 1.0, 7.0, 2.0, 3.0, 38.0, 13.0, 1.0, 2.0, 2.0, 5.0, 4.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0],backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"bar",label:"還券",data:[-21.0, -0.0, -0.0, -0.0, -2.0, -4.0, -3.0, -0.0, -0.0, -1.0, -0.0, -0.0, -2.0, -0.0, -0.0, -1.0, -1.0, -8.1, -0.0, -2.0, -26.0, -1.0, -38.0, -13.0, -8.0, -11.0, -5.0, -33.0, -0.0, -0.0, -52.0, -1.0, -5.0, -52.0, -2.0, -0.0, -9.0, -0.0, -13.0, -0.0, -1.0, -3.0, -0.0, -0.0, -0.0, -8.0, -0.0, -2.0, -0.0, -0.0, -22.0, -2.0, -0.0, -5.0, -33.0, -0.0, -2.0, -0.0, -0.0, -1.0],backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"line",label:"借券餘額",data:[417.2, 475.2, 489.2, 492.2, 554.2, 637.2, 702.2, 744.2, 771.2, 793.2, 855.2, 926.2, 942.2, 968.2, 986.2, 1025.2, 1081.2, 1073.1, 1083.1, 1081.1, 1055.1, 1054.1, 1017.1, 1004.1, 1058.1, 1083.1, 1126.1, 1117.1, 1155.1, 1177.1, 1138.1, 1178.1, 1188.1, 1149.1, 1155.1, 1200.1, 1206.1, 1209.1, 1207.1, 1210.1, 1216.1, 1218.1, 1224.1, 1225.1, 1232.1, 1226.1, 1229.1, 1265.1, 1278.1, 1279.1, 1259.1, 1259.1, 1263.1, 1262.1, 1231.1, 1231.1, 1229.1, 1229.1, 1229.1, 1228.1],borderColor:"#c9d1d9",borderWidth:1.5,tension:0.3,fill:false,pointRadius:1,yAxisID:"yr",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yl:{position:"left",ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{color:"#1c2333"}},
+          yr:{position:"right",ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">8021</span>
+    <span class="sname">尖點</span>
+    <span style="color:#6e7681;font-size:.78rem">[無期貨]</span>
+    <span class="badge active">處置中 倒數4天 (2026-11-30)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">2分鐘撮合</span>
+    <span class="cnt-badge" style="background:#f8514922;color:#f85149;border:1px solid #f8514955">今年處置 <b>11</b> 次</span>
+    
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>其他電子業</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#c9d1d9">34.34x</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>5.32x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.81%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">17.9%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="nf_prc_8021"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="nf_lend_8021"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 借券分析報告（無期貨）</div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span style="color:#e3b341">借券餘額從 6,752 小幅降至 5,523 張，空頭開始鬆動。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>244.5 元</b>，距期間低點 244.5 元反彈 +0.0%，距期間高點 561.0 元差距 -56.4%。</span></div>
+    <div class="analysis-row"><span class="a-label">融資利用率</span><span><span style="color:#4caf82;font-weight:600">17.9%</span></span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">今年已處置 11 次，主力慣用清洗手法；借券餘額仍在高位</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #e3b341;color:#e3b341">借券有所回收但未確立，需持續觀察。</div>
+  </div>
+  <script>
+  (function(){
+    var nf_prc_8021_ch = new Chart(document.getElementById("nf_prc_8021").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"成交量",data:[0, 0, 0, 8753, 7186, 14442, 6332, 13046, 15127, 1319, 995, 1115, 836, 563, 8326, 10346, 8380, 8458, 13222, 2016, 949, 755, 855, 1461, 9216, 12199, 8964, 7632, 8750, 1361, 1879, 957, 1153, 1541, 17475, 10312, 7153, 8410, 9900, 4573, 5529, 4848, 3336, 6341, 9649, 6039, 4925, 3446, 6908, 10359, 9993, 6750, 3747, 5774, 9067, 3523, 1167, 9565, 251, 2235],backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",yAxisID:"yv",order:3},
+        {type:"line",label:"收盤價",data:[422.5, 454.0, 435.0, 450.0, 459.0, 413.5, 420.0, 462.0, 450.0, 442.5, 438.0, 418.5, 442.5, 431.5, 440.0, 450.0, 460.0, 466.0, 477.0, 478.0, 480.0, 480.0, 486.0, 503.0, 553.0, 560.0, 561.0, 556.0, 557.0, 553.0, 544.0, 537.0, 506.0, 494.0, 520.0, 489.0, 506.0, 479.0, 433.0, 439.5, 428.5, 418.5, 424.5, 382.5, 378.0, 340.5, 308.5, 339.0, 369.0, 394.5, 386.0, 385.0, 346.5, 313.5, 305.0, 274.5, 247.5, 247.0, 271.5, 244.5],borderColor:"#e8eaea",borderWidth:1.8,tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},grid:{color:"#1c2333"}},
+          yv:{position:"right",ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+    var nf_lend_8021_ch = new Chart(document.getElementById("nf_lend_8021").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"借券賣出",data:[54.0, 262.0, 438.0, 218.0, 173.0, 1224.0, 634.0, 94.0, 551.0, 136.0, 0.0, 0.0, 0.0, 3.0, 153.0, 52.0, 1.0, 0.0, 3.0, 23.0, 3.0, 2.0, 0.0, 10.0, 84.0, 197.0, 11.0, 2.0, 9.0, 0.0, 1.0, 0.0, 124.0, 0.0, 221.0, 363.0, 370.0, 218.0, 138.0, 170.0, 403.0, 180.0, 111.0, 684.0, 425.0, 861.0, 0.0, 48.0, 86.0, 158.0, 176.0, 185.0, 191.0, 0.0, 199.0, 198.0, 0.0, 60.0, 0.0, 0.0],backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"bar",label:"還券",data:[-153.0, -32.0, -193.0, -155.0, -55.0, -215.0, -39.0, -151.0, -249.0, -247.0, -360.0, -26.0, -383.0, -20.0, -29.0, -31.0, -216.0, -43.0, -119.0, -14.0, -40.0, -4.0, -40.0, -6.0, -0.0, -67.0, -37.0, -1078.0, -111.0, -80.0, -1132.0, -17.0, -18.0, -9.0, -0.0, -587.0, -568.0, -44.0, -344.0, -801.0, -23.0, -143.0, -38.0, -78.0, -63.0, -10.0, -130.0, -2.0, -62.0, -5.0, -75.0, -0.0, -0.0, -124.0, -17.0, -49.0, -9.0, -179.4, -0.0, -2.9],backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"line",label:"借券餘額",data:[4247.0, 4477.0, 4722.0, 4785.0, 4903.0, 5912.0, 6507.0, 6450.0, 6752.0, 6641.0, 6281.0, 6255.0, 5872.0, 5855.0, 5979.0, 6000.0, 5785.0, 5735.0, 5619.0, 5628.0, 5591.0, 5589.0, 5549.0, 5553.0, 5637.0, 5767.0, 5741.0, 4665.0, 4563.0, 4483.0, 3352.0, 3335.0, 3441.0, 3432.0, 3653.0, 3429.0, 3231.0, 3405.0, 3199.0, 2568.0, 2948.0, 2985.0, 3058.0, 3664.0, 4026.0, 4877.0, 4747.0, 4793.0, 4817.0, 4970.0, 5071.0, 5256.0, 5447.0, 5323.0, 5505.0, 5654.0, 5645.0, 5525.6, 5525.6, 5522.7],borderColor:"#c9d1d9",borderWidth:1.5,tension:0.3,fill:false,pointRadius:1,yAxisID:"yr",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yl:{position:"left",ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{color:"#1c2333"}},
+          yr:{position:"right",ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">8996</span>
+    <span class="sname">高力</span>
+    <span style="color:#6e7681;font-size:.78rem">[無期貨]</span>
+    <span class="badge active">處置中 倒數4天 (2026-11-30)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">2分鐘撮合</span>
+    <span class="cnt-badge" style="background:#f8514922;color:#f85149;border:1px solid #f8514955">今年處置 <b>7</b> 次</span>
+    
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>電機機械</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#c9d1d9">49.04x</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>14.37x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.52%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">18.3%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="nf_prc_8996"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="nf_lend_8996"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 借券分析報告（無期貨）</div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span style="color:#e3b341">借券餘額從 8,886 小幅降至 8,655 張，空頭開始鬆動。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>870.0 元</b>，距期間低點 858.0 元反彈 +1.4%，距期間高點 1720.0 元差距 -49.4%。</span></div>
+    <div class="analysis-row"><span class="a-label">融資利用率</span><span><span style="color:#4caf82;font-weight:600">18.3%</span></span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">今年已處置 7 次，主力慣用清洗手法；借券餘額仍在高位</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #e3b341;color:#e3b341">借券有所回收但未確立，需持續觀察。</div>
+  </div>
+  <script>
+  (function(){
+    var nf_prc_8996_ch = new Chart(document.getElementById("nf_prc_8996").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"成交量",data:[0, 0, 0, 2309, 4591, 4551, 5561, 8775, 4527, 6087, 4932, 5053, 6220, 973, 1197, 1360, 2477, 2063, 5780, 5776, 2887, 5083, 4880, 5416, 5868, 1594, 695, 1093, 1086, 602, 7004, 3887, 4668, 6021, 4253, 3671, 6234, 5711, 5104, 3629, 2855, 3520, 3245, 3368, 7034, 3373, 3531, 3974, 3537, 3532, 6846, 4452, 1895, 3400, 8344, 2081, 137, 5680, 118, 1140],backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",yAxisID:"yv",order:3},
+        {type:"line",label:"收盤價",data:[1310.0, 1265.0, 1175.0, 1175.0, 1265.0, 1185.0, 1300.0, 1240.0, 1225.0, 1345.0, 1300.0, 1330.0, 1235.0, 1220.0, 1300.0, 1300.0, 1430.0, 1505.0, 1655.0, 1540.0, 1530.0, 1585.0, 1605.0, 1565.0, 1510.0, 1595.0, 1600.0, 1645.0, 1710.0, 1720.0, 1715.0, 1685.0, 1520.0, 1570.0, 1525.0, 1545.0, 1660.0, 1560.0, 1465.0, 1585.0, 1545.0, 1435.0, 1510.0, 1360.0, 1430.0, 1290.0, 1180.0, 1280.0, 1405.0, 1460.0, 1425.0, 1440.0, 1300.0, 1170.0, 1135.0, 1025.0, 923.0, 858.0, 943.0, 870.0],borderColor:"#e8eaea",borderWidth:1.8,tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},grid:{color:"#1c2333"}},
+          yv:{position:"right",ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+    var nf_lend_8996_ch = new Chart(document.getElementById("nf_lend_8996").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"借券賣出",data:[449.0, 577.0, 493.0, 389.0, 323.0, 739.0, 637.0, 736.0, 198.0, 92.0, 376.0, 189.0, 328.0, 4.0, 1.0, 1.0, 1.0, 25.0, 393.0, 100.0, 37.0, 197.0, 159.0, 480.0, 403.0, 6.0, 0.0, 0.0, 3.0, 5.0, 47.0, 333.0, 293.0, 97.0, 251.0, 79.0, 163.0, 238.0, 191.0, 159.0, 188.0, 321.0, 113.0, 68.0, 374.0, 81.0, 0.0, 119.0, 121.0, 118.0, 117.0, 121.0, 114.0, 0.0, 23.0, 110.0, 0.0, 0.0, 10.0, 0.0],backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"bar",label:"還券",data:[-15.0, -23.0, -12.0, -107.0, -84.0, -177.0, -45.0, -38.0, -81.0, -221.0, -38.0, -277.0, -84.0, -145.0, -21.0, -51.0, -7.0, -2.0, -7.0, -104.0, -61.0, -132.0, -208.0, -46.0, -3.0, -51.0, -197.0, -41.0, -299.0, -15.0, -7.0, -348.0, -134.0, -113.0, -156.0, -241.0, -341.0, -62.0, -71.0, -9.0, -61.0, -321.0, -66.0, -134.0, -79.0, -69.0, -191.0, -9.0, -52.0, -53.0, -60.0, -23.0, -83.0, -74.0, -97.0, -32.0, -44.0, -0.0, -1.0, -126.0],backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"line",label:"借券餘額",data:[3548.0, 4102.0, 4583.0, 4865.0, 5104.0, 5666.0, 6258.0, 6956.0, 7073.0, 6944.0, 7282.0, 7194.0, 7438.0, 7297.0, 7277.0, 7227.0, 7221.0, 7244.0, 7630.0, 7626.0, 7602.0, 7667.0, 7618.0, 8052.0, 8452.0, 8407.0, 8210.0, 8169.0, 7873.0, 7863.0, 7903.0, 7888.0, 8047.0, 8031.0, 8126.0, 7964.0, 7786.0, 7962.0, 8082.0, 8232.0, 8359.0, 8359.0, 8406.0, 8340.0, 8635.0, 8647.0, 8456.0, 8566.0, 8635.0, 8700.0, 8757.0, 8855.0, 8886.0, 8812.0, 8738.0, 8816.0, 8772.0, 8772.0, 8781.0, 8655.0],borderColor:"#c9d1d9",borderWidth:1.5,tension:0.3,fill:false,pointRadius:1,yAxisID:"yr",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yl:{position:"left",ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{color:"#1c2333"}},
+          yr:{position:"right",ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">6456</span>
+    <span class="sname">GIS-KY</span>
+    <span style="color:#6e7681;font-size:.78rem">[無期貨]</span>
+    <span class="badge active">處置中 倒數5天 (2026-12-01)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">2分鐘撮合</span>
+    <span class="cnt-badge" style="background:#4caf8222;color:#4caf82;border:1px solid #4caf8255">今年處置 <b>2</b> 次</span>
+    
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>光電業</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#8b949e">—</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>0.67x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.00%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">17.3%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="nf_prc_6456"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="nf_lend_6456"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 借券分析報告（無期貨）</div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span style="color:#e3b341">借券餘額從 17,860 小幅降至 14,789 張，空頭開始鬆動。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>58.4 元</b>，距期間低點 58.4 元反彈 +0.0%，距期間高點 107.5 元差距 -45.7%。</span></div>
+    <div class="analysis-row"><span class="a-label">融資利用率</span><span><span style="color:#4caf82;font-weight:600">17.3%</span></span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">借券餘額仍在高位</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #e3b341;color:#e3b341">借券有所回收但未確立，需持續觀察。</div>
+  </div>
+  <script>
+  (function(){
+    var nf_prc_6456_ch = new Chart(document.getElementById("nf_prc_6456").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"成交量",data:[0, 0, 0, 5124, 2619, 4089, 1705, 2412, 2827, 1788, 4059, 1579, 1658, 1606, 1886, 2358, 2256, 12215, 23340, 26940, 14497, 18926, 63213, 20200, 20444, 18149, 15976, 71277, 17868, 24578, 19737, 27400, 30323, 20323, 12171, 16952, 36231, 68501, 34192, 33530, 50505, 23528, 37084, 28890, 40799, 47894, 50383, 75892, 32277, 8430, 51043, 68994, 23714, 26561, 31337, 14237, 3960, 17977, 87399, 5863],backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",yAxisID:"yv",order:3},
+        {type:"line",label:"收盤價",data:[71.8, 74.3, 71.6, 70.4, 70.1, 67.4, 68.8, 68.8, 66.8, 67.5, 64.1, 63.4, 63.3, 61.6, 64.8, 65.1, 65.4, 71.9, 73.6, 78.6, 81.3, 89.4, 92.0, 87.9, 92.9, 90.6, 99.6, 102.0, 100.0, 102.0, 97.4, 91.2, 88.7, 88.1, 84.4, 89.5, 98.4, 102.0, 97.8, 107.5, 102.5, 92.3, 97.0, 87.7, 96.4, 87.2, 80.6, 76.6, 84.2, 92.6, 101.5, 101.5, 91.4, 84.5, 83.5, 75.2, 67.7, 65.2, 64.8, 58.4],borderColor:"#e8eaea",borderWidth:1.8,tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},grid:{color:"#1c2333"}},
+          yv:{position:"right",ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+    var nf_lend_6456_ch = new Chart(document.getElementById("nf_lend_6456").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"借券賣出",data:[58.0, 139.0, 66.0, 79.0, 122.0, 351.0, 106.0, 238.0, 267.0, 151.0, 653.0, 131.0, 167.0, 552.0, 45.0, 192.0, 220.0, 93.0, 266.0, 117.0, 242.0, 197.0, 244.0, 160.0, 50.0, 157.0, 181.0, 704.0, 196.0, 271.0, 470.0, 871.0, 558.0, 571.0, 240.0, 123.0, 1214.0, 997.0, 553.0, 258.0, 1049.0, 1143.0, 798.0, 1015.0, 715.0, 1411.0, 948.0, 926.0, 568.0, 162.0, 388.0, 791.0, 179.0, 0.0, 6.0, 98.0, 0.0, 0.0, 223.0, 0.0],backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"bar",label:"還券",data:[-31.0, -83.0, -109.0, -22.0, -1633.0, -102.0, -13.0, -253.0, -1080.0, -77.0, -49.0, -23.0, -0.0, -0.0, -64.0, -148.0, -131.0, -31.0, -0.0, -184.0, -622.0, -1170.0, -873.0, -1712.0, -756.0, -1689.0, -387.0, -247.0, -0.0, -1040.0, -192.0, -0.0, -82.0, -18.0, -86.0, -197.0, -260.0, -2345.0, -198.0, -495.0, -536.0, -0.0, -393.0, -904.0, -836.0, -240.0, -684.0, -250.0, -486.0, -0.0, -402.0, -216.0, -1626.0, -387.0, -254.0, -331.0, -294.0, -418.0, -267.0, -0.0],backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"line",label:"借券餘額",data:[17052.0, 17108.0, 17065.0, 17122.0, 15611.0, 15860.0, 15953.0, 15938.0, 15125.0, 15199.0, 15803.0, 15911.0, 16078.0, 16630.0, 16611.0, 16655.0, 16744.0, 16806.0, 17072.0, 17005.0, 16625.0, 15652.0, 15023.0, 13471.0, 12765.0, 11233.0, 11027.0, 11484.0, 11680.0, 10911.0, 11189.0, 12060.0, 12536.0, 13089.0, 13243.0, 13169.0, 14123.0, 12775.0, 13130.0, 12893.0, 13406.0, 14549.0, 14954.0, 15065.0, 14944.0, 16115.0, 16379.0, 17055.0, 17137.0, 17299.0, 17285.0, 17860.0, 16413.0, 16026.0, 15778.0, 15545.0, 15251.0, 14833.0, 14789.0, 14789.0],borderColor:"#c9d1d9",borderWidth:1.5,tension:0.3,fill:false,pointRadius:1,yAxisID:"yr",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yl:{position:"left",ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{color:"#1c2333"}},
+          yr:{position:"right",ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">3593</span>
+    <span class="sname">力銘</span>
+    <span style="color:#6e7681;font-size:.78rem">[無期貨]</span>
+    <span class="badge active">處置中 倒數6天 (2026-12-02)</span> <span style="background:#5a1e1e;color:#ffa657;border:1px solid #7a2e2e;border-radius:4px;padding:1px 6px;font-size:.72rem">四十五分鐘撮合</span>
+    <span class="cnt-badge" style="background:#4caf8222;color:#4caf82;border:1px solid #4caf8255">今年處置 <b>2</b> 次</span>
+    
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>電子零組件業</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#8b949e">—</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>1.97x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.00%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">0.0%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="nf_prc_3593"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="nf_lend_3593"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 借券分析報告（無期貨）</div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span style="color:#8b949e">借券餘額極低或無資料，空頭壓力可忽略。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>5.1 元</b>，距期間低點 5.1 元反彈 +0.0%，距期間高點 11.6 元差距 -56.0%。</span></div>
+    <div class="analysis-row"><span class="a-label">融資利用率</span><span><span style="color:#4caf82;font-weight:600">0.0%</span></span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">暫無明顯風險訊號。</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #f85149;color:#f85149">借券壓力仍大或無明顯改善，建議觀望。</div>
+  </div>
+  <script>
+  (function(){
+    var nf_prc_3593_ch = new Chart(document.getElementById("nf_prc_3593").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"成交量",data:[0, 0, 0, 0, 28, 26, 3, 38, 5, 7, 4, 3, 3, 13, 21, 15, 19, 30, 31, 35, 19, 24, 39, 20, 54, 11, 3, 5, 2, 3, 10, 7, 9, 7, 8, 21, 6, 8, 0, 4, 6, 10, 9, 1, 10, 18, 9, 6, 3, 11, 24, 8, 0, 0, 31, 20, 14, 41, 62, 17],backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",yAxisID:"yv",order:3},
+        {type:"line",label:"收盤價",data:[11.2, 11.0, 10.9, 10.8, 10.5, 10.4, 10.75, 10.5, 10.4, 10.4, 10.3, 10.35, 10.15, 9.95, 9.9, 9.9, 9.75, 9.07, 8.8, 9.5, 9.5, 10.3, 11.0, 11.5, 10.65, 10.75, 10.75, 10.75, 11.6, 10.65, 10.45, 10.0, 10.45, 10.0, 10.7, 10.5, 10.35, 10.3, 10.3, 10.2, 10.1, 10.2, 9.98, 9.96, 9.65, 9.8, 9.65, 9.64, 9.98, 9.95, 8.96, 9.68, 9.6, 9.55, 8.6, 7.74, 6.97, 6.28, 5.66, 5.1],borderColor:"#e8eaea",borderWidth:1.8,tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},grid:{color:"#1c2333"}},
+          yv:{position:"right",ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+    var nf_lend_3593_ch = new Chart(document.getElementById("nf_lend_3593").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"借券賣出",data:[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"bar",label:"還券",data:[-0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0],backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"line",label:"借券餘額",data:[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],borderColor:"#c9d1d9",borderWidth:1.5,tension:0.3,fill:false,pointRadius:1,yAxisID:"yr",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yl:{position:"left",ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{color:"#1c2333"}},
+          yr:{position:"right",ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div>
+</details>
+
+<h2 style="color:#4caf82;font-size:.95rem;margin:20px 0 8px;border-bottom:1px solid #21262d;padding-bottom:5px">已解除處置 <span class="hn">2 檔</span></h2>
+<div class="tbl-wrap"><table>
+<colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"><col class="c6"><col class="c7"><col class="c8"></colgroup>
+<thead><tr><th>代碼</th><th>名稱</th><th>撮合</th><th>狀態</th><th>解除日</th><th>今年處置</th><th>注意股</th><th>借券餘額</th></tr></thead>
+<tbody><tr><td class='code'>2466</td><td>冠西電</td><td style="color:#4caf82">已解除</td><td style='color:#4caf82'>已解除</td><td>2026-11-23</td><td style='color:#f85149;text-align:center'>6</td><td style='color:#ffa657;font-size:.78rem'>最快 3 日後再次撮合處置</td><td style='color:#8b949e'>0 張</td></tr><tr><td class='code'>6108</td><td>競國</td><td style="color:#4caf82">已解除</td><td style='color:#4caf82'>已解除</td><td>2026-11-23</td><td style='color:#8b949e;text-align:center'>1</td><td style='color:#ffa657;font-size:.78rem'>最快 3 日後再次撮合處置</td><td style='color:#8b949e'>370 張</td></tr></tbody></table></div>
+<details style="margin-top:8px"><summary style="cursor:pointer;color:#8b949e;font-size:.9rem;padding:4px 0">&#9654; 展開借券圖表 ─ 已解除處置</summary>
+
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">2466</span>
+    <span class="sname">冠西電</span>
+    <span style="color:#6e7681;font-size:.78rem">[無期貨]</span>
+    <span class="badge released">已解除 2026-11-23（3天前）</span>
+    <span class="cnt-badge" style="background:#f8514922;color:#f85149;border:1px solid #f8514955">今年處置 <b>6</b> 次</span>
+    
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>光電業</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#8b949e">—</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>31.22x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>0.00%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">14.1%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="nf_prc_2466"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="nf_lend_2466"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 借券分析報告（無期貨）</div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span style="color:#8b949e">借券餘額極低或無資料，空頭壓力可忽略。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>345.0 元</b>，距期間低點 94.7 元反彈 +264.3%，距期間高點 436.5 元差距 -21.0%。</span></div>
+    <div class="analysis-row"><span class="a-label">融資利用率</span><span><span style="color:#4caf82;font-weight:600">14.1%</span></span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">今年已處置 6 次，主力慣用清洗手法</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #f85149;color:#f85149">借券壓力仍大或無明顯改善，建議觀望。</div>
+  </div>
+  <script>
+  (function(){
+    var nf_prc_2466_ch = new Chart(document.getElementById("nf_prc_2466").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"成交量",data:[0, 0, 0, 815, 1938, 2125, 788, 914, 706, 957, 696, 1996, 1819, 701, 911, 845, 1513, 1237, 2847, 2419, 2401, 2218, 3211, 5280, 2480, 4574, 6768, 10204, 1622, 1251, 2495, 1304, 327, 1274, 634, 723, 2529, 7239, 1002, 1732, 11107, 1152, 849, 1107, 1233, 694, 919, 270, 237, 3710, 2736, 7900, 7367, 640, 457, 450, 352, 361, 9399, 2531],backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",yAxisID:"yv",order:3},
+        {type:"line",label:"收盤價",data:[105.5, 104.5, 99.0, 99.5, 104.0, 94.7, 97.2, 100.5, 98.6, 103.5, 101.5, 106.0, 103.0, 102.0, 104.0, 102.5, 106.0, 110.0, 115.5, 113.5, 119.5, 113.5, 124.5, 128.5, 141.0, 155.0, 170.5, 180.5, 198.5, 218.0, 237.0, 213.5, 192.5, 211.5, 226.0, 226.0, 248.5, 261.0, 287.0, 315.5, 322.0, 354.0, 380.0, 342.0, 330.5, 297.5, 299.0, 328.5, 361.0, 397.0, 436.5, 393.0, 402.5, 435.5, 436.5, 404.0, 387.0, 425.5, 383.0, 345.0],borderColor:"#e8eaea",borderWidth:1.8,tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},grid:{color:"#1c2333"}},
+          yv:{position:"right",ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+    var nf_lend_2466_ch = new Chart(document.getElementById("nf_lend_2466").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"借券賣出",data:[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"bar",label:"還券",data:[-0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0],backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"line",label:"借券餘額",data:[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],borderColor:"#c9d1d9",borderWidth:1.5,tension:0.3,fill:false,pointRadius:1,yAxisID:"yr",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yl:{position:"left",ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{color:"#1c2333"}},
+          yr:{position:"right",ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div>
+<div class="stock-card">
+  <div class="card-hdr">
+    <span class="code">6108</span>
+    <span class="sname">競國</span>
+    <span style="color:#6e7681;font-size:.78rem">[無期貨]</span>
+    <span class="badge released">已解除 2026-11-23（3天前）</span>
+    <span class="cnt-badge" style="background:#4caf8222;color:#4caf82;border:1px solid #4caf8255">今年處置 <b>1</b> 次</span>
+    
+  </div>
+  
+  <div class="info-row">
+    <span class="info-item"><span class="info-lbl">板塊</span>電子零組件業</span>
+    <span class="info-item"><span class="info-lbl">本益比</span><span style="color:#c9d1d9">10.38x</span></span>
+    <span class="info-item"><span class="info-lbl">股淨比</span>1.11x</span>
+    <span class="info-item"><span class="info-lbl">殖利率</span>3.18%</span>
+    <span class="info-item"><span class="info-lbl">融資利用率</span><span style="color:#4caf82;font-weight:600">7.0%</span></span>
+  </div>
+  <div class="panel-lbl" style="color:#8b949e">&#9632; 股價 / 成交量</div>
+  <div class="chart-wrap"><canvas id="nf_prc_6108"></canvas></div>
+  <div class="panel-lbl" style="color:#8b949e;margin-top:10px">&#9632; 借券 &nbsp;<span style="color:rgba(255,123,0,0.8)">賣出</span> &nbsp;<span style="color:rgba(63,185,80,0.8)">還券</span> &nbsp;<span style="color:#c9d1d9;font-size:.72rem">— 餘額（右軸）</span></div>
+  <div class="chart-wrap"><canvas id="nf_lend_6108"></canvas></div>
+  
+  <div class="analysis-box">
+    <div class="analysis-title">&#128202; 借券分析報告（無期貨）</div>
+    <div class="analysis-row"><span class="a-label">借券動向</span><span style="color:#3fb950">借券餘額從峰值 625 降至 370 張（-41%），空頭持續撤退。</span></div>
+    <div class="analysis-row"><span class="a-label">股價位置</span><span>目前股價 <b>31.45 元</b>，距期間低點 22.15 元反彈 +42.0%，距期間高點 42.5 元差距 -26.0%。</span></div>
+    <div class="analysis-row"><span class="a-label">融資利用率</span><span><span style="color:#4caf82;font-weight:600">7.0%</span></span></div>
+    <div class="analysis-row"><span class="a-label">風險提示</span><span style="color:#e3b341">暫無明顯風險訊號。</span></div>
+    <div class="analysis-summary" style="border-left:3px solid #3fb950;color:#3fb950">借券持續回收，空頭壓力減輕，技術面偏多。</div>
+  </div>
+  <script>
+  (function(){
+    var nf_prc_6108_ch = new Chart(document.getElementById("nf_prc_6108").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"成交量",data:[0, 0, 0, 2663, 2557, 2740, 1378, 1804, 1446, 2008, 1572, 2309, 2243, 2680, 2492, 3588, 2156, 1004, 1649, 789, 1139, 1269, 1909, 2564, 1558, 1527, 2226, 3288, 1474, 2023, 3789, 7728, 14659, 9961, 10767, 8662, 12406, 7013, 6257, 6841, 7792, 3561, 3348, 2755, 2994, 2810, 2891, 1277, 5410, 2226, 7717, 25215, 22602, 5778, 4297, 2893, 660, 3259, 1396, 4851],backgroundColor:"rgba(88,166,255,0.22)",borderColor:"transparent",yAxisID:"yv",order:3},
+        {type:"line",label:"收盤價",data:[23.8, 25.7, 23.85, 23.9, 23.9, 23.05, 22.95, 22.95, 22.25, 23.35, 23.3, 22.15, 22.15, 22.4, 23.0, 24.3, 24.1, 23.8, 23.6, 24.0, 24.4, 24.4, 25.05, 25.0, 25.7, 25.65, 25.4, 25.95, 25.6, 25.95, 26.25, 28.85, 29.2, 30.85, 31.6, 32.8, 33.0, 32.75, 31.0, 34.0, 30.8, 29.45, 30.9, 29.2, 28.95, 27.75, 26.9, 29.55, 32.5, 35.75, 39.3, 41.0, 40.4, 41.45, 42.5, 38.25, 34.45, 31.05, 34.15, 31.45],borderColor:"#e8eaea",borderWidth:1.8,tension:0.3,fill:false,pointRadius:1.5,yAxisID:"yp",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yp:{position:"left",ticks:{color:"#c9d1d9",font:{size:10}},grid:{color:"#1c2333"}},
+          yv:{position:"right",ticks:{color:"rgba(88,166,255,0.45)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+    var nf_lend_6108_ch = new Chart(document.getElementById("nf_lend_6108").getContext("2d"), {
+      data:{labels:["08/27", "08/28", "08/31", "09/01", "09/02", "09/03", "09/04", "09/07", "09/08", "09/09", "09/10", "09/11", "09/14", "09/15", "09/16", "09/17", "09/18", "09/21", "09/22", "09/23", "09/24", "09/29", "09/30", "10/01", "10/02", "10/05", "10/06", "10/07", "10/08", "10/12", "10/13", "10/14", "10/15", "10/16", "10/19", "10/20", "10/21", "10/22", "10/27", "10/28", "10/29", "10/30", "11/02", "11/03", "11/04", "11/05", "11/06", "11/09", "11/10", "11/11", "11/12", "11/13", "11/16", "11/17", "11/18", "11/19", "11/20", "11/23", "11/24", "11/25"],datasets:[
+        {type:"bar",label:"借券賣出",data:[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],backgroundColor:"rgba(255,123,0,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"bar",label:"還券",data:[-0.0, -1.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -52.0, -0.0, -17.0, -60.0, -1.0, -0.0, -6.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -79.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -6.0, -0.0, -1.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -39.0],backgroundColor:"rgba(63,185,80,0.45)",borderColor:"transparent",yAxisID:"yl",order:2},
+        {type:"line",label:"借券餘額",data:[625.0, 624.0, 624.0, 624.0, 624.0, 624.0, 624.0, 624.0, 572.0, 572.0, 555.0, 495.0, 494.0, 494.0, 488.0, 488.0, 488.0, 488.0, 488.0, 488.0, 488.0, 488.0, 488.0, 488.0, 488.0, 488.0, 488.0, 488.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 415.0, 415.0, 416.0, 410.0, 410.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 409.0, 370.0],borderColor:"#c9d1d9",borderWidth:1.5,tension:0.3,fill:false,pointRadius:1,yAxisID:"yr",order:1}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
+        plugins:{legend:{labels:{color:"#8b949e",boxWidth:10,font:{size:10}}}},
+        scales:{x:{ticks:{color:"#6e7681",maxTicksLimit:12,font:{size:10}},grid:{color:"#1c2333"}},
+          yl:{position:"left",ticks:{color:"rgba(255,123,0,0.6)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{color:"#1c2333"}},
+          yr:{position:"right",ticks:{color:"rgba(200,210,220,0.5)",font:{size:9},callback:function(v){return v>=1e3?Math.round(v/1e3)+"K":v;}},grid:{display:false}}
+        }
+      }
+    });
+  })();
+  </script>
+</div>
+</details>
+<div class="footer">資料：TWSE 處置公告 / 借券資料。無個股期貨標的僅顯示借券分析，不含大額交易人部位。</div>
+</body></html>
