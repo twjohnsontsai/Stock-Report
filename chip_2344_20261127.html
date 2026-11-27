@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<title>2344 華邦電 籌碼分析 2026-11-27</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;background:#0d0f14;color:#c9d1d9;padding:12px 12px 60px}
+#hdr{font-size:16px;margin-bottom:6px;color:#d0dce8}
+#hdr span{color:#8aa8c0;font-size:13px;margin-left:12px}
+.sum-card{background:#11151e;border:1px solid #1e2635;border-radius:10px;padding:16px;margin-bottom:10px;max-width:940px}
+.sum-title{font-size:11px;color:#8aa8c0;margin-bottom:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:8px;margin-bottom:10px;max-width:940px}
+.stat-box{background:#0d0f14;border-radius:8px;padding:10px 12px;border:1px solid #1e2635}
+.stat-lbl{font-size:11px;color:#7a9ab8;margin-bottom:3px;font-weight:500}
+.stat-val{font-size:17px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.2}
+.stat-sub{font-size:11px;color:#6a8298;margin-top:3px;line-height:1.4}
+.charts-layout{display:grid;grid-template-columns:1fr 220px;gap:10px;align-items:start}
+.charts-col{min-width:0}
+.panel-col{display:block;position:sticky;top:1rem;align-self:start}
+.cw{background:#111820;border:1px solid #1e2635;border-radius:8px;padding:8px 10px 6px;position:relative;margin-bottom:6px}
+.cl{font-size:.72rem;color:#6a8aaa;position:absolute;top:.45rem;left:.9rem;font-weight:600;pointer-events:none}
+#hpanel{background:rgba(13,15,20,0.97);border:1px solid #2a3a50;border-radius:6px;padding:8px 12px;font-size:.74rem;max-height:calc(100vh - 2rem);overflow-y:auto;white-space:normal;word-break:break-word;width:100%;box-shadow:0 4px 16px rgba(0,0,0,.6)}
+.hd{font-weight:600;color:#d8e8f0;font-size:.82rem;margin-bottom:.5rem;padding-bottom:.4rem;border-bottom:1px solid #1e2635}
+.hs{font-size:.68rem;color:#6a8298;text-transform:uppercase;letter-spacing:.06em;margin:6px 0 3px;font-weight:600;border-top:1px solid #182030;padding-top:4px}
+.hr{display:flex;justify-content:space-between;align-items:center;padding:.16rem 0}
+.hl{color:#586880;font-size:.68rem}
+.hv{font-weight:600;font-variant-numeric:tabular-nums;font-size:.75rem}
+/* ── 關聯分析 ── */
+.corr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin:8px 0 16px}
+.corr-card{background:#0d1118;border:1px solid #1e2635;border-radius:8px;padding:12px 14px}
+.corr-lbl{font-size:.72rem;color:#7a94a8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;font-weight:500}
+.corr-val{font-size:1rem;font-weight:700;margin-bottom:5px}
+.corr-hint{font-size:.72rem;color:#7a8898;line-height:1.6}
+/* ── 三指標追蹤 ── */
+.tri-wrap{background:#0d1118;border:1px solid #1e2635;border-radius:8px;padding:16px;margin:8px 0 16px}
+.tri-state{margin-bottom:12px}
+.tri-state-label{font-size:.72rem;color:#7a94a8;margin-bottom:6px;font-weight:500}
+.tri-badges{display:flex;gap:8px;flex-wrap:wrap}
+.tri-badge{border:1px solid;border-radius:4px;padding:3px 10px;font-size:.8rem;font-weight:600}
+.tri-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:800px){.tri-grid{grid-template-columns:1fr}}
+.tri-panel{background:#11151e;border:1px solid #1e2635;border-radius:6px;padding:12px}
+.tri-panel-title{font-size:.75rem;color:#8aa8c0;font-weight:600;margin-bottom:2px}
+.tri-panel-sub{font-size:.68rem;color:#586880;margin-bottom:8px}
+.tri-tbl-wrap{overflow-x:auto}
+table.tri-tbl{width:100%;border-collapse:collapse;font-size:.78rem;white-space:nowrap}
+table.tri-tbl th{padding:.35rem .5rem;color:#7a94a8;text-align:right;border-bottom:1px solid #1e2635;font-weight:500}
+table.tri-tbl td{padding:.35rem .5rem;text-align:right;border-bottom:1px solid #111823;color:#c8d8e8}
+table.tri-tbl td:first-child{text-align:left;color:#8aa8c0}
+.tri-items{display:flex;flex-direction:column;gap:8px}
+.tri-item{display:flex;align-items:baseline;gap:8px;font-size:.8rem}
+.tri-icon{font-size:1rem;width:16px;flex-shrink:0}
+.tri-label{color:#7a94a8;min-width:90px;font-weight:500}
+.tri-val{color:#c8d8e8}
+.sec-title{font-size:.78rem;font-weight:600;color:#8aa8c0;letter-spacing:.04em;
+  border-left:3px solid #29b6f6;padding-left:.6rem;margin:1.4rem 0 .7rem}
+/* ── 資料表格 ── */
+.data-note{font-size:.78rem;color:#f5c518;background:rgba(245,197,24,.08);border:1px solid rgba(245,197,24,.25);
+  border-radius:5px;padding:.4rem .8rem;margin-bottom:.6rem;font-weight:500;line-height:1.5}
+.tbl-wrap{overflow-x:auto;overflow-y:auto;max-height:520px;border-radius:8px;border:1px solid #1e2635;margin-bottom:2rem}
+table.dtbl{width:100%;border-collapse:collapse;font-size:.85rem;white-space:nowrap}
+table.dtbl thead tr{background:#0a0d14;position:sticky;top:0;z-index:5;box-shadow:0 2px 4px #000}
+table.dtbl th{padding:.5rem .7rem;text-align:right;border-bottom:2px solid #1e2635;
+  cursor:pointer;user-select:none;font-weight:700;font-size:.76rem;letter-spacing:.02em}
+table.dtbl th:first-child{text-align:left}
+table.dtbl th:hover{opacity:.75}
+table.dtbl th.sa::after{content:" ↑";color:#29b6f6}
+table.dtbl th.sd::after{content:" ↓";color:#29b6f6}
+table.dtbl td{padding:.42rem .7rem;border-bottom:1px solid #0a0f18;text-align:right;color:#b8ccda;font-size:.83rem}
+table.dtbl td:first-child{text-align:left;color:#7a9ab8;font-size:.8rem}
+table.dtbl tr:hover td{background:#111820}
+table.dtbl tr.burst-row td{background:rgba(239,83,80,.08)!important}
+table.dtbl tr.burst-row td:first-child::after{content:" ⚡";font-size:.65em}
+table.dtbl th.g-base{color:#90caf9}
+table.dtbl th.g-trade{color:#80cbc4}
+table.dtbl th.g-inst{color:#ef9a9a}
+table.dtbl th.g-margin{color:#ffcc80}
+table.dtbl th.g-short{color:#ce93d8}
+table.dtbl th.g-lend{color:#80deea}
+table.dtbl th.g-wg{color:#a5d6a7}
+table.dtbl th.g-flow{color:#fff176;border-bottom:2px solid #fff176}
+.cbuy{color:#ef5350!important}.csell{color:#26a69a!important}
+.crep{color:#66bb6a!important}.warn{color:#ef5350!important;font-weight:600}
+.hot2{color:#ffa07a!important}.num{font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<a id="mob-back" onclick="var fb=location.hostname.includes('github.io')?'https://twjohnsontsai.github.io/Stock-Report/':'https://twweiyuan.com/#stock';history.length>1?history.back():location.href=fb" href="javascript:void(0)" title="返回">&#8592; 返回</a>
+<style>#mob-back{display:block;position:fixed;bottom:20px;left:20px;z-index:9999;background:rgba(0,0,0,.35);border:1px solid rgba(192,152,64,.45);color:#c09840;padding:10px 22px;border-radius:24px;font-size:1.2rem;font-weight:700;text-decoration:none;backdrop-filter:blur(6px)}</style>
+<div id="hdr">2344 華邦電&nbsp;籌碼綜合分析<span>資料日期：2026-11-27</span><span>收盤：104.0</span></div>
+<div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:5px 10px;background:#0d1118;border-bottom:1px solid #1e2635;font-size:.78rem;color:#c8d8e8"><span>USD/TWD <b>32.95</b><span style="color:#26a69a;margin-left:4px">-0.24</span><span style="color:#586880;font-size:.7rem;margin-left:4px">台幣升值</span></span>  <span>Brent 原油 <b>91.44</b> USD<span style="color:#26a69a;margin-left:4px">-3.17</span></span><span style="margin-left:auto"><a href="file:///D%3A/Claude/Stock/broker_tracker/output/2344/2344_report_20260701.html" target="_blank" style="padding:3px 12px;border:1px solid #29b6f6;border-radius:4px;color:#29b6f6;font-size:.75rem;text-decoration:none;white-space:nowrap">分點進出 →</a></span></div><div style="margin-bottom:5px;padding:5px 10px;border-radius:4px;background:rgba(38,166,154,0.08);border-left:3px solid #26a69a;color:#80cbc4;font-size:11px">近30日無注意/警示/處置記錄&ensp;｜&ensp;狀態：<strong>正常</strong></div><div id="chip-summary"></div>
+<div style="margin:8px 0 4px;padding:8px 16px;background:#11151e;border-left:3px solid #ffb74d;border-radius:4px;max-width:860px;line-height:1.5"><span style="color:#ffb74d;font-size:13px;font-weight:bold">▶ 高位洗盤（中繼站）</span><span style="color:#8892a0;font-size:12px;margin-left:14px">主力意圖：主力拉高後反手洗掉跟風盤，只要5日不跌破20日代表大趨勢未變，屬短期籌碼過熱後的整理</span></div>
+<div class="charts-layout">
+<div class="charts-col">
+<div class="cw" style="padding-top:18px"><div class="cl">K線 + MA5/10/20/60</div><canvas id="ch1" height="350"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">成交量 / 當沖量 × 換手率% / 當沖獲利率%（右軸）</div><canvas id="ch2" height="130"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">KD (9, 3, 3)</div><canvas id="ch3" height="100"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">MACD (12, 26, 9)</div><canvas id="ch4" height="100"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">外資買賣超（柱）× 外資持股%（線，右軸）</div><canvas id="ch5" height="100"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">投信買賣超（柱）× 投信持股%（線，右軸）</div><canvas id="ch6" height="90"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">自營商買賣超（柱）× 自營商持股%（線，右軸）</div><canvas id="ch7" height="90"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">大戶持股%（日頻推算）× 散戶持股%校準（日頻，右軸反轉）</div><canvas id="ch8" height="100"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">浮籌日增減（紅=流向散戶／綠=主力吸籌）× 主力持股%推算（右軸）</div><canvas id="ch8b" height="100"></canvas></div>
+<div style="margin:8px 0 4px;padding:4px 12px;display:inline-block;background:#1a1f2e;border-radius:6px;font-size:12px;font-weight:700;color:#aaa">⚪ 觀望整理　<span style="font-weight:400;color:#aaa;font-size:11px">浮籌/借券/融資無明確訊號，主力暫無大動作</span></div>
+<div class="cw" style="padding-top:18px"><div class="cl">主力操作三角：浮籌日增減 × 借券淨建空 × 融資淨賣超</div><canvas id="ch_tri" height="110"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">融資 買進↑ / 賣出↓ / 現償↓（堆疊柱）× 融資餘額（右軸）</div><canvas id="ch9" height="110"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">融券 賣出↑ / 買回↓ / 現償↓（堆疊柱）× 融券餘額（右軸）</div><canvas id="ch9b" height="100"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">借券賣出 / 借券還券（柱）× 借券餘額（右軸）</div><canvas id="ch10" height="100"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">主力淨買/XQ（柱）╱ 法人合計（虛線）</div><canvas id="ch11" height="100"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">買賣家數差（家）</div><canvas id="ch12" height="90"></canvas></div>
+<div class="cw" style="padding-top:18px"><div class="cl">5日集中度 ╱ 20日集中度（%）</div><canvas id="ch13" height="130"></canvas></div>
+</div>
+<div class="panel-col"><div id="hpanel"><div class="hd">移至圖表查看數值</div></div></div>
+</div>
+
+<!-- 集中度說明 -->
+<div class="sec-title">5日 ╱ 20日集中度 — 完整說明與評估方式</div>
+<div style="background:#0d1117;border:1px solid #1e2635;border-radius:10px;padding:18px 20px;margin-bottom:18px;font-size:11px;color:#c9d1d9;line-height:1.8">
+
+  <!-- 什麼是集中度 -->
+  <div style="font-size:12px;font-weight:600;color:#58a6ff;margin-bottom:10px">① 集中度是什麼？計算方式</div>
+  <div style="margin-bottom:14px;color:#8b949e">
+    集中度（Concentration Index）由 WantGoo 計算，衡量「籌碼在過去 N 天內，是向主力集中還是向散戶分散」。<br>
+    <b style="color:#c9d1d9">5日集中度</b>：觀察最近 5 個交易日的主力買賣超相對成交量的加權偏態（正 = 主力淨買 → 籌碼集中；負 = 主力淨賣 → 籌碼分散）。<br>
+    <b style="color:#c9d1d9">20日集中度</b>：同上，但用 20 日窗口，反映中期趨勢，波動較小、方向較穩定。<br>
+    兩條線的<b style="color:#f6c90e">關係</b>與<b style="color:#f6c90e">位置</b>比單一數值更重要。
+  </div>
+
+  <!-- 數值解讀 -->
+  <div style="font-size:12px;font-weight:600;color:#58a6ff;margin-bottom:8px">② 數值大小代表什麼</div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:14px;text-align:center">
+    <div style="background:#1a2f1a;border:1px solid #2e7d32;border-radius:5px;padding:6px">
+      <div style="color:#4caf50;font-weight:700">&gt; +5%</div>
+      <div style="color:#8b949e">主力積極吸籌<br>籌碼高度集中<br>短線上攻信號</div>
+    </div>
+    <div style="background:#132a1a;border:1px solid #2e7d32;border-radius:5px;padding:6px">
+      <div style="color:#81c784;font-weight:700">+1% ~ +5%</div>
+      <div style="color:#8b949e">溫和集中<br>主力小量布局<br>偏多但不急</div>
+    </div>
+    <div style="background:#1a1a1a;border:1px solid #444;border-radius:5px;padding:6px">
+      <div style="color:#8b949e;font-weight:700">-1% ~ +1%</div>
+      <div style="color:#8b949e">中性震盪<br>無明顯主力<br>觀望為主</div>
+    </div>
+    <div style="background:#2a1313;border:1px solid #c62828;border-radius:5px;padding:6px">
+      <div style="color:#ef9a9a;font-weight:700">-1% ~ -5%</div>
+      <div style="color:#8b949e">籌碼分散中<br>主力減碼<br>偏空但未崩</div>
+    </div>
+    <div style="background:#3a1010;border:1px solid #b71c1c;border-radius:5px;padding:6px">
+      <div style="color:#ef5350;font-weight:700">&lt; -5%</div>
+      <div style="color:#8b949e">籌碼大量外流<br>主力砸盤洗盤<br>強力殺跌信號</div>
+    </div>
+  </div>
+
+  <!-- 5日 vs 20日 關係 -->
+  <div style="font-size:12px;font-weight:600;color:#58a6ff;margin-bottom:8px">③ 5日（快線）vs 20日（慢線）的使用方式</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+    <div style="background:#111827;border-radius:6px;padding:8px 10px">
+      <div style="color:#f6c90e;font-weight:600;margin-bottom:4px">🟡 黃金交叉（5日由下穿越20日向上）</div>
+      <div style="color:#8b949e">短線集中度開始超越中線，代表吸籌速度加快，<b style="color:#c9d1d9">主升段啟動的最重要信號</b>。<br>
+      配合買賣家數差由負轉正 = 更強確認。</div>
+    </div>
+    <div style="background:#111827;border-radius:6px;padding:8px 10px">
+      <div style="color:#ab47bc;font-weight:600;margin-bottom:4px">🟣 死亡交叉（5日由上穿越20日向下）</div>
+      <div style="color:#8b949e">短線分散速度超過中期，代表籌碼開始外流，<b style="color:#c9d1d9">出場警示信號</b>。<br>
+      若20日集中度同步下彎 = 主力確認退場，不宜守。</div>
+    </div>
+    <div style="background:#111827;border-radius:6px;padding:8px 10px">
+      <div style="color:#26a69a;font-weight:600;margin-bottom:4px">✅ 兩線均正且5日 &gt; 20日</div>
+      <div style="color:#8b949e">最強多頭格局：主力短中期均在集中籌碼，趨勢確立向上，<b style="color:#c9d1d9">持股最安全的區間</b>。</div>
+    </div>
+    <div style="background:#111827;border-radius:6px;padding:8px 10px">
+      <div style="color:#ef5350;font-weight:600;margin-bottom:4px">⚠️ 兩線均負且5日 &lt; 20日</div>
+      <div style="color:#8b949e">最弱空頭格局：短中期籌碼均分散，主力持續離場，<b style="color:#c9d1d9">避免進場，持有者考慮減碼</b>。</div>
+    </div>
+  </div>
+
+  <!-- 8種形態 -->
+  <div style="font-size:12px;font-weight:600;color:#58a6ff;margin-bottom:8px">④ 8種集中度形態與操作建議</div>
+  <div id="pat-table" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px">
+    <div class="pat-row" data-pat="低位吸籌（深度築底）" style="background:#111827;border-radius:6px;padding:7px 10px;border-left:3px solid #1565c0">
+      <div style="color:#42a5f5;font-weight:600">低位吸籌（深度築底）</div>
+      <div style="color:#8b949e">5日在極深負值（&lt;-7%），但 20日集中度已在改善（由負轉緩）。<br>
+      <b style="color:#c9d1d9">意義</b>：主力趁最後一波殺跌完成底部吸籌。<b style="color:#4caf50">操作</b>：逢進場機會，等5日開始回升再分批買。</div>
+    </div>
+    <div class="pat-row" data-pat="暴力恐嚇（趕人下車）" style="background:#111827;border-radius:6px;padding:7px 10px;border-left:3px solid #b71c1c">
+      <div style="color:#ef5350;font-weight:600">暴力恐嚇（趕人下車）</div>
+      <div style="color:#8b949e">5日急跌速度遠快於20日（斜率差異大）。<br>
+      <b style="color:#c9d1d9">意義</b>：主力刻意製造恐慌，逼出短線持有者。<b style="color:#ff9800">操作</b>：不追殺，有底部支撐時可留意反彈機會。</div>
+    </div>
+    <div class="pat-row" data-pat="窒息鎖碼（沉澱期）" style="background:#111827;border-radius:6px;padding:7px 10px;border-left:3px solid #546e7a">
+      <div style="color:#78909c;font-weight:600">窒息鎖碼（沉澱期）</div>
+      <div style="color:#8b949e">5日低位趨平（不再繼續跌），20日緩跌中。<br>
+      <b style="color:#c9d1d9">意義</b>：浮額洗盤接近尾聲，成交量極度萎縮，準備蓄勢。<b style="color:#ff9800">操作</b>：耐心等待，直到5日開始回升。</div>
+    </div>
+    <div class="pat-row" data-pat="初步換手（點火期）" style="background:#111827;border-radius:6px;padding:7px 10px;border-left:3px solid #f57f17">
+      <div style="color:#ffb300;font-weight:600">初步換手（點火期）</div>
+      <div style="color:#8b949e">5日開始向上穿越20日（兩線均仍在負值區）。<br>
+      <b style="color:#c9d1d9">意義</b>：主力開始點火，技術指標醞釀黃金交叉。<b style="color:#4caf50">操作</b>：準備進場，分批布局，設好停損。</div>
+    </div>
+    <div class="pat-row" data-pat="底部回升（準備上穿）" style="background:#111827;border-radius:6px;padding:7px 10px;border-left:3px solid #1976d2">
+      <div style="color:#42a5f5;font-weight:600">底部回升（準備上穿）</div>
+      <div style="color:#8b949e">5日持續從低位上揚，逐漸靠近20日，即將形成黃金交叉。<br>
+      <b style="color:#c9d1d9">意義</b>：主升段啟動的前奏，是最佳進場準備窗口。<b style="color:#4caf50">操作</b>：積極布局，等待黃金交叉確認後加碼。</div>
+    </div>
+    <div class="pat-row" data-pat="低位回升（蓄勢期）" style="background:#111827;border-radius:6px;padding:7px 10px;border-left:3px solid #00838f">
+      <div style="color:#26c6da;font-weight:600">低位回升（蓄勢期）</div>
+      <div style="color:#8b949e">5日從深度負值持續回升，方向確認向上，但距20日仍有差距。<br>
+      <b style="color:#c9d1d9">意義</b>：正在蓄勢累積，需要時間讓20日也跟上。<b style="color:#ff9800">操作</b>：小量試水，等5日持續向上且靠近20日再加碼。</div>
+    </div>
+    <div class="pat-row" data-pat="強推換手（進攻期）" style="background:#111827;border-radius:6px;padding:7px 10px;border-left:3px solid #2e7d32">
+      <div style="color:#66bb6a;font-weight:600">強推換手（進攻期）</div>
+      <div style="color:#8b949e">5日快速翻正並帶動20日上揚（兩線均正，5日 &gt; 20日）。<br>
+      <b style="color:#c9d1d9">意義</b>：主力全面進攻，不惜代價拉升，即將進入噴發段。<b style="color:#4caf50">操作</b>：續持或追買，停損設在20日集中度線下彎的位置。</div>
+    </div>
+    <div class="pat-row" data-pat="高位洗盤（中繼站）" style="background:#111827;border-radius:6px;padding:7px 10px;border-left:3px solid #e65100">
+      <div style="color:#ff9800;font-weight:600">高位洗盤（中繼站）</div>
+      <div style="color:#8b949e">5日從正值高位回落，20日仍在上升中（兩線仍正，5日開始 &lt; 20日）。<br>
+      <b style="color:#c9d1d9">意義</b>：拉高後短暫震盪洗籌，中期趨勢未變。<b style="color:#ff9800">操作</b>：持有，不宜追高，等5日再次上揚確認後可加碼。</div>
+    </div>
+  </div>
+
+  <!-- 結合其他指標 -->
+  <div style="font-size:12px;font-weight:600;color:#58a6ff;margin-bottom:8px">⑤ 結合其他指標提升準確性</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px">
+    <div style="background:#111827;border-radius:5px;padding:6px 10px">
+      <div style="color:#f6c90e;font-weight:600;margin-bottom:2px">集中度 + 買賣家數差</div>
+      <div style="color:#8b949e">5日集中度轉正 + 買賣家數差由負轉正 = 雙重確認，散戶開始跟進，最強進場訊號。</div>
+    </div>
+    <div style="background:#111827;border-radius:5px;padding:6px 10px">
+      <div style="color:#4db6ac;font-weight:600;margin-bottom:2px">集中度 + 大戶持股%</div>
+      <div style="color:#8b949e">5日集中度暴跌（洗盤形態）+ 大戶持股%仍在上升 = 假跌真吸，是洗盤訊號而非真實出貨。</div>
+    </div>
+    <div style="background:#111827;border-radius:5px;padding:6px 10px">
+      <div style="color:#ab47bc;font-weight:600;margin-bottom:2px">集中度 + 借券餘額</div>
+      <div style="color:#8b949e">5日集中度回升 + 借券餘額同步減少 = 打壓結束 + 籌碼集中，底部最強組合訊號。</div>
+    </div>
+  </div>
+
+  <!-- 當前狀態（動態注入） -->
+  <div id="conc-status" style="border-top:1px solid #1e2635;padding-top:10px;margin-top:4px"></div>
+</div>
+<script>
+(function(){
+  var S = D.summary;
+  var el = document.getElementById('conc-status');
+  if (!el || !S) return;
+  var s5 = S.skp5Last, s20 = S.skp20Last, pat = S.patLabel, pc = S.patColor || '#8892a0';
+  var cross = (s5 > s20) ? '5日 > 20日（多頭排列）' : '5日 < 20日（空頭排列）';
+  var crossColor = (s5 > s20) ? '#4caf50' : '#ef5350';
+  var zone = s5 > 5 ? '積極吸籌區' : s5 > 1 ? '溫和集中區' : s5 > -1 ? '中性震盪區' : s5 > -5 ? '分散區' : '重度分散區';
+  var zc   = s5 > 5 ? '#4caf50' : s5 > 1 ? '#81c784' : s5 > -1 ? '#8b949e' : s5 > -5 ? '#ef9a9a' : '#ef5350';
+  el.innerHTML =
+    '<div style="font-size:12px;font-weight:600;color:#58a6ff;margin-bottom:6px">⑥ 當前狀態（最後一日）</div>' +
+    '<div style="display:flex;gap:20px;flex-wrap:wrap;font-size:11px">' +
+    '<span>5日集中度：<b style="color:' + (s5>=0?'#4caf50':'#ef5350') + '">' + (s5>=0?'+':'') + s5.toFixed(2) + '%</b>（' + zone + '）</span>' +
+    '<span>20日集中度：<b style="color:' + (s20>=0?'#4caf50':'#ef5350') + '">' + (s20>=0?'+':'') + s20.toFixed(2) + '%</b></span>' +
+    '<span>排列：<b style="color:' + crossColor + '">' + cross + '</b></span>' +
+    (pat ? '<span>形態：<b style="color:' + pc + '">▶ ' + pat + '</b></span>' : '') +
+    '</div>';
+  // 高亮當前形態卡片
+  if (pat) {
+    document.querySelectorAll('.pat-row').forEach(function(r) {
+      if (r.getAttribute('data-pat') === pat) {
+        r.style.boxShadow = '0 0 0 2px ' + pc;
+        r.style.background = '#1a1f2e';
+      }
+    });
+  }
+})();
+</script>
+
+<!-- 關聯分析 -->
+<div class="sec-title">籌碼關聯分析</div>
+<div class="corr-grid"><div class='corr-card'><div class='corr-lbl'>借券餘額 vs 收盤價</div><div class='corr-val' style='color:#26a69a'>強負相關 (-0.751)</div><div class='corr-hint'>r=-0.75　借券增加時股價下跌 → 空頭力道顯著，借券壓力有效打壓股價</div></div><div class='corr-card'><div class='corr-lbl'>外資買賣超 vs 次日漲跌</div><div class='corr-val' style='color:#8892a0'>無顯著相關 (+0.064)</div><div class='corr-hint'>r=+0.06　外資買賣超對次日漲跌無預測力，不宜以外資方向推算短線漲跌</div></div><div class='corr-card'><div class='corr-lbl'>主力進出(WG) vs 收盤價</div><div class='corr-val' style='color:#8892a0'>無顯著相關 (-0.123)</div><div class='corr-hint'>r=-0.12　主力買超與股價走勢無顯著連動，主力可能在低檔靜默布局</div></div><div class='corr-card'><div class='corr-lbl'>當沖比% vs 換手率</div><div class='corr-val' style='color:#ffa07a'>弱正相關 (+0.313)</div><div class='corr-hint'>r=+0.31　當沖與換手率連動不穩定，本股換手率構成因素較複雜</div></div><div class='corr-card'><div class='corr-lbl'>三大法人合計 vs 次日漲跌</div><div class='corr-val' style='color:#8892a0'>無顯著相關 (+0.021)</div><div class='corr-hint'>r=+0.02　法人合計買超對次日漲跌無預測力，法人進出非短線價格催化劑</div></div><div class='corr-card'><div class='corr-lbl'>融資餘額 vs 收盤價</div><div class='corr-val' style='color:#ef5350'>強正相關 (+0.933)</div><div class='corr-hint'>r=+0.93　融資餘額隨股價同步擴大 → 散戶融資追漲，股價若回落將面臨融資斷頭壓力</div></div><div class='corr-card'><div class='corr-lbl'>浮籌日增減 vs 借券淨建空</div><div class='corr-val' style='color:#ef5350'>r=+0.520</div><div class='corr-hint'>浮籌↑時借券也↑→主力借券壓盤同時分發浮籌給散戶（出貨型放空）</div></div><div class='corr-card'><div class='corr-lbl'>浮籌日增減 vs 融資淨賣超</div><div class='corr-val' style='color:#26a69a'>r=-0.405</div><div class='corr-hint'>浮籌減少同時融資↓→主力吸籌，融資戶同步撤出（健康換手）</div></div><div class='corr-card'><div class='corr-lbl'>借券淨建空 vs 融資淨賣超</div><div class='corr-val' style='color:#aaa'>r=-0.130</div><div class='corr-hint'>借券與融資連動性低，主力暫無明確借券策略</div></div></div>
+
+<!-- 三指標追蹤 -->
+<div style='margin-bottom:14px;padding:10px 14px;background:#0a1520;border-radius:6px;border:1px solid #1e2e40'><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:8px'><span style='font-size:12px;font-weight:700;color:#8aa8c0'>技術位參考（來源：broker_tracker 20260701）</span><span style='font-size:11px;color:#586880'>主力分點：台灣摩根士丹利</span></div><div style='display:flex;gap:10px;flex-wrap:wrap'><div style='padding:8px 14px;background:#0d1e35;border-radius:6px;text-align:center'><div style='font-size:10px;color:#888;margin-bottom:2px'>強支撐</div><div style='font-size:18px;font-weight:700;color:#5c9fff'>121.00</div><div style='font-size:10px;color:#aaa'>元</div></div><div style='padding:8px 14px;background:#0d1e35;border-radius:6px;text-align:center'><div style='font-size:10px;color:#888;margin-bottom:2px'>主力成本（支撐）</div><div style='font-size:18px;font-weight:700;color:#4db6ff'>122.84</div><div style='font-size:10px;color:#aaa'>元</div></div><div style='padding:8px 14px;background:#2a1500;border-radius:6px;text-align:center'><div style='font-size:10px;color:#888;margin-bottom:2px'>壓力一</div><div style='font-size:18px;font-weight:700;color:#ff8a65'>189.00</div><div style='font-size:10px;color:#aaa'>元</div></div><div style='padding:8px 14px;background:#2a0a0a;border-radius:6px;text-align:center'><div style='font-size:10px;color:#888;margin-bottom:2px'>壓力二（近高）</div><div style='font-size:18px;font-weight:700;color:#ef5350'>222.00</div><div style='font-size:10px;color:#aaa'>元</div></div></div></div><div class="sec-title">三指標追蹤分析：借券 × 外資 × 融資</div>
+<div class="tri-wrap">
+  <div class="tri-grid">
+    <div class="tri-panel">
+      <div class="tri-panel-title">歷史相似型態 → 次日結果 <span style='display:inline-block;padding:1px 5px;border-radius:3px;font-size:10px;background:#331010;color:#f44336;font-weight:700;margin-left:4px'>S4下跌</span></div>
+      <div class="tri-panel-sub">篩選條件（外資+借券（淨向+賣出量級）+融資（Stage+換手率+主法同向））：【S4 下跌段】換手低量｜外資＝買超、借券＝淨增、融資＝減少（主法同向）</div>
+      <div class="tri-tbl-wrap">
+      <table class="tri-tbl">
+        <thead><tr>
+          <th style="text-align:left">日期</th><th>收盤</th><th>外資</th><th>法人合計</th><th>主力</th>
+          <th>借券淨</th><th>成交量</th><th>換手率</th>
+          <th>次1日%</th>
+        </tr></thead>
+        <tbody><tr style='background:#0d2035;border-bottom:2px solid #29b6f6'><td><b style='color:#29b6f6'>今日 2026-11-27</b><span style='display:inline-block;padding:1px 5px;border-radius:3px;font-size:10px;background:#331010;color:#f44336;font-weight:700;margin-left:4px'>S4下跌</span></td><td>104.0</td><td style='color:#ef5350'>+3,937</td><td style='color:#ef5350'>+6,787</td><td style='color:#ef5350'>+844</td><td style=''>+336</td><td>58,011</td><td style=''>1.23%</td><td style='color:#29b6f6;font-weight:700'>▶待觀察</td></tr><tr><td>2026-11-26<span style='display:inline-block;padding:1px 5px;border-radius:3px;font-size:10px;background:#331010;color:#f44336;font-weight:700;margin-left:4px'>S4下跌</span></td><td>103.5</td><td style='color:#ef5350'>+10,796</td><td style='color:#ef5350'>+11,832</td><td style='color:#ef5350'>+2,674</td><td style='background:#1a3a20;'>+561</td><td>55,474</td><td style='background:#1a3a20;'>1.18%</td><td style='color:#ef5350;font-weight:700'>+0.48%</td></tr><tr><td>2026-11-19<span style='display:inline-block;padding:1px 5px;border-radius:3px;font-size:10px;background:#331010;color:#f44336;font-weight:700;margin-left:4px'>S4下跌</span></td><td>98.0</td><td style='color:#ef5350'>+9,515</td><td style='color:#ef5350'>+9,778</td><td style='color:#ef5350'>+3,152</td><td style='background:#1a3a20;'>+1,373</td><td>76,770</td><td style='background:#1a3a20;'>1.63%</td><td style='color:#26a69a;font-weight:700'>-8.98%</td></tr><tr><td>2026-11-16<span style='display:inline-block;padding:1px 5px;border-radius:3px;font-size:10px;background:#331010;color:#f44336;font-weight:700;margin-left:4px'>S4下跌</span></td><td>113.0</td><td style='color:#ef5350'>+4,257</td><td style='color:#ef5350'>+486</td><td style='color:#ef5350'>+1,245</td><td style='background:#1a3a20;'>+1,955</td><td>60,600</td><td style='background:#1a3a20;'>1.28%</td><td style='color:#26a69a;font-weight:700'>-2.21%</td></tr></tbody>
+      </table>
+      </div>
+    </div>
+    <div class="tri-panel">
+      <div class="tri-panel-title">下一交易日追蹤重點</div>
+      <div class="tri-items"><div class='tri-item'><span class='tri-icon' style='color:#90a0b0'>●</span><span class='tri-label'>借券餘額觀察</span><span class='tri-val'>目前 121,992 張 / 5日均 121,152 張（+0.7%）</span></div><div class='tri-item'><span class='tri-icon' style='color:#90a0b0'>●</span><span class='tri-label'>借券賣出警戒</span><span class='tri-val'>近5日均 520 張；次日若超過 780 張視為壓力升高</span></div><div class='tri-item'><span class='tri-icon' style='color:#ef5350'>●</span><span class='tri-label'>外資方向</span><span class='tri-val'>連續 2 日買超</span></div><div class='tri-item'><span class='tri-icon' style='color:#66bb6a'>●</span><span class='tri-label'>融資動向</span><span class='tri-val'>今日減少 470 張；近3日趨勢減 1,919張</span></div><div class='tri-item'><span class='tri-icon' style='color:#ef5350'>●</span><span class='tri-label'>主力近5日</span><span class='tri-val'>合計 +5,886 張（今日 +844 張）</span></div><div class='tri-item'><span class='tri-icon' style='color:#ef5350'>●</span><span class='tri-label'>法人近5日</span><span class='tri-val'>合計 +9,524 張（今日 +6,787 張）</span></div><div class='tri-item'><span class='tri-icon' style='color:#90a0b0'>●</span><span class='tri-label'>成交量狀態</span><span class='tri-val'>當日 58,011 張 / 5日均 67,679 張（×0.86 均量）</span></div><div style='margin-top:16px;padding:12px 14px;background:#0d1821;border-radius:6px;border:1px solid #1e3045'><div style='display:flex;align-items:center;justify-content:space-between;margin-bottom:6px'><div class='tri-panel-title' style='margin:0;font-size:13px'>回測 vs 出貨  評分</div><div style='font-size:16px;font-weight:700;color:#ff9800'>多空拉鋸 &nbsp;4.0/7</div></div><div style='font-size:11px;color:#ff9800;margin-bottom:8px'>4項支持回測、3項偏出貨，方向未定｜歷史3筆：次1日勝率33%、平均-3.6%</div><table style='width:100%;border-collapse:collapse'><tr><td style='padding:3px 8px 3px 0;font-size:12px;color:#8aa8c0;white-space:nowrap'>量縮回測</td><td style='padding:3px 8px'><div style='display:inline-block;width:80px;height:9px;background:#1a2533;border-radius:3px;vertical-align:middle'><div style='width:0%;height:100%;background:#f44336;border-radius:3px'></div></div></td><td style='padding:3px 6px;font-size:12px;font-weight:700;color:#f44336'>○</td><td style='padding:3px 0;font-size:11px;color:#7888a0'>未縮量 ×0.86  ⚠</td></tr><tr><td style='padding:3px 8px 3px 0;font-size:12px;color:#8aa8c0;white-space:nowrap'>法人未出</td><td style='padding:3px 8px'><div style='display:inline-block;width:80px;height:9px;background:#1a2533;border-radius:3px;vertical-align:middle'><div style='width:100%;height:100%;background:#4caf50;border-radius:3px'></div></div></td><td style='padding:3px 6px;font-size:12px;font-weight:700;color:#4caf50'>●</td><td style='padding:3px 0;font-size:11px;color:#7888a0'>法人買超 +6,787張  ✓</td></tr><tr><td style='padding:3px 8px 3px 0;font-size:12px;color:#8aa8c0;white-space:nowrap'>借券未增</td><td style='padding:3px 8px'><div style='display:inline-block;width:80px;height:9px;background:#1a2533;border-radius:3px;vertical-align:middle'><div style='width:0%;height:100%;background:#f44336;border-radius:3px'></div></div></td><td style='padding:3px 6px;font-size:12px;font-weight:700;color:#f44336'>○</td><td style='padding:3px 0;font-size:11px;color:#7888a0'>借券大增 +336張  ⚠</td></tr><tr><td style='padding:3px 8px 3px 0;font-size:12px;color:#8aa8c0;white-space:nowrap'>主力護盤</td><td style='padding:3px 8px'><div style='display:inline-block;width:80px;height:9px;background:#1a2533;border-radius:3px;vertical-align:middle'><div style='width:100%;height:100%;background:#4caf50;border-radius:3px'></div></div></td><td style='padding:3px 6px;font-size:12px;font-weight:700;color:#4caf50'>●</td><td style='padding:3px 0;font-size:11px;color:#7888a0'>主力買超 +844張  ✓</td></tr><tr><td style='padding:3px 8px 3px 0;font-size:12px;color:#8aa8c0;white-space:nowrap'>支撐未破</td><td style='padding:3px 8px'><div style='display:inline-block;width:80px;height:9px;background:#1a2533;border-radius:3px;vertical-align:middle'><div style='width:0%;height:100%;background:#f44336;border-radius:3px'></div></div></td><td style='padding:3px 6px;font-size:12px;font-weight:700;color:#f44336'>○</td><td style='padding:3px 0;font-size:11px;color:#7888a0'>收盤104.0 跌破 MA20 118.8  ⚠</td></tr><tr><td style='padding:3px 8px 3px 0;font-size:12px;color:#8aa8c0;white-space:nowrap'>融資穩定</td><td style='padding:3px 8px'><div style='display:inline-block;width:80px;height:9px;background:#1a2533;border-radius:3px;vertical-align:middle'><div style='width:100%;height:100%;background:#4caf50;border-radius:3px'></div></div></td><td style='padding:3px 6px;font-size:12px;font-weight:700;color:#4caf50'>●</td><td style='padding:3px 0;font-size:11px;color:#7888a0'>融資減少 -470張（去槓桿  ✓）</td></tr><tr><td style='padding:3px 8px 3px 0;font-size:12px;color:#8aa8c0;white-space:nowrap'>大戶未減碼</td><td style='padding:3px 8px'><div style='display:inline-block;width:80px;height:9px;background:#1a2533;border-radius:3px;vertical-align:middle'><div style='width:100%;height:100%;background:#4caf50;border-radius:3px'></div></div></td><td style='padding:3px 6px;font-size:12px;font-weight:700;color:#4caf50'>●</td><td style='padding:3px 0;font-size:11px;color:#7888a0'>大戶 66.4%（週增 +0.0%  ✓）</td></tr></table></div><div style='margin-top:8px;padding:8px 10px;background:#0d1821;border-radius:4px;border:1px solid #1e3045'><span style='font-size:11px;color:#8aa8c0;font-weight:700'>次1日規律統計（3 個可比樣本）</span><table style='width:100%;border-collapse:collapse;margin-top:6px'><tr style='font-size:11px;color:#586880'><td style='padding:2px 8px'>時間</td><td>平均漲跌</td><td>勝率</td><td>最小～最大</td></tr><tr style='font-size:12px'><td style='padding:3px 8px;color:#8aa8c0'>次1日</td><td style='color:#26a69a;font-weight:700'>-3.57%</td><td style='color:#8aa8c0'>1/3 勝</td><td style='color:#586880;font-size:10px'>-9.0~+0.5%</td></tr></table></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 綜合數據表 -->
+<div class="sec-title">原始數據一覽（共 43 筆）<span style="font-weight:400;color:#5a7a94;margin-left:.5rem">· 點擊欄位排序 · ⚡ 借券爆量</span></div>
+<div class="data-note">📌 <b>浮籌日增減</b> = 主力淨賣超①（三大法人） + 融資淨賣超②；正（紅）=籌碼流向散戶，負（綠）=主力吸籌。①以 TWSE 三大法人（外資+投信+自營）為準，覆蓋全市場；XQ 920分點資料僅用於「主力淨買(XQ)」欄（識別具體主力帳號）。<br>
+📌 <b>散戶持股（校準）</b> = 以 TDCC 週報（大戶持股%）為週頻錨點，換算散戶持股張數後，兩錨點間按日頻浮籌比例插值，得出每日散戶估算持股。<br>
+📌 <b>主力持股（推算）</b> = 總流通張數 − 散戶持股（校準），涵蓋大戶＋法人，為散戶的鏡像數據，兩者合計≈總流通。<br>
+📌 <b>週誤差（驗證）</b> = 每個 TDCC 錨點日才顯示：「日頻浮籌週累計」vs「TDCC實際週變化」的差距；誤差越小代表日頻計算越準確，可藉此驗證模型可靠度。滑鼠懸停可看詳情。<br>
+📌 <b>週誤差偏大的常見原因</b>：① 借券場外划拨（不過市場交易，不計入浮籌）② ETF 申贖（大量股票進出不走次級市場）③ 外資透過 ADR/GDR 的持股轉換 ④ 大宗交易（拍板成交，不計入一般成交量）。這些路徑都會造成散戶持股實際變化，但我們的日頻浮籌無法捕捉，屬於模型盲區。</div>
+<div class="data-note">📌 法人持股%（各圖右軸）：FBS 原始資料僅含最近 40 個交易日，更早的數值已用 TWT38U 日頻買賣超反推補全。超出 TWT38U 覆蓋範圍（約 65 日前）的日期，持股% 以當時最早已知值平推，僅供趨勢參考。</div>
+<div class="tbl-wrap">
+<table class="dtbl" id="dtbl">
+<thead><tr>
+  <th class="g-base">日期</th><th class="g-base">收盤</th><th class="g-base">成交量</th><th class="g-trade">當沖量</th>
+  <th class="g-trade">當沖比%</th><th class="g-trade">獲利率%</th><th class="g-trade">換手率</th><th class="g-trade">實際換手</th>
+  <th class="g-inst">外資</th><th class="g-inst">投信</th><th class="g-inst">自營</th><th class="g-inst">法人合計</th>
+  <th class="g-margin">融資買進</th><th class="g-margin">融資賣出</th><th class="g-margin">融資現償</th><th class="g-margin">融資餘額</th><th class="g-margin">使用率%</th><th class="g-margin" title="收盤價÷(融資成本線×0.6)×100%；&lt;120紅/120-130黃/130-160橘">維持率%</th>
+  <th class="g-short">融券賣出</th><th class="g-short">融券回補</th><th class="g-short">融券現償</th><th class="g-short">融券餘額</th>
+  <th class="g-lend">借券賣出</th><th class="g-lend">借券還券</th><th class="g-lend">淨借券</th><th class="g-lend">借券餘額</th>
+  <th class="g-wg" title="XQ 920分點主力集團淨買超；無 XQ cache 時備援用 WantGoo(WG)">主力淨買(XQ)</th><th class="g-wg">買賣家數差</th><th class="g-wg">5日集中</th><th class="g-wg">20日集中</th>
+  <th class="g-flow" title="= −三大法人合計（外資+投信+自營，TWSE全市場）；正=法人淨賣出/浮籌增加">主力淨賣超①</th>
+  <th class="g-flow" title="= 融資賣出−融資買進；正=融資戶淨賣出">融資淨賣超②</th>
+  <th class="g-flow" title="= ①+②；正=浮籌流向散戶／負=主力吸籌">浮籌日增減</th>
+  <th class="g-flow" title="以TDCC週報為錨點，日頻浮籌插值校準的散戶持股張數（下方小字為占比%）">散戶持股（校準）</th>
+  <th class="g-flow" title="= 總流通 − 散戶持股（校準）；主力+機構合計，下方小字為占比%">主力持股（推算）</th>
+  <th class="g-flow" title="TDCC週報錨點日：日頻浮籌累計 vs TDCC實際週變化的誤差，正=高估負=低估（滑鼠可查詳情）">週誤差(驗證)</th>
+</tr></thead>
+<tbody id="dtbody"><tr><td>2026-11-27</td><td class='num'>104.00</td><td class='num'>58,011</td><td class='num'>35,785</td><td class='num' class='warn'>61.7%</td><td class='num' class='cbuy'>+0.41%</td><td class='num'>+1.229%</td><td class='num'>+0.471%</td><td class='num' class='cbuy'>+3,937</td><td class='num' class='cbuy'>+3,015</td><td class='num' class='csell'>-165</td><td class='num' class='cbuy'>+6,787</td><td class='num'>1,339</td><td class='num'>1,798</td><td class='num'>11</td><td class='num'>74,270</td><td class='num'>6.6%</td><td class='num' style='color:#e3b341'>121.4%</td><td class='num'>441</td><td class='num'>148</td><td class='num'>0</td><td class='num'>2,495</td><td class='num csell'>405</td><td class='num crep'>-69</td><td class='num' class='csell'>+336</td><td class='num'>121,992</td><td class='num'>+844</td><td class='num'>-46</td><td class='num'>2.5%</td><td class='num'>-3.9%</td><td class='num cbuy'>-6,787</td><td class='num csell'>+459</td><td class='num cbuy'>-6,328</td><td class='num'>1,577,825<br><small style='color:#888'>33.4%</small></td><td class='num'>3,144,182<br><small style='color:#888'>66.6%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-26</td><td class='num'>103.50</td><td class='num'>55,474</td><td class='num'>29,136</td><td class='num' class='warn'>52.5%</td><td class='num' class='cbuy'>+0.68%</td><td class='num'>+1.175%</td><td class='num'>+0.558%</td><td class='num' class='cbuy'>+10,796</td><td class='num' class='cbuy'>+22</td><td class='num' class='cbuy'>+1,013</td><td class='num' class='cbuy'>+11,832</td><td class='num'>1,744</td><td class='num'>2,850</td><td class='num'>31</td><td class='num'>74,740</td><td class='num'>6.6%</td><td class='num' style='color:#e3b341'>120.3%</td><td class='num'>1,614</td><td class='num'>619</td><td class='num'>0</td><td class='num'>2,202</td><td class='num csell'>684</td><td class='num crep'>-123</td><td class='num' class='csell'>+561</td><td class='num'>121,656</td><td class='num'>+2,674</td><td class='num'>-602</td><td class='num'>3.7%</td><td class='num'>-3.9%</td><td class='num cbuy'>-11,832</td><td class='num csell'>+1,106</td><td class='num cbuy'>-10,726</td><td class='num'>1,584,153<br><small style='color:#888'>33.5%</small></td><td class='num'>3,137,854<br><small style='color:#888'>66.5%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-25</td><td class='num'>94.50</td><td class='num'>75,173</td><td class='num'>45,088</td><td class='num' class='warn'>60.0%</td><td class='num' class='csell'>-0.09%</td><td class='num'>+1.592%</td><td class='num'>+0.637%</td><td class='num' class='csell'>-7,136</td><td class='num' class='cbuy'>+352</td><td class='num' class='csell'>-1,195</td><td class='num' class='csell'>-7,979</td><td class='num'>4,309</td><td class='num'>4,564</td><td class='num'>54</td><td class='num'>75,877</td><td class='num'>6.7%</td><td class='num' style='color:#f85149'>109.1%</td><td class='num'>0</td><td class='num'>102</td><td class='num'>50</td><td class='num'>1,207</td><td class='num csell'>342</td><td class='num crep'>—</td><td class='num' class='csell'>+342</td><td class='num'>121,095</td><td class='num'>+1,982</td><td class='num'>+512</td><td class='num'>1.9%</td><td class='num'>-4.3%</td><td class='num csell'>+7,979</td><td class='num csell'>+255</td><td class='num csell'>+8,234</td><td class='num'>1,594,879<br><small style='color:#888'>33.8%</small></td><td class='num'>3,127,128<br><small style='color:#888'>66.2%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-24</td><td class='num'>105.00</td><td class='num'>4,672</td><td class='num'>19</td><td class='num'>0.4%</td><td class='num'>+0.00%</td><td class='num'>+0.099%</td><td class='num'>+0.099%</td><td class='num' class='csell'>-1,031</td><td class='num' class='csell'>-26</td><td class='num' class='cbuy'>+205</td><td class='num' class='csell'>-852</td><td class='num'>1,736</td><td class='num'>447</td><td class='num'>33</td><td class='num'>76,189</td><td class='num'>6.8%</td><td class='num' style='color:#f85149'>118.9%</td><td class='num'>56</td><td class='num'>18</td><td class='num'>0</td><td class='num'>1,359</td><td class='num csell'>489</td><td class='num crep'>—</td><td class='num' class='csell'>+489</td><td class='num'>120,753</td><td class='num'>-680</td><td class='num'>-416</td><td class='num'>4.0%</td><td class='num'>-2.0%</td><td class='num csell'>+852</td><td class='num cbuy'>-1,289</td><td class='num cbuy'>-436</td><td class='num'>1,586,645<br><small style='color:#888'>33.6%</small></td><td class='num'>3,135,362<br><small style='color:#888'>66.4%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-23</td><td class='num'>95.50</td><td class='num'>117,729</td><td class='num'>75,681</td><td class='num' class='warn'>64.3%</td><td class='num' class='cbuy'>+0.28%</td><td class='num'>+2.494%</td><td class='num'>+0.891%</td><td class='num' class='csell'>-690</td><td class='num' class='cbuy'>+657</td><td class='num' class='csell'>-230</td><td class='num' class='csell'>-263</td><td class='num'>4,051</td><td class='num'>4,902</td><td class='num'>223</td><td class='num'>74,933</td><td class='num'>6.7%</td><td class='num' style='color:#f85149'>107.4%</td><td class='num'>971</td><td class='num'>842</td><td class='num'>0</td><td class='num'>1,321</td><td class='num csell'>678</td><td class='num crep'>-41</td><td class='num' class='csell'>+637</td><td class='num'>120,264</td><td class='num'>+1,066</td><td class='num'>+50</td><td class='num'>4.2%</td><td class='num'>-0.5%</td><td class='num csell'>+263</td><td class='num csell'>+851</td><td class='num csell'>+1,114</td><td class='num'>1,587,081<br><small style='color:#888'>33.6%</small></td><td class='num'>3,134,926<br><small style='color:#888'>66.4%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-20</td><td class='num'>89.20</td><td class='num'>85,345</td><td class='num'>43,995</td><td class='num' class='warn'>51.5%</td><td class='num' class='cbuy'>+0.26%</td><td class='num'>+1.808%</td><td class='num'>+0.876%</td><td class='num' class='cbuy'>+10,569</td><td class='num' class='csell'>-1,931</td><td class='num' class='cbuy'>+1,483</td><td class='num' class='cbuy'>+10,122</td><td class='num'>4,752</td><td class='num'>12,358</td><td class='num'>456</td><td class='num'>76,007</td><td class='num'>6.8%</td><td class='num' style='color:#f85149'>98.5%</td><td class='num'>0</td><td class='num'>787</td><td class='num'>0</td><td class='num'>1,192</td><td class='num csell'>—</td><td class='num crep'>-300</td><td class='num' class='crep'>-300</td><td class='num'>119,627</td><td class='num'>-645</td><td class='num'>-154</td><td class='num'>5.5%</td><td class='num'>-0.5%</td><td class='num cbuy'>-10,122</td><td class='num csell'>+7,606</td><td class='num cbuy'>-2,516</td><td class='num'>1,585,967<br><small style='color:#888'>33.6%</small></td><td class='num'>3,136,040<br><small style='color:#888'>66.4%</small></td><td class='num' title='TDCC週變化:+6,611 日頻估算:+5,571 誤差:-1,040' style='color:#26a69a;font-size:.75rem'>-1,040</td></tr>
+<tr><td>2026-11-19</td><td class='num'>98.00</td><td class='num'>76,770</td><td class='num'>30,183</td><td class='num' class='warn'>39.3%</td><td class='num' class='csell'>-1.31%</td><td class='num'>+1.626%</td><td class='num'>+0.987%</td><td class='num' class='cbuy'>+9,515</td><td class='num' class='csell'>-221</td><td class='num' class='cbuy'>+484</td><td class='num' class='cbuy'>+9,778</td><td class='num'>2,639</td><td class='num'>9,605</td><td class='num'>150</td><td class='num'>84,069</td><td class='num'>7.5%</td><td class='num' style='color:#f85149'>105.8%</td><td class='num'>1,502</td><td class='num'>220</td><td class='num'>0</td><td class='num'>1,979</td><td class='num csell'>2,022</td><td class='num crep'>-648</td><td class='num' class='csell'>+1,373</td><td class='num'>119,927</td><td class='num'>+3,152</td><td class='num'>-77</td><td class='num'>1.9%</td><td class='num'>-0.4%</td><td class='num cbuy'>-9,778</td><td class='num csell'>+6,966</td><td class='num cbuy'>-2,812</td><td class='num'>1,591,820<br><small style='color:#888'>33.7%</small></td><td class='num'>3,130,187<br><small style='color:#888'>66.3%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-18</td><td class='num'>108.00</td><td class='num'>61,717</td><td class='num'>28,125</td><td class='num' class='warn'>45.6%</td><td class='num' class='csell'>-0.69%</td><td class='num'>+1.307%</td><td class='num'>+0.712%</td><td class='num' class='csell'>-2,831</td><td class='num' class='csell'>-1,160</td><td class='num' class='cbuy'>+2,017</td><td class='num' class='csell'>-1,974</td><td class='num'>2,896</td><td class='num'>1,966</td><td class='num'>127</td><td class='num'>91,185</td><td class='num'>8.1%</td><td class='num' style='color:#f85149'>115.3%</td><td class='num'>697</td><td class='num'>0</td><td class='num'>0</td><td class='num'>697</td><td class='num csell'>2,035</td><td class='num crep'>—</td><td class='num' class='csell'>+2,035</td><td class='num'>118,554</td><td class='num'>-295</td><td class='num'>+229</td><td class='num'>-2.8%</td><td class='num'>-1.1%</td><td class='num csell'>+1,974</td><td class='num cbuy'>-930</td><td class='num csell'>+1,044</td><td class='num'>1,590,581<br><small style='color:#888'>33.7%</small></td><td class='num'>3,131,426<br><small style='color:#888'>66.3%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-17</td><td class='num'>110.50</td><td class='num'>65,787</td><td class='num'>28,687</td><td class='num' class='warn'>43.6%</td><td class='num' class='cbuy'>+0.93%</td><td class='num'>+1.394%</td><td class='num'>+0.786%</td><td class='num' class='csell'>-70</td><td class='num' class='csell'>-1,394</td><td class='num' class='cbuy'>+1,775</td><td class='num' class='cbuy'>+311</td><td class='num'>2,587</td><td class='num'>4,642</td><td class='num'>167</td><td class='num'>90,382</td><td class='num'>8.0%</td><td class='num' style='color:#f85149'>116.8%</td><td class='num'>0</td><td class='num'>0</td><td class='num'>0</td><td class='num'>0</td><td class='num csell'>2,125</td><td class='num crep'>0</td><td class='num' class='csell'>+2,124</td><td class='num'>116,519</td><td class='num'>+3,516</td><td class='num'>+5</td><td class='num'>-4.2%</td><td class='num'>-1.9%</td><td class='num cbuy'>-311</td><td class='num csell'>+2,055</td><td class='num csell'>+1,743</td><td class='num'>1,588,512<br><small style='color:#888'>33.6%</small></td><td class='num'>3,133,495<br><small style='color:#888'>66.4%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-16</td><td class='num'>113.00</td><td class='num'>60,600</td><td class='num'>22,410</td><td class='num' class='warn'>37.0%</td><td class='num' class='csell'>-1.52%</td><td class='num'>+1.284%</td><td class='num'>+0.809%</td><td class='num' class='cbuy'>+4,257</td><td class='num' class='csell'>-3,586</td><td class='num' class='csell'>-183</td><td class='num' class='cbuy'>+486</td><td class='num'>2,632</td><td class='num'>6,717</td><td class='num'>76</td><td class='num'>92,604</td><td class='num'>8.2%</td><td class='num' style='color:#f85149'>118.5%</td><td class='num'>0</td><td class='num'>0</td><td class='num'>0</td><td class='num'>0</td><td class='num csell'>1,961</td><td class='num crep'>-6</td><td class='num' class='csell'>+1,955</td><td class='num'>114,394</td><td class='num'>+1,245</td><td class='num'>+342</td><td class='num'>-7.7%</td><td class='num'>-1.1%</td><td class='num cbuy'>-486</td><td class='num csell'>+4,085</td><td class='num csell'>+3,598</td><td class='num'>1,584,242<br><small style='color:#888'>33.6%</small></td><td class='num'>3,137,765<br><small style='color:#888'>66.4%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-13</td><td class='num'>125.00</td><td class='num'>46,966</td><td class='num'>18,001</td><td class='num' class='warn'>38.3%</td><td class='num' class='csell'>-1.52%</td><td class='num'>+0.995%</td><td class='num'>+0.614%</td><td class='num' class='csell'>-1,239</td><td class='num' class='csell'>-447</td><td class='num' class='cbuy'>+389</td><td class='num' class='csell'>-1,297</td><td class='num'>3,247</td><td class='num'>3,947</td><td class='num'>19</td><td class='num'>96,765</td><td class='num'>8.6%</td><td class='num' style='color:#ff9800'>130.1%</td><td class='num'>0</td><td class='num'>0</td><td class='num'>9</td><td class='num'>0</td><td class='num csell'>1,933</td><td class='num crep'>-530</td><td class='num' class='csell'>+1,403</td><td class='num'>112,439</td><td class='num'>-2,706</td><td class='num'>+373</td><td class='num'>-5.2%</td><td class='num'>-2.3%</td><td class='num csell'>+1,297</td><td class='num csell'>+700</td><td class='num csell'>+1,997</td><td class='num'>1,581,872<br><small style='color:#888'>33.5%</small></td><td class='num'>3,140,135<br><small style='color:#888'>66.5%</small></td><td class='num' title='TDCC週變化:+9,916 日頻估算:+17,484 誤差:+7,568' style='color:#ef5350;font-size:.75rem'>+7,568</td></tr>
+<tr><td>2026-11-12</td><td class='num'>127.50</td><td class='num'>77,464</td><td class='num'>47,976</td><td class='num' class='warn'>61.9%</td><td class='num' class='csell'>-0.05%</td><td class='num'>+1.641%</td><td class='num'>+0.625%</td><td class='num' class='csell'>-4,533</td><td class='num' class='csell'>-438</td><td class='num' class='csell'>-1,089</td><td class='num' class='csell'>-6,061</td><td class='num'>3,967</td><td class='num'>4,338</td><td class='num'>13</td><td class='num'>97,484</td><td class='num'>8.7%</td><td class='num' style='color:#ff9800'>131.7%</td><td class='num'>0</td><td class='num'>1,279</td><td class='num'>0</td><td class='num'>9</td><td class='num csell'>1,787</td><td class='num crep'>—</td><td class='num' class='csell'>+1,787</td><td class='num'>111,036</td><td class='num'>+636</td><td class='num'>+256</td><td class='num'>-2.9%</td><td class='num'>-1.6%</td><td class='num csell'>+6,061</td><td class='num csell'>+371</td><td class='num csell'>+6,432</td><td class='num'>1,578,224<br><small style='color:#888'>33.4%</small></td><td class='num'>3,143,783<br><small style='color:#888'>66.6%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-11</td><td class='num'>136.50</td><td class='num'>69,275</td><td class='num'>45,950</td><td class='num' class='warn'>66.3%</td><td class='num' class='cbuy'>+0.49%</td><td class='num'>+1.468%</td><td class='num'>+0.494%</td><td class='num' class='csell'>-5,874</td><td class='num' class='cbuy'>+336</td><td class='num' class='cbuy'>+133</td><td class='num' class='csell'>-5,404</td><td class='num'>2,603</td><td class='num'>1,173</td><td class='num'>12</td><td class='num'>97,868</td><td class='num'>8.7%</td><td class='num' style='color:#ff9800'>139.8%</td><td class='num'>293</td><td class='num'>420</td><td class='num'>65</td><td class='num'>1,288</td><td class='num csell'>1,935</td><td class='num crep'>—</td><td class='num' class='csell'>+1,935</td><td class='num'>109,249</td><td class='num'>-246</td><td class='num'>+372</td><td class='num'>-5.7%</td><td class='num'>-4.9%</td><td class='num csell'>+5,404</td><td class='num cbuy'>-1,430</td><td class='num csell'>+3,974</td><td class='num'>1,575,969<br><small style='color:#888'>33.4%</small></td><td class='num'>3,146,038<br><small style='color:#888'>66.6%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-10</td><td class='num'>135.00</td><td class='num'>86,708</td><td class='num'>54,337</td><td class='num' class='warn'>62.7%</td><td class='num' class='cbuy'>+0.24%</td><td class='num'>+1.837%</td><td class='num'>+0.686%</td><td class='num' class='csell'>-7,967</td><td class='num' class='cbuy'>+383</td><td class='num' class='cbuy'>+379</td><td class='num' class='csell'>-7,205</td><td class='num'>4,368</td><td class='num'>3,984</td><td class='num'>20</td><td class='num'>96,450</td><td class='num'>8.6%</td><td class='num' style='color:#ff9800'>137.7%</td><td class='num'>184</td><td class='num'>285</td><td class='num'>10</td><td class='num'>1,480</td><td class='num csell'>1,824</td><td class='num crep'>-1,206</td><td class='num' class='csell'>+618</td><td class='num'>107,314</td><td class='num'>-1,560</td><td class='num'>+470</td><td class='num'>-6.8%</td><td class='num'>-5.2%</td><td class='num csell'>+7,205</td><td class='num cbuy'>-384</td><td class='num csell'>+6,821</td><td class='num'>1,572,101<br><small style='color:#888'>33.3%</small></td><td class='num'>3,149,906<br><small style='color:#888'>66.7%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-09</td><td class='num'>132.50</td><td class='num'>37,942</td><td class='num'>15,686</td><td class='num' class='warn'>41.3%</td><td class='num' class='cbuy'>+0.89%</td><td class='num'>+0.804%</td><td class='num'>+0.471%</td><td class='num' class='cbuy'>+2,856</td><td class='num' class='csell'>-468</td><td class='num' class='cbuy'>+337</td><td class='num' class='cbuy'>+2,725</td><td class='num'>2,373</td><td class='num'>1,933</td><td class='num'>129</td><td class='num'>96,086</td><td class='num'>8.5%</td><td class='num' style='color:#ff9800'>134.0%</td><td class='num'>482</td><td class='num'>80</td><td class='num'>1</td><td class='num'>1,591</td><td class='num csell'>2,082</td><td class='num crep'>-150</td><td class='num' class='csell'>+1,932</td><td class='num'>106,696</td><td class='num'>+1,981</td><td class='num'>-450</td><td class='num'>-15.6%</td><td class='num'>-6.2%</td><td class='num cbuy'>-2,725</td><td class='num cbuy'>-440</td><td class='num cbuy'>-3,165</td><td class='num'>1,573,896<br><small style='color:#888'>33.3%</small></td><td class='num'>3,148,111<br><small style='color:#888'>66.7%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-06</td><td class='num'>120.50</td><td class='num'>84,221</td><td class='num'>46,122</td><td class='num' class='warn'>54.8%</td><td class='num' class='cbuy'>+1.26%</td><td class='num'>+1.784%</td><td class='num'>+0.807%</td><td class='num' class='cbuy'>+5,872</td><td class='num' class='csell'>-4,620</td><td class='num' class='cbuy'>+2,372</td><td class='num' class='cbuy'>+3,624</td><td class='num'>3,030</td><td class='num'>10,076</td><td class='num'>279</td><td class='num'>95,775</td><td class='num'>8.5%</td><td class='num' style='color:#e3b341'>121.3%</td><td class='num'>60</td><td class='num'>2,227</td><td class='num'>2</td><td class='num'>1,190</td><td class='num csell'>—</td><td class='num crep'>-1,291</td><td class='num' class='crep'>-1,291</td><td class='num'>104,764</td><td class='num'>+913</td><td class='num'>+64</td><td class='num'>-14.6%</td><td class='num'>-5.2%</td><td class='num cbuy'>-3,624</td><td class='num csell'>+7,046</td><td class='num csell'>+3,421</td><td class='num'>1,571,956<br><small style='color:#888'>33.3%</small></td><td class='num'>3,150,051<br><small style='color:#888'>66.7%</small></td><td class='num' title='TDCC週變化:+71,302 日頻估算:+72,007 誤差:+705' style='color:#ef5350;font-size:.75rem'>+705</td></tr>
+<tr class='burst-row'><td>2026-11-05</td><td class='num'>127.50</td><td class='num'>82,273</td><td class='num'>37,207</td><td class='num' class='warn'>45.2%</td><td class='num' class='cbuy'>+0.14%</td><td class='num'>+1.743%</td><td class='num'>+0.955%</td><td class='num' class='csell'>-13,221</td><td class='num' class='csell'>-1,343</td><td class='num' class='cbuy'>+1,888</td><td class='num' class='csell'>-12,676</td><td class='num'>4,353</td><td class='num'>7,088</td><td class='num'>134</td><td class='num'>103,100</td><td class='num'>9.2%</td><td class='num' style='color:#e3b341'>127.4%</td><td class='num'>1,988</td><td class='num'>357</td><td class='num'>0</td><td class='num'>3,359</td><td class='num csell'>13,925</td><td class='num crep'>—</td><td class='num' class='csell'>+13,925</td><td class='num'>106,055</td><td class='num'>-3,616</td><td class='num'>+617</td><td class='num'>-17.1%</td><td class='num'>-5.6%</td><td class='num csell'>+12,676</td><td class='num csell'>+2,735</td><td class='num csell'>+15,411</td><td class='num'>1,556,696<br><small style='color:#888'>33.0%</small></td><td class='num'>3,165,311<br><small style='color:#888'>67.0%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-04</td><td class='num'>141.50</td><td class='num'>98,909</td><td class='num'>60,110</td><td class='num' class='warn'>60.8%</td><td class='num' class='cbuy'>+0.61%</td><td class='num'>+2.095%</td><td class='num'>+0.822%</td><td class='num' class='csell'>-12,939</td><td class='num' class='cbuy'>+90</td><td class='num' class='csell'>-76</td><td class='num' class='csell'>-12,925</td><td class='num'>5,606</td><td class='num'>6,646</td><td class='num'>65</td><td class='num'>105,969</td><td class='num'>9.4%</td><td class='num' style='color:#ff9800'>140.0%</td><td class='num'>38</td><td class='num'>3,144</td><td class='num'>26</td><td class='num'>1,728</td><td class='num csell'>1,448</td><td class='num crep'>-524</td><td class='num' class='csell'>+924</td><td class='num'>92,130</td><td class='num'>+1,365</td><td class='num'>+480</td><td class='num'>-10.8%</td><td class='num'>-2.9%</td><td class='num csell'>+12,925</td><td class='num csell'>+1,040</td><td class='num csell'>+13,965</td><td class='num'>1,542,866<br><small style='color:#888'>32.7%</small></td><td class='num'>3,179,141<br><small style='color:#888'>67.3%</small></td><td class='num'>—</td></tr>
+<tr class='burst-row'><td>2026-11-03</td><td class='num'>146.00</td><td class='num'>90,749</td><td class='num'>34,478</td><td class='num' class='warn'>38.0%</td><td class='num' class='cbuy'>+0.21%</td><td class='num'>+1.922%</td><td class='num'>+1.192%</td><td class='num' class='csell'>-36,740</td><td class='num' class='csell'>-97</td><td class='num' class='csell'>-1,089</td><td class='num' class='csell'>-37,927</td><td class='num'>5,972</td><td class='num'>3,921</td><td class='num'>229</td><td class='num'>107,074</td><td class='num'>9.5%</td><td class='num' style='color:#ff9800'>143.2%</td><td class='num'>2,918</td><td class='num'>1,511</td><td class='num'>1</td><td class='num'>4,860</td><td class='num csell'>11,156</td><td class='num crep'>-3,505</td><td class='num' class='csell'>+7,650</td><td class='num'>91,206</td><td class='num'>-5,148</td><td class='num'>+695</td><td class='num'>-0.8%</td><td class='num'>-2.7%</td><td class='num csell'>+37,927</td><td class='num cbuy'>-2,051</td><td class='num csell'>+35,876</td><td class='num'>1,507,342<br><small style='color:#888'>31.9%</small></td><td class='num'>3,214,665<br><small style='color:#888'>68.1%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-11-02</td><td class='num'>162.00</td><td class='num'>55,310</td><td class='num'>35,054</td><td class='num' class='warn'>63.4%</td><td class='num' class='cbuy'>+0.20%</td><td class='num'>+1.172%</td><td class='num'>+0.429%</td><td class='num' class='csell'>-4,187</td><td class='num' class='cbuy'>+78</td><td class='num' class='cbuy'>+818</td><td class='num' class='csell'>-3,290</td><td class='num'>1,287</td><td class='num'>705</td><td class='num'>12</td><td class='num'>105,252</td><td class='num'>9.4%</td><td class='num' style='color:#ff9800'>157.7%</td><td class='num'>265</td><td class='num'>349</td><td class='num'>0</td><td class='num'>3,454</td><td class='num csell'>1,801</td><td class='num crep'>-5,184</td><td class='num' class='crep'>-3,383</td><td class='num'>83,556</td><td class='num'>-753</td><td class='num'>+372</td><td class='num'>14.9%</td><td class='num'>1.2%</td><td class='num csell'>+3,290</td><td class='num cbuy'>-582</td><td class='num csell'>+2,708</td><td class='num'>1,504,660<br><small style='color:#888'>31.9%</small></td><td class='num'>3,217,347<br><small style='color:#888'>68.1%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-10-30</td><td class='num'>164.50</td><td class='num'>54,423</td><td class='num'>33,610</td><td class='num' class='warn'>61.8%</td><td class='num' class='cbuy'>+0.03%</td><td class='num'>+1.153%</td><td class='num'>+0.441%</td><td class='num' class='csell'>-3,186</td><td class='num' class='cbuy'>+270</td><td class='num' class='csell'>-175</td><td class='num' class='csell'>-3,091</td><td class='num'>1,324</td><td class='num'>2,278</td><td class='num'>1</td><td class='num'>104,682</td><td class='num'>9.3%</td><td class='num' style='color:#26a69a'>160.0%</td><td class='num'>272</td><td class='num'>761</td><td class='num'>0</td><td class='num'>3,538</td><td class='num csell'>2,089</td><td class='num crep'>-10,849</td><td class='num' class='crep'>-8,760</td><td class='num'>86,940</td><td class='num'>+928</td><td class='num'>+275</td><td class='num'>16.4%</td><td class='num'>3.9%</td><td class='num csell'>+3,091</td><td class='num csell'>+954</td><td class='num csell'>+4,045</td><td class='num'>1,500,654<br><small style='color:#888'>31.8%</small></td><td class='num'>3,221,353<br><small style='color:#888'>68.2%</small></td><td class='num' title='TDCC週變化:-53,831 日頻估算:-58,182 誤差:-4,351' style='color:#26a69a;font-size:.75rem'>-4,351</td></tr>
+<tr><td>2026-10-29</td><td class='num'>170.50</td><td class='num'>80,829</td><td class='num'>45,871</td><td class='num' class='warn'>56.8%</td><td class='num' class='cbuy'>+0.11%</td><td class='num'>+1.712%</td><td class='num'>+0.741%</td><td class='num' class='cbuy'>+14,319</td><td class='num' class='cbuy'>+133</td><td class='num' class='csell'>-308</td><td class='num' class='cbuy'>+14,144</td><td class='num'>2,638</td><td class='num'>3,023</td><td class='num'>1</td><td class='num'>105,637</td><td class='num'>9.4%</td><td class='num' style='color:#26a69a'>165.8%</td><td class='num'>255</td><td class='num'>335</td><td class='num'>2</td><td class='num'>4,027</td><td class='num csell'>325</td><td class='num crep'>-3,256</td><td class='num' class='crep'>-2,931</td><td class='num'>95,700</td><td class='num'>+1,009</td><td class='num'>-392</td><td class='num'>20.5%</td><td class='num'>4.3%</td><td class='num cbuy'>-14,144</td><td class='num csell'>+385</td><td class='num cbuy'>-13,759</td><td class='num'>1,513,385<br><small style='color:#888'>32.0%</small></td><td class='num'>3,208,622<br><small style='color:#888'>68.0%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-10-28</td><td class='num'>172.00</td><td class='num'>70,853</td><td class='num'>28,097</td><td class='num' class='warn'>39.7%</td><td class='num' class='cbuy'>+0.22%</td><td class='num'>+1.501%</td><td class='num'>+0.906%</td><td class='num' class='cbuy'>+25,347</td><td class='num' class='cbuy'>+179</td><td class='num' class='cbuy'>+1,208</td><td class='num' class='cbuy'>+26,735</td><td class='num'>1,999</td><td class='num'>3,085</td><td class='num'>3</td><td class='num'>106,023</td><td class='num'>9.4%</td><td class='num' style='color:#26a69a'>167.2%</td><td class='num'>560</td><td class='num'>195</td><td class='num'>0</td><td class='num'>4,109</td><td class='num csell'>76</td><td class='num crep'>-7,000</td><td class='num' class='crep'>-6,924</td><td class='num'>98,631</td><td class='num'>+3,389</td><td class='num'>-677</td><td class='num'>20.3%</td><td class='num'>2.3%</td><td class='num cbuy'>-26,735</td><td class='num csell'>+1,086</td><td class='num cbuy'>-25,649</td><td class='num'>1,537,117<br><small style='color:#888'>32.6%</small></td><td class='num'>3,184,890<br><small style='color:#888'>67.4%</small></td><td class='num'>—</td></tr>
+<tr class='burst-row'><td>2026-10-27</td><td class='num'>163.00</td><td class='num'>67,335</td><td class='num'>26,690</td><td class='num' class='warn'>39.6%</td><td class='num' class='cbuy'>+0.32%</td><td class='num'>+1.426%</td><td class='num'>+0.861%</td><td class='num' class='cbuy'>+22,489</td><td class='num' class='csell'>-302</td><td class='num' class='cbuy'>+1,677</td><td class='num' class='cbuy'>+23,864</td><td class='num'>944</td><td class='num'>3,587</td><td class='num'>26</td><td class='num'>107,112</td><td class='num'>9.5%</td><td class='num' style='color:#ff9800'>158.4%</td><td class='num'>498</td><td class='num'>114</td><td class='num'>0</td><td class='num'>3,744</td><td class='num csell'>6,825</td><td class='num crep'>-2,609</td><td class='num' class='csell'>+4,216</td><td class='num'>105,555</td><td class='num'>+3,828</td><td class='num'>-697</td><td class='num'>7.0%</td><td class='num'>1.0%</td><td class='num cbuy'>-23,864</td><td class='num csell'>+2,643</td><td class='num cbuy'>-21,221</td><td class='num'>1,556,751<br><small style='color:#888'>33.0%</small></td><td class='num'>3,165,256<br><small style='color:#888'>67.0%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-10-22</td><td class='num'>154.50</td><td class='num'>43,722</td><td class='num'>22,348</td><td class='num' class='warn'>51.1%</td><td class='num' class='cbuy'>+0.03%</td><td class='num'>+0.926%</td><td class='num'>+0.453%</td><td class='num' class='csell'>-1,707</td><td class='num' class='csell'>-1,100</td><td class='num' class='cbuy'>+720</td><td class='num' class='csell'>-2,086</td><td class='num'>1,229</td><td class='num'>1,591</td><td class='num'>23</td><td class='num'>109,781</td><td class='num'>9.8%</td><td class='num' style='color:#ff9800'>150.1%</td><td class='num'>276</td><td class='num'>287</td><td class='num'>0</td><td class='num'>3,360</td><td class='num csell'>2,070</td><td class='num crep'>-3,675</td><td class='num' class='crep'>-1,605</td><td class='num'>101,339</td><td class='num'>+206</td><td class='num'>+309</td><td class='num'>3.5%</td><td class='num'>-1.1%</td><td class='num csell'>+2,086</td><td class='num csell'>+362</td><td class='num csell'>+2,448</td><td class='num'>1,554,485<br><small style='color:#888'>32.9%</small></td><td class='num'>3,167,522<br><small style='color:#888'>67.1%</small></td><td class='num' title='TDCC週變化:-8,499 日頻估算:-12,863 誤差:-4,364' style='color:#26a69a;font-size:.75rem'>-4,364</td></tr>
+<tr class='burst-row'><td>2026-10-21</td><td class='num'>159.50</td><td class='num'>49,967</td><td class='num'>20,895</td><td class='num' class='warn'>41.8%</td><td class='num' class='cbuy'>+0.22%</td><td class='num'>+1.059%</td><td class='num'>+0.616%</td><td class='num' class='cbuy'>+11,726</td><td class='num' class='csell'>-2,012</td><td class='num' class='cbuy'>+1,860</td><td class='num' class='cbuy'>+11,574</td><td class='num'>1,286</td><td class='num'>1,998</td><td class='num'>7</td><td class='num'>110,166</td><td class='num'>9.8%</td><td class='num' style='color:#ff9800'>154.8%</td><td class='num'>479</td><td class='num'>657</td><td class='num'>0</td><td class='num'>3,371</td><td class='num csell'>5,839</td><td class='num crep'>-2,221</td><td class='num' class='csell'>+3,618</td><td class='num'>102,944</td><td class='num'>+2,106</td><td class='num'>-605</td><td class='num'>-8.7%</td><td class='num'>-3.6%</td><td class='num cbuy'>-11,574</td><td class='num csell'>+712</td><td class='num cbuy'>-10,862</td><td class='num'>1,561,662<br><small style='color:#888'>33.1%</small></td><td class='num'>3,160,345<br><small style='color:#888'>66.9%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-10-20</td><td class='num'>152.50</td><td class='num'>42,095</td><td class='num'>21,744</td><td class='num' class='warn'>51.7%</td><td class='num' class='cbuy'>+0.32%</td><td class='num'>+0.892%</td><td class='num'>+0.431%</td><td class='num' class='cbuy'>+423</td><td class='num' class='csell'>-523</td><td class='num' class='cbuy'>+566</td><td class='num' class='cbuy'>+466</td><td class='num'>948</td><td class='num'>1,959</td><td class='num'>25</td><td class='num'>110,885</td><td class='num'>9.9%</td><td class='num' style='color:#ff9800'>147.9%</td><td class='num'>858</td><td class='num'>258</td><td class='num'>1</td><td class='num'>3,549</td><td class='num csell'>3,343</td><td class='num crep'>-3,387</td><td class='num' class='crep'>-44</td><td class='num'>99,326</td><td class='num'>+1,339</td><td class='num'>+187</td><td class='num'>-5.3%</td><td class='num'>-0.8%</td><td class='num cbuy'>-466</td><td class='num csell'>+1,011</td><td class='num csell'>+544</td><td class='num'>1,561,302<br><small style='color:#888'>33.1%</small></td><td class='num'>3,160,705<br><small style='color:#888'>66.9%</small></td><td class='num'>—</td></tr>
+<tr class='burst-row'><td>2026-10-19</td><td class='num'>155.50</td><td class='num'>57,769</td><td class='num'>25,630</td><td class='num' class='warn'>44.4%</td><td class='num' class='cbuy'>+0.25%</td><td class='num'>+1.224%</td><td class='num'>+0.681%</td><td class='num' class='csell'>-11,015</td><td class='num' class='csell'>-1,758</td><td class='num' class='cbuy'>+2,399</td><td class='num' class='csell'>-10,374</td><td class='num'>1,874</td><td class='num'>1,197</td><td class='num'>65</td><td class='num'>111,921</td><td class='num'>9.9%</td><td class='num' style='color:#ff9800'>150.7%</td><td class='num'>277</td><td class='num'>1,365</td><td class='num'>1</td><td class='num'>2,950</td><td class='num csell'>9,071</td><td class='num crep'>-1,372</td><td class='num' class='csell'>+7,699</td><td class='num'>99,370</td><td class='num'>+1,345</td><td class='num'>+611</td><td class='num'>-16.7%</td><td class='num'>-1.5%</td><td class='num csell'>+10,374</td><td class='num cbuy'>-677</td><td class='num csell'>+9,697</td><td class='num'>1,554,895<br><small style='color:#888'>32.9%</small></td><td class='num'>3,167,112<br><small style='color:#888'>67.1%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-10-16</td><td class='num'>161.50</td><td class='num'>47,423</td><td class='num'>22,869</td><td class='num' class='warn'>48.2%</td><td class='num' class='cbuy'>+0.28%</td><td class='num'>+1.005%</td><td class='num'>+0.520%</td><td class='num' class='cbuy'>+12,224</td><td class='num' class='cbuy'>+281</td><td class='num' class='cbuy'>+1,030</td><td class='num' class='cbuy'>+13,535</td><td class='num'>1,001</td><td class='num'>2,294</td><td class='num'>10</td><td class='num'>111,309</td><td class='num'>9.9%</td><td class='num' style='color:#ff9800'>156.2%</td><td class='num'>670</td><td class='num'>491</td><td class='num'>0</td><td class='num'>4,039</td><td class='num csell'>2,780</td><td class='num crep'>-3,074</td><td class='num' class='crep'>-294</td><td class='num'>91,671</td><td class='num'>+1,950</td><td class='num'>-610</td><td class='num'>-22.4%</td><td class='num'>-0.6%</td><td class='num cbuy'>-13,535</td><td class='num csell'>+1,293</td><td class='num cbuy'>-12,242</td><td class='num'>1,562,984<br><small style='color:#888'>33.1%</small></td><td class='num'>3,159,023<br><small style='color:#888'>66.9%</small></td><td class='num' title='TDCC週變化:+95,856 日頻估算:+71,899 誤差:-23,957' style='color:#26a69a;font-size:.75rem'>-23,957</td></tr>
+<tr class='burst-row'><td>2026-10-15</td><td class='num'>155.00</td><td class='num'>79,592</td><td class='num'>29,555</td><td class='num' class='warn'>37.1%</td><td class='num' class='cbuy'>+0.24%</td><td class='num'>+1.686%</td><td class='num'>+1.060%</td><td class='num' class='csell'>-18,846</td><td class='num' class='csell'>-184</td><td class='num' class='csell'>-1,616</td><td class='num' class='csell'>-20,646</td><td class='num'>2,607</td><td class='num'>3,781</td><td class='num'>55</td><td class='num'>112,612</td><td class='num'>10.0%</td><td class='num' style='color:#ff9800'>149.8%</td><td class='num'>896</td><td class='num'>457</td><td class='num'>2</td><td class='num'>3,860</td><td class='num csell'>10,679</td><td class='num crep'>-517</td><td class='num' class='csell'>+10,162</td><td class='num'>91,965</td><td class='num'>-2,249</td><td class='num'>+618</td><td class='num'>-21.3%</td><td class='num'>0.3%</td><td class='num csell'>+20,646</td><td class='num csell'>+1,174</td><td class='num csell'>+21,820</td><td class='num'>1,533,893<br><small style='color:#888'>32.5%</small></td><td class='num'>3,188,114<br><small style='color:#888'>67.5%</small></td><td class='num'>—</td></tr>
+<tr class='burst-row'><td>2026-10-14</td><td class='num'>165.00</td><td class='num'>56,696</td><td class='num'>23,303</td><td class='num' class='warn'>41.1%</td><td class='num' class='cbuy'>+0.36%</td><td class='num'>+1.201%</td><td class='num'>+0.707%</td><td class='num' class='cbuy'>+10,827</td><td class='num' class='csell'>-1,168</td><td class='num' class='cbuy'>+608</td><td class='num' class='cbuy'>+10,267</td><td class='num'>978</td><td class='num'>3,432</td><td class='num'>4</td><td class='num'>113,841</td><td class='num'>10.1%</td><td class='num' style='color:#ff9800'>159.1%</td><td class='num'>359</td><td class='num'>610</td><td class='num'>0</td><td class='num'>3,423</td><td class='num csell'>5,828</td><td class='num crep'>-1,253</td><td class='num' class='csell'>+4,575</td><td class='num'>81,803</td><td class='num'>+714</td><td class='num'>-349</td><td class='num'>-14.0%</td><td class='num'>-3.1%</td><td class='num cbuy'>-10,267</td><td class='num csell'>+2,454</td><td class='num cbuy'>-7,813</td><td class='num'>1,544,309<br><small style='color:#888'>32.7%</small></td><td class='num'>3,177,698<br><small style='color:#888'>67.3%</small></td><td class='num'>—</td></tr>
+<tr class='burst-row'><td>2026-10-13</td><td class='num'>161.50</td><td class='num'>124,198</td><td class='num'>33,279</td><td class='num' class='warn'>26.8%</td><td class='num' class='cbuy'>+0.55%</td><td class='num'>+2.631%</td><td class='num'>+1.926%</td><td class='num' class='csell'>-37,021</td><td class='num' class='csell'>-3,289</td><td class='num' class='csell'>-5,042</td><td class='num' class='csell'>-45,353</td><td class='num'>6,658</td><td class='num'>4,342</td><td class='num'>22</td><td class='num'>116,299</td><td class='num'>10.3%</td><td class='num' style='color:#ff9800'>155.7%</td><td class='num'>947</td><td class='num'>606</td><td class='num'>0</td><td class='num'>3,674</td><td class='num csell'>12,500</td><td class='num crep'>-98</td><td class='num' class='csell'>+12,402</td><td class='num'>77,228</td><td class='num'>-8,432</td><td class='num'>+692</td><td class='num'>-16.8%</td><td class='num'>-5.4%</td><td class='num csell'>+45,353</td><td class='num cbuy'>-2,316</td><td class='num csell'>+43,037</td><td class='num'>1,486,932<br><small style='color:#888'>31.5%</small></td><td class='num'>3,235,075<br><small style='color:#888'>68.5%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-10-12</td><td class='num'>174.00</td><td class='num'>46,356</td><td class='num'>20,367</td><td class='num' class='warn'>43.9%</td><td class='num' class='cbuy'>+0.15%</td><td class='num'>+0.982%</td><td class='num'>+0.551%</td><td class='num' class='csell'>-3,333</td><td class='num' class='cbuy'>+380</td><td class='num' class='csell'>-109</td><td class='num' class='csell'>-3,061</td><td class='num'>1,678</td><td class='num'>1,197</td><td class='num'>57</td><td class='num'>114,005</td><td class='num'>10.1%</td><td class='num' style='color:#26a69a'>167.1%</td><td class='num'>60</td><td class='num'>325</td><td class='num'>4</td><td class='num'>3,333</td><td class='num csell'>2,705</td><td class='num crep'>-13,119</td><td class='num' class='crep'>-10,414</td><td class='num'>64,826</td><td class='num'>-1,875</td><td class='num'>+552</td><td class='num'>1.0%</td><td class='num'>-2.9%</td><td class='num csell'>+3,061</td><td class='num cbuy'>-481</td><td class='num csell'>+2,580</td><td class='num'>1,483,491<br><small style='color:#888'>31.4%</small></td><td class='num'>3,238,516<br><small style='color:#888'>68.6%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-10-08</td><td class='num'>177.00</td><td class='num'>70,323</td><td class='num'>35,412</td><td class='num' class='warn'>50.4%</td><td class='num' class='csell'>-0.03%</td><td class='num'>+1.490%</td><td class='num'>+0.740%</td><td class='num' class='csell'>-14,220</td><td class='num' class='csell'>-250</td><td class='num' class='csell'>-119</td><td class='num' class='csell'>-14,590</td><td class='num'>4,110</td><td class='num'>1,793</td><td class='num'>80</td><td class='num'>113,581</td><td class='num'>10.1%</td><td class='num' style='color:#26a69a'>170.0%</td><td class='num'>38</td><td class='num'>171</td><td class='num'>0</td><td class='num'>3,602</td><td class='num csell'>3,785</td><td class='num crep'>-1,849</td><td class='num' class='csell'>+1,936</td><td class='num'>75,241</td><td class='num'>-2,619</td><td class='num'>+571</td><td class='num'>0.4%</td><td class='num'>-5.5%</td><td class='num csell'>+14,590</td><td class='num cbuy'>-2,317</td><td class='num csell'>+12,273</td><td class='num'>1,467,128<br><small style='color:#888'>31.1%</small></td><td class='num'>3,254,879<br><small style='color:#888'>68.9%</small></td><td class='num' title='TDCC週變化:-16,999 日頻估算:-17,774 誤差:-775' style='color:#26a69a;font-size:.75rem'>-775</td></tr>
+<tr><td>2026-10-07</td><td class='num'>179.50</td><td class='num'>63,385</td><td class='num'>27,776</td><td class='num' class='warn'>43.8%</td><td class='num' class='cbuy'>+0.23%</td><td class='num'>+1.343%</td><td class='num'>+0.754%</td><td class='num' class='cbuy'>+20,530</td><td class='num' class='csell'>-7,282</td><td class='num' class='csell'>-329</td><td class='num' class='cbuy'>+12,918</td><td class='num'>1,430</td><td class='num'>3,477</td><td class='num'>156</td><td class='num'>111,344</td><td class='num'>9.9%</td><td class='num' style='color:#26a69a'>172.5%</td><td class='num'>142</td><td class='num'>189</td><td class='num'>2</td><td class='num'>3,735</td><td class='num csell'>934</td><td class='num crep'>-12,439</td><td class='num' class='crep'>-11,505</td><td class='num'>73,305</td><td class='num'>+1,097</td><td class='num'>-467</td><td class='num'>9.2%</td><td class='num'>0.5%</td><td class='num cbuy'>-12,918</td><td class='num csell'>+2,047</td><td class='num cbuy'>-10,871</td><td class='num'>1,477,526<br><small style='color:#888'>31.3%</small></td><td class='num'>3,244,481<br><small style='color:#888'>68.7%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-10-06</td><td class='num'>177.50</td><td class='num'>58,644</td><td class='num'>24,504</td><td class='num' class='warn'>41.8%</td><td class='num' class='cbuy'>+0.01%</td><td class='num'>+1.242%</td><td class='num'>+0.723%</td><td class='num' class='cbuy'>+7,287</td><td class='num' class='csell'>-10,812</td><td class='num' class='csell'>-304</td><td class='num' class='csell'>-3,829</td><td class='num'>2,281</td><td class='num'>2,727</td><td class='num'>6</td><td class='num'>113,547</td><td class='num'>10.1%</td><td class='num' style='color:#26a69a'>170.7%</td><td class='num'>64</td><td class='num'>102</td><td class='num'>0</td><td class='num'>3,784</td><td class='num csell'>974</td><td class='num crep'>-10,314</td><td class='num' class='crep'>-9,340</td><td class='num'>84,810</td><td class='num'>-889</td><td class='num'>+162</td><td class='num'>14.9%</td><td class='num'>2.2%</td><td class='num csell'>+3,829</td><td class='num csell'>+446</td><td class='num csell'>+4,275</td><td class='num'>1,473,437<br><small style='color:#888'>31.2%</small></td><td class='num'>3,248,570<br><small style='color:#888'>68.8%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-10-05</td><td class='num'>181.00</td><td class='num'>90,977</td><td class='num'>45,776</td><td class='num' class='warn'>50.3%</td><td class='num' class='cbuy'>+0.14%</td><td class='num'>+1.927%</td><td class='num'>+0.958%</td><td class='num' class='cbuy'>+22,053</td><td class='num' class='csell'>-1,848</td><td class='num' class='cbuy'>+661</td><td class='num' class='cbuy'>+20,866</td><td class='num'>2,305</td><td class='num'>7,639</td><td class='num'>9</td><td class='num'>113,999</td><td class='num'>10.1%</td><td class='num' style='color:#26a69a'>174.1%</td><td class='num'>269</td><td class='num'>146</td><td class='num'>0</td><td class='num'>3,822</td><td class='num csell'>1,705</td><td class='num crep'>-7,378</td><td class='num' class='crep'>-5,673</td><td class='num'>94,150</td><td class='num'>+4,537</td><td class='num'>-544</td><td class='num'>17.1%</td><td class='num'>2.3%</td><td class='num cbuy'>-20,866</td><td class='num csell'>+5,334</td><td class='num cbuy'>-15,532</td><td class='num'>1,488,292<br><small style='color:#888'>31.5%</small></td><td class='num'>3,233,715<br><small style='color:#888'>68.5%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-10-02</td><td class='num'>179.00</td><td class='num'>74,492</td><td class='num'>35,640</td><td class='num' class='warn'>47.8%</td><td class='num' class='cbuy'>+0.14%</td><td class='num'>+1.578%</td><td class='num'>+0.823%</td><td class='num' class='cbuy'>+2,135</td><td class='num' class='csell'>-10,224</td><td class='num' class='cbuy'>+931</td><td class='num' class='csell'>-7,157</td><td class='num'>5,549</td><td class='num'>2,747</td><td class='num'>324</td><td class='num'>119,342</td><td class='num'>10.6%</td><td class='num' style='color:#26a69a'>172.4%</td><td class='num'>50</td><td class='num'>210</td><td class='num'>0</td><td class='num'>3,699</td><td class='num csell'>1,887</td><td class='num crep'>-5,567</td><td class='num' class='crep'>-3,680</td><td class='num'>99,823</td><td class='num'>-200</td><td class='num'>+395</td><td class='num'>8.6%</td><td class='num'>-0.2%</td><td class='num csell'>+7,157</td><td class='num cbuy'>-2,802</td><td class='num csell'>+4,355</td><td class='num'>1,484,127<br><small style='color:#888'>31.4%</small></td><td class='num'>3,237,880<br><small style='color:#888'>68.6%</small></td><td class='num' title='TDCC週變化:-38,248 日頻估算:-40,727 誤差:-2,479' style='color:#26a69a;font-size:.75rem'>-2,479</td></tr>
+<tr><td>2026-10-01</td><td class='num'>180.00</td><td class='num'>64,786</td><td class='num'>25,638</td><td class='num' class='warn'>39.6%</td><td class='num' class='cbuy'>+0.18%</td><td class='num'>+1.372%</td><td class='num'>+0.829%</td><td class='num' class='cbuy'>+16,788</td><td class='num' class='csell'>-463</td><td class='num' class='cbuy'>+1,204</td><td class='num' class='cbuy'>+17,530</td><td class='num'>2,439</td><td class='num'>4,924</td><td class='num'>16</td><td class='num'>116,864</td><td class='num'>10.4%</td><td class='num' style='color:#26a69a'>173.6%</td><td class='num'>191</td><td class='num'>260</td><td class='num'>1</td><td class='num'>3,859</td><td class='num csell'>1,013</td><td class='num crep'>-4,003</td><td class='num' class='crep'>-2,990</td><td class='num'>103,503</td><td class='num'>-359</td><td class='num'>-555</td><td class='num'>13.8%</td><td class='num'>1.0%</td><td class='num cbuy'>-17,530</td><td class='num csell'>+2,485</td><td class='num cbuy'>-15,045</td><td class='num'>1,498,256<br><small style='color:#888'>31.7%</small></td><td class='num'>3,223,751<br><small style='color:#888'>68.3%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-09-30</td><td class='num'>179.50</td><td class='num'>85,028</td><td class='num'>28,497</td><td class='num' class='warn'>33.5%</td><td class='num' class='cbuy'>+0.18%</td><td class='num'>+1.801%</td><td class='num'>+1.198%</td><td class='num' class='cbuy'>+37,711</td><td class='num' class='csell'>-37</td><td class='num' class='cbuy'>+1,349</td><td class='num' class='cbuy'>+39,024</td><td class='num'>2,975</td><td class='num'>5,972</td><td class='num'>19</td><td class='num'>119,365</td><td class='num'>10.6%</td><td class='num' style='color:#26a69a'>173.3%</td><td class='num'>346</td><td class='num'>262</td><td class='num'>1</td><td class='num'>3,929</td><td class='num csell'>1,782</td><td class='num crep'>-2,436</td><td class='num' class='crep'>-654</td><td class='num'>106,493</td><td class='num'>+724</td><td class='num'>-716</td><td class='num'>5.6%</td><td class='num'>-2.6%</td><td class='num cbuy'>-39,024</td><td class='num csell'>+2,997</td><td class='num cbuy'>-36,027</td><td class='num'>1,532,090<br><small style='color:#888'>32.4%</small></td><td class='num'>3,189,917<br><small style='color:#888'>67.6%</small></td><td class='num'>—</td></tr>
+<tr><td>2026-09-29</td><td class='num'>174.00</td><td class='num'>45,791</td><td class='num'>22,983</td><td class='num' class='warn'>50.2%</td><td class='num' class='cbuy'>+0.14%</td><td class='num'>+0.970%</td><td class='num'>+0.483%</td><td class='num' class='cbuy'>+7,390</td><td class='num' class='csell'>-2,002</td><td class='num' class='cbuy'>+667</td><td class='num' class='cbuy'>+6,055</td><td class='num'>1,091</td><td class='num'>1,640</td><td class='num'>70</td><td class='num'>122,381</td><td class='num'>10.9%</td><td class='num' style='color:#26a69a'>168.1%</td><td class='num'>506</td><td class='num'>157</td><td class='num'>0</td><td class='num'>3,846</td><td class='num csell'>2,264</td><td class='num crep'>-3,708</td><td class='num' class='crep'>-1,444</td><td class='num'>107,148</td><td class='num'>-729</td><td class='num'>-314</td><td class='num'>-10.4%</td><td class='num'>-3.6%</td><td class='num cbuy'>-6,055</td><td class='num csell'>+549</td><td class='num cbuy'>-5,506</td><td class='num'>1,537,262<br><small style='color:#888'>32.6%</small></td><td class='num'>3,184,745<br><small style='color:#888'>67.4%</small></td><td class='num'>—</td></tr>
+<tr class='burst-row'><td>2026-09-24</td><td class='num'>171.50</td><td class='num'>51,226</td><td class='num'>20,887</td><td class='num' class='warn'>40.8%</td><td class='num' class='cbuy'>+0.00%</td><td class='num'>+1.085%</td><td class='num'>+0.643%</td><td class='num' class='csell'>-17,824</td><td class='num' class='csell'>-162</td><td class='num' class='csell'>-8</td><td class='num' class='csell'>-17,995</td><td class='num'>3,082</td><td class='num'>939</td><td class='num'>462</td><td class='num'>123,000</td><td class='num'>10.9%</td><td class='num' style='color:#26a69a'>165.7%</td><td class='num'>173</td><td class='num'>410</td><td class='num'>0</td><td class='num'>3,497</td><td class='num csell'>10,970</td><td class='num crep'>-5,258</td><td class='num' class='csell'>+5,712</td><td class='num'>108,592</td><td class='num'>-3,259</td><td class='num'>+648</td><td class='num'>-1.4%</td><td class='num'>-4.8%</td><td class='num csell'>+17,995</td><td class='num cbuy'>-2,143</td><td class='num csell'>+15,852</td><td class='num'>1,522,375<br><small style='color:#888'>32.2%</small></td><td class='num'>3,199,632<br><small style='color:#888'>67.8%</small></td><td class='num' title='TDCC週變化:-10,388 日頻估算:-6,550 誤差:+3,838' style='color:#ef5350;font-size:.75rem'>+3,838</td></tr>
+<tr><td>2026-09-23</td><td class='num'>172.50</td><td class='num'>70,594</td><td class='num'>38,793</td><td class='num' class='warn'>55.0%</td><td class='num' class='cbuy'>+0.00%</td><td class='num'>+1.495%</td><td class='num'>+0.674%</td><td class='num' class='cbuy'>+10,124</td><td class='num' class='csell'>-3,272</td><td class='num' class='cbuy'>+94</td><td class='num' class='cbuy'>+6,946</td><td class='num'>2,326</td><td class='num'>2,722</td><td class='num'>25</td><td class='num'>121,319</td><td class='num'>10.8%</td><td class='num' style='color:#26a69a'>166.7%</td><td class='num'>165</td><td class='num'>219</td><td class='num'>3</td><td class='num'>3,734</td><td class='num csell'>4,135</td><td class='num crep'>-4,681</td><td class='num' class='crep'>-546</td><td class='num'>102,880</td><td class='num'>+1,176</td><td class='num'>-296</td><td class='num'>0.3%</td><td class='num'>-2.8%</td><td class='num cbuy'>-6,946</td><td class='num csell'>+396</td><td class='num cbuy'>-6,550</td><td class='num'>1,532,763<br><small style='color:#888'>32.5%</small></td><td class='num'>3,189,244<br><small style='color:#888'>67.5%</small></td><td class='num'>—</td></tr>
+</tbody>
+</table>
+</div>
+
+<script>
+const D={"stock": "2344", "name": "華邦電", "last_date": "2026-11-27", "last_close": 104.0, "dates": ["2026-09-23", "2026-09-24", "2026-09-29", "2026-09-30", "2026-10-01", "2026-10-02", "2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08", "2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-10-19", "2026-10-20", "2026-10-21", "2026-10-22", "2026-10-27", "2026-10-28", "2026-10-29", "2026-10-30", "2026-11-02", "2026-11-03", "2026-11-04", "2026-11-05", "2026-11-06", "2026-11-09", "2026-11-10", "2026-11-11", "2026-11-12", "2026-11-13", "2026-11-16", "2026-11-17", "2026-11-18", "2026-11-19", "2026-11-20", "2026-11-23", "2026-11-24", "2026-11-25", "2026-11-26", "2026-11-27"], "open": [175.0, 169.0, 167.5, 176.0, 178.0, 182.5, 177.5, 181.5, 178.5, 181.0, 173.5, 168.5, 162.0, 157.0, 157.5, 153.0, 153.0, 157.5, 160.0, 159.0, 168.0, 174.5, 162.0, 160.5, 157.5, 147.5, 133.5, 115.0, 125.0, 138.0, 130.5, 137.0, 133.0, 123.5, 108.5, 114.0, 107.5, 90.3, 90.0, 105.0, 98.5, 98.4, 103.0], "high": [177.0, 171.5, 174.0, 179.5, 180.5, 184.0, 181.0, 183.0, 181.5, 182.0, 177.0, 168.5, 167.5, 159.0, 165.0, 156.0, 157.5, 161.5, 161.0, 164.0, 172.0, 178.5, 167.0, 164.5, 158.0, 148.0, 136.0, 123.5, 132.5, 142.0, 136.5, 141.0, 134.0, 123.5, 114.0, 115.0, 108.0, 93.3, 98.0, 105.0, 101.0, 103.5, 106.0], "low": [172.0, 166.5, 166.0, 175.0, 175.5, 177.5, 174.0, 177.5, 175.0, 177.0, 172.0, 159.5, 160.0, 153.0, 156.0, 151.0, 151.0, 156.0, 154.0, 157.5, 165.0, 167.0, 159.0, 157.0, 146.0, 132.5, 127.5, 115.0, 124.0, 132.0, 127.0, 127.0, 125.0, 112.5, 104.0, 102.5, 97.3, 88.2, 88.3, 105.0, 94.5, 97.4, 100.5], "close": [172.5, 171.5, 174.0, 179.5, 180.0, 179.0, 181.0, 177.5, 179.5, 177.0, 174.0, 161.5, 165.0, 155.0, 161.5, 155.5, 152.5, 159.5, 154.5, 163.0, 172.0, 170.5, 164.5, 162.0, 146.0, 141.5, 127.5, 120.5, 132.5, 135.0, 136.5, 127.5, 125.0, 113.0, 110.5, 108.0, 98.0, 89.2, 95.5, 105.0, 94.5, 103.5, 104.0], "vol": [70594.0, 51226.0, 45791.0, 85028.0, 64786.0, 74492.0, 90977.0, 58644.0, 63385.0, 70323.0, 46356.0, 124198.0, 56696.0, 79592.0, 47423.0, 57769.0, 42095.0, 49967.0, 43722.0, 67335.0, 70853.0, 80829.0, 54423.0, 55310.0, 90749.0, 98909.0, 82273.0, 84221.0, 37942.0, 86708.0, 69275.0, 77464.0, 46966.0, 60600.0, 65787.0, 61717.0, 76770.0, 85345.0, 117729.0, 4672.0, 75173.0, 55474.0, 58011.0], "vol_colors": ["#26a69a", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#ef5350", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#ef5350", "#26a69a", "#ef5350", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#ef5350", "#26a69a", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#ef5350", "#26a69a", "#ef5350", "#ef5350"], "dt_vol": [38793.0, 20887.0, 22983.0, 28497.0, 25638.0, 35640.0, 45776.0, 24504.0, 27776.0, 35412.0, 20367.0, 33279.0, 23303.0, 29555.0, 22869.0, 25630.0, 21744.0, 20895.0, 22348.0, 26690.0, 28097.0, 45871.0, 33610.0, 35054.0, 34478.0, 60110.0, 37207.0, 46122.0, 15686.0, 54337.0, 45950.0, 47976.0, 18001.0, 22410.0, 28687.0, 28125.0, 30183.0, 43995.0, 75681.0, 19.0, 45088.0, 29136.0, 35785.0], "dt_profit_rate": [0.0019, 0.0036, 0.1413, 0.1782, 0.1763, 0.1413, 0.1363, 0.0111, 0.2328, -0.033, 0.146, 0.5505, 0.3583, 0.2437, 0.2765, 0.249, 0.3174, 0.2236, 0.0321, 0.3186, 0.2228, 0.1109, 0.0317, 0.2007, 0.2085, 0.6102, 0.1377, 1.2595, 0.8854, 0.2353, 0.4944, -0.0509, -1.5165, -1.5171, 0.9322, -0.6918, -1.3063, 0.2621, 0.2776, 0.0, -0.0877, 0.6796, 0.4059], "ma5": [173.4, 173.7, 172.6, 173.7, 175.5, 176.8, 178.7, 179.4, 179.4, 178.8, 177.8, 173.9, 171.4, 166.5, 163.4, 159.7, 157.9, 156.8, 156.7, 157.0, 160.3, 163.9, 164.9, 166.4, 163.0, 156.9, 148.3, 139.5, 133.6, 131.4, 130.4, 130.4, 131.3, 127.4, 122.5, 116.8, 110.9, 103.74, 100.24, 99.14, 96.44, 97.54, 100.5], "ma10": [170.65, 169.85, 170.1, 172.05, 174.1, 175.1, 176.2, 176.0, 176.55, 177.15, 177.3, 176.3, 175.4, 172.95, 171.1, 168.75, 165.9, 164.1, 161.6, 160.2, 160.0, 160.9, 160.85, 161.55, 160.0, 158.6, 156.1, 152.2, 150.0, 147.2, 143.65, 139.35, 135.4, 130.5, 126.95, 123.6, 120.65, 117.52, 113.82, 110.82, 106.62, 104.22, 102.12], "ma20": [175.28, 174.55, 174.18, 174.03, 174.22, 174.22, 174.82, 175.0, 174.97, 174.43, 173.97, 173.07, 172.75, 172.5, 172.6, 171.93, 171.05, 170.05, 169.07, 168.68, 168.65, 168.6, 168.12, 167.25, 165.55, 163.68, 161.0, 158.15, 155.8, 153.7, 151.82, 150.12, 148.12, 146.03, 143.47, 141.1, 138.38, 134.86, 131.91, 129.01, 125.13, 121.78, 118.76], "ma60": [168.97, 168.66, 168.56, 168.53, 168.54, 168.67, 168.93, 169.0, 169.26, 169.52, 169.46, 169.34, 169.55, 169.67, 169.81, 169.61, 169.51, 169.64, 169.6, 169.96, 170.7, 171.6, 172.22, 172.53, 172.35, 171.89, 171.17, 170.45, 169.67, 168.95, 168.28, 167.45, 166.47, 165.33, 164.23, 163.23, 161.93, 160.4, 159.04, 157.8, 156.35, 154.98, 153.69], "k": [51.65, 54.13, 59.57, 71.09, 79.58, 77.12, 79.19, 74.09, 74.39, 69.97, 61.46, 43.69, 36.61, 26.56, 27.15, 22.79, 16.8, 20.34, 18.05, 34.89, 56.59, 61.37, 57.27, 51.52, 34.34, 29.42, 19.61, 15.96, 19.83, 23.72, 29.59, 28.15, 26.52, 18.15, 17.8, 16.51, 11.53, 8.3, 10.14, 17.37, 16.16, 25.22, 36.47], "d": [43.64, 47.14, 51.28, 57.88, 65.12, 69.12, 72.48, 73.02, 73.48, 72.31, 68.69, 60.36, 52.44, 43.81, 38.26, 33.1, 27.67, 25.23, 22.83, 26.85, 36.77, 44.97, 49.07, 49.88, 44.7, 39.61, 32.94, 27.28, 24.8, 24.44, 26.16, 26.82, 26.72, 23.86, 21.84, 20.06, 17.22, 14.25, 12.88, 14.38, 14.97, 18.39, 24.42], "dif": [-0.651, -0.711, -0.55, 0.021, 0.508, 0.804, 1.187, 1.194, 1.345, 1.249, 0.92, -0.346, -1.054, -2.394, -2.899, -3.74, -4.595, -4.655, -5.047, -4.619, -3.513, -2.726, -2.557, -2.595, -3.872, -5.187, -7.274, -9.386, -9.976, -10.125, -10.007, -10.518, -10.998, -12.206, -13.213, -14.051, -15.345, -16.886, -17.398, -16.843, -17.054, -16.307, -15.496], "dea": [-0.189, -0.293, -0.344, -0.271, -0.115, 0.069, 0.293, 0.473, 0.647, 0.767, 0.798, 0.569, 0.244, -0.284, -0.807, -1.394, -2.034, -2.558, -3.056, -3.369, -3.398, -3.264, -3.123, -3.017, -3.188, -3.588, -4.325, -5.337, -6.265, -7.037, -7.631, -8.208, -8.766, -9.454, -10.206, -10.975, -11.849, -12.856, -13.764, -14.38, -14.915, -15.193, -15.254], "mh": [-0.924, -0.836, -0.412, 0.584, 1.246, 1.47, 1.788, 1.442, 1.396, 0.964, 0.244, -1.83, -2.596, -4.22, -4.184, -4.692, -5.122, -4.194, -3.982, -2.5, -0.23, 1.076, 1.132, 0.844, -1.368, -3.198, -5.898, -8.098, -7.422, -6.176, -4.752, -4.62, -4.464, -5.504, -6.014, -6.152, -6.992, -8.06, -7.268, -4.926, -4.278, -2.228, -0.484], "mh_colors": ["#26a69a", "#80cbc4", "#80cbc4", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef9a9a", "#ef9a9a", "#ef9a9a", "#ef9a9a", "#26a69a", "#26a69a", "#26a69a", "#80cbc4", "#26a69a", "#26a69a", "#80cbc4", "#80cbc4", "#80cbc4", "#80cbc4", "#ef5350", "#ef5350", "#ef9a9a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#80cbc4", "#80cbc4", "#80cbc4", "#80cbc4", "#80cbc4", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#80cbc4", "#80cbc4", "#80cbc4", "#80cbc4", "#80cbc4"], "foreign": [10124.2, -17824.4, 7390.7, 37711.5, 16788.9, 2135.6, 22053.2, 7287.3, 20530.2, -14220.7, -3333.7, -37021.5, 10827.6, -18846.1, 12224.1, -11015.9, 423.2, 11726.2, -1707.8, 22489.0, 25347.8, 14319.3, -3186.3, -4187.3, -36740.1, -12939.1, -13221.2, 5872.9, 2856.1, -7967.4, -5874.0, -4533.5, -1239.4, 4257.1, -70.3, -2831.3, 9515.4, 10569.5, -690.0, -1031.8, -7136.2, 10796.5, 3937.5], "trust": [-3272.0, -162.0, -2002.0, -37.0, -463.0, -10224.1, -1848.1, -10812.0, -7282.0, -250.1, 380.8, -3289.1, -1168.6, -184.0, 281.8, -1758.2, -523.4, -2012.1, -1100.0, -302.7, 179.3, 133.5, 270.6, 78.7, -97.1, 90.0, -1343.6, -4620.4, -468.0, 383.0, 336.0, -438.5, -447.3, -3586.9, -1394.2, -1160.3, -221.8, -1931.2, 657.4, -26.6, 352.6, 22.0, 3015.2], "dealer": [94.0, -8.6, 667.2, 1349.8, 1204.3, 931.5, 661.4, -304.5, -329.4, -119.6, -109.1, -5042.7, 608.3, -1616.5, 1030.0, 2399.2, 566.8, 1860.2, 720.9, 1677.8, 1208.7, -308.2, -175.8, 818.3, -1089.8, -76.8, 1888.6, 2372.4, 337.7, 379.1, 133.1, -1089.5, 389.7, -183.4, 1775.8, 2017.5, 484.4, 1483.7, -230.4, 205.4, -1195.7, 1013.7, -165.2], "inst_total": [6946.200000000001, -17995.0, 6055.9, 39024.3, 17530.2, -7157.0, 20866.500000000004, -3829.2, 12918.800000000001, -14590.400000000001, -3061.9999999999995, -45353.299999999996, 10267.3, -20646.6, 13535.9, -10374.900000000001, 466.59999999999997, 11574.300000000001, -2086.9, 23864.1, 26735.8, 14144.599999999999, -3091.5000000000005, -3290.3, -37927.0, -12925.9, -12676.2, 3624.9, 2725.7999999999997, -7205.299999999999, -5404.9, -6061.5, -1297.0, 486.8000000000003, 311.29999999999995, -1974.1000000000004, 9778.0, 10122.0, -263.0, -852.9999999999999, -7979.299999999999, 11832.2, 6787.5], "foreign_colors": ["#ef5350", "#26a69a", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#ef5350", "#26a69a", "#ef5350", "#ef5350", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#26a69a", "#ef5350", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#ef5350"], "trust_colors": ["#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#26a69a", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#ef5350", "#ef5350"], "dealer_colors": ["#ef5350", "#26a69a", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#26a69a", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#26a69a"], "fbs_f": [19.0, 18.58, 18.78, 19.48, 19.84, 19.91, 20.35, 20.36, 20.79, 20.46, 20.38, 19.58, 19.83, 19.45, 19.67, 19.46, 19.47, 19.73, 19.64, 20.17, 20.73, 21.04, 20.96, 20.82, 20.08, 19.75, 19.44, 19.56, 19.62, 19.41, 19.25, 19.15, 19.04, 19.11, 19.12, 19.07, 19.27, 18.59, 18.58, 18.56, 18.41, 18.64, 18.72], "fbs_t": [7.465, 7.461, 7.419, 7.418, 7.408, 7.192, 7.153, 6.924, 6.769, 6.764, 6.772, 6.702, 6.678, 6.674, 6.68, 6.642, 6.887, 6.844, 6.821, 6.815, 6.818, 6.821, 6.827, 6.829, 6.827, 6.829, 6.8, 6.702, 6.692, 6.7, 6.708, 6.698, 6.689, 6.613, 6.583, 6.559, 6.554, 6.513, 6.527, 6.526, 6.534, 6.534, 6.598], "fbs_d": [0.747, 0.747, 0.761, 0.79, 0.815, 0.835, 0.849, 0.842, 0.835, 0.833, 0.831, 0.724, 0.737, 0.702, 0.724, 0.775, 0.787, 0.827, 0.842, 0.877, 0.903, 0.896, 0.893, 0.91, 0.887, 0.885, 0.925, 0.976, 0.983, 0.991, 0.994, 0.97, 0.979, 0.975, 1.012, 1.055, 1.065, 1.097, 1.092, 1.096, 1.071, 1.093, 1.089], "fbs_i": [27.61, 27.19, 27.36, 28.09, 28.47, 28.33, 28.74, 28.51, 28.77, 28.43, 28.36, 27.37, 27.61, 27.19, 27.44, 27.24, 27.52, 27.78, 27.68, 28.24, 28.83, 29.14, 29.06, 28.94, 28.17, 27.84, 27.54, 27.61, 27.67, 27.48, 27.33, 27.19, 27.08, 27.07, 27.09, 27.06, 27.26, 26.57, 26.57, 26.56, 26.39, 26.64, 26.78], "fbs_ibal": [1242715.0, 1223895.0, 1231260.0, 1264496.0, 1281336.0, 1275089.0, 1293575.0, 1282941.0, 1294737.0, 1279416.0, 1276282.0, 1231972.0, 1242533.0, 1223504.0, 1234931.0, 1226080.0, 1238516.0, 1250029.0, 1245915.0, 1271119.0, 1297474.0, 1311421.0, 1307639.0, 1302615.0, 1268101.0, 1253037.0, 1239881.0, 1242880.0, 1245440.0, 1236544.0, 1230024.0, 1223999.0, 1219089.0, 1218145.0, 1219085.0, 1217629.0, 1226993.0, 1237123.0, 1236867.0, 1236410.0, 1228310.0, 1240384.0, 1246902.0], "yh_m": [67.54, 67.76, 67.76, 67.76, 67.76, 68.57, 68.57, 68.57, 68.57, 68.93, 68.93, 68.93, 68.93, 68.93, 66.9, 66.9, 66.9, 66.9, 67.08, 67.08, 67.08, 67.08, 68.22, 68.22, 68.22, 68.22, 68.22, 66.71, 66.71, 66.71, 66.71, 66.71, 66.5, 66.5, 66.5, 66.5, 66.5, 66.36, 66.36, 66.36, 66.36, 66.36, 66.36], "yh_f": [19.0, 18.58, 18.78, 19.48, 19.84, 19.91, 20.35, 20.36, 20.79, 20.46, 20.38, 19.58, 19.83, 19.45, 19.67, 19.46, 19.47, 19.73, 19.64, 20.17, 20.73, 21.04, 20.96, 20.82, 20.08, 19.75, 19.44, 19.56, 19.62, 19.41, 19.25, 19.15, 19.04, 19.11, 19.12, 19.07, 19.27, 18.59, 18.58, 18.56, 18.41, 18.64, 18.72], "fin_buy": [2326, 3082, 1091, 2975, 2439, 5549, 2305, 2281, 1430, 4110, 1678, 6658, 978, 2607, 1001, 1874, 948, 1286, 1229, 944, 1999, 2638, 1324, 1287, 5972, 5606, 4353, 3030, 2373, 4368, 2603, 3967, 3247, 2632, 2587, 2896, 2639, 4752, 4051, 1736, 4309, 1744, 1339], "fin_sell": [2722, 939, 1640, 5972, 4924, 2747, 7639, 2727, 3477, 1793, 1197, 4342, 3432, 3781, 2294, 1197, 1959, 1998, 1591, 3587, 3085, 3023, 2278, 705, 3921, 6646, 7088, 10076, 1933, 3984, 1173, 4338, 3947, 6717, 4642, 1966, 9605, 12358, 4902, 447, 4564, 2850, 1798], "fin_repay": [25, 462, 70, 19, 16, 324, 9, 6, 156, 80, 57, 22, 4, 55, 10, 65, 25, 7, 23, 26, 3, 1, 1, 12, 229, 65, 134, 279, 129, 20, 12, 13, 19, 76, 167, 127, 150, 456, 223, 33, 54, 31, 11], "fin_diff": [0, 1681, -619, -3016, -2501, 2478, -5343, -452, -2203, 2237, 424, 2294, -2458, -1229, -1303, 612, -1036, -719, -385, -2669, -1089, -386, -955, 570, 1822, -1105, -2869, -7325, 311, 364, 1418, -384, -719, -4161, -2222, 803, -7116, -8062, -1074, 1256, -312, -1137, -470], "fin_colors": ["#26a69a", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#ef5350", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#ef5350", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#26a69a", "#26a69a"], "fin_bal": [121319, 123000, 122381, 119365, 116864, 119342, 113999, 113547, 111344, 113581, 114005, 116299, 113841, 112612, 111309, 111921, 110885, 110166, 109781, 107112, 106023, 105637, 104682, 105252, 107074, 105969, 103100, 95775, 96086, 96450, 97868, 97484, 96765, 92604, 90382, 91185, 84069, 76007, 74933, 76189, 75877, 74740, 74270], "fin_rate": [10.8, 10.9, 10.9, 10.6, 10.4, 10.6, 10.1, 10.1, 9.9, 10.1, 10.1, 10.3, 10.1, 10.0, 9.9, 9.9, 9.9, 9.8, 9.8, 9.5, 9.4, 9.4, 9.3, 9.4, 9.5, 9.4, 9.2, 8.5, 8.5, 8.6, 8.7, 8.7, 8.6, 8.2, 8.0, 8.1, 7.5, 6.8, 6.7, 6.8, 6.7, 6.6, 6.6], "fin_cost": [172.5, 172.48, 172.49, 172.66, 172.8, 173.08, 173.23, 173.32, 173.39, 173.52, 173.53, 172.87, 172.8, 172.4, 172.31, 172.03, 171.86, 171.72, 171.53, 171.46, 171.47, 171.44, 171.36, 171.25, 169.89, 168.48, 166.86, 165.54, 164.74, 163.44, 162.74, 161.36, 160.19, 158.94, 157.63, 156.09, 154.45, 150.96, 148.15, 147.18, 144.36, 143.44, 142.75], "fin_maint": [166.7, 165.7, 168.1, 173.3, 173.6, 172.4, 174.1, 170.7, 172.5, 170.0, 167.1, 155.7, 159.1, 149.8, 156.2, 150.7, 147.9, 154.8, 150.1, 158.4, 167.2, 165.8, 160.0, 157.7, 143.2, 140.0, 127.4, 121.3, 134.0, 137.7, 139.8, 131.7, 130.1, 118.5, 116.8, 115.3, 105.8, 98.5, 107.4, 118.9, 109.1, 120.3, 121.4], "short_buy": [219, 410, 157, 262, 260, 210, 146, 102, 189, 171, 325, 606, 610, 457, 491, 1365, 258, 657, 287, 114, 195, 335, 761, 349, 1511, 3144, 357, 2227, 80, 285, 420, 1279, 0, 0, 0, 0, 220, 787, 842, 18, 102, 619, 148], "short_sell": [165, 173, 506, 346, 191, 50, 269, 64, 142, 38, 60, 947, 359, 896, 670, 277, 858, 479, 276, 498, 560, 255, 272, 265, 2918, 38, 1988, 60, 482, 184, 293, 0, 0, 0, 0, 697, 1502, 0, 971, 56, 0, 1614, 441], "short_repay": [3, 0, 0, 1, 1, 0, 0, 0, 2, 0, 4, 0, 0, 2, 0, 1, 1, 0, 0, 0, 0, 2, 0, 0, 1, 26, 0, 2, 1, 10, 65, 0, 9, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0], "short_diff": [0, -237, 349, 83, -70, -160, 123, -38, -49, -133, -269, 341, -251, 437, 179, -1089, 599, -178, -11, 384, 365, -82, -489, -84, 1406, -3132, 1631, -2169, 401, -111, -192, -1279, -9, 0, 0, 697, 1282, -787, 129, 38, -152, 995, 293], "short_colors": ["#66bb6a", "#66bb6a", "#ff9800", "#ff9800", "#66bb6a", "#66bb6a", "#ff9800", "#66bb6a", "#66bb6a", "#66bb6a", "#66bb6a", "#ff9800", "#66bb6a", "#ff9800", "#ff9800", "#66bb6a", "#ff9800", "#66bb6a", "#66bb6a", "#ff9800", "#ff9800", "#66bb6a", "#66bb6a", "#66bb6a", "#ff9800", "#66bb6a", "#ff9800", "#66bb6a", "#ff9800", "#66bb6a", "#66bb6a", "#66bb6a", "#66bb6a", "#66bb6a", "#66bb6a", "#ff9800", "#ff9800", "#66bb6a", "#ff9800", "#ff9800", "#66bb6a", "#ff9800", "#ff9800"], "short_bal": [3734, 3497, 3846, 3929, 3859, 3699, 3822, 3784, 3735, 3602, 3333, 3674, 3423, 3860, 4039, 2950, 3549, 3371, 3360, 3744, 4109, 4027, 3538, 3454, 4860, 1728, 3359, 1190, 1591, 1480, 1288, 9, 0, 0, 0, 697, 1979, 1192, 1321, 1359, 1207, 2202, 2495], "lend_diff": [-546.0, 5712.0, -1444.2, -654.8, -2990.2, -3680.0, -5673.0, -9340.0, -11505.0, 1936.0, -10414.9, 12402.0, 4575.0, 10162.0, -294.0, 7699.0, -44.0, 3618.0, -1605.0, 4216.0, -6924.0, -2931.0, -8760.7, -3383.7, 7650.2, 924.0, 13925.0, -1291.0, 1932.0, 618.0, 1935.0, 1787.0, 1403.0, 1955.0, 2124.5, 2035.0, 1373.2, -300.0, 637.0, 489.0, 342.0, 561.0, 336.0], "lend_sell": [4135.0, 10970.0, 2264.0, 1782.0, 1013.0, 1887.0, 1705.0, 974.0, 934.0, 3785.0, 2705.0, 12500.0, 5828.0, 10679.0, 2780.0, 9071.0, 3343.0, 5839.0, 2070.0, 6825.0, 76.0, 325.0, 2089.0, 1801.0, 11156.0, 1448.0, 13925.0, 0.0, 2082.0, 1824.0, 1935.0, 1787.0, 1933.0, 1961.0, 2125.0, 2035.0, 2022.0, 0.0, 678.0, 489.0, 342.0, 684.0, 405.0], "lend_ret": [-4681.0, -5258.0, -3708.2, -2436.8, -4003.2, -5567.0, -7378.0, -10314.0, -12439.0, -1849.0, -13119.9, -98.0, -1253.0, -517.0, -3074.0, -1372.0, -3387.0, -2221.0, -3675.0, -2609.0, -7000.0, -3256.0, -10849.7, -5184.7, -3505.8, -524.0, -0.0, -1291.0, -150.0, -1206.0, -0.0, -0.0, -530.0, -6.0, -0.5, -0.0, -648.8, -300.0, -41.0, -0.0, -0.0, -123.0, -69.0], "lend_bal": [102880.8, 108592.8, 107148.5, 106493.8, 103503.5, 99823.5, 94150.5, 84810.5, 73305.5, 75241.5, 64826.6, 77228.6, 81803.6, 91965.6, 91671.6, 99370.6, 99326.6, 102944.6, 101339.6, 105555.6, 98631.6, 95700.6, 86940.0, 83556.3, 91206.5, 92130.5, 106055.5, 104764.5, 106696.5, 107314.5, 109249.5, 111036.5, 112439.5, 114394.5, 116519.0, 118554.0, 119927.1, 119627.1, 120264.1, 120753.1, 121095.1, 121656.1, 121992.1], "main_power": [1176.2, -3259.2, -729.5, 724.2, -359.9, -200.7, 4537.1, -889.8, 1097.7, -2619.7, -1875.4, -8432.8, 714.7, -2249.2, 1950.0, 1345.2, 1339.7, 2106.1, 206.2, 3828.1, 3389.3, 1009.0, 928.5, -753.0, -5148.9, 1365.4, -3616.4, 913.8, 1981.5, -1560.6, -246.8, 636.9, -2706.3, 1245.1, 3516.7, -295.4, 3152.4, -645.3, 1066.1, -680.8, 1982.0, 2674.2, 844], "mp_colors": ["#ef5350", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#26a69a", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#ef5350", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#ef5350", "#26a69a", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#ef5350", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#26a69a", "#ef5350", "#ef5350", "#ef5350"], "buy_sell_diff": [-296, 648, -314, -716, -555, 395, -544, 162, -467, 571, 552, 692, -349, 618, -610, 611, 187, -605, 309, -697, -677, -392, 275, 372, 695, 480, 617, 64, -450, 470, 372, 256, 373, 342, 5, 229, -77, -154, 50, -416, 512, -602, -46], "bsd_colors": ["#ff9800", "#29b6f6", "#ff9800", "#ff9800", "#ff9800", "#29b6f6", "#ff9800", "#29b6f6", "#ff9800", "#29b6f6", "#29b6f6", "#29b6f6", "#ff9800", "#29b6f6", "#ff9800", "#29b6f6", "#29b6f6", "#ff9800", "#29b6f6", "#ff9800", "#ff9800", "#ff9800", "#29b6f6", "#29b6f6", "#29b6f6", "#29b6f6", "#29b6f6", "#29b6f6", "#ff9800", "#29b6f6", "#29b6f6", "#29b6f6", "#29b6f6", "#29b6f6", "#29b6f6", "#29b6f6", "#ff9800", "#ff9800", "#29b6f6", "#ff9800", "#29b6f6", "#ff9800", "#ff9800"], "skp5": [0.33, -1.43, -10.38, 5.61, 13.85, 8.59, 17.14, 14.91, 9.2, 0.38, 0.99, -16.77, -13.96, -21.3, -22.35, -16.7, -5.28, -8.7, 3.46, 6.97, 20.34, 20.5, 16.36, 14.95, -0.85, -10.76, -17.09, -14.59, -15.55, -6.76, -5.68, -2.92, -5.25, -7.73, -4.2, -2.79, 1.86, 5.53, 4.24, 3.98, 1.87, 3.67, 2.5], "skp20": [-2.84, -4.82, -3.59, -2.64, 1.0, -0.2, 2.34, 2.17, 0.49, -5.48, -2.92, -5.39, -3.14, 0.34, -0.57, -1.5, -0.82, -3.6, -1.08, 1.02, 2.29, 4.32, 3.9, 1.21, -2.73, -2.89, -5.58, -5.16, -6.17, -5.19, -4.87, -1.59, -2.3, -1.06, -1.87, -1.11, -0.42, -0.49, -0.5, -2.05, -4.29, -3.94, -3.86], "turnover": [1.495, 1.085, 0.97, 1.801, 1.372, 1.578, 1.927, 1.242, 1.343, 1.49, 0.982, 2.631, 1.201, 1.686, 1.005, 1.224, 0.892, 1.059, 0.926, 1.426, 1.501, 1.712, 1.153, 1.172, 1.922, 2.095, 1.743, 1.784, 0.804, 1.837, 1.468, 1.641, 0.995, 1.284, 1.394, 1.307, 1.626, 1.808, 2.494, 0.099, 1.592, 1.175, 1.229], "actual_turnover": [0.674, 0.643, 0.483, 1.198, 0.829, 0.823, 0.958, 0.723, 0.754, 0.74, 0.551, 1.926, 0.707, 1.06, 0.52, 0.681, 0.431, 0.616, 0.453, 0.861, 0.906, 0.741, 0.441, 0.429, 1.192, 0.822, 0.955, 0.807, 0.471, 0.686, 0.494, 0.625, 0.614, 0.809, 0.786, 0.712, 0.987, 0.876, 0.891, 0.099, 0.637, 0.558, 0.471], "summary": {"score": 61, "grade": "中性觀望 ★", "color": "#ff9800", "scoreItems": [{"label": "技術位階", "sub": "K/D + MACD + MA20", "score": 5, "max": 20, "value": "K=36.5 / D=24.4"}, {"label": "法人動向", "sub": "近5日三大法人淨", "score": 20, "max": 20, "value": "+9524張"}, {"label": "借券壓力", "sub": "近10日借券餘額趨勢", "score": 3, "max": 20, "value": "↑增加"}, {"label": "籌碼集中", "sub": "集中度×大戶持股趨勢", "score": 15, "max": 20, "value": "高位洗盤（中繼站）"}, {"label": "資金動向", "sub": "融資趨勢×股價方向", "score": 18, "max": 20, "value": "強手主導"}], "instNet5d": 9524.4, "lendBal": 121992.1, "finBal": 74270, "lastK": 36.5, "lastD": 24.4, "ma20Gap": -12.43, "patLabel": "高位洗盤（中繼站）", "patColor": "#ffb74d", "skp5Last": 2.5, "skp20Last": -3.86, "yhTrend": 0.0, "yhLast": 66.36, "conclusionText": "現價低於MA20（-12.43%）。KD中性整理（K=36.5）。MACD空頭排列，動能向下。三大法人近5日淨買 9,524張，法人偏多。借券餘額近期增加6.6%，短空增壓。大戶持股%約 66.4%，近期穩定。集中度形態：高位洗盤（中繼站）。底部清洗特徵【雙確認✓】：現償異常放大（被迫出場）、融資買量竭盡（賣方力竭）。"}, "float_chip": [-6550, 15852, -5507, -36027, -15045, 4355, -15533, 4275, -10872, 12273, 2581, 43037, -7813, 21821, -12243, 9698, 544, -10862, 2449, -21221, -25650, -13760, 4046, 2708, 35876, 13966, 15411, 3421, -3166, 6821, 3975, 6432, 1997, 3598, 1744, 1044, -2812, -2516, 1114, -436, 8234, -10726, -6328], "lend_net_d": [-546.0, 5712.0, -1444.1999999999998, -654.8000000000002, -2990.2, -3680.0, -5673.0, -9340.0, -11505.0, 1936.0, -10414.9, 12402.0, 4575.0, 10162.0, -294.0, 7699.0, -44.0, 3618.0, -1605.0, 4216.0, -6924.0, -2931.0, -8760.7, -3383.7, 7650.2, 924.0, 13925.0, -1291.0, 1932.0, 618.0, 1935.0, 1787.0, 1403.0, 1955.0, 2124.5, 2035.0, 1373.2, -300.0, 637.0, 489.0, 342.0, 561.0, 336.0], "fin_net_d": [396, -2143, 549, 2997, 2485, -2802, 5334, 446, 2047, -2317, -481, -2316, 2454, 1174, 1293, -677, 1011, 712, 362, 2643, 1086, 385, 954, -582, -2051, 1040, 2735, 7046, -440, -384, -1430, 371, 700, 4085, 2055, -930, 6966, 7606, 851, -1289, 255, 1106, 459], "retail_pct": [32.46, 32.24, 32.56, 32.45, 31.73, 31.43, 31.52, 31.2, 31.29, 31.07, 31.42, 31.49, 32.7, 32.48, 33.1, 32.93, 33.06, 33.07, 32.92, 32.97, 32.55, 32.05, 31.78, 31.86, 31.92, 32.67, 32.97, 33.29, 33.33, 33.29, 33.37, 33.42, 33.5, 33.55, 33.64, 33.68, 33.71, 33.59, 33.61, 33.6, 33.78, 33.55, 33.41], "major_pct": [67.54, 67.76, 67.44, 67.55, 68.27, 68.57, 68.48, 68.8, 68.71, 68.93, 68.58, 68.51, 67.3, 67.52, 66.9, 67.07, 66.94, 66.93, 67.08, 67.03, 67.45, 67.95, 68.22, 68.14, 68.08, 67.33, 67.03, 66.71, 66.67, 66.71, 66.63, 66.58, 66.5, 66.45, 66.36, 66.32, 66.29, 66.41, 66.39, 66.4, 66.22, 66.45, 66.59]};
+const L=D.dates;
+const NDATES=[];
+
+Chart.register({
+  id:'xhair',
+  afterDraw(chart){
+    if(chart._xhairIdx==null) return;
+    const {ctx,chartArea,scales:{x}}=chart;
+    if(!x) return;
+    const px=x.getPixelForValue(chart._xhairIdx);
+    if(px<chartArea.left||px>chartArea.right) return;
+    ctx.save();ctx.beginPath();ctx.moveTo(px,chartArea.top);ctx.lineTo(px,chartArea.bottom);
+    ctx.strokeStyle='rgba(255,220,50,0.70)';ctx.lineWidth=1.5;
+    ctx.setLineDash([3,2]);ctx.stroke();ctx.restore();
+  }
+});
+Chart.register({
+  id:'noticeDates',
+  afterDatasetsDraw(chart){
+    if(!NDATES.length) return;
+    const {ctx,chartArea:{top,bottom},scales:{x}}=chart;
+    NDATES.forEach(d=>{
+      const idx=L.indexOf(d); if(idx<0) return;
+      const px=x.getPixelForValue(idx);
+      if(px==null||isNaN(px)) return;
+      ctx.save();ctx.beginPath();ctx.moveTo(px,top);ctx.lineTo(px,bottom);
+      ctx.strokeStyle='rgba(255,152,0,0.55)';ctx.lineWidth=1.5;
+      ctx.setLineDash([4,3]);ctx.stroke();ctx.restore();
+    });
+  }
+});
+
+const ALL=[]; let _idx=-1;
+document.querySelector('.charts-col').addEventListener('mouseleave',()=>{
+  document.getElementById('hpanel').innerHTML='<div class="hd">移至圖表查看數值</div>';
+  _idx=-1;
+  ALL.forEach(ch=>{ch._xhairIdx=null;});
+  if(_raf)cancelAnimationFrame(_raf);
+  _raf=requestAnimationFrame(()=>{ALL.forEach(ch=>ch.update('none'));_raf=null;});
+});
+function fN(v,d){return v==null?'—':(d?v.toFixed(d):Math.round(v).toLocaleString());}
+function fK(v){if(v==null)return '—';const n=Math.abs(Math.round(v));return(v<0?'-':'')+(n>=1000?(n/1000).toFixed(1)+'K':n.toLocaleString());}
+function fSK(v){if(v==null)return '—';const s=v>0?'+':v<0?'-':'';const n=Math.abs(Math.round(v));return s+(n>=1000?(n/1000).toFixed(1)+'K':n.toLocaleString());}
+function rc(v){return v>0?'#ef5350':v<0?'#26a69a':'#8892a0';}
+
+let _raf=null;
+function syncAll(idx){
+  if(idx===_idx)return;_idx=idx;
+  ALL.forEach(ch=>{ch._xhairIdx=idx;});
+  updatePanel(idx);
+  if(_raf)cancelAnimationFrame(_raf);
+  _raf=requestAnimationFrame(()=>{ALL.forEach(ch=>ch.update('none'));_raf=null;});
+}
+
+function updatePanel(idx){
+  if(idx<0||idx>=L.length)return;
+  const p=document.getElementById('hpanel');
+  const i=idx;
+  function rv(a,d){const v=a[i];return v==null?'—':(d!=null?v.toFixed(d):Math.round(v).toLocaleString());}
+  function row(lbl,val,clr){return '<div class="hr"><span class="hl">'+lbl+'</span><span class="hv" style="color:'+(clr||'#c8d8e8')+'">'+val+'</span></div>';}
+  function sec(t){return '<div class="hs">'+t+'</div>';}
+  const kc=D.close[i]>=D.open[i]?'#ef5350':'#26a69a';
+  const dtPct=D.dt_vol[i]!=null&&D.vol[i]?' ('+(D.dt_vol[i]/D.vol[i]*100).toFixed(1)+'%)':'';
+  p.innerHTML=
+    '<div class="hd">'+L[i]+'</div>'+
+    sec('K線技術')+
+    row('開/收',rv(D.open,2)+' / '+rv(D.close,2),kc)+
+    row('高/低',rv(D.high,2)+' / '+rv(D.low,2),'#8892a0')+
+    row('MA5/20',rv(D.ma5,2)+' / '+rv(D.ma20,2),'#4a6080')+
+    row('K / D',rv(D.k,1)+' / '+rv(D.d,1),(D.k[i]!=null&&D.d[i]!=null)?(D.k[i]>D.d[i]?'#26a69a':'#ef5350'):'#8892a0')+
+    row('DIF/DEA',rv(D.dif,3)+' / '+rv(D.dea,3),'#f6c90e')+
+    row('MACD柱',rv(D.mh,3),D.mh[i]!=null?(D.mh[i]>=0?'#ef5350':'#26a69a'):'#8892a0')+
+    sec('法人動向')+
+    row('外資買賣超',fSK(D.foreign[i])+'張',rc(D.foreign[i]))+
+    row('外資持股%',rv(D.fbs_f,2)+'%','#ef5350')+
+    row('投信買賣超',fSK(D.trust[i])+'張',rc(D.trust[i]))+
+    row('投信持股%',rv(D.fbs_t,3)+'%','#29b6f6')+
+    row('自營買賣超',fSK(D.dealer[i])+'張',rc(D.dealer[i]))+
+    sec('融資')+
+    (D.fin_buy[i]!=null
+      ? row('買進',fK(D.fin_buy[i])+'張','#26a69a')+
+        row('賣出',fK(D.fin_sell[i])+'張','#ef5350')+
+        row('現償',fK(D.fin_repay[i])+'張','#ff9800')
+      : row('買/賣/現償','（歷史快取累積中）','#484f58'))+
+    row('增減',fSK(D.fin_diff[i])+'張',rc(D.fin_diff[i]))+
+    row('餘額',fK(D.fin_bal[i])+'張','#ef5350')+
+    (D.fin_rate&&D.fin_rate[i]!=null
+      ? row('使用率',D.fin_rate[i].toFixed(1)+'%',
+          D.fin_rate[i]>50?'#f85149':D.fin_rate[i]>30?'#e3b341':'#26a69a')
+      : '')+
+    (D.fin_maint&&D.fin_maint[i]!=null
+      ? row('維持率',D.fin_maint[i].toFixed(1)+'%',
+          D.fin_maint[i]<120?'#f85149':D.fin_maint[i]<130?'#e3b341':D.fin_maint[i]<160?'#ff9800':'#26a69a')
+      : '')+
+    (D.fin_cost&&D.fin_cost[i]!=null
+      ? row('成本線','$'+D.fin_cost[i].toFixed(1),'#8892a0')
+      : '')+
+    sec('融券')+
+    (D.short_sell[i]!=null
+      ? row('賣出',fK(D.short_sell[i])+'張','#ff9800')+
+        row('買進回補',fK(D.short_buy[i])+'張','#26a69a')+
+        row('現償',fK(D.short_repay[i])+'張','#29b6f6')
+      : row('賣/補/現償','（歷史快取累積中）','#484f58'))+
+    row('增減',fSK(D.short_diff[i])+'張',rc(D.short_diff[i]))+
+    row('餘額',fK(D.short_bal[i])+'張','#ff9800')+
+    (()=>{
+      if(D.fin_buy[i]==null) return '';
+      const priceUp = i>0 && D.close[i]>D.close[i-1];
+      const mp = D.main_power[i];
+      const finNet = D.fin_diff[i];
+      const finBuy = D.fin_buy[i]; const finSell = D.fin_sell[i];
+      let sig=''; let col='#8892a0';
+      if(!priceUp && mp>0 && finSell>finBuy){
+        sig='股跌融資潰散，主力逢低接手'; col='#4db6ac';
+      }else if(!priceUp && mp>0 && finBuy>finSell){
+        sig='股跌主力融資進場，積極低接'; col='#29b6f6';
+      }else if(priceUp && mp<0 && finBuy>finSell){
+        sig='股漲散戶追高，主力出貨，注意頭部'; col='#ff9800';
+      }else if(priceUp && mp>0 && finBuy>finSell){
+        sig='股漲主力融資攻堅，多方共振'; col='#ef5350';
+      }else if(priceUp && mp>0 && finSell>finBuy){
+        sig='股漲融資去槓桿，主力續買，健康換手'; col='#26a69a';
+      }else if(!priceUp && mp<0){
+        sig='股跌主力賣出，空方主導'; col='#ef5350';
+      }
+      return sig ? '<div style="margin:6px 8px 2px;padding:6px 8px;background:#1a2233;border-left:3px solid '+col+';border-radius:3px;font-size:0.78rem;color:'+col+'">⚡ '+sig+'</div>' : '';
+    })() +
+    sec('借券')+
+    row('賣出',fK(D.lend_sell[i])+'張','#ef5350')+
+    row('還券',D.lend_ret[i]!=null?fK(Math.abs(D.lend_ret[i]))+'張':'—','#26a69a')+
+    (()=>{const nd=D.lend_diff[i]; if(nd==null)return ''; const col=nd>0?'#ef5350':'#26a69a'; return row('淨方向',(nd>0?'+':'')+fK(nd)+'張',col);})() +
+    row('餘額',fK(D.lend_bal[i])+'張','#fff176')+
+    sec('主力/集中度')+
+    (D.major_pct&&D.major_pct[i]!=null?row('大戶持股%（推算）',D.major_pct[i].toFixed(2)+'%','#ffb300'):row('大戶持股%（週）',rv(D.yh_m,2)+'%','#fff176'))+
+    (D.retail_pct&&D.retail_pct[i]!=null?row('散戶持股%（推算）',D.retail_pct[i].toFixed(2)+'%','#4dd0e1'):'')+(D.float_chip&&D.float_chip[i]!=null?row('浮籌日增減',(D.float_chip[i]>0?'+':'')+Math.round(D.float_chip[i])+'張',D.float_chip[i]>0?'#ef5350':'#26a69a'):'')+
+    row('主力淨買(XQ)',fSK(D.main_power[i])+'張',rc(D.main_power[i]))+
+    row('法人合計',fSK(D.inst_total[i],1)+'張','#fff176')+
+    row('買賣家數差',fSK(D.buy_sell_diff[i])+'家',D.buy_sell_diff[i]>0?'#29b6f6':'#ff9800')+
+    row('5日集中度',rv(D.skp5,2)+'%','#f6c90e')+
+    row('20日集中度',rv(D.skp20,2)+'%','#ab47bc')+
+    sec('成交/換手')+
+    row('成交量',fK(D.vol[i])+'張','#8892a0')+
+    row('當沖量',D.dt_vol[i]!=null?fK(D.dt_vol[i])+'張'+dtPct:'—','#ffd54f')+
+    row('當沖獲利率',D.dt_profit_rate[i]!=null?(D.dt_profit_rate[i]>=0?'+':'')+rv(D.dt_profit_rate,3)+'%':'—',D.dt_profit_rate[i]!=null&&D.dt_profit_rate[i]>=0?'#00cc66':'#ff5050')+
+    row('換手率',rv(D.turnover,3)+'%','#80cbc4')+
+    row('實際換手率',rv(D.actual_turnover,3)+'%','#ff9800');
+}
+
+function mk(id,datasets,opts){
+  const needPad=!(opts.scales&&opts.scales.y2);
+  const ch=new Chart(document.getElementById(id),{data:{labels:L,datasets},
+    options:{...opts,layout:{padding:{right:needPad?52:0}},onHover(evt,items,chart){
+      const pts=chart.getElementsAtEventForMode(evt,'index',{intersect:false},false);
+      if(pts.length)syncAll(pts[0].index);
+    }}});
+  ALL.push(ch);return ch;
+}
+
+const G='rgba(255,255,255,0.06)';
+const xS={ticks:{color:'#4a6080',font:{size:9},maxTicksLimit:20,maxRotation:45},grid:{color:G}};
+const yS={afterFit(s){s.width=58;},ticks:{color:'#4a6080',font:{size:9}},grid:{color:G}};
+const yR={...yS,position:'right',grid:{display:false},afterFit(s){s.width=52;}};
+const leg={display:true,position:'top',labels:{color:'#7a8898',font:{size:9},boxWidth:8,padding:5}};
+const tipD={enabled:false};
+const BASE={responsive:true,maintainAspectRatio:false,
+  interaction:{mode:'index',intersect:false},
+  plugins:{legend:leg,tooltip:tipD},scales:{x:xS,y:yS}};
+
+// ── ch1 K線 + MA ──────────────────────────────────────────────────────────────
+const _wk=D.low.map((lo,i)=>[lo,D.high[i]]);
+const _bd=D.open.map((o,i)=>[Math.min(o,D.close[i]),Math.max(o,D.close[i])]);
+const _bc=D.close.map((c,i)=>c>=D.open[i]?'rgba(239,83,80,0.88)':'rgba(38,166,154,0.88)');
+const _allY=[...D.low,...D.high,...D.ma5,...D.ma10,...D.ma20,...D.ma60].filter(v=>v!=null);
+const _yMin=_allY.length?Math.min(..._allY)*0.995:undefined;
+const _yMax=_allY.length?Math.max(..._allY)*1.005:undefined;
+mk('ch1',[
+  {type:'bar',label:'影線',data:_wk,backgroundColor:'rgba(140,140,140,0.45)',barThickness:1,grouped:false,order:3},
+  {type:'bar',label:'K線',data:_bd,backgroundColor:_bc,barThickness:5,grouped:false,order:2},
+  {type:'line',label:'MA5', data:D.ma5, borderColor:'#f6c90e',borderWidth:1.2,pointRadius:0,tension:0,order:1},
+  {type:'line',label:'MA10',data:D.ma10,borderColor:'#ff9800',borderWidth:1.2,pointRadius:0,tension:0,order:1},
+  {type:'line',label:'MA20',data:D.ma20,borderColor:'#29b6f6',borderWidth:1.2,pointRadius:0,tension:0,order:1},
+  {type:'line',label:'MA60',data:D.ma60,borderColor:'#ab47bc',borderWidth:1.2,pointRadius:0,tension:0,order:1},
+],{...BASE,
+  plugins:{legend:leg,tooltip:{...tipD,
+    filter:item=>item.dataset.label!=='影線',
+    callbacks:{label:ctx=>{
+      if(ctx.dataset.label==='影線') return null;
+      if(ctx.dataset.label==='K線'){
+        const i=ctx.dataIndex;
+        return [` 開:${D.open[i].toFixed(2)}  收:${D.close[i].toFixed(2)}`,
+                ` 高:${D.high[i].toFixed(2)}  低:${D.low[i].toFixed(2)}`];
+      }
+      const v=ctx.parsed.y;return v!=null?` ${ctx.dataset.label}: ${v.toFixed(2)}`:`${ctx.dataset.label}: —`;
+    }}}},
+  scales:{x:xS,y:{...yS,min:_yMin,max:_yMax,ticks:{...yS.ticks,callback:v=>v.toFixed(0)}}}});
+
+// ── ch2 成交量 + 當沖量 × 換手率% / 當沖獲利率%（右軸） ─────────────
+mk('ch2',[
+  {type:'bar',label:'成交量（張）',data:D.vol,backgroundColor:D.vol_colors,order:2},
+  {type:'bar',label:'當沖量（張）',data:D.dt_vol,backgroundColor:'rgba(255,193,7,0.65)',order:1},
+  {type:'line',label:'換手率%',data:D.turnover,yAxisID:'y2',borderColor:'#80cbc4',borderWidth:1.5,pointRadius:0,tension:0.3,order:0},
+  {type:'line',label:'實際換手%',data:D.actual_turnover,yAxisID:'y2',borderColor:'#ff9800',borderWidth:1.2,pointRadius:0,tension:0.3,borderDash:[4,2],order:0},
+  {type:'line',label:'當沖獲利率%',data:D.dt_profit_rate,yAxisID:'y3',borderWidth:1.5,pointRadius:0,tension:0.3,order:0,
+   segment:{borderColor:ctx=>ctx.p0.parsed.y<0?'rgba(255,80,80,0.9)':'rgba(0,200,100,0.9)'}},
+],{...BASE,
+  plugins:{legend:leg,tooltip:{...tipD,callbacks:{label:ctx=>{
+    const v=ctx.parsed.y,l=ctx.dataset.label;
+    if(v==null) return null;
+    if(ctx.datasetIndex===4) return ` ${l}: ${v>=0?'+':''}${v.toFixed(3)}%`;
+    return ctx.datasetIndex<2?` ${l}: ${Math.round(v).toLocaleString()} 張`:` ${l}: ${v.toFixed(3)}%`;
+  }}}},
+  scales:{x:xS,y:{...yS,ticks:{...yS.ticks,callback:v=>v>=1000?Math.round(v/1000)+'K':v}},
+    y2:{...yR,ticks:{...yR.ticks,callback:v=>v.toFixed(2)+'%'}},
+    y3:{display:false,position:'right',grid:{display:false}}}});
+
+// ── ch3 KD ────────────────────────────────────────────────────────────────────
+mk('ch3',[
+  {type:'line',label:'K(%)',data:D.k,borderColor:'#f6c90e',borderWidth:1.5,pointRadius:0,tension:0},
+  {type:'line',label:'D(%)',data:D.d,borderColor:'#29b6f6',borderWidth:1.5,pointRadius:0,tension:0},
+],{...BASE,
+  plugins:{legend:leg,tooltip:{...tipD,callbacks:{label:ctx=>{const v=ctx.parsed.y;return v!=null?` ${ctx.dataset.label}: ${v.toFixed(1)}`:null;}}}},
+  scales:{x:xS,y:{...yS,min:0,max:100,ticks:{...yS.ticks,stepSize:20}}}});
+
+// ── ch4 MACD ──────────────────────────────────────────────────────────────────
+mk('ch4',[
+  {type:'bar', label:'MACD柱',data:D.mh, backgroundColor:D.mh_colors,order:2},
+  {type:'line',label:'DIF',  data:D.dif,borderColor:'#f6c90e',borderWidth:1.5,pointRadius:0,tension:0,order:1},
+  {type:'line',label:'DEA',  data:D.dea,borderColor:'#29b6f6',borderWidth:1.5,pointRadius:0,tension:0,order:1},
+],{...BASE,
+  plugins:{legend:leg,tooltip:{...tipD,callbacks:{label:ctx=>{const v=ctx.parsed.y;return v!=null?` ${ctx.dataset.label}: ${v.toFixed(3)}`:null;}}}},
+  scales:{x:xS,y:{...yS,ticks:{...yS.ticks,callback:v=>v.toFixed(2)}}}});
+
+// ── ch5 外資買賣超 × 外資持股% ───────────────────────────────────────────────
+mk('ch5',[
+  {type:'bar', label:'外資買賣超（張）',data:D.foreign,backgroundColor:D.foreign_colors,order:2},
+  {type:'line',label:'外資持股%',data:D.fbs_f,yAxisID:'y2',borderColor:'#ef5350',borderWidth:1.8,pointRadius:0,tension:0.3,order:1},
+],{...BASE,scales:{x:xS,
+  y:{...yS,ticks:{...yS.ticks,callback:v=>v>=1000||v<=-1000?Math.round(v/1000)+'K':v}},
+  y2:{...yR,ticks:{...yR.ticks,callback:v=>v.toFixed(1)+'%'}}}});
+
+// ── ch6 投信買賣超 × 投信持股% ───────────────────────────────────────────────
+mk('ch6',[
+  {type:'bar', label:'投信買賣超（張）',data:D.trust,backgroundColor:D.trust_colors,order:2},
+  {type:'line',label:'投信持股%',data:D.fbs_t,yAxisID:'y2',borderColor:'#29b6f6',borderWidth:1.8,pointRadius:0,tension:0.3,order:1},
+],{...BASE,scales:{x:xS,
+  y:{...yS,ticks:{...yS.ticks,callback:v=>v>=1000||v<=-1000?Math.round(v/1000)+'K':v}},
+  y2:{...yR,ticks:{...yR.ticks,callback:v=>v.toFixed(2)+'%'}}}});
+
+// ── ch7 自營商買賣超 × 自營商持股% ──────────────────────────────────────────
+mk('ch7',[
+  {type:'bar', label:'自營商買賣超（張）',data:D.dealer,backgroundColor:D.dealer_colors,order:2},
+  {type:'line',label:'自營持股%',data:D.fbs_d,yAxisID:'y2',borderColor:'#ab47bc',borderWidth:1.8,pointRadius:0,tension:0.3,order:1},
+],{...BASE,scales:{x:xS,
+  y:{...yS,ticks:{...yS.ticks,callback:v=>v>=1000||v<=-1000?Math.round(v/1000)+'K':v}},
+  y2:{...yR,ticks:{...yR.ticks,callback:v=>v.toFixed(2)+'%'}}}});
+
+// ── ch8 大戶持股%（日頻推算）× 散戶持股%校準（日頻）────────────────────────
+mk('ch8',[
+  {type:'line',label:'大戶持股%（日頻推算）',data:D.major_pct,borderColor:'#ffb300',borderWidth:2,pointRadius:0,tension:0.3,yAxisID:'y'},
+  {type:'line',label:'散戶持股%（日頻校準）',data:D.retail_pct,borderColor:'#4dd0e1',borderWidth:1.2,pointRadius:0,tension:0.3,borderDash:[3,2],yAxisID:'y2'},
+],{...BASE,
+  plugins:{legend:leg,tooltip:{...tipD,callbacks:{label:ctx=>{const v=ctx.parsed.y;return v!=null?` ${ctx.dataset.label}: ${v.toFixed(2)}%`:null;}}}},
+  scales:{x:xS,
+    y:{...yS,position:'left',ticks:{...yS.ticks,callback:v=>v.toFixed(1)+'%'}},
+    y2:{...yR,position:'right',ticks:{...yR.ticks,callback:v=>v.toFixed(1)+'%'}}}});
+
+// ── ch8b 浮籌日增減 × 主力持股%推算（右軸）─────────────────────────────────
+const _fcColors=D.float_chip.map(v=>v==null?'#444':v>0?'rgba(239,83,80,0.8)':'rgba(38,166,154,0.8)');
+mk('ch8b',[
+  {type:'bar', label:'浮籌日增減（張）',data:D.float_chip,backgroundColor:_fcColors,borderWidth:0,yAxisID:'y',order:2},
+  {type:'line',label:'主力持股%（推算）',data:D.major_pct,borderColor:'#ffb300',borderWidth:1.5,pointRadius:0,tension:0.3,yAxisID:'y2',order:1},
+],{...BASE,
+  plugins:{legend:leg,tooltip:{...tipD,callbacks:{label:ctx=>{
+    const v=ctx.parsed.y;
+    if(ctx.dataset.yAxisID==='y2') return v!=null?` 主力持股%: ${v.toFixed(2)}%`:null;
+    return v!=null?` 浮籌日增減: ${v>0?'+':''}${Math.round(v)}張`:null;
+  }}}},
+  scales:{x:xS,
+    y:{...yS,position:'left',ticks:{...yS.ticks,callback:v=>Math.round(v)}},
+    y2:{...yR,position:'right',ticks:{...yR.ticks,callback:v=>v.toFixed(1)+'%'}}}});
+
+// ── ch_tri 主力操作三角：浮籌 × 借券淨 × 融資淨 ────────────────────────────
+mk('ch_tri',[
+  {type:'bar', label:'浮籌日增減',data:D.float_chip,
+    backgroundColor:D.float_chip.map(v=>v==null?'#444':v>0?'rgba(239,83,80,0.6)':'rgba(38,166,154,0.6)'),
+    borderWidth:0,yAxisID:'y',order:3},
+  {type:'line',label:'借券淨建空（正=建空）',data:D.lend_net_d,
+    borderColor:'#80deea',borderWidth:1.5,pointRadius:0,tension:0.3,yAxisID:'y2',order:1},
+  {type:'line',label:'融資淨賣超（正=融資在賣）',data:D.fin_net_d,
+    borderColor:'#ffcc80',borderWidth:1.5,pointRadius:0,tension:0.3,yAxisID:'y2',order:2,borderDash:[4,2]},
+],{...BASE,
+  plugins:{legend:leg,tooltip:{...tipD,callbacks:{label:ctx=>{
+    const v=ctx.parsed.y;
+    if(v==null) return null;
+    if(ctx.dataset.yAxisID==='y') return ` 浮籌: ${v>0?'+':''}${Math.round(v)}張`;
+    return ` ${ctx.dataset.label}: ${v>0?'+':''}${Math.round(v)}張`;
+  }}}},
+  scales:{x:xS,
+    y:{...yS,position:'left',ticks:{...yS.ticks,callback:v=>v>=1000||v<=-1000?Math.round(v/1000)+'K':v}},
+    y2:{...yR,position:'right',ticks:{...yR.ticks,callback:v=>v>=1000||v<=-1000?Math.round(v/1000)+'K':v}}}});
+
+// ── ch9 融資 買進/賣出/現償 × 融資餘額 ───────────────────────────────────────
+mk('ch9',[
+  {type:'bar', label:'融資買進（張）',data:D.fin_buy,backgroundColor:'rgba(38,166,154,0.85)',order:2,stack:'fin'},
+  {type:'bar', label:'融資賣出（張）',data:D.fin_sell.map(v=>v!=null?-v:null),backgroundColor:'rgba(239,83,80,0.85)',order:2,stack:'fin'},
+  {type:'bar', label:'融資現償（張）',data:D.fin_repay.map(v=>v!=null?-v:null),backgroundColor:'rgba(255,152,0,0.75)',order:2,stack:'fin'},
+  {type:'line',label:'融資餘額',data:D.fin_bal,yAxisID:'y2',borderColor:'#ef5350',borderWidth:1.5,pointRadius:0,tension:0.3,order:1},
+],{...BASE,scales:{x:{...xS,stacked:true},
+  y:{...yS,stacked:true,ticks:{...yS.ticks,callback:v=>v>=1000||v<=-1000?Math.round(v/1000)+'K':v}},
+  y2:{...yR,ticks:{...yR.ticks,callback:v=>v>=1000?Math.round(v/1000)+'K':v}}}});
+
+// ── ch9b 融券 賣出/買回/現償 × 融券餘額 ─────────────────────────────────────
+mk('ch9b',[
+  {type:'bar', label:'融券賣出（張）',data:D.short_sell,backgroundColor:'rgba(255,152,0,0.85)',order:2,stack:'short'},
+  {type:'bar', label:'融券買回（張）',data:D.short_buy.map(v=>v!=null?-v:null),backgroundColor:'rgba(38,166,154,0.85)',order:2,stack:'short'},
+  {type:'bar', label:'融券現償（張）',data:D.short_repay.map(v=>v!=null?-v:null),backgroundColor:'rgba(41,182,246,0.75)',order:2,stack:'short'},
+  {type:'line',label:'融券餘額',data:D.short_bal,yAxisID:'y2',borderColor:'#ff9800',borderWidth:1.5,pointRadius:0,tension:0.3,borderDash:[4,2],order:1},
+],{...BASE,scales:{x:{...xS,stacked:true},
+  y:{...yS,stacked:true,ticks:{...yS.ticks,callback:v=>v>=1000||v<=-1000?Math.round(v/1000)+'K':v}},
+  y2:{...yR,ticks:{...yR.ticks,callback:v=>v>=1000?Math.round(v/1000)+'K':v}}}});
+
+// ── ch10 借券賣出/還券/淨方向 × 借券餘額 ─────────────────────────────────────
+mk('ch10',[
+  {type:'bar', label:'借券賣出（張）',data:D.lend_sell,backgroundColor:'rgba(239,83,80,0.60)',order:3},
+  {type:'bar', label:'借券還券（張）',data:D.lend_ret, backgroundColor:'rgba(38,166,154,0.60)',order:3},
+  {type:'line',label:'淨借券方向（張）',data:D.lend_diff,
+    borderWidth:2.5,pointRadius:0,tension:0.3,order:2,
+    segment:{borderColor:ctx=>{const v=ctx.p1.parsed.y; return v>0?'rgba(239,83,80,0.95)':'rgba(38,166,154,0.95)';}}},
+  {type:'line',label:'借券餘額',data:D.lend_bal,yAxisID:'y2',borderColor:'#fff176',borderWidth:1.8,pointRadius:0,tension:0.3,fill:true,backgroundColor:'rgba(255,241,118,0.04)',order:1},
+],{...BASE,scales:{x:xS,
+  y:{...yS,ticks:{...yS.ticks,callback:v=>v>=1000||v<=-1000?Math.round(v/1000)+'K':v}},
+  y2:{...yR,ticks:{...yR.ticks,callback:v=>v>=1000?Math.round(v/1000)+'K':v}}}});
+
+// ── ch11 主力買賣超 + 法人合計 ────────────────────────────────────────────────
+mk('ch11',[
+  {type:'bar', label:'主力淨買/XQ（張）',data:D.main_power,backgroundColor:D.mp_colors,order:2},
+  {type:'line',label:'法人合計（張）', data:D.inst_total,borderColor:'rgba(255,241,118,0.80)',borderWidth:1.5,pointRadius:0,tension:0,borderDash:[5,3],order:1},
+],{...BASE,scales:{x:xS,y:{...yS,ticks:{...yS.ticks,callback:v=>v>=1000||v<=-1000?Math.round(v/1000)+'K':v}}}});
+
+// ── ch12 買賣家數差 ───────────────────────────────────────────────────────────
+mk('ch12',[
+  {type:'bar',label:'買賣家數差（家）',data:D.buy_sell_diff,backgroundColor:D.bsd_colors,order:1},
+],{...BASE,scales:{x:xS,y:{...yS,ticks:{...yS.ticks,callback:v=>v>=1000||v<=-1000?Math.round(v/1000)+'K':v}}}});
+
+// ── ch13 5日/20日集中度 ───────────────────────────────────────────────────────
+mk('ch13',[
+  {type:'line',label:'5日集中度（%）', data:D.skp5, borderColor:'#f6c90e',borderWidth:2,pointRadius:0,tension:0.3,fill:false},
+  {type:'line',label:'20日集中度（%）',data:D.skp20,borderColor:'#ab47bc',borderWidth:2,pointRadius:0,tension:0.3,fill:false},
+],{...BASE,
+  plugins:{legend:leg,tooltip:{...tipD,callbacks:{label:ctx=>{const v=ctx.parsed.y;return v!=null?` ${ctx.dataset.label}: ${v.toFixed(2)}%`:null;}}}},
+  scales:{x:xS,y:{...yS,ticks:{...yS.ticks,callback:v=>v.toFixed(1)+'%'}}}});
+
+// ── 籌碼面摘要卡 ─────────────────────────────────────────────────────────────
+(function() {
+  const S = D.summary;
+  const cont = document.getElementById("chip-summary");
+  if (!cont || !S) return;
+
+  // 評分卡
+  const sc = document.createElement("div");
+  sc.className = "sum-card";
+  const barsHtml = S.scoreItems.map(function(item) {
+    const pct = Math.round(item.score / item.max * 100);
+    const c = item.score >= 16?"#26a69a":item.score>=12?"#4caf50":item.score>=8?"#ff9800":"#ef5350";
+    return "<div class='stat-box'>" +
+      "<div class='stat-lbl'>"+item.label+"</div>" +
+      "<div class='stat-val' style='color:"+c+";font-size:16px'>"+item.score+
+        "<span style='font-size:10px;color:#6e7681'>/"+item.max+"</span></div>" +
+      "<div style='background:#1e2635;border-radius:2px;height:3px;margin:5px 0 3px'>" +
+        "<div style='background:"+c+";width:"+pct+"%;height:3px;border-radius:2px'></div></div>" +
+      "<div class='stat-sub'>"+item.sub+"<br>"+item.value+"</div></div>";
+  }).join("");
+  sc.innerHTML =
+    "<div style='display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:12px'>" +
+      "<div><div class='sum-title'>籌碼面綜合評分</div>" +
+      "<div style='font-size:20px;font-weight:500;color:"+S.color+";line-height:1.3'>"+S.grade+"</div></div>" +
+      "<div style='text-align:center'><div style='font-size:48px;font-weight:300;color:"+S.color+";line-height:1'>"+S.score+"</div>" +
+      "<div style='font-size:10px;color:#6e7681'>/ 100</div></div></div>" +
+    "<div class='stat-grid'>"+barsHtml+"</div>";
+  cont.appendChild(sc);
+
+  // 關鍵數據列
+  const kr = document.createElement("div");
+  kr.className = "stat-grid";
+  function mkStat(lbl, val, color) {
+    const d = document.createElement("div");
+    d.className = "stat-box";
+    d.innerHTML = "<div class='stat-lbl'>"+lbl+"</div>"+
+                  "<div class='stat-val' style='color:"+color+"'>"+val+"</div>";
+    kr.appendChild(d);
+  }
+  mkStat("KD（K / D）", S.lastK.toFixed(1)+" / "+S.lastD.toFixed(1),
+         S.lastK > S.lastD ? "#26a69a" : "#ef5350");
+  mkStat("現價 vs MA20", (S.ma20Gap>=0?"+":"")+S.ma20Gap.toFixed(2)+"%",
+         S.ma20Gap >= 0 ? "#26a69a" : "#ef5350");
+  mkStat("三大法人（近5日）", (S.instNet5d>=0?"+":"")+S.instNet5d.toFixed(0)+"張",
+         S.instNet5d >= 0 ? "#29b6f6" : "#ef5350");
+  if (S.lendBal != null) mkStat("借券餘額", S.lendBal.toLocaleString()+"張", "#ff9800");
+  if (S.finBal  != null) mkStat("融資餘額",  S.finBal.toLocaleString()+"張",  "#ab47bc");
+  if (S.patLabel) mkStat("集中度形態", S.patLabel, S.patColor || "#8892a0");
+  cont.appendChild(kr);
+
+  // 結論卡
+  const cc = document.createElement("div");
+  cc.className = "sum-card";
+  cc.style.cssText = "border-left:3px solid "+S.color+";border-radius:0 10px 10px 0";
+  cc.innerHTML =
+    "<div class='sum-title'>籌碼面研判結論</div>" +
+    "<div style='font-size:13px;line-height:1.9;color:#c9d1d9'>"+S.conclusionText+"</div>" +
+    "<div style='font-size:10px;color:#555;margin-top:8px'>★ 系統依籌碼數據自動生成，僅供輔助研判，不構成投資建議。</div>";
+  cont.appendChild(cc);
+})();
+
+// ── 表格排序 ─────────────────────────────────────────────────────────────────
+(function(){
+  const tbl=document.getElementById('dtbl');
+  if(!tbl) return;
+  let sc=-1,sa=true;
+  tbl.querySelectorAll('thead th').forEach((th,ci)=>{
+    th.addEventListener('click',()=>{
+      tbl.querySelectorAll('thead th').forEach(t=>t.classList.remove('sa','sd'));
+      if(sc===ci){ sa=!sa; }else{ sc=ci; sa=true; }
+      th.classList.add(sa?'sa':'sd');
+      const tb=document.getElementById('dtbody');
+      [...tb.querySelectorAll('tr')].sort((a,b)=>{
+        const av=(a.cells[ci]?.textContent||'').trim().replace(/[+⚡%張元,]/g,'');
+        const bv=(b.cells[ci]?.textContent||'').trim().replace(/[+⚡%張元,]/g,'');
+        const an=parseFloat(av),bn=parseFloat(bv);
+        if(!isNaN(an)&&!isNaN(bn)) return sa?an-bn:bn-an;
+        return sa?av.localeCompare(bv,'zh-TW'):bv.localeCompare(av,'zh-TW');
+      }).forEach(r=>tb.appendChild(r));
+    });
+  });
+})();
+</script>
+
+
+<!-- FINI 假外資追蹤表 -->
+<div class="sec-title" style="margin-top:2rem">FINI 假外資借券追蹤
+  <span style="font-weight:400;color:#5a7a94;margin-left:.5rem">· 外資法人-分點差異 × 借券賣出交叉驗證</span>
+</div>
+<div class="data-note">
+📌 <b>外資法人</b>：TWSE 三大法人，依 FINI 帳戶持股直接統計（不分券商）。
+<b>外資分點</b>：XQ 920分點，篩選具外資名稱券商（摩根/高盛/美林等）。<br>
+📌 <b>FINI差異（負值）</b>：有 FINI 帳戶透過<b>本土券商</b>（元大、凱基等）執行賣出，未被分點外資統計捕捉——<b>疑似假外資借券砸盤</b>。<br>
+📌 <b>借券-|差異|</b>：僅 FINI差異為負時顯示。正值=借券量超過 FINI 隱藏賣出（有其他借券者）；負值=FINI 尚有現股賣出。<br>
+🚨 高度嫌疑：FINI差異 &lt; -400 且借券賣出 ≥ 300　⚠️ 中度嫌疑：FINI差異 &lt; -100 且借券賣出 ≥ 200
+</div>
+<div class="tbl-wrap">
+<table class="dtbl">
+<thead><tr>
+  <th class="g-base">日期</th>
+  <th class="g-base">收盤</th>
+  <th class="g-base" style="color:#f85149">最高</th>
+  <th class="g-base" style="color:#3fb950">最低</th>
+  <th class="g-base">成交量</th>
+  <th class="g-lend">借券賣出</th>
+  <th class="g-lend" style="color:#3fb950">借券還券</th>
+  <th class="g-lend">借券餘額</th>
+  <th class="g-inst">外資法人</th>
+  <th class="g-inst">外資分點</th>
+  <th class="g-flow" title="外資法人 - 外資分點，負值=FINI走本土券商通道">FINI差異</th>
+  <th class="g-flow" title="借券賣出 - |FINI差異|，僅差異為負時顯示">借券-|差異|</th>
+</tr></thead>
+<tbody>
+<tr ><td>11/27</td><td style='color:#e6edf3'>104.00</td><td style='color:#f85149'>106.00</td><td style='color:#3fb950'>100.50</td><td>58,011.0</td><td>405</td><td style='color:#3fb950'>-69</td><td>121992</td><td style='color:#3fb950'>+3938</td><td style='color:#8b949e'>—</td><td class=''>—</td><td class=''>—</td></tr>
+<tr ><td>11/26</td><td style='color:#e6edf3'>103.50</td><td style='color:#f85149'>103.50</td><td style='color:#3fb950'>97.40</td><td>55,474.0</td><td>684</td><td style='color:#3fb950'>-123</td><td>121656</td><td style='color:#3fb950'>+10796</td><td style='color:#3fb950'>+8922</td><td class='cbuy'>+1874</td><td class=''>—</td></tr>
+<tr style='background:rgba(248,81,73,0.18)'><td>11/25 🚨</td><td style='color:#e6edf3'>94.50</td><td style='color:#f85149'>101.00</td><td style='color:#3fb950'>94.50</td><td>75,173.0</td><td>342</td><td style='color:#3fb950'>-0</td><td>121095</td><td style='color:#f85149'>-7136</td><td style='color:#f85149'>-2432</td><td class='csell'>-4704</td><td class='csell'>-4362</td></tr>
+<tr style='background:rgba(210,153,34,0.15)'><td>11/24 ⚠️</td><td style='color:#e6edf3'>105.00</td><td style='color:#f85149'>105.00</td><td style='color:#3fb950'>105.00</td><td>4,672.0</td><td>489</td><td style='color:#3fb950'>-0</td><td>120753</td><td style='color:#f85149'>-1032</td><td style='color:#f85149'>-914</td><td class='csell'>-118</td><td class='cbuy'>+371</td></tr>
+<tr style='background:rgba(248,81,73,0.18)'><td>11/23 🚨</td><td style='color:#e6edf3'>95.50</td><td style='color:#f85149'>98.00</td><td style='color:#3fb950'>88.30</td><td>117,729.0</td><td>678</td><td style='color:#3fb950'>-41</td><td>120264</td><td style='color:#f85149'>-690</td><td style='color:#3fb950'>+1403</td><td class='csell'>-2093</td><td class='csell'>-1415</td></tr>
+<tr ><td>11/20</td><td style='color:#e6edf3'>89.20</td><td style='color:#f85149'>93.30</td><td style='color:#3fb950'>88.20</td><td>85,345.0</td><td>0</td><td style='color:#3fb950'>-300</td><td>119627</td><td style='color:#3fb950'>+10570</td><td style='color:#3fb950'>+7373</td><td class='cbuy'>+3196</td><td class=''>—</td></tr>
+<tr ><td>11/19</td><td style='color:#e6edf3'>98.00</td><td style='color:#f85149'>108.00</td><td style='color:#3fb950'>97.30</td><td>76,770.0</td><td>2022</td><td style='color:#3fb950'>-649</td><td>119927</td><td style='color:#3fb950'>+9515</td><td style='color:#3fb950'>+7097</td><td class='cbuy'>+2418</td><td class=''>—</td></tr>
+<tr ><td>11/18</td><td style='color:#e6edf3'>108.00</td><td style='color:#f85149'>115.00</td><td style='color:#3fb950'>102.50</td><td>61,717.0</td><td>2035</td><td style='color:#3fb950'>-0</td><td>118554</td><td style='color:#f85149'>-2831</td><td style='color:#f85149'>-4796</td><td class='cbuy'>+1965</td><td class=''>—</td></tr>
+<tr ><td>11/17</td><td style='color:#e6edf3'>110.50</td><td style='color:#f85149'>114.00</td><td style='color:#3fb950'>104.00</td><td>65,787.0</td><td>2125</td><td style='color:#3fb950'>-0</td><td>116519</td><td style='color:#f85149'>-70</td><td style='color:#f85149'>-5104</td><td class='cbuy'>+5034</td><td class=''>—</td></tr>
+<tr ><td>11/16</td><td style='color:#e6edf3'>113.00</td><td style='color:#f85149'>123.50</td><td style='color:#3fb950'>112.50</td><td>60,600.0</td><td>1961</td><td style='color:#3fb950'>-6</td><td>114394</td><td style='color:#3fb950'>+4257</td><td style='color:#f85149'>-3161</td><td class='cbuy'>+7418</td><td class=''>—</td></tr>
+<tr ><td>11/13</td><td style='color:#e6edf3'>125.00</td><td style='color:#f85149'>134.00</td><td style='color:#3fb950'>125.00</td><td>46,966.0</td><td>1933</td><td style='color:#3fb950'>-530</td><td>112440</td><td style='color:#f85149'>-1239</td><td style='color:#f85149'>-2452</td><td class='cbuy'>+1213</td><td class=''>—</td></tr>
+<tr ><td>11/12</td><td style='color:#e6edf3'>127.50</td><td style='color:#f85149'>141.00</td><td style='color:#3fb950'>127.00</td><td>77,464.0</td><td>1787</td><td style='color:#3fb950'>-0</td><td>111036</td><td style='color:#f85149'>-4534</td><td style='color:#f85149'>-4881</td><td class='cbuy'>+348</td><td class=''>—</td></tr>
+<tr ><td>11/11</td><td style='color:#e6edf3'>136.50</td><td style='color:#f85149'>136.50</td><td style='color:#3fb950'>127.00</td><td>69,275.0</td><td>1935</td><td style='color:#3fb950'>-0</td><td>109250</td><td style='color:#f85149'>-5874</td><td style='color:#f85149'>-6068</td><td class='cbuy'>+194</td><td class=''>—</td></tr>
+<tr ><td>11/10</td><td style='color:#e6edf3'>135.00</td><td style='color:#f85149'>142.00</td><td style='color:#3fb950'>132.00</td><td>86,708.0</td><td>1824</td><td style='color:#3fb950'>-1206</td><td>107314</td><td style='color:#f85149'>-7967</td><td style='color:#f85149'>-10308</td><td class='cbuy'>+2341</td><td class=''>—</td></tr>
+<tr style='background:rgba(248,81,73,0.18)'><td>11/09 🚨</td><td style='color:#e6edf3'>132.50</td><td style='color:#f85149'>132.50</td><td style='color:#3fb950'>124.00</td><td>37,942.0</td><td>2082</td><td style='color:#3fb950'>-150</td><td>106696</td><td style='color:#3fb950'>+2856</td><td style='color:#3fb950'>+4741</td><td class='csell'>-1885</td><td class='cbuy'>+197</td></tr>
+<tr ><td>11/06</td><td style='color:#e6edf3'>120.50</td><td style='color:#f85149'>123.50</td><td style='color:#3fb950'>115.00</td><td>84,221.0</td><td>0</td><td style='color:#3fb950'>-1291</td><td>104764</td><td style='color:#3fb950'>+5873</td><td style='color:#3fb950'>+4583</td><td class='cbuy'>+1290</td><td class=''>—</td></tr>
+<tr ><td>11/05</td><td style='color:#e6edf3'>127.50</td><td style='color:#f85149'>136.00</td><td style='color:#3fb950'>127.50</td><td>82,273.0</td><td>13925</td><td style='color:#3fb950'>-0</td><td>106056</td><td style='color:#f85149'>-13221</td><td style='color:#f85149'>-13967</td><td class='cbuy'>+746</td><td class=''>—</td></tr>
+<tr ><td>11/04</td><td style='color:#e6edf3'>141.50</td><td style='color:#f85149'>148.00</td><td style='color:#3fb950'>132.50</td><td>98,909.0</td><td>1448</td><td style='color:#3fb950'>-524</td><td>92130</td><td style='color:#f85149'>-12939</td><td style='color:#f85149'>-13240</td><td class='cbuy'>+301</td><td class=''>—</td></tr>
+<tr style='background:rgba(248,81,73,0.18)'><td>11/03 🚨</td><td style='color:#e6edf3'>146.00</td><td style='color:#f85149'>158.00</td><td style='color:#3fb950'>146.00</td><td>90,749.0</td><td>11156</td><td style='color:#3fb950'>-3506</td><td>91206</td><td style='color:#f85149'>-36740</td><td style='color:#f85149'>-31167</td><td class='csell'>-5573</td><td class='cbuy'>+5583</td></tr>
+<tr ><td>11/02</td><td style='color:#e6edf3'>162.00</td><td style='color:#f85149'>164.50</td><td style='color:#3fb950'>157.00</td><td>55,310.0</td><td>1801</td><td style='color:#3fb950'>-5185</td><td>83556</td><td style='color:#f85149'>-4187</td><td style='color:#f85149'>-6911</td><td class='cbuy'>+2724</td><td class=''>—</td></tr>
+<tr style='background:rgba(248,81,73,0.18)'><td>10/30 🚨</td><td style='color:#e6edf3'>164.50</td><td style='color:#f85149'>167.00</td><td style='color:#3fb950'>159.00</td><td>54,423.0</td><td>2089</td><td style='color:#3fb950'>-10850</td><td>86940</td><td style='color:#f85149'>-3186</td><td style='color:#f85149'>-2677</td><td class='csell'>-509</td><td class='cbuy'>+1580</td></tr>
+<tr style='background:rgba(248,81,73,0.18)'><td>10/29 🚨</td><td style='color:#e6edf3'>170.50</td><td style='color:#f85149'>178.50</td><td style='color:#3fb950'>167.00</td><td>80,829.0</td><td>325</td><td style='color:#3fb950'>-3256</td><td>95701</td><td style='color:#3fb950'>+14319</td><td style='color:#3fb950'>+16814</td><td class='csell'>-2495</td><td class='csell'>-2170</td></tr>
+<tr ><td>10/28</td><td style='color:#e6edf3'>172.00</td><td style='color:#f85149'>172.00</td><td style='color:#3fb950'>165.00</td><td>70,853.0</td><td>76</td><td style='color:#3fb950'>-7000</td><td>98632</td><td style='color:#3fb950'>+25348</td><td style='color:#3fb950'>+22112</td><td class='cbuy'>+3236</td><td class=''>—</td></tr>
+<tr ><td>10/27</td><td style='color:#e6edf3'>163.00</td><td style='color:#f85149'>164.00</td><td style='color:#3fb950'>157.50</td><td>67,335.0</td><td>6825</td><td style='color:#3fb950'>-2609</td><td>105556</td><td style='color:#3fb950'>+22489</td><td style='color:#3fb950'>+14912</td><td class='cbuy'>+7577</td><td class=''>—</td></tr>
+<tr style='background:rgba(248,81,73,0.18)'><td>10/22 🚨</td><td style='color:#e6edf3'>154.50</td><td style='color:#f85149'>161.00</td><td style='color:#3fb950'>154.00</td><td>43,722.0</td><td>2070</td><td style='color:#3fb950'>-3675</td><td>101340</td><td style='color:#f85149'>-1708</td><td style='color:#3fb950'>+1741</td><td class='csell'>-3449</td><td class='csell'>-1379</td></tr>
+<tr ><td>10/21</td><td style='color:#e6edf3'>159.50</td><td style='color:#f85149'>161.50</td><td style='color:#3fb950'>156.00</td><td>49,967.0</td><td>5839</td><td style='color:#3fb950'>-2221</td><td>102945</td><td style='color:#3fb950'>+11726</td><td style='color:#3fb950'>+7765</td><td class='cbuy'>+3961</td><td class=''>—</td></tr>
+<tr style='background:rgba(210,153,34,0.15)'><td>10/20 ⚠️</td><td style='color:#e6edf3'>152.50</td><td style='color:#f85149'>157.50</td><td style='color:#3fb950'>151.00</td><td>42,095.0</td><td>3343</td><td style='color:#3fb950'>-3387</td><td>99327</td><td style='color:#3fb950'>+423</td><td style='color:#3fb950'>+636</td><td class='csell'>-213</td><td class='cbuy'>+3130</td></tr>
+<tr ><td>10/19</td><td style='color:#e6edf3'>155.50</td><td style='color:#f85149'>156.00</td><td style='color:#3fb950'>151.00</td><td>57,769.0</td><td>9071</td><td style='color:#3fb950'>-1372</td><td>99371</td><td style='color:#f85149'>-11016</td><td style='color:#f85149'>-14911</td><td class='cbuy'>+3895</td><td class=''>—</td></tr>
+<tr ><td>10/16</td><td style='color:#e6edf3'>161.50</td><td style='color:#f85149'>165.00</td><td style='color:#3fb950'>156.00</td><td>47,423.0</td><td>2780</td><td style='color:#3fb950'>-3074</td><td>91672</td><td style='color:#3fb950'>+12224</td><td style='color:#3fb950'>+8101</td><td class='cbuy'>+4123</td><td class=''>—</td></tr>
+<tr style='background:rgba(248,81,73,0.18)'><td>10/15 🚨</td><td style='color:#e6edf3'>155.00</td><td style='color:#f85149'>159.00</td><td style='color:#3fb950'>153.00</td><td>79,592.0</td><td>10679</td><td style='color:#3fb950'>-517</td><td>91966</td><td style='color:#f85149'>-18846</td><td style='color:#f85149'>-12902</td><td class='csell'>-5944</td><td class='cbuy'>+4735</td></tr>
+
+</tbody>
+</table>
+</div>
+
+</body>
+</html>
